@@ -1,0 +1,22 @@
+{
+  "name": "sixtyfps-wasm-interpreter",
+  "collaborators": [
+    "SixtyFPS <info@sixtyfps.io>"
+  ],
+  "description": "SixtyFPS wasm glue",
+  "version": "0.1.6",
+  "license": "(GPL-3.0-only OR LicenseRef-SixtyFPS-commercial)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sixtyfpsui/sixtyfps"
+  },
+  "files": [
+    "sixtyfps_wasm_interpreter_bg.wasm",
+    "sixtyfps_wasm_interpreter.js",
+    "sixtyfps_wasm_interpreter.d.ts"
+  ],
+  "module": "sixtyfps_wasm_interpreter.js",
+  "homepage": "https://sixtyfps.io",
+  "types": "sixtyfps_wasm_interpreter.d.ts",
+  "sideEffects": false
+}

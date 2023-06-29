@@ -1,0 +1,16 @@
+{
+  "name": "slide_puzzle",
+  "collaborators": [
+    "SixtyFPS <info@sixtyfps.io>"
+  ],
+  "version": "0.1.6",
+  "license": "(GPL-3.0-only OR LicenseRef-SixtyFPS-commercial)",
+  "files": [
+    "slide_puzzle_bg.wasm",
+    "slide_puzzle.js",
+    "slide_puzzle.d.ts"
+  ],
+  "module": "slide_puzzle.js",
+  "types": "slide_puzzle.d.ts",
+  "sideEffects": false
+}

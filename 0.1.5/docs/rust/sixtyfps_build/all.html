@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="List of all items in this crate"><meta name="keywords" content="rust, rustlang, rust-lang"><title>List of all items in this crate</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><script defer src="../main.js"></script>
+    <noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"><!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.5/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+        await sixtyfps.default();
+        var elements = document.querySelectorAll("code.language-60, .rustdoc pre.language-60, div.highlight-60");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.60` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://sixtyfps.io/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://sixtyfps.io/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("60", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'sixtyfps',
+      aliases: ['60'],
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .60 blocks, leave the others to rustdoc
+      for (dot60Block of document.querySelectorAll(".language-60")) {
+        hljs.highlightElement(dot60Block)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-60.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-60 div.highlight pre, div.highlight-60-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+<style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../sixtyfps_build/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;sixtyfps.io&#x2F;resources&#x2F;logo.drawio.svg' alt='logo'></div></a><h2 class="location">Crate sixtyfps_build</h2><div class="block version"><p>Version 0.1.5</p></div><a id="all-types" href="index.html"><p>Back to index</p></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">List of all items</span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span>
+                 </span>
+             </h1><h3 id="Structs">Structs</h3><ul class="structs docblock"><li><a href="struct.CompilerConfiguration.html">CompilerConfiguration</a></li></ul><h3 id="Enums">Enums</h3><ul class="enums docblock"><li><a href="enum.CompileError.html">CompileError</a></li></ul><h3 id="Functions">Functions</h3><ul class="functions docblock"><li><a href="fn.compile.html">compile</a></li><li><a href="fn.compile_with_config.html">compile_with_config</a></li></ul></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="sixtyfps_build" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+</body></html>

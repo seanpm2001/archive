@@ -1,0 +1,829 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Recipes and Examples"><meta name="keywords" content="rust, rustlang, rust-lang, recipes"><title>slint::docs::recipes - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/0.2.2/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/0.2.2/editor/";
+    //import * as slint from 'https://slint-ui.com/snapshots/master/wasm-interpreter/slint_wasm_interpreter.js';
+    //const editor_url = "https://slint-ui.com/snapshots/master/editor/";
+
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no_run])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            let link = document.createElement("div");
+            link.innerHTML = `<a href="${editor_url}?snippet=${encodeURIComponent(source)}" target="_blank">📝</a>`;
+            elements[i].append(link);
+            await render_or_error(source, div);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+    // Select C++ blocks in rustdoc generated code and hide them, while opening the <details> of Rust snippets
+    // Similarly, in Sphinx generated HTML, hide Rust blocks and open C++.
+    function select_code_snippet_variants(options) {
+        // When the CSS has pseudo class becomes available, we can probably use that directly
+        // in a stylesheet instead of JS here.
+
+        let selector_for_language = (language) => {
+            return `details[data-snippet-language="${language}"]`;
+        };
+
+        for (let details_element_to_hide of document.querySelectorAll(selector_for_language(options.hide))) {
+            details_element_to_hide.style = "display: none";
+        }
+
+        for (let details_element_to_show of document.querySelectorAll(selector_for_language(options.show))) {
+            details_element_to_show.open = true;
+        }
+    }
+
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+        select_code_snippet_variants({ hide: "cpp", show: "rust" })
+    } else {
+        select_code_snippet_variants({ hide: "rust", show: "cpp" })
+    }
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../slint/index.html"><div class="logo-container"><img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../../slint/index.html"><div class="logo-container">
+                    <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div>
+        </a><h2 class="location"><a href="#">Module recipes</a></h2><div class="sidebar-elems"><div id="sidebar-vars" data-name="recipes" data-ty="mod" data-relpath="./"></div><script defer src="./sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../slint/index.html">
+                        <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Module <a href="../../index.html">slint</a>::<wbr><a href="../index.html">docs</a>::<wbr><a class="mod" href="#">recipes</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../../../src/slint/docs.rs.html#17-25">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="recipes-and-examples"><a href="#recipes-and-examples">Recipes and Examples</a></h2>
+<p>This page provides a collection of common use-cases and how to implement them using Slint.</p>
+<h3 id="get-started"><a href="#get-started">Get Started</a></h3><h4 id="a-clickable-button"><a href="#a-clickable-button">A clickable Button</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { VerticalBox, Button } from &quot;std-widgets.slint&quot;;
+export Recipe := Window {
+    property &lt;int&gt; counter: 0;
+    VerticalBox {
+        button := Button {
+            text: &quot;Button, pressed &quot; + counter + &quot; times&quot;;
+            clicked =&gt; {
+                counter += 1;
+            }
+        }
+    }
+}</code></pre></div>
+<p>In this first example, you see the basics of the Slint language:</p>
+<ul>
+<li>The <code>VerticalBox</code> layout and the <code>Button</code> widget is imported from the standard library
+using the <code>import</code> statement. That statement can import widgets or your own components
+declared in different files. Built-in element such as <code>Window</code> or <code>Rectangle</code> do not
+need to be imported.</li>
+<li>The <code>Recipe</code> component is declared using <code>:=</code>. It is a <code>Window</code> and it contains
+a layout (<code>VerticalBox</code>) with one button.</li>
+<li>The elements are just instantiated with their name and braces; they form a tree.
+They can optionally be named using <code>:=</code></li>
+<li>Elements can have properties and can be set with <code>:</code>. In this case the <code>Button</code> has a <code>text</code>
+property and it is assigned a binding that computes a string by concatenating some string
+literals, and the <code>counter</code> property.</li>
+<li>You can declare custom properties with <code>property &lt;...&gt;</code>. A property needs to have a type and can have
+a default value. This is how the <code>counter</code> property is declared in this example.</li>
+<li>In addition to properties, elements can also have callback. In this case we assign a callback
+handler to the <code>clicked</code> callback of the button with <code>=&gt; { ... }</code></li>
+<li>Property bindings are automatically re-evaluated if any of the properties the binding depends on changes. The <code>text</code> binding of
+the button is going to be automatically re-computed when the <code>counter</code> is changed.</li>
+</ul>
+<h4 id="react-to-a-button-in-native-code"><a href="#react-to-a-button-in-native-code">React to a Button in native code</a></h4>
+<p>This example increments the counter using native code, instead with the slint language.</p>
+<div class="example-wrap"><pre class="language-slint"><code>import { VerticalBox, Button } from &quot;std-widgets.slint&quot;;
+export Recipe := Window {
+    property &lt;int&gt; counter: 0;
+    callback button-pressed &lt;=&gt; button.clicked;
+    VerticalBox {
+        button := Button {
+            text: &quot;Button, pressed &quot; + counter + &quot; times&quot;;
+        }
+    }
+}</code></pre></div>
+<p>The <code>button-pressed</code> callback is declared using the <code>&lt;=&gt;</code> syntax, which binds it to the <code>button.clicked</code> signal.</p>
+<p>Properties and callbacks declared on the root element of the main component will be exposed to the
+native code.</p>
+<p>Note that <code>-</code> is replaced by <code>_</code>. In slint, <code>-</code> and <code>_</code> are equivalent and interchangable. But this since <code>-</code> is not valid in identifier in native code, they are replaced by <code>_</code>.</p>
+<details data-snippet-language="rust">
+<summary>Rust code</summary>
+<p>For technical reasons, this example uses <code>import {Recipe}</code> in the <code>slint!</code> macro, but
+in real code, you can put the whole slint code in the <code>slint!</code> macro, or use a build script.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="macro">slint::slint!</span>(<span class="ident">import</span> { <span class="ident">Recipe</span> } <span class="ident">from</span> <span class="string">&quot;docs/recipes/button_native.slint&quot;</span>;);
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="kw">let</span> <span class="ident">recipe</span> <span class="op">=</span> <span class="ident">Recipe::new</span>();
+    <span class="kw">let</span> <span class="ident">recipe_weak</span> <span class="op">=</span> <span class="ident">recipe</span>.<span class="ident">as_weak</span>();
+    <span class="ident">recipe</span>.<span class="ident">on_button_pressed</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
+        <span class="kw">let</span> <span class="ident">recipe</span> <span class="op">=</span> <span class="ident">recipe_weak</span>.<span class="ident">upgrade</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">recipe</span>.<span class="ident">get_counter</span>();
+        <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span> <span class="op">+</span> <span class="number">1</span>;
+        <span class="ident">recipe</span>.<span class="ident">set_counter</span>(<span class="ident">value</span>);
+    });
+    <span class="ident">recipe</span>.<span class="ident">run</span>();
+}</code></pre></div>
+<p>A <code>struct Recipe</code> is generated by Slint. For each property, a getter (<code>get_counter</code>) and a setter (<code>set_counter</code>)
+is generated. For the callback, a function to set the callback is generated (<code>on_button_pressed</code>).</p>
+<p>The <code>Recipe</code> struct implements the <a href="../../trait.ComponentHandle.html" title="slint::ComponentHandle"><code>slint::ComponentHandle</code></a> trait. A component handle is an equivalent of <code>Rc</code>.
+It is a handle to a component with a strong and a weak reference count. We call the <code>as_weak</code> function to
+get a weak handle to the component, which we can move into the callback.
+We can’t move a strong handle because that would form a cycle: The component handle has ownership of the callback, which itself has ownership of the closure’s captured variables.</p>
+</details>
+<details data-snippet-language="cpp">
+<summary>C++ code</summary>
+In C++ you can write
+<div class="example-wrap"><pre class="language-cpp"><code>#include &quot;button_native.h&quot;
+
+int main(int argc, char **argv)
+{
+    auto recipe = Recipe::create();
+    recipe-&gt;on_button_pressed([&amp;]() {
+        auto value = recipe-&gt;get_counter();
+        value += 1;
+        recipe-&gt;set_counter(value);
+    });
+    recipe-&gt;run();
+}</code></pre></div>
+<p>Some simple boiler plate needs to be done with cmake for the integration, so that the Slint compiler
+generates the button_native.h header file from the Slint file. It contains the generated class <code>Recipe</code>.</p>
+<p>For each property, a getter (<code>get_counter</code>) and a setter (<code>set_counter</code>)
+is generated. For the callback, a function to set the callback is generated (<code>on_button_pressed</code>)</p>
+</details>
+<h4 id="use-property-bindings-to-synchronize-controls"><a href="#use-property-bindings-to-synchronize-controls">Use property bindings to synchronize controls</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { VerticalBox, Slider } from &quot;std-widgets.slint&quot;;
+export Recipe := Window {
+    VerticalBox {
+        slider := Slider {
+            maximum: 100;
+        }
+        Text {
+            text: &quot;Value: \{round(slider.value)}&quot;;
+        }
+    }
+}</code></pre></div>
+<p>This example introduces the <code>Slider</code> widget.
+It also introduces interpolation in string literal: Use <code>\{...}</code> in strings to render
+code between the curly braces to a string.</p>
+<h3 id="animations"><a href="#animations">Animations</a></h3><h4 id="animate-the-position-of-an-element"><a href="#animate-the-position-of-an-element">Animate the position of an element</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { CheckBox } from &quot;std-widgets.slint&quot;;
+export Recipe := Window {
+    width: 200px;
+    height: 100px;
+
+    rect := Rectangle {
+        y: 5px;
+        width: 40px;
+        height: 40px;
+        background: blue;
+        animate x {
+            duration: 500ms;
+            easing: ease-in-out;
+        }
+    }
+
+
+    CheckBox {
+        y: 25px;
+        text: &quot;Align rect to the right&quot;;
+        toggled =&gt; {
+            if (self.checked) {
+                 rect.x = parent.width - rect.width;
+            } else {
+                 rect.x = 0px;
+            }
+        }
+    }
+}</code></pre></div>
+<p>Layouts are typically used to position elements automatically. In this example they are positioned
+manually using the <code>x</code>, <code>y</code>, <code>width</code>, <code>height</code> properties.</p>
+<p>Notice the <code>animate x</code> block that specifies an animation. It is run when the property
+changes: Either because the property is set in a callback, or if its binding value changes.</p>
+<h4 id="animation-sequence"><a href="#animation-sequence">Animation Sequence</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { CheckBox } from &quot;std-widgets.slint&quot;;
+export Recipe := Window {
+    width: 200px;
+    height: 100px;
+
+    rect := Rectangle {
+        y: 5px;
+        width: 40px;
+        height: 40px;
+        background: blue;
+        animate x {
+            duration: 500ms;
+            easing: ease-in-out;
+        }
+        animate y {
+            duration: 250ms;
+            delay: 500ms;
+            easing: ease-in;
+        }
+    }
+
+
+    CheckBox {
+        y: 25px;
+        text: &quot;Align rect bottom right&quot;;
+        toggled =&gt; {
+            if (self.checked) {
+                 rect.x = parent.width - rect.width;
+                 rect.y = parent.height - rect.height;
+            } else {
+                 rect.x = 0px;
+                 rect.y = 0px;
+            }
+        }
+    }
+}</code></pre></div>
+<p>This example uses the <code>delay</code> property to make one animation run after another.</p>
+<h3 id="states"><a href="#states">States</a></h3><h4 id="associate-multiple-property-values-with-states"><a href="#associate-multiple-property-values-with-states">Associate multiple property values with states</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { HorizontalBox, VerticalBox, Button } from &quot;std-widgets.slint&quot;;
+
+Circle := Rectangle {
+    width: 30px;
+    height: 30px;
+    border-radius: width / 2;
+    animate x { duration: 250ms; easing: ease-in; }
+    animate y { duration: 250ms; easing: ease-in-out; }
+    animate background { duration: 250ms; }
+}
+
+export Recipe := Window {
+    states [
+        left-aligned when b1.pressed: {
+            circle1.x: 0px; circle1.y: 40px; circle1.background: green;
+            circle2.x: 0px; circle2.y: 0px; circle2.background: blue;
+        }
+        right-aligned when b2.pressed: {
+            circle1.x: 170px; circle1.y: 70px; circle1.background: green;
+            circle2.x: 170px; circle2.y: 00px; circle2.background: blue;
+        }
+    ]
+
+    VerticalBox {
+        HorizontalBox {
+            max-height: min-height;
+            b1 := Button {
+                text: &quot;State 1&quot;;
+            }
+            b2 := Button {
+                text: &quot;State 2&quot;;
+            }
+        }
+        Rectangle {
+            background: root.background.darker(20%);
+            width: 200px;
+            height: 100px;
+
+            circle1 := Circle { background: green; x: 85px; }
+            circle2 := Circle { background: green; x: 85px; y: 40px; }
+        }
+    }
+}</code></pre></div><h4 id="transitions"><a href="#transitions">Transitions</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { HorizontalBox, VerticalBox, Button } from &quot;std-widgets.slint&quot;;
+
+Circle := Rectangle {
+    width: 30px;
+    height: 30px;
+    border-radius: width / 2;
+}
+
+export Recipe := Window {
+    states [
+        left-aligned when b1.pressed: {
+            circle1.x: 0px; circle1.y: 40px;
+            circle2.x: 0px; circle2.y: 0px;
+        }
+        right-aligned when !b1.pressed: {
+            circle1.x: 170px; circle1.y: 70px;
+            circle2.x: 170px; circle2.y: 00px;
+        }
+    ]
+
+    transitions [
+        in left-aligned: {
+            animate circle1.x, circle2.x { duration: 250ms; }
+        }
+        out left-aligned: {
+            animate circle1.x, circle2.x { duration: 500ms; }
+        }
+    ]
+
+    VerticalBox {
+        HorizontalBox {
+            max-height: min-height;
+            b1 := Button {
+                text: &quot;Press and hold to change state&quot;;
+            }
+        }
+        Rectangle {
+            background: root.background.darker(20%);
+            width: 250px;
+            height: 100px;
+
+            circle1 := Circle { background: green; x: 85px; }
+            circle2 := Circle { background: blue; x: 85px; y: 40px; }
+        }
+    }
+}</code></pre></div><h3 id="layouts"><a href="#layouts">Layouts</a></h3><h4 id="vertical"><a href="#vertical">Vertical</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { VerticalBox, Button } from &quot;std-widgets.slint&quot;;
+export Recipe := Window {
+    VerticalBox {
+        Button { text: &quot;First&quot;; }
+        Button { text: &quot;Second&quot;; }
+        Button { text: &quot;Third&quot;; }
+    }
+}</code></pre></div><h4 id="horizontal"><a href="#horizontal">Horizontal</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { HorizontalBox, Button } from &quot;std-widgets.slint&quot;;
+export Recipe := Window {
+    HorizontalBox {
+        Button { text: &quot;First&quot;; }
+        Button { text: &quot;Second&quot;; }
+        Button { text: &quot;Third&quot;; }
+    }
+}</code></pre></div><h4 id="grid"><a href="#grid">Grid</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { GridBox, Button, Slider } from &quot;std-widgets.slint&quot;;
+export Recipe := Window {
+    GridBox {
+        Row {
+            Button { text: &quot;First&quot;; }
+            Button { text: &quot;Second&quot;; }
+        }
+        Row {
+            Button { text: &quot;Third&quot;; }
+            Button { text: &quot;Fourth&quot;; }
+        }
+        Row {
+            Slider {
+                colspan: 2;
+            }
+        }
+    }
+}</code></pre></div><h3 id="global-callbacks"><a href="#global-callbacks">Global Callbacks</a></h3><h4 id="invoke-a-globally-registered-native-callback-from-slint"><a href="#invoke-a-globally-registered-native-callback-from-slint">Invoke a globally registered native callback from Slint</a></h4>
+<p>This example uses a global singleton to implement common logic in native code. It can also be used to store properties and they can be set by native code.</p>
+<p>Please note that in the preview only visualize the slint code, but is not
+connected to the native code.</p>
+<div class="example-wrap"><pre class="language-slint,no-preview"><code>import { HorizontalBox, VerticalBox, LineEdit } from &quot;std-widgets.slint&quot;;
+
+export global Logic := {
+    callback to-upper-case(string) -&gt; string;
+    // You can collect other global properties here
+}
+
+export Recipe := Window {
+    VerticalBox {
+        input := LineEdit {
+            text: &quot;Text to be transformed&quot;;
+        }
+        HorizontalBox {
+            Text { text: &quot;Transformed:&quot;; }
+            // Callback invoked in binding expression
+            Text {
+                text: {
+                    Logic.to-upper-case(input.text);
+                }
+            }
+        }
+    }
+}</code></pre></div><details  data-snippet-language="rust">
+<summary>Rust code</summary>
+In Rust you can set the callback like this:
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="macro">slint::slint!</span>{
+<span class="ident">import</span> { <span class="ident">HorizontalBox</span>, <span class="ident">VerticalBox</span>, <span class="ident">LineEdit</span> } <span class="ident">from</span> <span class="string">&quot;std-widgets.slint&quot;</span>;
+
+<span class="ident">export</span> <span class="ident">global</span> <span class="ident">Logic</span> :<span class="op">=</span> {
+    <span class="ident">callback</span> <span class="ident">to</span><span class="op">-</span><span class="ident">upper</span><span class="op">-</span><span class="ident">case</span>(<span class="ident">string</span>) -&gt; <span class="ident">string</span>;
+    <span class="comment">// You can collect other global properties here</span>
+}
+
+<span class="ident">export</span> <span class="ident">Recipe</span> :<span class="op">=</span> <span class="ident">Window</span> {
+    <span class="ident">VerticalBox</span> {
+        <span class="ident">input</span> :<span class="op">=</span> <span class="ident">LineEdit</span> {
+            <span class="ident">text</span>: <span class="string">&quot;Text to be transformed&quot;</span>;
+        }
+        <span class="ident">HorizontalBox</span> {
+            <span class="ident">Text</span> { <span class="ident">text</span>: <span class="string">&quot;Transformed:&quot;</span>; }
+            <span class="comment">// Callback invoked in binding expression</span>
+            <span class="ident">Text</span> {
+                <span class="ident">text</span>: {
+                    <span class="ident">Logic</span>.<span class="ident">to</span><span class="op">-</span><span class="ident">upper</span><span class="op">-</span><span class="ident">case</span>(<span class="ident">input</span>.<span class="ident">text</span>);
+                }
+            }
+        }
+    }
+}
+}
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="kw">let</span> <span class="ident">recipe</span> <span class="op">=</span> <span class="ident">Recipe::new</span>();
+    <span class="ident">recipe</span>.<span class="ident">global</span>::<span class="op">&lt;</span><span class="ident">Logic</span><span class="op">&gt;</span>().<span class="ident">on_to_upper_case</span>(<span class="op">|</span><span class="ident">string</span><span class="op">|</span> {
+        <span class="ident">string</span>.<span class="ident">as_str</span>().<span class="ident">to_uppercase</span>().<span class="ident">into</span>()
+    });
+    <span class="comment">// ...</span>
+}</code></pre></div>
+</details>
+<details  data-snippet-language="cpp">
+<summary>C++ code</summary>
+In C++ you can set the callback like this:
+<div class="example-wrap"><pre class="language-cpp"><code>int main(int argc, char **argv)
+{
+    auto recipe = Recipe::create();
+    recipe-&gt;global&lt;Logic&gt;().on_to_uppercase([](SharedString str) -&gt; SharedString {
+        std::string arg(str);
+        std::transform(arg.begin(), arg.end(), arg.begin(), toupper);
+        return SharedString(arg);
+    });
+    // ...
+}</code></pre></div></details>
+<h3 id="custom-widgets"><a href="#custom-widgets">Custom widgets</a></h3><h4 id="custom-button"><a href="#custom-button">Custom Button</a></h4><div class="example-wrap"><pre class="language-slint"><code>Button := Rectangle {
+    property text &lt;=&gt; txt.text;
+    callback clicked &lt;=&gt; touch.clicked;
+    border-radius: height / 2;
+    border-width: 1px;
+    border-color: background.darker(25%);
+    background: touch.pressed ? #6b8282 : touch.has-hover ? #6c616c :  #456;
+    height: txt.preferred-height * 1.33;
+    min-width: txt.preferred-width + 20px;
+    txt := Text {
+        x: (parent.width - width)/2 + (touch.pressed ? 2px : 0);
+        y: (parent.height - height)/2 + (touch.pressed ? 1px : 0);
+        color: touch.pressed ? #fff : #eee;
+    }
+    touch := TouchArea { }
+}
+
+export Recipe := Window {
+    VerticalLayout {
+        alignment: start;
+        Button { text: &quot;Button&quot;; }
+    }
+}</code></pre></div><h4 id="toggleswitch"><a href="#toggleswitch">ToggleSwitch</a></h4><div class="example-wrap"><pre class="language-slint"><code>export ToggleSwitch := Rectangle {
+    callback toggled;
+    property &lt;string&gt; text;
+    property &lt;bool&gt; checked;
+    property&lt;bool&gt; enabled &lt;=&gt; touch-area.enabled;
+    height: 20px;
+    horizontal-stretch: 0;
+    vertical-stretch: 0;
+
+    HorizontalLayout {
+        spacing: 8px;
+        indicator := Rectangle {
+            width: 40px;
+            border-width: 1px;
+            border-radius: root.height / 2;
+            border-color: background.darker(25%);
+            background: root.enabled ? (root.checked ? blue: white)  : white;
+            animate background { duration: 100ms; }
+
+            bubble := Rectangle {
+                width: root.height - 8px;
+                height: bubble.width;
+                border-radius: bubble.height / 2;
+                y: 4px;
+                x: 4px + a * (indicator.width - bubble.width - 8px);
+                property &lt;float&gt; a: root.checked ? 1 : 0;
+                background: root.checked ? white : (root.enabled ? blue : gray);
+                animate a, background { duration: 200ms; easing: ease;}
+            }
+        }
+
+        Text {
+            min-width: max(100px, preferred-width);
+            text: root.text;
+            vertical-alignment: center;
+            color: root.enabled ? black : gray;
+        }
+
+    }
+
+    touch-area := TouchArea {
+        width: root.width;
+        height: root.height;
+        clicked =&gt; {
+            if (root.enabled) {
+                root.checked = !root.checked;
+                root.toggled();
+            }
+        }
+    }
+}
+
+export Recipe := Window {
+    VerticalLayout {
+        alignment: start;
+        ToggleSwitch { text: &quot;Toggle me&quot;; }
+        ToggleSwitch { text: &quot;Disabled&quot;; enabled: false; }
+    }
+}</code></pre></div><h4 id="customslider"><a href="#customslider">CustomSlider</a></h4>
+<p>This slider can be dragged from any point within itself, because the TouchArea is covering
+the whole widget.</p>
+<div class="example-wrap"><pre class="language-slint"><code>import { VerticalBox } from &quot;std-widgets.slint&quot;;
+
+export MySlider := Rectangle {
+    property&lt;float&gt; maximum: 100;
+    property&lt;float&gt; minimum: 0;
+    property&lt;float&gt; value;
+
+    min-height: 24px;
+    min-width: 100px;
+    horizontal-stretch: 1;
+    vertical-stretch: 0;
+
+    border-radius: height/2;
+    background: touch.pressed ? #eee: #ddd;
+    border-width: 1px;
+    border-color: background.darker(25%);
+
+    handle := Rectangle {
+        width: height;
+        height: parent.height;
+        border-width: 3px;
+        border-radius: height / 2;
+        background: touch.pressed ? #f8f: touch.has-hover ? #66f : #0000ff;
+        border-color: background.darker(15%);
+        x: (root.width - handle.width) * (value - minimum)/(maximum - minimum);
+    }
+    touch := TouchArea {
+        property &lt;float&gt; pressed-value;
+        pointer-event(event) =&gt; {
+            if (event.button == PointerEventButton.left &amp;&amp; event.kind == PointerEventKind.down) {
+                pressed-value = root.value;
+            }
+        }
+        moved =&gt; {
+            if (enabled &amp;&amp; pressed) {
+                value = max(root.minimum, min(root.maximum,
+                    pressed-value + (touch.mouse-x - touch.pressed-x) * (maximum - minimum) / (root.width - handle.width)));
+
+            }
+        }
+    }
+}
+
+export Recipe := Window {
+    VerticalBox {
+        alignment: start;
+        slider := MySlider {
+            maximum: 100;
+        }
+        Text {
+            text: &quot;Value: \{round(slider.value)}&quot;;
+        }
+    }
+}</code></pre></div>
+<p>This example show another implementation that has a draggable handle:
+The handle only moves when we click on that handle.
+The TouchArea is within the handle and moves with the handle.</p>
+<div class="example-wrap"><pre class="language-slint"><code>import { VerticalBox } from &quot;std-widgets.slint&quot;;
+
+export MySlider := Rectangle {
+    property&lt;float&gt; maximum: 100;
+    property&lt;float&gt; minimum: 0;
+    property&lt;float&gt; value;
+
+    min-height: 24px;
+    min-width: 100px;
+    horizontal-stretch: 1;
+    vertical-stretch: 0;
+
+    border-radius: height/2;
+    background: touch.pressed ? #eee: #ddd;
+    border-width: 1px;
+    border-color: background.darker(25%);
+
+    handle := Rectangle {
+        width: height;
+        height: parent.height;
+        border-width: 3px;
+        border-radius: height / 2;
+        background: touch.pressed ? #f8f: touch.has-hover ? #66f : #0000ff;
+        border-color: background.darker(15%);
+        x: (root.width - handle.width) * (value - minimum)/(maximum - minimum);
+
+        touch := TouchArea {
+            moved =&gt; {
+                if (enabled &amp;&amp; pressed) {
+                    value = max(root.minimum, min(root.maximum,
+                        value + (mouse-x - pressed-x) * (maximum - minimum) / root.width));
+                }
+            }
+        }
+    }
+}
+
+export Recipe := Window {
+    VerticalBox {
+        alignment: start;
+        slider := MySlider {
+            maximum: 100;
+        }
+        Text {
+            text: &quot;Value: \{round(slider.value)}&quot;;
+        }
+    }
+}</code></pre></div><h4 id="custom-tabs"><a href="#custom-tabs">Custom Tabs</a></h4>
+<p>Use this recipe as a basis to when you want to create your own custom tab widget.</p>
+<div class="example-wrap"><pre class="language-slint"><code>import { Button } from &quot;std-widgets.slint&quot;;
+
+export Recipe := Window {
+    preferred-height: 200px;
+    property &lt;int&gt; active-tab;
+    VerticalLayout {
+        tab_bar := HorizontalLayout {
+            spacing: 3px;
+            Button {
+                text: &quot;Red&quot;;
+                clicked =&gt; { active-tab = 0; }
+            }
+            Button {
+                text: &quot;Blue&quot;;
+                clicked =&gt; { active-tab = 1; }
+            }
+            Button {
+                text: &quot;Green&quot;;
+                clicked =&gt; { active-tab = 2; }
+            }
+        }
+        Rectangle {
+            clip: true;
+            Rectangle {
+                background: red;
+                x: active-tab == 0 ? 0 : active-tab &lt; 0 ? - width - 1px : parent.width + 1px;
+                animate x { duration: 125ms; easing: ease; }
+            }
+            Rectangle {
+                background: blue;
+                x: active-tab == 1 ? 0 : active-tab &lt; 1 ? - width - 1px : parent.width + 1px;
+                animate x { duration: 125ms; easing: ease; }
+            }
+            Rectangle {
+                background: green;
+                x: active-tab == 2 ? 0 : active-tab &lt; 2 ? - width - 1px : parent.width + 1px;
+                animate x { duration: 125ms; easing: ease; }
+            }
+        }
+    }
+}</code></pre></div><!--
+
+more content:
+
+## Input Events
+
+### Keyboard Input
+
+Receive key events, pass them to native code
+
+### Mouse and Touch Input
+
+### Flickable
+
+-->
+<h2 id=""><a href="#"></a></h2>
+<p>Next: <a href="../langref/index.html">The <code>.slint</code> language reference</a></p>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="slint" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (e1b71feb5 2022-05-03)" ></div>
+</body></html>

@@ -1,0 +1,13 @@
+.. _exhale_define_sixtyfps__generated__public_8h_1a20756db9217e215dc6494f90a790cc28:
+
+Define SIXTYFPS_VERSION_PATCH
+=============================
+
+- Defined in :ref:`file_cppdocs_generated_include_sixtyfps_generated_public.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SIXTYFPS_VERSION_PATCH

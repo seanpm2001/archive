@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["builtin_elements","builtin_enums","debugging_techniques","generated_code","langref","layouting","mcu","recipes","widgets"]};

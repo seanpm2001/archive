@@ -1,0 +1,466 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Positioning and Layout of Elements"><meta name="keywords" content="rust, rustlang, rust-lang, layouting"><title>sixtyfps::docs::layouting - Rust</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.4/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+        await sixtyfps.default();
+        var elements = document.querySelectorAll("code.language-60, .rustdoc pre.language-60, div.highlight-60");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.60` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://sixtyfps.io/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://sixtyfps.io/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("60", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'sixtyfps',
+      aliases: ['60'],
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .60 blocks, leave the others to rustdoc
+      for (dot60Block of document.querySelectorAll(".language-60")) {
+        hljs.highlightElement(dot60Block)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-60.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-60 div.highlight pre, div.highlight-60-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+<style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../sixtyfps/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;sixtyfps.io&#x2F;resources&#x2F;logo.drawio.svg' alt='logo'></div></a><h2 class="location">Module layouting</h2><div class="sidebar-elems"><div id="sidebar-vars" data-name="layouting" data-ty="mod" data-relpath="./"></div><script defer src="./sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../../index.html">sixtyfps</a>::<wbr><a href="../index.html">docs</a>::<wbr><a class="mod" href="#">layouting</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../../src/sixtyfps/docs.rs.html#44-47" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="positioning-and-layout-of-elements" class="section-header"><a href="#positioning-and-layout-of-elements">Positioning and Layout of Elements</a></h2>
+<p>All visual elements are shown in a window. Their position is stored in the <code>x</code> and <code>y</code>
+properties as coordinates relative to their parent element. The absolute position of an element
+in a window is calculated by adding the parent’s position to the element’s position. If the
+parent has a grandparent element, then that one is added as well. This calculation continues until
+the top-level element is reached.</p>
+<p>The size of visual elements is stored in the <code>width</code> and <code>height</code> properties.</p>
+<p>You can create an entire graphical user interface by placing the elements in two different
+ways:</p>
+<ul>
+<li>Explicitly - by setting the <code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code> properties.</li>
+<li>Automatically - by using layout elements.</li>
+</ul>
+<p>Explicit placement is great for static scenes with few elements. Layouts are suitable for
+complex user interfaces, because the geometric relationship between the elements is
+expressed in dedicated layout elements. This requires less effort to maintain and helps
+to create scalable user interfaces.</p>
+<h3 id="explicit-placement" class="section-header"><a href="#explicit-placement">Explicit Placement</a></h3>
+<p>The following example places two rectangles into a window, a blue one and
+a green one that is a child of the blue:</p>
+<div class="example-wrap"><pre class="language-60"><code>// Explicit positioning
+Example := Window {
+    width: 200px;
+    height: 200px;
+    Rectangle {
+        x: 100px;
+        y: 70px;
+        width: parent.width - x;
+        height: parent.height - y;
+        background: blue;
+        Rectangle {
+            x: 10px;
+            y: 5px;
+            width: 50px;
+            height: 30px;
+            background: green;
+        }
+    }
+}</code></pre></div>
+<p>The position of both rectangles is fixed, as well as the size of the inner green one.
+The outer blue rectangle however has a size that’s automatically calculated using binding
+expressions for the <code>width</code> and <code>height</code> properties. The calculation results in the
+bottom left corner aligning with the corner of the window - it is updated whenever
+the <code>width</code> and <code>height</code> of the window changes.</p>
+<p>When specifying explicit values for any of the geometric properties, SixtyFPS requires
+you to attach a unit to the number. You can choose between two different units:</p>
+<ul>
+<li>Logical pixels, using the <code>px</code> unit suffix. This is the recommended unit.</li>
+<li>Physical pixels, using the <code>phx</code> unit suffix</li>
+</ul>
+<p>Logical pixels scale automatically with the device pixel ratio that your system is
+configured with. For example, on a modern High-DPI display the device pixel ratio can be 2,
+so every logical pixel occupies 2 physical pixels. On an older screen the user
+interface scales without any adaptations.</p>
+<p>Additionally, the <code>width</code> and <code>height</code> properties can also be specified as a <code>%</code> percentage
+unit, which applies relative to the parent element. For example a <code>width: 50%</code> means half
+of the parent’s <code>width</code>.</p>
+<p>The default values for <code>x</code> and <code>y</code> properties are 0, which means they align with their parent
+on the screen.</p>
+<p>The default values for <code>width</code> and <code>height</code> depend on the type of element. Some elements are sized
+automatically based on their content, such as <code>Image</code>, <code>Text</code>, and most widgets. The following elements
+do not have content and therefore default to fill their parent element:</p>
+<ul>
+<li><code>Rectangle</code></li>
+<li><code>TouchArea</code></li>
+<li><code>FocusScope</code></li>
+<li><code>Flickable</code></li>
+<li><code>Clip</code></li>
+</ul>
+<h3 id="automatic-placement-using-layouts" class="section-header"><a href="#automatic-placement-using-layouts">Automatic Placement using Layouts</a></h3>
+<p>SixtyFPS comes with different layout elements that automatically calculate the position and size of their children:</p>
+<ul>
+<li><code>VerticalLayout</code> / <code>HorizontalLayout</code>: The children are placed along the vertical or horizontal axis.</li>
+<li><code>GridLayout</code>: The children are placed in a grid of columns and rows.</li>
+<li><code>PathLayout</code>: The children are placed along a path.</li>
+</ul>
+<p>Layouts can also be nested, making it possible to create complex user interfaces.</p>
+<p>You can tune the automatic placement using different constraints, to accommodate the design of your user
+interface. For example each element has a minimum and a maximum size. Set these explicitly using the
+following properties:</p>
+<ul>
+<li><code>min-width</code></li>
+<li><code>min-height</code></li>
+<li><code>max-width</code></li>
+<li><code>max-height</code></li>
+</ul>
+<p>A layout element also affects the minimum and maximum size of its parent.</p>
+<p>An element is considered to have a fixed size in a layout when the <code>width</code> and <code>height</code> is specified directly.</p>
+<p>When there is extra space in a layout, elements can stretch along the layout axis. You can control this stretch
+factor between the element and its siblings with these properties:</p>
+<ul>
+<li><code>horizontal-stretch</code></li>
+<li><code>vertical-stretch</code></li>
+</ul>
+<p>A value of <code>0</code> means that the element will not be stretched at all; unless all siblings also have a stretch
+factor of <code>0</code>. Then all the elements will be equally stretched.</p>
+<h3 id="common-properties-on-layout-elements" class="section-header"><a href="#common-properties-on-layout-elements">Common Properties on Layout Elements</a></h3>
+<p>All layout elements have the following properties in common:</p>
+<ul>
+<li><code>spacing</code>: This controls the spacing between the children.</li>
+<li><code>padding</code>: This specifies the padding within the layout, the space between the elements and the border of the
+layout.</li>
+</ul>
+<p>For more fine grained control, the <code>padding</code> property can be split into properties for each side of the layout:</p>
+<ul>
+<li><code>padding-left</code></li>
+<li><code>padding-right</code></li>
+<li><code>padding-top</code></li>
+<li><code>padding-bottom</code></li>
+</ul>
+<h3 id="verticallayout-and-horizontallayout" class="section-header"><a href="#verticallayout-and-horizontallayout"><code>VerticalLayout</code> and <code>HorizontalLayout</code></a></h3>
+<p>The <code>VerticalLayout</code> and <code>HorizontalLayout</code> elements place elements in a column or row.
+By default, they will be stretched or shrunk so that they take the whole space, and their
+alignment can be adjusted.</p>
+<p>The following example places the blue and yellow rectangle in a row and evenly stretched
+across the 200 logical pixels of <code>width</code>:</p>
+<div class="example-wrap"><pre class="language-60"><code>// Stretch by default
+Example := Window {
+    width: 200px;
+    height: 200px;
+    HorizontalLayout {
+        Rectangle { background: blue; min-width: 20px; }
+        Rectangle { background: yellow; min-width: 30px; }
+    }
+}</code></pre></div>
+<p>The example below, on the other hand, specifies that the rectangles shell be aligned
+to the start of the layout (the visual left). That results in no stretching but instead
+the rectangles retain their specified minimum width:</p>
+<div class="example-wrap"><pre class="language-60"><code>// Unless an alignment is specified
+Example := Window {
+    width: 200px;
+    height: 200px;
+    HorizontalLayout {
+        alignment: start;
+        Rectangle { background: blue; min-width: 20px; }
+        Rectangle { background: yellow; min-width: 30px; }
+    }
+}</code></pre></div>
+<p>The example below nests two layouts for a more complex scene:</p>
+<div class="example-wrap"><pre class="language-60"><code>Example := Window {
+    width: 200px;
+    height: 200px;
+    HorizontalLayout {
+        // Side panel
+        Rectangle { background: green; width: 10px; }
+
+        VerticalLayout {
+            padding: 0px;
+            //toolbar
+            Rectangle { background: blue; height: 7px; }
+
+            Rectangle {
+                border-color: red; border-width: 2px;
+                HorizontalLayout {
+                    Rectangle { border-color: blue; border-width: 2px; }
+                    Rectangle { border-color: green; border-width: 2px; }
+                }
+            }
+            Rectangle {
+                border-color: orange; border-width: 2px;
+                HorizontalLayout {
+                    Rectangle { border-color: black; border-width: 2px; }
+                    Rectangle { border-color: pink; border-width: 2px; }
+                }
+            }
+        }
+    }
+}</code></pre></div><h4 id="alignment" class="section-header"><a href="#alignment">Alignment</a></h4>
+<p>Each elements is sized according to their <code>width</code> or <code>height</code> is specified, otherwise it is
+set to the minimum size which is set with the min-width or min-height property, or
+the minimum size of an inner layout, whatever is bigger.
+Then, the elements are placed according to the alignment.
+The size of elements is bigger than the minimum size only if the alignment is stretch</p>
+<p>This example show the different alignment possibilities</p>
+<div class="example-wrap"><pre class="language-60"><code>Example := Window {
+    width: 300px;
+    height: 200px;
+    VerticalLayout {
+        HorizontalLayout {
+            alignment: stretch;
+            Text { text: &quot;stretch (default)&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: start;
+            Text { text: &quot;start&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: end;
+            Text { text: &quot;end&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: start;
+            Text { text: &quot;start&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: center;
+            Text { text: &quot;center&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: space-between;
+            Text { text: &quot;space-between&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: space-around;
+            Text { text: &quot;space-around&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+    }
+}</code></pre></div><h4 id="stretch-algorithm" class="section-header"><a href="#stretch-algorithm">Stretch algorithm</a></h4>
+<p>When the <code>alignment</code> is set to stretch (the default), the elements are sized to their minimum size,
+then the extra space is shared amongst element proportional to their stretch factor set with the
+<code>horizontal-stretch</code> and <code>vertical-stretch</code> properties. But the size does not exceed the maximum size.
+The stretch factor is a floating point number. The elements that have a default content size usually defaults to 0
+while elements that default to the size of their parents defaults to 1.
+An element of a stretch factor if 0 will keep its minimum size, unless all the other elements also have a stretch
+factor of 0 or reached their maximum size.</p>
+<p>Examples:</p>
+<div class="example-wrap"><pre class="language-60"><code>Example := Window {
+    width: 300px;
+    height: 200px;
+    VerticalLayout {
+        // Same stretch factor (1 by default): the size is divided equally
+        HorizontalLayout {
+            Rectangle { background: blue; }
+            Rectangle { background: yellow;}
+            Rectangle { background: green;}
+        }
+        // Elements with a bigger min-width are given a bigger size before they expand
+        HorizontalLayout {
+            Rectangle { background: cyan; min-width: 100px;}
+            Rectangle { background: magenta; min-width: 50px;}
+            Rectangle { background: gold;}
+        }
+        // Stretch factor twice as big:  grows twice as much
+        HorizontalLayout {
+            Rectangle { background: navy; horizontal-stretch: 2;}
+            Rectangle { background: gray; }
+        }
+        // All elements not having a maximum width have a stretch factor of 0 so they grow
+        HorizontalLayout {
+            Rectangle { background: red; max-width: 20px; }
+            Rectangle { background: orange; horizontal-stretch: 0; }
+            Rectangle { background: pink; horizontal-stretch: 0; }
+        }
+    }
+}</code></pre></div><h4 id="for" class="section-header"><a href="#for"><code>for</code></a></h4>
+<p>The VerticalLayout and Horizontal layout may also contain <code>for</code> or <code>if</code> expressions, and it does what one expect</p>
+<div class="example-wrap"><pre class="language-60"><code>Example := Window {
+    width: 200px;
+    height: 50px;
+    HorizontalLayout {
+        Rectangle { background: green; }
+        for t in [ &quot;Hello&quot;, &quot;World&quot;, &quot;!&quot; ] : Text {
+            text: t;
+        }
+        Rectangle { background: blue; }
+    }
+}</code></pre></div><h3 id="gridlayout" class="section-header"><a href="#gridlayout">GridLayout</a></h3>
+<p>The GridLayout lays the element in a grid.
+Each element gains the properties <code>row</code>, <code>col</code>, <code>rowspan</code>, and <code>colspan</code>.
+One can either use a <code>Row</code> sub-element, or set the <code>row</code> property explicitly.
+These properties must be statically known at compile time, so it is not possible to use arithmetic or depends on properties.
+As of now, the use of <code>for</code> or <code>if</code> is not allowed in a grid layout.</p>
+<p>This example use the <code>Row</code> element</p>
+<div class="example-wrap"><pre class="language-60"><code>Foo := Window {
+    width: 200px;
+    height: 200px;
+    GridLayout {
+        spacing: 5px;
+        Row {
+            Rectangle { background: red; }
+            Rectangle { background: blue; }
+        }
+        Row {
+            Rectangle { background: yellow; }
+            Rectangle { background: green; }
+        }
+    }
+}</code></pre></div>
+<p>This example use the <code>col</code> and <code>row</code> property</p>
+<div class="example-wrap"><pre class="language-60"><code>Foo := Window {
+    width: 200px;
+    height: 150px;
+    GridLayout {
+        spacing: 0px;
+        Rectangle { background: red; }
+        Rectangle { background: blue; }
+        Rectangle { background: yellow; row: 1; }
+        Rectangle { background: green; }
+        Rectangle { background: black; col: 2; row: 0; }
+    }
+}</code></pre></div><h3 id="pathlayout" class="section-header"><a href="#pathlayout"><code>PathLayout</code></a></h3>
+<p>FIXME: write docs</p>
+</div></details></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="sixtyfps" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+    <script src="../../../main.js"></script>
+</body></html>

@@ -1,0 +1,76 @@
+
+.. _file_cppdocs_generated_include_sixtyfps_generated_public.h:
+
+File sixtyfps_generated_public.h
+================================
+
+|exhale_lsh| :ref:`Parent directory <dir_cppdocs_generated_include>` (``cppdocs/generated_include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``cppdocs/generated_include/sixtyfps_generated_public.h``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_cppdocs_generated_include_sixtyfps_generated_public.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cstdarg``
+
+- ``cstdint``
+
+- ``cstdlib``
+
+- ``new``
+
+- ``ostream``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_cppdocs_generated_include_sixtyfps_internal.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_sixtyfps`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespacesixtyfps_1a4ec7bb57017bccdc7e1630b01e3f63c8`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_sixtyfps__generated__public_8h_1ac8ca325bb394287520306f2c40951f04`
+
+- :ref:`exhale_define_sixtyfps__generated__public_8h_1a4a240cf511b0a0e6f3ac44baf7c70c59`
+
+- :ref:`exhale_define_sixtyfps__generated__public_8h_1a20756db9217e215dc6494f90a790cc28`
+

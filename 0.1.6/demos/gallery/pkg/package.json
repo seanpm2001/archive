@@ -1,0 +1,16 @@
+{
+  "name": "gallery",
+  "collaborators": [
+    "SixtyFPS <info@sixtyfps.io>"
+  ],
+  "version": "0.1.6",
+  "license": "(GPL-3.0-only OR LicenseRef-SixtyFPS-commercial)",
+  "files": [
+    "gallery_bg.wasm",
+    "gallery.js",
+    "gallery.d.ts"
+  ],
+  "module": "gallery.js",
+  "types": "gallery.d.ts",
+  "sideEffects": false
+}

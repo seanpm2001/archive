@@ -1,0 +1,150 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_enums_internal.h:
+
+Program Listing for File slint_enums_internal.h
+===============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_enums_internal.h>` (``cppdocs/generated_include/slint_enums_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   // This file is auto-generated from xtask/src/../../api/cpp/cbindgen.rs
+   namespace slint::cbindgen_private {
+   enum class TextHorizontalAlignment {
+       Left,
+       Center,
+       Right,
+   };
+   enum class TextVerticalAlignment {
+       Top,
+       Center,
+       Bottom,
+   };
+   enum class TextWrap {
+       NoWrap,
+       WordWrap,
+   };
+   enum class TextOverflow {
+       Clip,
+       Elide,
+   };
+   enum class EventResult {
+       Reject,
+       Accept,
+   };
+   enum class FillRule {
+       Nonzero,
+       Evenodd,
+   };
+   enum class StandardButtonKind {
+       Ok,
+       Cancel,
+       Apply,
+       Close,
+       Reset,
+       Help,
+       Yes,
+       No,
+       Abort,
+       Retry,
+       Ignore,
+   };
+   enum class DialogButtonRole {
+       None,
+       Accept,
+       Reject,
+       Apply,
+       Reset,
+       Help,
+       Action,
+   };
+   enum class PointerEventKind {
+       Cancel,
+       Down,
+       Up,
+   };
+   enum class PointerEventButton {
+       None,
+       Left,
+       Right,
+       Middle,
+   };
+   enum class MouseCursor {
+       Default,
+       None,
+       Help,
+       Pointer,
+       Progress,
+       Wait,
+       Crosshair,
+       Text,
+       Alias,
+       Copy,
+       Move,
+       NoDrop,
+       NotAllowed,
+       Grab,
+       Grabbing,
+       ColResize,
+       RowResize,
+       NResize,
+       EResize,
+       SResize,
+       WResize,
+       NeResize,
+       NwResize,
+       SeResize,
+       SwResize,
+       EwResize,
+       NsResize,
+       NeswResize,
+       NwseResize,
+   };
+   enum class ImageFit {
+       Fill,
+       Contain,
+       Cover,
+   };
+   enum class ImageRendering {
+       Smooth,
+       Pixelated,
+   };
+   enum class InputType {
+       Text,
+       Password,
+   };
+   enum class LayoutAlignment {
+       Stretch,
+       Center,
+       Start,
+       End,
+       SpaceBetween,
+       SpaceAround,
+   };
+   enum class PathEvent {
+       Begin,
+       Line,
+       Quadratic,
+       Cubic,
+       EndOpen,
+       EndClosed,
+   };
+   enum class AccessibleRole {
+       None,
+       Button,
+       Checkbox,
+       Combobox,
+       Slider,
+       Spinbox,
+       Tab,
+       Text,
+   };
+   enum class SortOrder {
+       Unsorted,
+       Ascending,
+       Descending,
+   };
+   }

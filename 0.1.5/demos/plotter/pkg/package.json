@@ -1,0 +1,16 @@
+{
+  "name": "plotter",
+  "collaborators": [
+    "SixtyFPS <info@sixtyfps.io>"
+  ],
+  "version": "0.1.5",
+  "license": "GPL-3.0-only",
+  "files": [
+    "plotter_bg.wasm",
+    "plotter.js",
+    "plotter.d.ts"
+  ],
+  "module": "plotter.js",
+  "types": "plotter.d.ts",
+  "sideEffects": false
+}

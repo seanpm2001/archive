@@ -1,0 +1,16 @@
+{
+  "name": "slide_puzzle",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "version": "0.3.3",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "files": [
+    "slide_puzzle_bg.wasm",
+    "slide_puzzle.js",
+    "slide_puzzle.d.ts"
+  ],
+  "module": "slide_puzzle.js",
+  "types": "slide_puzzle.d.ts",
+  "sideEffects": false
+}

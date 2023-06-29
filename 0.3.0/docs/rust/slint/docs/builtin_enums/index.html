@@ -1,0 +1,374 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Builtin Enums"><meta name="keywords" content="rust, rustlang, rust-lang, builtin_enums"><title>slint::docs::builtin_enums - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/0.3.0/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/0.3.0/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no_run])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            let link = document.createElement("div");
+            link.innerHTML = `<a href="${editor_url}?snippet=${encodeURIComponent(source)}" target="_blank">📝</a>`;
+            elements[i].append(link);
+            await render_or_error(source, div);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+
+    // Select C++ blocks in rustdoc generated code and hide them, while opening the <details> of Rust snippets
+    // Similarly, in Sphinx generated HTML, hide Rust blocks and open C++.
+    function select_code_snippet_variants(options) {
+        // When the CSS has pseudo class becomes available, we can probably use that directly
+        // in a stylesheet instead of JS here.
+
+        let selector_for_language = (language) => {
+            return `details[data-snippet-language="${language}"]`;
+        };
+
+        for (let details_element_to_hide of document.querySelectorAll(selector_for_language(options.hide))) {
+            details_element_to_hide.style = "display: none";
+        }
+
+        for (let details_element_to_show of document.querySelectorAll(selector_for_language(options.show))) {
+            details_element_to_show.open = true;
+        }
+    }
+
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+        select_code_snippet_variants({ hide: "cpp", show: "rust" })
+    } else {
+        select_code_snippet_variants({ hide: "rust", show: "cpp" })
+    }
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../slint/index.html"><div class="logo-container"><img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../slint/index.html"><div class="logo-container">
+                    <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div></a><h2 class="location"><a href="#">Module builtin_enums</a></h2><div class="sidebar-elems"></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../slint/index.html">
+                        <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Module <a href="../../index.html">slint</a>::<wbr><a href="../index.html">docs</a>::<wbr><a class="mod" href="#">builtin_enums</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../../../src/slint/docs.rs.html#41">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><!-- Generated with `cargo xtask enumdocs` from internal/commons/enums.rs -->
+<h2 id="builtin-enums"><a href="#builtin-enums">Builtin Enums</a></h2>
+<p>Enum value can be referenced by using the name of the enum and the name of the value
+separated by a dot. (eg: <code>TextHorizontalAlignment.left</code>)</p>
+<p>The name of the enum can be omitted in bindings of the type of that enum, or if the
+return value of a callback is of that enum.</p>
+<p>The default value of each enum type is always the first value.</p>
+<h3 id="texthorizontalalignment"><a href="#texthorizontalalignment"><code>TextHorizontalAlignment</code></a></h3>
+<p>This enum describes the different types of alignment of text along the horizontal axis.</p>
+<ul>
+<li><strong><code>left</code></strong>: The text will be aligned with the left edge of the containing box.</li>
+<li><strong><code>center</code></strong>: The text will be horizontally centered within the containing box.</li>
+<li><strong><code>right</code></strong>: The text will be aligned to the right of the containing box.</li>
+</ul>
+<h3 id="textverticalalignment"><a href="#textverticalalignment"><code>TextVerticalAlignment</code></a></h3>
+<p>This enum describes the different types of alignment of text along the vertical axis.</p>
+<ul>
+<li><strong><code>top</code></strong>: The text will be aligned to the top of the containing box.</li>
+<li><strong><code>center</code></strong>: The text will be vertically centered within the containing box.</li>
+<li><strong><code>bottom</code></strong>: The text will be aligned to the bottom of the containing box.</li>
+</ul>
+<h3 id="textwrap"><a href="#textwrap"><code>TextWrap</code></a></h3>
+<p>This enum describes the how the text wrap if it is too wide to fit in the Text width.</p>
+<ul>
+<li><strong><code>no-wrap</code></strong>: The text will not wrap, but instead will overflow.</li>
+<li><strong><code>word-wrap</code></strong>: The text will be wrapped at word boundaries.</li>
+</ul>
+<h3 id="textoverflow"><a href="#textoverflow"><code>TextOverflow</code></a></h3>
+<p>This enum describes the how the text appear if it is too wide to fit in the Text width.</p>
+<ul>
+<li><strong><code>clip</code></strong>: The text will simply be clipped.</li>
+<li><strong><code>elide</code></strong>: The text will be elided with <code>…</code>.</li>
+</ul>
+<h3 id="eventresult"><a href="#eventresult"><code>EventResult</code></a></h3>
+<p>This enum describes whether an event was rejected or accepted by an event handler.</p>
+<ul>
+<li><strong><code>reject</code></strong>: The event is rejected by this event handler and may then be handled by the parent item</li>
+<li><strong><code>accept</code></strong>: The event is accepted and won’t be processed further</li>
+</ul>
+<h3 id="fillrule"><a href="#fillrule"><code>FillRule</code></a></h3>
+<p>This enum describes the different ways of deciding what the inside of a shape described by a path shall be.</p>
+<ul>
+<li><strong><code>nonzero</code></strong>: The <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule#nonzero">“nonzero” fill rule as defined in SVG</a>.</li>
+<li><strong><code>evenodd</code></strong>: The <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule#evenodd">“evenodd” fill rule as defined in SVG</a></li>
+</ul>
+<h3 id="standardbuttonkind"><a href="#standardbuttonkind"><code>StandardButtonKind</code></a></h3>
+<ul>
+<li><strong><code>ok</code></strong>:</li>
+<li><strong><code>cancel</code></strong>:</li>
+<li><strong><code>apply</code></strong>:</li>
+<li><strong><code>close</code></strong>:</li>
+<li><strong><code>reset</code></strong>:</li>
+<li><strong><code>help</code></strong>:</li>
+<li><strong><code>yes</code></strong>:</li>
+<li><strong><code>no</code></strong>:</li>
+<li><strong><code>abort</code></strong>:</li>
+<li><strong><code>retry</code></strong>:</li>
+<li><strong><code>ignore</code></strong>:</li>
+</ul>
+<h3 id="dialogbuttonrole"><a href="#dialogbuttonrole"><code>DialogButtonRole</code></a></h3>
+<p>This enum represents the value of the <code>dialog-button-role</code> property which can be added to
+any element within a <code>Dialog</code> to put that item in the button row, and its exact position
+depends on the role and the platform.</p>
+<ul>
+<li><strong><code>none</code></strong>: This is not a button means to go in the row of button of the dialog</li>
+<li><strong><code>accept</code></strong>: This is the role of the main button to click to accept the dialog. e.g. “Ok” or “Yes”</li>
+<li><strong><code>reject</code></strong>: This is the role of the main button to click to reject the dialog. e.g. “Cancel” or “No”</li>
+<li><strong><code>apply</code></strong>: This is the role of the “Apply” button</li>
+<li><strong><code>reset</code></strong>: This is the role of the “Reset” button</li>
+<li><strong><code>help</code></strong>: This is the role of the  “Help” button</li>
+<li><strong><code>action</code></strong>: This is the role of any other button that performs another action.</li>
+</ul>
+<h3 id="pointereventkind"><a href="#pointereventkind"><code>PointerEventKind</code></a></h3>
+<ul>
+<li><strong><code>cancel</code></strong>:</li>
+<li><strong><code>down</code></strong>:</li>
+<li><strong><code>up</code></strong>:</li>
+</ul>
+<h3 id="pointereventbutton"><a href="#pointereventbutton"><code>PointerEventButton</code></a></h3>
+<ul>
+<li><strong><code>none</code></strong>:</li>
+<li><strong><code>left</code></strong>:</li>
+<li><strong><code>right</code></strong>:</li>
+<li><strong><code>middle</code></strong>:</li>
+</ul>
+<h3 id="mousecursor"><a href="#mousecursor"><code>MouseCursor</code></a></h3>
+<p>This enum represents different types of mouse cursors. It is a subset of the mouse cursors available in CSS.
+For details and pictograms see the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#values">MDN Documentation for cursor</a>.
+Depending on the backend and used OS unidirectional resize cursors may be replaced with bidirectional ones.</p>
+<ul>
+<li><strong><code>default</code></strong>: The systems default cursor.</li>
+<li><strong><code>none</code></strong>: No cursor is displayed.</li>
+<li><strong><code>help</code></strong>: A cursor indicating help information.</li>
+<li><strong><code>pointer</code></strong>: A pointing hand indicating a link.</li>
+<li><strong><code>progress</code></strong>: The program is busy but can still be interacted with.</li>
+<li><strong><code>wait</code></strong>: The program is busy.</li>
+<li><strong><code>crosshair</code></strong>: A crosshair.</li>
+<li><strong><code>text</code></strong>: A cursor indicating selectable text.</li>
+<li><strong><code>alias</code></strong>: An alias or shortcut is being created.</li>
+<li><strong><code>copy</code></strong>: A copy is being created.</li>
+<li><strong><code>move</code></strong>: Something is to be moved.</li>
+<li><strong><code>no-drop</code></strong>: Something cannot be dropped here.</li>
+<li><strong><code>not-allowed</code></strong>: An action is not allowed</li>
+<li><strong><code>grab</code></strong>: Something is grabbable.</li>
+<li><strong><code>grabbing</code></strong>: Something is being grabbed.</li>
+<li><strong><code>col-resize</code></strong>: Indicating that a column is resizable horizontally.</li>
+<li><strong><code>row-resize</code></strong>: Indicating that a row is resizable vertically.</li>
+<li><strong><code>n-resize</code></strong>: Unidirectional resize north.</li>
+<li><strong><code>e-resize</code></strong>: Unidirectional resize east.</li>
+<li><strong><code>s-resize</code></strong>: Unidirectional resize south.</li>
+<li><strong><code>w-resize</code></strong>: Unidirectional resize west.</li>
+<li><strong><code>ne-resize</code></strong>: Unidirectional resize north-east.</li>
+<li><strong><code>nw-resize</code></strong>: Unidirectional resize north-west.</li>
+<li><strong><code>se-resize</code></strong>: Unidirectional resize south-east.</li>
+<li><strong><code>sw-resize</code></strong>: Unidirectional resize south-west.</li>
+<li><strong><code>ew-resize</code></strong>: Bidirectional resize east-west.</li>
+<li><strong><code>ns-resize</code></strong>: Bidirectional resize north-south.</li>
+<li><strong><code>nesw-resize</code></strong>: Bidirectional resize north-east-south-west.</li>
+<li><strong><code>nwse-resize</code></strong>: Bidirectional resize north-west-south-east.</li>
+</ul>
+<h3 id="imagefit"><a href="#imagefit"><code>ImageFit</code></a></h3>
+<ul>
+<li><strong><code>fill</code></strong>:</li>
+<li><strong><code>contain</code></strong>:</li>
+<li><strong><code>cover</code></strong>:</li>
+</ul>
+<h3 id="imagerendering"><a href="#imagerendering"><code>ImageRendering</code></a></h3>
+<ul>
+<li><strong><code>smooth</code></strong>:</li>
+<li><strong><code>pixelated</code></strong>:</li>
+</ul>
+<h3 id="inputtype"><a href="#inputtype"><code>InputType</code></a></h3>
+<p>This enum is used to define the type of the input field. Currently this only differentiates between
+text and password inputs but in the future it could be expanded to also define what type of virtual keyboard
+should be shown, for example.</p>
+<ul>
+<li><strong><code>text</code></strong>: The default value. This will render all characters normally</li>
+<li><strong><code>password</code></strong>: This will render all characters with a character that defaults to “*”</li>
+</ul>
+<h3 id="layoutalignment"><a href="#layoutalignment"><code>LayoutAlignment</code></a></h3>
+<p>Enum representing the alignment property of a BoxLayout or HorizontalLayout</p>
+<ul>
+<li><strong><code>stretch</code></strong>:</li>
+<li><strong><code>center</code></strong>:</li>
+<li><strong><code>start</code></strong>:</li>
+<li><strong><code>end</code></strong>:</li>
+<li><strong><code>space-between</code></strong>:</li>
+<li><strong><code>space-around</code></strong>:</li>
+</ul>
+<h3 id="pathevent"><a href="#pathevent"><code>PathEvent</code></a></h3>
+<p>PathEvent is a low-level data structure describing the composition of a path. Typically it is
+generated at compile time from a higher-level description, such as SVG commands.</p>
+<ul>
+<li><strong><code>begin</code></strong>: The beginning of the path.</li>
+<li><strong><code>line</code></strong>: A straight line on the path.</li>
+<li><strong><code>quadratic</code></strong>: A quadratic bezier curve on the path.</li>
+<li><strong><code>cubic</code></strong>: A cubic bezier curve on the path.</li>
+<li><strong><code>end-open</code></strong>: The end of the path that remains open.</li>
+<li><strong><code>end-closed</code></strong>: The end of a path that is closed.</li>
+</ul>
+<h3 id="accessiblerole"><a href="#accessiblerole"><code>AccessibleRole</code></a></h3>
+<p>This enum represents the different values for the <code>accessible-role</code> property, used to describe the
+role of an element in the context of assistive technology such as screen readers.</p>
+<ul>
+<li><strong><code>none</code></strong>: The element is not accessible.</li>
+<li><strong><code>button</code></strong>: The element is a Button or behaves like one.</li>
+<li><strong><code>checkbox</code></strong>: The element is a CheckBox or behaves like one.</li>
+<li><strong><code>combobox</code></strong>: The element is a ComboBox or behaves like one.</li>
+<li><strong><code>slider</code></strong>: The element is a Slider or behaves like one.</li>
+<li><strong><code>spinbox</code></strong>: The element is a SpinBox or behaves like one.</li>
+<li><strong><code>tab</code></strong>: The element is a Tab or behaves like one.</li>
+<li><strong><code>text</code></strong>: The role for a Text element. It is automatically applied.</li>
+</ul>
+<h2 id=""><a href="#"></a></h2>
+<p>Next: <a href="../widgets/index.html">Widgets</a></p>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="slint" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (17cbdfd07 2022-09-13)" ></div></body></html>

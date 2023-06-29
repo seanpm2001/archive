@@ -1,0 +1,16 @@
+{
+  "name": "todo",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "version": "0.3.0",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "files": [
+    "todo_bg.wasm",
+    "todo.js",
+    "todo.d.ts"
+  ],
+  "module": "todo.js",
+  "types": "todo.d.ts",
+  "sideEffects": false
+}

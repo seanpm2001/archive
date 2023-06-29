@@ -1,0 +1,16 @@
+.. _dir__home_runner_work_slint_slint_api:
+
+
+Directory api
+=============
+
+
+*Directory path:* ``/home/runner/work/slint/slint/api``
+
+Subdirectories
+--------------
+
+- :ref:`dir__home_runner_work_slint_slint_api_cpp`
+
+
+

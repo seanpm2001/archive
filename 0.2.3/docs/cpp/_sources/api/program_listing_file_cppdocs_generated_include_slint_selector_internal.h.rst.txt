@@ -1,0 +1,36 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_selector_internal.h:
+
+Program Listing for File slint_selector_internal.h
+==================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_selector_internal.h>` (``cppdocs/generated_include/slint_selector_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.23.0 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   #include "slint_qt_internal.h"
+   
+   namespace slint {
+   namespace cbindgen_private {
+   
+   extern "C" {
+   
+   void slint_native_style_metrics_init(Pin<const NativeStyleMetrics*> _self);
+   
+   void slint_native_style_metrics_deinit(Pin<NativeStyleMetrics*> _self);
+   
+   } // extern "C"
+   
+   } // namespace cbindgen_private
+   } // namespace slint

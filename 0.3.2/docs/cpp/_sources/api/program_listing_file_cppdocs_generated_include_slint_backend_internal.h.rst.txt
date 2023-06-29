@@ -1,0 +1,53 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_backend_internal.h:
+
+Program Listing for File slint_backend_internal.h
+=================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_backend_internal.h>` (``cppdocs/generated_include/slint_backend_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include <slint_internal.h>
+   
+   #pragma once
+   
+   /* Generated with cbindgen:0.24.3 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   
+   namespace slint {
+   namespace cbindgen_private {
+   
+   extern "C" {
+   
+   void slint_windowrc_init(WindowAdapterRcOpaque *out);
+   
+   void slint_run_event_loop();
+   
+   void slint_post_event(void (*event)(void *user_data),
+                         void *user_data,
+                         void (*drop_user_data)(void*));
+   
+   void slint_quit_event_loop();
+   
+   void slint_register_font_from_path(const WindowAdapterRcOpaque *win,
+                                      const SharedString *path,
+                                      SharedString *error_str);
+   
+   void slint_register_font_from_data(const WindowAdapterRcOpaque *win,
+                                      Slice<uint8_t> data,
+                                      SharedString *error_str);
+   
+   void slint_testing_init_backend();
+   
+   } // extern "C"
+   
+   } // namespace cbindgen_private
+   } // namespace slint

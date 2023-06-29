@@ -1,0 +1,17 @@
+.. _exhale_struct_structslint_1_1SharedVector:
+
+Template Struct SharedVector
+============================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_sharedvector.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::SharedVector
+   :project: Slint
+   :members:
+   :protected-members:
+   :undoc-members:

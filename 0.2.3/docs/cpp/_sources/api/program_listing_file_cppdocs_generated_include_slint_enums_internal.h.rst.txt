@@ -1,0 +1,139 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_enums_internal.h:
+
+Program Listing for File slint_enums_internal.h
+===============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_enums_internal.h>` (``cppdocs/generated_include/slint_enums_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   // This file is auto-generated from xtask/src/../../api/cpp/cbindgen.rs
+   namespace slint::cbindgen_private {
+   enum class StandardButtonKind {
+       ok,
+       cancel,
+       apply,
+       close,
+       reset,
+       help,
+       yes,
+       no,
+       abort,
+       retry,
+       ignore,
+   };
+   enum class DialogButtonRole {
+       none,
+       accept,
+       reject,
+       apply,
+       reset,
+       action,
+       help,
+   };
+   enum class PointerEventKind {
+       cancel,
+       down,
+       up,
+   };
+   enum class PointerEventButton {
+       none,
+       left,
+       right,
+       middle,
+   };
+   enum class MouseCursor {
+       default_,
+       none,
+       help,
+       pointer,
+       progress,
+       wait,
+       crosshair,
+       text,
+       alias,
+       copy,
+       move,
+       no_drop,
+       not_allowed,
+       grab,
+       grabbing,
+       col_resize,
+       row_resize,
+       n_resize,
+       e_resize,
+       s_resize,
+       w_resize,
+       ne_resize,
+       nw_resize,
+       se_resize,
+       sw_resize,
+       ew_resize,
+       ns_resize,
+       nesw_resize,
+       nwse_resize,
+   };
+   enum class ImageFit {
+       fill,
+       contain,
+       cover,
+   };
+   enum class ImageRendering {
+       smooth,
+       pixelated,
+   };
+   enum class FillRule {
+       nonzero,
+       evenodd,
+   };
+   enum class InputType {
+       text,
+       password,
+   };
+   enum class TextHorizontalAlignment {
+       left,
+       center,
+       right,
+   };
+   enum class TextVerticalAlignment {
+       top,
+       center,
+       bottom,
+   };
+   enum class TextWrap {
+       no_wrap,
+       word_wrap,
+   };
+   enum class TextOverflow {
+       clip,
+       elide,
+   };
+   enum class LayoutAlignment {
+       stretch,
+       center,
+       start,
+       end,
+       space_between,
+       space_around,
+   };
+   enum class PathEvent {
+       begin,
+       line,
+       quadratic,
+       cubic,
+       end_open,
+       end_closed,
+   };
+   enum class EventResult {
+       reject,
+       accept,
+   };
+   enum class KeyEventType {
+       KeyPressed,
+       KeyReleased,
+   };
+   }

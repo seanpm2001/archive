@@ -1,0 +1,16 @@
+.. _exhale_class_classsixtyfps_1_1Brush:
+
+Class Brush
+===========
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_brush.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: sixtyfps::Brush
+   :members:
+   :protected-members:
+   :undoc-members:

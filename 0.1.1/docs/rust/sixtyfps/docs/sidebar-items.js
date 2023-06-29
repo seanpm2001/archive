@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["builtin_elements","Builtin Elements"],["generated_code","This module exists only to explain the API of the code generated from `.60` design markup. Its described structure is not really contained in the compiled crate."],["langref","The `.60` language reference"],["layouting","Positioning and Layout of Elements"],["widgets","Widgets"]]});

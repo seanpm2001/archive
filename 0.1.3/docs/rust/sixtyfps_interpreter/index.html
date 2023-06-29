@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="SixtyFPS interpreter library"><meta name="keywords" content="rust, rustlang, rust-lang, sixtyfps_interpreter"><title>sixtyfps_interpreter - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"><!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.3/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+        await sixtyfps.default();
+        var elements = document.querySelectorAll("code.language-60, .rustdoc pre.language-60, div.highlight-60");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.60` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://sixtyfps.io/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://sixtyfps.io/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("60", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'sixtyfps',
+      aliases: ['60'],
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .60 blocks, leave the others to rustdoc
+      for (dot60Block of document.querySelectorAll(".language-60")) {
+        hljs.highlightElement(dot60Block)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-60.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-60 div.highlight pre, div.highlight-60-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+<style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../sixtyfps_interpreter/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;sixtyfps.io&#x2F;resources&#x2F;logo.drawio.svg' alt='logo'></div></a><h2 class="location">Crate sixtyfps_interpreter</h2><div class="block version"><div class="narrow-helper"></div><p>Version 0.1.3</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all sixtyfps_interpreter's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><div id="sidebar-vars" data-name="sixtyfps_interpreter" data-ty="mod" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">sixtyfps_interpreter</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/sixtyfps_interpreter/lib.rs.html#10-112" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h1 id="sixtyfps-interpreter-library" class="section-header"><a href="#sixtyfps-interpreter-library">SixtyFPS interpreter library</a></h1>
+<p>With this crate, you can load a .60 file at runtime and show its UI.</p>
+<p>You only need to use this crate if you do not want to use pre-compiled .60
+code, which is the normal way to use SixtyFPS, using the <code>sixtyfps</code> crate</p>
+<p>The entry point for this crate is the <a href="struct.ComponentCompiler.html" title="ComponentCompiler"><code>ComponentCompiler</code></a> type, which you can
+use to create <a href="struct.ComponentDefinition.html" title="ComponentDefinition"><code>ComponentDefinition</code></a> with the <a href="struct.ComponentCompiler.html#method.build_from_source" title="ComponentCompiler::build_from_source"><code>ComponentCompiler::build_from_source</code></a> or <a href="struct.ComponentCompiler.html#method.build_from_path" title="ComponentCompiler::build_from_path"><code>ComponentCompiler::build_from_path</code></a>
+functions.</p>
+<h3 id="note-about-async-functions" class="section-header"><a href="#note-about-async-functions">Note about <code>async</code> functions</a></h3>
+<p>Compiling a component is <code>async</code> but in practice, this is only asynchronous if <a href="struct.ComponentCompiler.html#method.set_file_loader" title="ComponentCompiler::set_file_loader"><code>ComponentCompiler::set_file_loader</code></a>
+is set and its future is actually asynchronous.  If that is not used, then it is fine to use a very simple
+executor, such as the one provided by the <code>spin_on</code> crate</p>
+<h2 id="examples" class="section-header"><a href="#examples">Examples</a></h2>
+<p>This example loads a <code>.60</code> dynamically from a path and show errors if any:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">sixtyfps_interpreter</span>::{<span class="ident">ComponentDefinition</span>, <span class="ident">ComponentCompiler</span>};
+
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">compiler</span> <span class="op">=</span> <span class="ident">ComponentCompiler::default</span>();
+<span class="kw">let</span> <span class="ident">definition</span> <span class="op">=</span>
+    <span class="ident">spin_on::spin_on</span>(<span class="ident">compiler</span>.<span class="ident">build_from_path</span>(<span class="string">&quot;hello.60&quot;</span>));
+<span class="ident">sixtyfps_interpreter::print_diagnostics</span>(<span class="kw-2">&amp;</span><span class="ident">compiler</span>.<span class="ident">diagnostics</span>());
+<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">definition</span>) <span class="op">=</span> <span class="ident">definition</span> {
+    <span class="kw">let</span> <span class="ident">instance</span> <span class="op">=</span> <span class="ident">definition</span>.<span class="ident">create</span>();
+    <span class="ident">instance</span>.<span class="ident">run</span>();
+}</code></pre></div>
+<p>This example load a <code>.60</code> from a string and set some properties:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">sixtyfps_interpreter</span>::{<span class="ident">ComponentDefinition</span>, <span class="ident">ComponentCompiler</span>, <span class="ident">Value</span>, <span class="ident">SharedString</span>};
+
+<span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="string">r#&quot;
+    MyWin := Window {
+        property &lt;string&gt; my_name;
+        Text {
+            text: &quot;Hello, &quot; + my_name;
+        }
+    }
+&quot;#</span>;
+
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">compiler</span> <span class="op">=</span> <span class="ident">ComponentCompiler::default</span>();
+<span class="kw">let</span> <span class="ident">definition</span> <span class="op">=</span>
+    <span class="ident">spin_on::spin_on</span>(<span class="ident">compiler</span>.<span class="ident">build_from_source</span>(<span class="ident">code</span>.<span class="ident">into</span>(), <span class="ident">Default::default</span>()));
+<span class="macro">assert!</span>(<span class="ident">compiler</span>.<span class="ident">diagnostics</span>().<span class="ident">is_empty</span>());
+<span class="kw">let</span> <span class="ident">instance</span> <span class="op">=</span> <span class="ident">definition</span>.<span class="ident">unwrap</span>().<span class="ident">create</span>();
+<span class="ident">instance</span>.<span class="ident">set_property</span>(<span class="string">&quot;my_name&quot;</span>, <span class="ident">Value::from</span>(<span class="ident">SharedString::from</span>(<span class="string">&quot;World&quot;</span>))).<span class="ident">unwrap</span>();
+<span class="ident">instance</span>.<span class="ident">run</span>();</code></pre></div>
+<h2 id="features" class="section-header"><a href="#features">Features</a></h2>
+<p><strong>display-diagnostics</strong>: enable the <a href="fn.print_diagnostics.html" title="print_diagnostics"><code>print_diagnostics</code></a> function to show diagnostic in the console output</p>
+</div></details><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="testing/index.html" title="sixtyfps_interpreter::testing mod">testing</a></div><div class="item-right docblock-short"><p>This module contains a few function use by tests</p>
+</div></div></div><h2 id="macros" class="section-header"><a href="#macros">Macros</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="macro" href="macro.ModelAdaptorVTable_static.html" title="sixtyfps_interpreter::ModelAdaptorVTable_static macro">ModelAdaptorVTable_static</a></div><div class="item-right docblock-short"><p>Instantiate a static ModelAdaptorVTable for a given type and implements <code>vtable::HasStaticVTable&lt;ModelAdaptorVTable&gt;</code> for it.</p>
+</div></div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Color.html" title="sixtyfps_interpreter::Color struct">Color</a></div><div class="item-right docblock-short"><p>(Re-export from corelib.)</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ComponentCompiler.html" title="sixtyfps_interpreter::ComponentCompiler struct">ComponentCompiler</a></div><div class="item-right docblock-short"><p>ComponentCompiler is the entry point to the SixtyFPS interpreter that can be used
+to load .60 files or compile them on-the-fly from a string.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ComponentDefinition.html" title="sixtyfps_interpreter::ComponentDefinition struct">ComponentDefinition</a></div><div class="item-right docblock-short"><p>ComponentDefinition is a representation of a compiled component from .60 markup.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ComponentInstance.html" title="sixtyfps_interpreter::ComponentInstance struct">ComponentInstance</a></div><div class="item-right docblock-short"><p>This represent an instance of a dynamic component</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Diagnostic.html" title="sixtyfps_interpreter::Diagnostic struct">Diagnostic</a></div><div class="item-right docblock-short"><p>This structure represent a diagnostic emitted while compiling .60 code.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SharedString.html" title="sixtyfps_interpreter::SharedString struct">SharedString</a></div><div class="item-right docblock-short"><p>(Re-export from corelib.)</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SharedVector.html" title="sixtyfps_interpreter::SharedVector struct">SharedVector</a></div><div class="item-right docblock-short"><p>(Re-export from corelib.)</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Struct.html" title="sixtyfps_interpreter::Struct struct">Struct</a></div><div class="item-right docblock-short"><p>This type represents a runtime instance of structure in <code>.60</code>.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.WeakComponentInstance.html" title="sixtyfps_interpreter::WeakComponentInstance struct">WeakComponentInstance</a></div><div class="item-right docblock-short"><p>A Weak references to a dynamic SixtyFPS components.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Window.html" title="sixtyfps_interpreter::Window struct">Window</a></div><div class="item-right docblock-short"><p>This type represents a window towards the windowing system, that’s used to render the
+scene of a component. It provides API to control windowing system specific aspects such
+as the position on the screen.</p>
+</div></div></div><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Brush.html" title="sixtyfps_interpreter::Brush enum">Brush</a></div><div class="item-right docblock-short"><p>(Re-export from corelib.)</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.CallCallbackError.html" title="sixtyfps_interpreter::CallCallbackError enum">CallCallbackError</a></div><div class="item-right docblock-short"><p>Error returned by <a href="struct.ComponentInstance.html#method.invoke_callback" title="ComponentInstance::invoke_callback"><code>ComponentInstance::invoke_callback</code></a></p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.DiagnosticLevel.html" title="sixtyfps_interpreter::DiagnosticLevel enum">DiagnosticLevel</a></div><div class="item-right docblock-short"><p>Diagnostics level (error or warning)</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.GetPropertyError.html" title="sixtyfps_interpreter::GetPropertyError enum">GetPropertyError</a></div><div class="item-right docblock-short"><p>Error returned by <a href="struct.ComponentInstance.html#method.get_property" title="ComponentInstance::get_property"><code>ComponentInstance::get_property</code></a></p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.SetCallbackError.html" title="sixtyfps_interpreter::SetCallbackError enum">SetCallbackError</a></div><div class="item-right docblock-short"><p>Error returned by <a href="struct.ComponentInstance.html#method.set_callback" title="ComponentInstance::set_callback"><code>ComponentInstance::set_callback</code></a></p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.SetPropertyError.html" title="sixtyfps_interpreter::SetPropertyError enum">SetPropertyError</a></div><div class="item-right docblock-short"><p>Error returned by <a href="struct.ComponentInstance.html#method.set_property" title="ComponentInstance::set_property"><code>ComponentInstance::set_property</code></a></p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Value.html" title="sixtyfps_interpreter::Value enum">Value</a></div><div class="item-right docblock-short"><p>This is a dynamically typed value used in the SixtyFPS interpreter.
+It can hold a value of different types, and you should use the
+<a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="From"><code>From</code></a> or <a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html" title="TryInto"><code>TryInto</code></a> traits to access the value.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.ValueType.html" title="sixtyfps_interpreter::ValueType enum">ValueType</a></div><div class="item-right docblock-short"><p>This enum represents the different public variants of the <a href="enum.Value.html" title="Value"><code>Value</code></a> enum, without
+the contained values.</p>
+</div></div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.print_diagnostics.html" title="sixtyfps_interpreter::print_diagnostics fn">print_diagnostics</a></div><div class="item-right docblock-short"><p>Print the diagnostics to stderr</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.run_event_loop.html" title="sixtyfps_interpreter::run_event_loop fn">run_event_loop</a></div><div class="item-right docblock-short"><p>Enters the main event loop. This is necessary in order to receive
+events from the windowing system in order to render to the screen
+and react to user input.</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="sixtyfps_interpreter" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+    <script src="../main.js"></script>
+</body></html>

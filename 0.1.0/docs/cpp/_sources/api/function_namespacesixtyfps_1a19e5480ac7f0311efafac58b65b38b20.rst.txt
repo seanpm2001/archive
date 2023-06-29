@@ -1,0 +1,13 @@
+.. _exhale_function_namespacesixtyfps_1a19e5480ac7f0311efafac58b65b38b20:
+
+Function sixtyfps::quit_event_loop
+==================================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: sixtyfps::quit_event_loop()

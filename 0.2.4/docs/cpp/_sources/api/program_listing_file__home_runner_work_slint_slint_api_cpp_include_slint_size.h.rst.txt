@@ -1,0 +1,36 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_size.h:
+
+Program Listing for File slint_size.h
+=====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint_size.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint_size.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint-ui.com>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   
+   
+   namespace slint {
+   
+   template <typename T>
+   struct Size {
+       T width;
+       T height;
+   
+       bool operator==(const Size &other) const = default;
+   };
+   
+   namespace cbindgen_private {
+       // The Size types are expanded to the Size2D<...> type from the euclid crate which
+       // is binary compatible with Size<T>
+       template <typename T> using Size2D = Size<T>;
+   }
+   
+   
+   }

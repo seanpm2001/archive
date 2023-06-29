@@ -1,0 +1,63 @@
+
+.. _file__home_runner_work_slint_slint_api_cpp_include_slint_string.h:
+
+File slint_string.h
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_runner_work_slint_slint_api_cpp_include>` (``/home/runner/work/slint/slint/api/cpp/include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/runner/work/slint/slint/api/cpp/include/slint_string.h``)
+-----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_string.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``slint_string_internal.h`` (:ref:`file_cppdocs_generated_include_slint_string_internal.h`)
+
+- ``string_view``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_brush.h`
+
+- :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_image.h`
+
+- :ref:`file_cppdocs_generated_include_slint_internal.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structslint_1_1SharedString`
+

@@ -1,0 +1,793 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="The `.60` language reference"><meta name="keywords" content="rust, rustlang, rust-lang, langref"><title>sixtyfps::docs::langref - Rust</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-integration.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.0/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+    //import * as sixtyfps from 'https://sixtyfps.io/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+
+        await sixtyfps.default();
+
+        var elements = document.querySelectorAll("code.language-60, div.highlight-60 div");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            div.innerHTML = "<p>Preview:</p>";
+            elements[i].parentElement.insertBefore(div, elements[i])
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+<style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../sixtyfps/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;sixtyfps.io&#x2F;resources&#x2F;logo.drawio.svg' alt='logo'></div></a><p class="location">Module langref</p><div class="sidebar-elems"><div id="sidebar-vars" data-name="langref" data-ty="mod" data-relpath="./"></div><script defer src="./sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../../index.html">sixtyfps</a>::<wbr><a href="../index.html">docs</a>::<wbr><a class="mod" href="#">langref</a><button id="copy-path" onclick="copy_path(this)" title="copy path"><img src="../../../clipboard.svg" width="19" height="18" alt="Copy item import" title="Copy item import to clipboard"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../../src/sixtyfps/docs.rs.html#23-28" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h1 id="the-60-language-reference" class="section-header"><a href="#the-60-language-reference">The <code>.60</code> language reference</a></h1>
+<p>This page is work in progress as the language is not yet set in stones.
+<code>TODO</code> indicates things that are not yet implemented.</p>
+<h2 id="60-files" class="section-header"><a href="#60-files"><code>.60</code> files</a></h2>
+<p>The basic idea is that the <code>.60</code> files contains one or several components.
+These components contain a tree of elements. Each declared component can be
+given a name and re-used under that name as an an element later.</p>
+<p>By default, the SixtyFPS comes with some <a href="builtin_elements.md">builtin elements</a> and <a href="widgets.md">widgets</a>.</p>
+<p>Below is an example of components and elements:</p>
+<pre><code class="language-60">
+MyButton := Text {
+    color: black;
+    // ...
+}
+
+export MyApp := Window {
+    width: 200px;
+    height: 100px;
+    Rectangle {
+        width: 200px;
+        height: 100px;
+        background: green;
+    }
+    MyButton {
+        text: &quot;hello&quot;;
+    }
+    MyButton {
+        x: 50px;
+        text: &quot;world&quot;;
+    }
+}
+
+</code></pre>
+<p>Here, both <code>MyButton</code> and <code>MyApp</code> are components. <code>Window</code> and <code>Rectangle</code> are built-in elements
+used by <code>MyApp</code>. <code>MyApp</code> also re-uses the <code>MyButton</code> component.</p>
+<p>You can assign a name to the elements using the <code>:=</code>  syntax in front an element:</p>
+<pre><code class="language-60">MyButton := Text {
+    // ...
+}
+
+MyApp := Window {
+    hello := MyButton {
+        text: &quot;hello&quot;;
+    }
+    world := MyButton {
+        text: &quot;world&quot;;
+        x: 50px;
+    }
+}
+</code></pre>
+<p>The outermost element of a component is always accessible under the name <code>root</code>.
+The current element can be referred as <code>self</code>.
+The parent element can be referred as <code>parent</code>.
+These names are reserved and cannot be used as element names.</p>
+<h3 id="container-components" class="section-header"><a href="#container-components">Container Components</a></h3>
+<p>When creating components, it may sometimes be useful to influence where child elements
+are placed when they are used. For example, imagine a component that draws label above
+whatever element the user places inside:</p>
+<pre><code class="language-60,ignore">MyApp := Window {
+
+    BoxWithLabel {
+        Text {
+            // ...
+        }
+    }
+
+    // ...
+}
+</code></pre>
+<p>Such a <code>BoxWithLabel</code> could be implemented using a layout, but by default child elements like
+the <code>Text</code> element become children of the <code>BoxWithLabel</code>, when they would have to be somewhere
+else, inside the layout. For this purpose, you can change the default child placement by using
+the <code>@children</code> expression inside the element hierarchy of a component:</p>
+<pre><code class="language-60">BoxWithLabel := GridLayout {
+    Row {
+        Text { text: &quot;label text here&quot;; }
+    }
+    Row {
+        @children
+    }
+}
+
+MyApp := Window {
+    BoxWithLabel {
+        Rectangle { background: blue; }
+        Rectangle { background: yellow; }
+    }
+}
+</code></pre>
+<h2 id="comments" class="section-header"><a href="#comments">Comments</a></h2>
+<p>C-style comments are supported:</p>
+<ul>
+<li>line comments: <code>//</code> means everything to the end of the line is commented.</li>
+<li>block comments: <code>/* .. */</code>.  Note that the blocks comments can be nested, so <code>/* this is a /* single */ comment */</code></li>
+</ul>
+<h2 id="identifiers" class="section-header"><a href="#identifiers">Identifiers</a></h2>
+<p>Identifiers can be composed of letter (<code>a-zA-Z</code>), of numbers (<code>0-9</code>), or of the underscore (<code>_</code>) or the dash (<code>-</code>).
+They cannot start with a number or a dash (but they can start with underscore)
+The dashes are normalized to underscore. Which means that these two identifiers are the same: <code>foo-bar</code> and <code>foo_bar</code>.</p>
+<h2 id="properties" class="section-header"><a href="#properties">Properties</a></h2>
+<p>The elements can have properties. Built-in elements come with common properties such
+as color or dimensional properties. You can assign values or entire <a href="#expressions">expressions</a> to them:</p>
+<pre><code class="language-60">Example := Window {
+    // Simple expression: ends with a semi colon
+    width: 42px;
+    // or a code block (no semicolon needed)
+    height: { 42px }
+}
+</code></pre>
+<p>You can also declare your own properties. The properties declared at the top level of a
+component are public and can be accessed by the component using it as an element, or using the
+language bindings:</p>
+<pre><code class="language-60">Example := Rectangle {
+    // declare a property of type int with the name `my_property`
+    property&lt;int&gt; my_property;
+
+    // declare a property with a default value
+    property&lt;int&gt; my_second_property: 42;
+}
+</code></pre>
+<h3 id="bindings" class="section-header"><a href="#bindings">Bindings</a></h3>
+<p>The expression on the right of a binding is automatically re-evaluated when the expression changes.</p>
+<p>In the following example, the text of the button is automatically changed when the button is pressed, because
+changing the <code>counter</code>  property automatically changes the text.</p>
+<pre><code class="language-60">import { Button } from &quot;sixtyfps_widgets.60&quot;;
+Example := Button {
+    property &lt;int&gt; counter: 3;
+    clicked =&gt; { counter += 3 }
+    text: counter * 2;
+}
+</code></pre>
+<h3 id="two-way-bindings" class="section-header"><a href="#two-way-bindings">Two-way Bindings</a></h3>
+<p>Using the <code>&lt;=&gt;</code> syntax, one can create two ways binding between properties. These properties are now linked
+together.
+The right hand side of the <code>&lt;=&gt;</code> must be a reference to a property of the same type.
+The type can be omitted in a property declaration to have the type automatically inferred.</p>
+<pre><code class="language-60">Example := Window {
+    property&lt;brush&gt; rect_color &lt;=&gt; r.background;
+    // it is allowed to omit the type to have it automatically inferred
+    property rect_color2 &lt;=&gt; r.background;
+    r:= Rectangle {
+        width: parent.width;
+        height: parent.height;
+        background: blue;
+    }
+}
+</code></pre>
+<h2 id="types" class="section-header"><a href="#types">Types</a></h2>
+<p>All properties in elements have a type. The following types are supported:</p>
+<table><thead><tr><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>int</code></td><td>Signed integral number.</td></tr>
+<tr><td><code>float</code></td><td>Signed, 32-bit floating point number. Numbers with a <code>%</code> suffix are automatically divided by 100, so for example <code>30%</code> is the same as <code>0.30</code>.</td></tr>
+<tr><td><code>string</code></td><td>UTF-8 encoded, reference counted string.</td></tr>
+<tr><td><code>color</code></td><td>RGB color with an alpha channel, with 8 bit precision for each channel. CSS color names as well as the hexadecimal color encodings are supported, such as <code>#RRGGBBAA</code> or <code>#RGB</code>.</td></tr>
+<tr><td><code>brush</code></td><td>A brush is a special type that can be either initialized from a color or a gradient specification. See the <a href="#colors">Colors Section</a> for more information.</td></tr>
+<tr><td><code>physicial_length</code></td><td>This is an amount of physical pixels. To convert from an integer to a length unit, one can simply multiply by <code>1px</code>.  Or to convert from a length to a float, one can divide by <code>1phx</code>.</td></tr>
+<tr><td><code>length</code></td><td>The type used for <code>x</code>, <code>y</code>, <code>width</code> and <code>height</code> coordinates. Corresponds to a literal like <code>1px</code>, <code>1pt</code>, <code>1in</code>, <code>1mm</code>, or <code>1cm</code>. It can be converted to and from length provided the binding is run in a context where there is an access to the device pixel ratio.</td></tr>
+<tr><td><code>duration</code></td><td>Type for the duration of animations. A suffix like <code>ms</code> (millisecond) or <code>s</code> (second) is used to indicate the precision.</td></tr>
+<tr><td><code>angle</code></td><td>Angle mesurement, corresponds to a literal like <code>90deg</code>, <code>1.2rad</code>, <code>0.25turn</code></td></tr>
+<tr><td><code>easing</code></td><td>Property animation allow specifying an easing curve. Valid values are <code>linear</code> (values are interpolated linearly) and the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function#Keywords_for_common_cubic-bezier_easing_functions">four common cubiz-bezier functions known from CSS</a>:  <code>ease</code>, <code>ease_in</code>, <code>ease_in_out</code>, <code>ease_out</code>.</td></tr>
+<tr><td><code>percent</code></td><td>Signed, 32-bit floating point number that is interpreted as percentage. Literal number assigned to properties of this type must have a <code>%</code> suffix.</td></tr>
+<tr><td><code>image</code></td><td>A reference to an image, can be initialized with the <code>@image-url(&quot;...&quot;)</code> construct</td></tr>
+</tbody></table>
+<p>Please see the language specific API references how these types are mapped to the APIs of the different programming languages.</p>
+<h3 id="structs" class="section-header"><a href="#structs">Structs</a></h3>
+<p>Anonymous structs type can be declared with curly braces: <code>{ identifier1: type2, identifier1: type2, }</code>
+The trailing semicolon is optional.
+They can be initialized with a struct literal: <code>{ identifier1: expression1, identifier2: expression2  }</code></p>
+<pre><code class="language-60">Example := Window {
+    property&lt;{name: string, score: int}&gt; player: { name: &quot;Foo&quot;, score: 100 };
+    property&lt;{a: int, }&gt; foo: { a: 3 };
+}
+</code></pre>
+<h3 id="custom-named-structures" class="section-header"><a href="#custom-named-structures">Custom named structures</a></h3>
+<p>It is possible to define a named struct using the <code>struct</code> keyword,</p>
+<pre><code class="language-60">export struct Player := {
+    name: string,
+    score: int,
+}
+
+Example := Window {
+    property&lt;Player&gt; player: { name: &quot;Foo&quot;, score: 100 };
+}
+</code></pre>
+<h3 id="arrays--model" class="section-header"><a href="#arrays--model">Arrays / Model</a></h3>
+<p>The type array is using square brackets for example  <code>[int]</code> is an array of <code>int</code>. In the runtime, they are
+basically used as models for the <code>for</code> expression.</p>
+<pre><code class="language-60">Example := Window {
+    property&lt;[int]&gt; list_of_int: [1,2,3];
+    property&lt;[{a: int, b: string}]&gt; list_of_structs: [{ a: 1, b: &quot;hello&quot; }, {a: 2, b: &quot;world&quot;}];
+}
+</code></pre>
+<h3 id="conversions" class="section-header"><a href="#conversions">Conversions</a></h3>
+<ul>
+<li><code>int</code> can be converted implicitly to <code>float</code> and vice-versa</li>
+<li><code>int</code> and <code>float</code> can be converted implicitly to <code>string</code></li>
+<li><code>physical_length</code> and <code>length</code> can be converted implicitly to each other only in
+context where the pixel ratio is known.</li>
+<li>the units type (<code>length</code>, <code>physical_length</code>, <code>duration</code>, …) cannot be converted to numbers (<code>float</code> or <code>int</code>)
+but they can be divided by themselves to result in a number. Similarly, a number can be multiplied by one of
+these unit. The idea is that one would multiply by <code>1px</code> or divide by <code>1px</code> to do such conversions</li>
+<li>The literal <code>0</code> can be converted to any of these types that have associated unit.</li>
+<li>Struct types convert with another struct type if they have the same property names and their types can be converted.
+The source struct can have either missing properties, or extra properties. But not both.</li>
+<li>Array generally do not convert between each other. But array literal can be converted if the type does convert.</li>
+<li>String can be converted to float by using the <code>to_float</code> function. That function returns 0 if the string is not
+a valid number. you can check with <code>is_float</code> if the string contains a valid number</li>
+</ul>
+<pre><code class="language-60">Example := Window {
+    // ok: int converts to string
+    property&lt;{a: string, b: int}&gt; prop1: {a: 12, b: 12 };
+    // ok even if a is missing, it will just have the default value
+    property&lt;{a: string, b: int}&gt; prop2: { b: 12 };
+    // ok even if c is too many, it will be discarded
+    property&lt;{a: string, b: int}&gt; prop3: { a: &quot;x&quot;, b: 12, c: 42 };
+    // ERROR: b is missing and c is extra, this does not compile, because it could be a typo.
+    // property&lt;{a: string, b: int}&gt; prop4: { a: &quot;x&quot;, c: 42 };
+
+    property&lt;string&gt; xxx: &quot;42.1&quot;;
+    property&lt;float&gt; xxx1: xxx.to_float(); // 42.1
+    property&lt;bool&gt; xxx2: xxx.is_float(); // true
+}
+</code></pre>
+<h3 id="relative-lengths" class="section-header"><a href="#relative-lengths">Relative Lengths</a></h3>
+<p>Sometimes it is convenient to express the relationships of length properties in terms of relative percentages.
+For example the following inner blue rectangle has half the size of the outer green one:</p>
+<pre><code class="language-60">Example := Rectangle {
+    background: green;
+    Rectangle {
+        background: blue;
+        width: parent.width * 50%;
+        height: parent.height * 50%;
+    }
+}
+</code></pre>
+<p>This pattern of expressing the <code>width</code> or <code>height</code> in percent of the parent’s property with the same name is
+common. For convenience, a short-hand syntax exists for this scenario:</p>
+<ul>
+<li>The property is <code>width</code> or <code>height</code></li>
+<li>A binding expression evaluates to a percentage.</li>
+</ul>
+<p>If these conditions are met, then it is not necessary to specify the parent property, instead you can simply
+use the percentage. The earlier example then looks like this:</p>
+<pre><code class="language-60">Example := Rectangle {
+    background: green;
+    Rectangle {
+        background: blue;
+        width: 50%;
+        height: 50%;
+    }
+}
+</code></pre>
+<h2 id="callback" class="section-header"><a href="#callback">Callback</a></h2>
+<p>Components may declare callbacks, that allow it to communicate changes of state to the outside. Callbacks are emitted by “calling” them
+and you can react to callback emissions by declaring a handler using the <code>=&gt;</code> arrow syntax. The built-in <code>TouchArea</code>
+element comes with a <code>clicked</code> callback, that’s emitted when the user touches the rectangular area covered by the element, or clicks into
+it with the mouse. In the example below, the emission of that callback is forwarded to another custom callback (<code>hello</code>) by declaring a
+handler and emitting our custom callback:</p>
+<pre><code class="language-60">Example := Rectangle {
+    // declare a callback
+    callback hello;
+
+    area := TouchArea {
+        // sets a handler with `=&gt;`
+        clicked =&gt; {
+            // emit the callback
+            root.hello()
+        }
+    }
+}
+</code></pre>
+<p>It is also possible to add parameters to the callback.</p>
+<pre><code class="language-60">Example := Rectangle {
+    // declares a callback
+    callback hello(int, string);
+    hello(aa, bb) =&gt; { /* ... */ }
+}
+</code></pre>
+<p>And return value.</p>
+<pre><code class="language-60">Example := Rectangle {
+    // declares a callback with a return value
+    callback hello(int, int) -&gt; int;
+    hello(aa, bb) =&gt; { aa + bb }
+}
+</code></pre>
+<h3 id="callback-aliases" class="section-header"><a href="#callback-aliases">Callback aliases</a></h3>
+<p>It is possible to declare callback aliases in a similar way to two-way bindings:</p>
+<pre><code class="language-60">Example := Rectangle {
+    callback clicked &lt;=&gt; area.clicked;
+    area := TouchArea {}
+}
+</code></pre>
+<h2 id="expressions" class="section-header"><a href="#expressions">Expressions</a></h2>
+<p>Expressions are a powerful way to declare relationships and connections in your user interface. They
+are typically used to combine basic arithmetic with access to properties of other elements. When
+these properties change, the expression is automatically re-evaluated and a new value is assigned
+to the property the expression is associated with:</p>
+<pre><code class="language-60">Example := Rectangle {
+    // declare a property of type int
+    property&lt;int&gt; my_property;
+
+    // This accesses the property
+    width: root.my_property * 20px;
+
+}
+</code></pre>
+<p>If something changes <code>my_property</code>, the width will be updated automatically.</p>
+<p>Arithmetic in expression works like in most programming language with the operators <code>*</code>, <code>+</code>, <code>-</code>, <code>/</code>:</p>
+<pre><code class="language-60">Example := Rectangle {
+    property &lt;int&gt; p: 1 * 2 + 3 * 4; // same as (1 * 2) + (3 * 4)
+}
+</code></pre>
+<p>You can access properties by addressing the associated element, followed by a <code>.</code> and the property name:</p>
+<pre><code class="language-60">Example := Rectangle {
+    foo := Rectangle {
+        x: 42px;
+    }
+    x: foo.x;
+}
+</code></pre>
+<h3 id="strings" class="section-header"><a href="#strings">Strings</a></h3>
+<p>Strings can be used with surrounding quotes: <code>&quot;foo&quot;</code>.</p>
+<p>Some character can be escaped with slashes (<code>\</code>)</p>
+<table><thead><tr><th>Escape</th><th>Result</th></tr></thead><tbody>
+<tr><td><code>\&quot;</code></td><td><code>&quot;</code></td></tr>
+<tr><td><code>\\</code></td><td><code>\</code></td></tr>
+<tr><td><code>\n</code></td><td>new line</td></tr>
+<tr><td><code>\u{xxx}</code></td><td>where <code>xxx</code> is an hexadecimal number, this expand to the unicode character represented by this number</td></tr>
+<tr><td><code>\{expression}</code></td><td>the expression is evaluated and inserted here</td></tr>
+</tbody></table>
+<p>Anything else after a <code>\</code> is an error.</p>
+<p>(TODO: translations: <code>tr!&quot;Hello&quot;</code>)</p>
+<pre><code class="language-60">Example := Text {
+    text: &quot;hello&quot;;
+}
+</code></pre>
+<h3 id="colors" class="section-header"><a href="#colors">Colors</a></h3>
+<p>Color literals follow the syntax of CSS:</p>
+<pre><code class="language-60">Example := Rectangle {
+    background: blue;
+    property&lt;color&gt; c1: #ffaaff;
+}
+</code></pre>
+<p>(TODO: currently color name are only limited to a handful and only supported in color property)</p>
+<p>In addition to plain colors, many elements have properties that are of type <code>brush</code> instead of <code>color</code>.
+A brush is a type that can be either a color or gradient. The brush is then used to fill an element or
+draw the outline.</p>
+<h4 id="methods" class="section-header"><a href="#methods">Methods</a></h4>
+<p>All colors have methods that can be called on them:</p>
+<ul>
+<li>
+<p><strong><code>brighter(factor: float) -&gt; Color</code></strong></p>
+<p>Returns a new color that is derived from this color but has its brightness increased by the specified factor.
+For example if the factor is 0.5 (or for example 50%) the returned color is 50% brighter. Negative factors
+decrease the brightness.</p>
+</li>
+<li>
+<p><strong><code>darker(factor: float) -&gt; Color</code></strong></p>
+<p>Returns a new color that is derived from this color but has its brightness decreased by the specified factor.
+For example if the factor is .5 (or for example 50%) the returned color is 50% darker. Negative factors
+increase the brightness.</p>
+</li>
+</ul>
+<h4 id="gradients" class="section-header"><a href="#gradients">Gradients</a></h4>
+<p>Gradients allow creating smooth colorful surfaces. They are specified using an angle and a series of
+color stops. The colors will be linearly interpolated between the stops, aligned to an imaginary line
+that is rotated by the specified angle. This is called a linear gradient and is specified using the
+<code>@linear-gradient</code> macro with the following signature:</p>
+<p><strong><code>@linear-gradient(angle, color percentage, color percentage, ...)</code></strong></p>
+<p>The first parameter to the macro is an angle (see <a href="#types">Types</a>). The gradient line’s starting point
+will be rotated by the specified value.</p>
+<p>Following the initial angle is one or multiple color stops, describe as a space separated pair of a
+<code>color</code> value and a <code>percentage</code>. The color specifies which value the linear color interpolation should
+reach at the specified percentage along the axis of the gradient.</p>
+<p>The following example shows a rectangle that’s filled with a linear gradient that starts with a light blue
+color, interpolates to a very light shade in the center and finishes with an orange tone:</p>
+<pre><code class="language-60">Example := Rectangle {
+    width: 100px;
+    height: 100px;
+    background: @linear-gradient(90deg, #3f87a6 0%, #ebf8e1 50%, #f69d3c 100%);
+}
+</code></pre>
+<h3 id="images" class="section-header"><a href="#images">Images</a></h3>
+<p>The <code>image</code> type is a reference to an image. It be initialized with the <code>@image-url(&quot;...&quot;)</code> construct.
+The URL within the <code>@image-url</code> function need to be known at compile time, and it is looked up
+relative to the file. In addition, it will also be looked in the include path specified to load
+.60 files via import.</p>
+<p>It is possible to access the <code>width</code> and <code>height</code> of an image.</p>
+<pre><code class="language-60">Example := Text {
+    property &lt;image&gt; some_image: @image-url(&quot;https://sixtyfps.io/resources/logo_scaled.png&quot;);
+    text: &quot;The image is &quot; + some_image.width + &quot;x&quot; + some_image.height;
+}
+</code></pre>
+<h3 id="arraysstructs" class="section-header"><a href="#arraysstructs">Arrays/Structs</a></h3>
+<p>Arrays are currently only supported in <code>for</code> expressions. <code>[1, 2, 3]</code> is an array of integers.
+All the types in the array have to be of the same type.
+It is useful to have arrays of struct. An struct is between curly braces: <code>{ a: 12, b: &quot;hello&quot;}</code>.</p>
+<h2 id="statements" class="section-header"><a href="#statements">Statements</a></h2>
+<p>Inside callback handlers, more complicated statements are allowed:</p>
+<p>Assignment:</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="ident">clicked</span> <span class="op">=</span><span class="op">&gt;</span> { <span class="ident">some_property</span> <span class="op">=</span> <span class="number">42</span>; }</pre></div>
+<p>Self-assignment with <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code></p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="ident">clicked</span> <span class="op">=</span><span class="op">&gt;</span> { <span class="ident">some_property</span> <span class="op">+</span><span class="op">=</span> <span class="number">42</span>; }</pre></div>
+<p>Calling a callback</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="ident">clicked</span> <span class="op">=</span><span class="op">&gt;</span> { <span class="ident">root</span>.<span class="ident">some_callback</span>(); }</pre></div>
+<p>Conditional expression</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="ident">clicked</span> <span class="op">=</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> (<span class="ident">condition</span>) {
+        <span class="ident">foo</span> <span class="op">=</span> <span class="number">42</span>;
+    } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">other_condition</span>) {
+        <span class="ident">bar</span> <span class="op">=</span> <span class="number">28</span>;
+    } <span class="kw">else</span> {
+        <span class="ident">foo</span> <span class="op">=</span> <span class="number">4</span>;
+    }
+}</pre></div>
+<p>Empty expression</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="ident">clicked</span> <span class="op">=</span><span class="op">&gt;</span> { }
+<span class="comment">// or</span>
+<span class="ident">clicked</span> <span class="op">=</span><span class="op">&gt;</span> { ; }</pre></div>
+<h2 id="repetition" class="section-header"><a href="#repetition">Repetition</a></h2>
+<p>The <code>for</code>-<code>in</code> syntax can be used to repeat an element.</p>
+<p>The syntax look like this: <code>for name[index] in model : id := Element { ... }</code></p>
+<p>The <em>model</em> can be of the following type:</p>
+<ul>
+<li>an integer, in which case the element will be repeated that amount of time</li>
+<li>an array type or a model declared natively, in which case the element will be instantiated for each element in the array or model.</li>
+</ul>
+<p>The <em>name</em> will be available for lookup within the element and is going to be like a pseudo-property set to the
+value of the model. The <em>index</em> is optional and will be set to the index of this element in the model.
+The <em>id</em> is also optional.</p>
+<h3 id="examples" class="section-header"><a href="#examples">Examples</a></h3>
+<pre><code class="language-60">Example := Window {
+    height: 100px;
+    width: 300px;
+    for my_color[index] in [ #e11, #1a2, #23d ]: Rectangle {
+        height: 100px;
+        width: 60px;
+        x: width * index;
+        background: my_color;
+    }
+}
+</code></pre>
+<pre><code class="language-60">Example := Window {
+    height: 50px;
+    width: 50px;
+    property &lt;[{foo: string, col: color}]&gt; model: [
+        {foo: &quot;abc&quot;, col: #f00 },
+        {foo: &quot;def&quot;, col: #00f },
+    ];
+    VerticalLayout {
+        for data in root.model: my_repeated_text := Text {
+            color: data.col;
+            text: data.foo;
+        }
+    }
+}
+</code></pre>
+<h2 id="conditional-element" class="section-header"><a href="#conditional-element">Conditional element</a></h2>
+<p>Similar to <code>for</code>, the <code>if</code> construct can instantiate element only if a given condition is true.
+The syntax is <code>if (condition) : id := Element { ... }</code></p>
+<pre><code class="language-60">Example := Window {
+    height: 50px;
+    width: 50px;
+    if (true) : foo := Rectangle { background: blue; }
+    if (false) : Rectangle { background: red; }
+}
+</code></pre>
+<h2 id="animations" class="section-header"><a href="#animations">Animations</a></h2>
+<p>Simple animation that animates a property can be declared with <code>animate</code> like so:</p>
+<pre><code class="language-60">Example := Rectangle {
+    property&lt;bool&gt; pressed;
+    background: pressed ? blue : red;
+    animate background {
+        duration: 100ms;
+    }
+}
+</code></pre>
+<p>This will animate the color property for 100ms when it changes.</p>
+<p>Animation can be configured with the following parameter:</p>
+<ul>
+<li><code>duration</code>: the amount of time it takes for the animation to complete</li>
+<li><code>loop_count</code>: FIXME</li>
+<li><code>easing</code>: can be <code>linear</code>, <code>ease</code>, <code>ease_in</code>, <code>ease_out</code>, <code>ease_in_out</code>, <code>cubic_bezier(a, b, c, d)</code> as in CSS</li>
+</ul>
+<p>It is also possible to animate several properties with the same animation:</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="ident">animate</span> <span class="ident">x</span>, <span class="ident">y</span> { <span class="ident">duration</span>: <span class="number">100ms</span>; }</pre></div>
+<p>is the same as</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="ident">animate</span> <span class="ident">x</span> { <span class="ident">duration</span>: <span class="number">100ms</span>; }
+<span class="ident">animate</span> <span class="ident">y</span> { <span class="ident">duration</span>: <span class="number">100ms</span>; }</pre></div>
+<h2 id="states" class="section-header"><a href="#states">States</a></h2>
+<p>The <code>states</code> statement alow to declare states like so:</p>
+<pre><code class="language-60">Example := Rectangle {
+    text := Text { text: &quot;hello&quot;; }
+    property&lt;bool&gt; pressed;
+    property&lt;bool&gt; is_enabled;
+
+    states [
+        disabled when !is_enabled : {
+            color: gray; // same as root.color: gray;
+            text.color: white;
+        }
+        down when pressed : {
+            background: blue;
+        }
+    ]
+}
+</code></pre>
+<p>In that example, when the <code>is_enabled</code> property is set to false, the <code>disabled</code> state will be entered
+This will change the color of the Rectangle and of the Text.</p>
+<h3 id="transitions" class="section-header"><a href="#transitions">Transitions</a></h3>
+<p>Complex animations can be declared on state transitions:</p>
+<pre><code class="language-60">Example := Rectangle {
+    text := Text { text: &quot;hello&quot;; }
+    property&lt;bool&gt; pressed;
+    property&lt;bool&gt; is_enabled;
+
+    states [
+        disabled when !is_enabled : {
+            color: gray; // same as root.color: gray;
+            text.color: white;
+        }
+        down when pressed : {
+            background: blue;
+        }
+    ]
+
+    transitions [
+        in down : {
+            animate color { duration: 300ms; }
+        }
+        out disabled : {
+            animate * { duration: 800ms; }
+        }
+    ]
+}
+</code></pre>
+<h2 id="global-singletons" class="section-header"><a href="#global-singletons">Global Singletons</a></h2>
+<p>You can declare global singleton for properties that are available in the entire project.
+The syntax is <code>global Name := { /* .. properties or callbacks .. */ }</code>.
+Then can be then used using the <code>Name.property</code> syntax.</p>
+<pre><code class="language-60">global Palette := {
+    property&lt;color&gt; primary: blue;
+    property&lt;color&gt; secondary: green;
+}
+
+Example := Rectangle {
+    background: Palette.primary;
+    border-color: Palette.secondary;
+    border-width: 2px;
+}
+</code></pre>
+<h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<p>Components declared in a .60 file can be shared with components in other .60 files, by means of exporting and importing them.
+By default, everything declared in a .60 file is private, but it can be made accessible from the outside using the export
+keyword:</p>
+<pre><code class="language-60">ButtonHelper := Rectangle {
+    // ...
+}
+
+Button := Rectangle {
+    // ...
+    ButtonHelper {
+        // ...
+    }
+}
+
+export { Button }
+</code></pre>
+<p>In the above example, <code>Button</code> is usable from other .60 files, but <code>ButtonHelper</code> isn’t.</p>
+<p>It’s also possible to change the name just for the purpose of exporting, without affecting its internal use:</p>
+<pre><code class="language-60">Button := Rectangle {
+    // ...
+}
+
+export { Button as ColorButton }
+</code></pre>
+<p>In the above example, <code>Button</code> is not accessible from the outside, but instead it is available under the name <code>ColorButton</code>.</p>
+<p>For convenience, a third way of exporting a component is to declare it exported right away:</p>
+<pre><code class="language-60">export Button := Rectangle {
+    // ...
+}
+</code></pre>
+<p>Similarly, components exported from other files can be accessed by importing them:</p>
+<pre><code class="language-60,ignore">import { Button } from &quot;./button.60&quot;;
+
+App := Rectangle {
+    // ...
+    Button {
+        // ...
+    }
+}
+</code></pre>
+<p>In the event that two files export a type under the same name, then you have the option
+of assigning a different name at import time:</p>
+<pre><code class="language-60,ignore">import { Button } from &quot;./button.60&quot;;
+import { Button as CoolButton } from &quot;../other_theme/button.60&quot;;
+
+App := Rectangle {
+    // ...
+    CoolButton {} // from cool_button.60
+    Button {} // from button.60
+}
+</code></pre>
+<p>Elements, globals and structs can be exported and imported.</p>
+<h2 id="focus-handling" class="section-header"><a href="#focus-handling">Focus Handling</a></h2>
+<p>Certain elements such as <code>TextInput</code> accept not only input from the mouse/finger but
+also key events originating from (virtual) keyboards. In order for an item to receive
+these events, it must have the focus. This is visible through the <code>has_focus</code> property.</p>
+<p>You can manually activate the focus on an element by calling <code>focus()</code>:</p>
+<pre><code class="language-60">import { Button } from &quot;sixtyfps_widgets.60&quot;;
+
+App := Window {
+    VerticalLayout {
+        alignment: start;
+        Button {
+            text: &quot;press me&quot;;
+            clicked =&gt; { input.focus(); }
+        }
+        input := TextInput {
+            text: &quot;I am a text input field&quot;;
+        }
+    }
+}
+</code></pre>
+<p>If you have wrapped the <code>TextInput</code> in a component, then you can forward such a focus activation
+using the <code>forward-focus</code> property to refer to the element that should receive it:</p>
+<pre><code class="language-60">import { Button } from &quot;sixtyfps_widgets.60&quot;;
+
+LabeledInput := GridLayout {
+    forward-focus: input;
+    Row {
+        Text {
+            text: &quot;Input Label:&quot;;
+        }
+        input := TextInput {}
+    }
+}
+
+App := Window {
+    GridLayout {
+        Button {
+            text: &quot;press me&quot;;
+            clicked =&gt; { label.focus(); }
+        }
+        label := LabeledInput {
+        }
+    }
+}
+</code></pre>
+<p>If you use the <code>forward-focus</code> property on a <code>Window</code>, then the specified element will receive
+the focus the very first time the window receives the focus - it becomes the initial focus element.</p>
+<h2 id="builtin-functions" class="section-header"><a href="#builtin-functions">Builtin functions</a></h2>
+<ul>
+<li><strong><code>debug(string) -&gt; string</code></strong></li>
+</ul>
+<p>The debug function take a string as an argument and prints it</p>
+<ul>
+<li><strong><code>min</code></strong>, <strong><code>max</code></strong></li>
+</ul>
+<p>Return the arguments with the minimum (or maximum) value. All arguments must be of the same numeric type</p>
+<ul>
+<li><strong><code>mod(int, int) -&gt; int</code></strong></li>
+</ul>
+<p>Perform a modulo operation.</p>
+<ul>
+<li><strong><code>abs(float) -&gt; float</code></strong></li>
+</ul>
+<p>Return the absolute value.</p>
+<ul>
+<li><strong><code>round(float) -&gt; int</code></strong></li>
+</ul>
+<p>Return the value rounded to the nearest integer</p>
+<ul>
+<li><strong><code>ceil(float) -&gt; int</code></strong>, <strong><code>floor(float) -&gt; int</code></strong></li>
+</ul>
+<p>Return the ceiling or floor</p>
+<ul>
+<li><strong><code>sin(angle) -&gt; float</code></strong>, <strong><code>cos(angle) -&gt; float</code></strong>, <strong><code>tan(angle) -&gt; float</code></strong>, <strong><code>asin(float) -&gt; angle</code></strong>, <strong><code>acos(float) -&gt; angle</code></strong>, <strong><code>atan(float) -&gt; angle</code></strong></li>
+</ul>
+<p>The trigonometry function. Note that the should be typed with <code>deg</code> or <code>rad</code> unit
+(for example <code>cos(90deg)</code> or <code>sin(slider.value * 1deg)</code>).</p>
+<ul>
+<li><strong><code>sqrt(float) -&gt; float</code></strong></li>
+</ul>
+<p>Square root</p>
+<ul>
+<li><strong><code>rgb(int, int, int) -&gt; color</code></strong>,  <strong><code>rgba(int, int, int, float) -&gt; color</code></strong></li>
+</ul>
+<p>Return the color as in CSS. Like in CSS, These two functions are actually aliases that can take 3 or for parameter.
+The first 3 parameters can be either number between 0 and 255, or percentage with a <code>%</code> unit.
+The fourth value, if present, is an alpha value between 0 and 1.
+(Unlike in CSS, the comas are mandatory)</p>
+<h2 id="font-handling" class="section-header"><a href="#font-handling">Font Handling</a></h2>
+<p>Elements such as <code>Text</code> and <code>TextInput</code> can render text and allow customizing the appearance of the text through
+different properties. The properties prefixed with <code>font-</code>, such as <code>font-family</code>, <code>font-size</code> and <code>font-weight</code>
+affect the choice of font used for rendering to the screen. If any of these properties is not specified, the <code>default-font-</code>
+values in the surrounding <code>Window</code> element apply, such as <code>default-font-family</code>.</p>
+<p>The fonts chosen for rendering are automatically picked up from the system. It is also possible to include custom
+fonts in your design. A custom font must be a TrueType font (<code>.ttf</code>) or a TrueType font collection (<code>.ttc</code>).
+You can select a custom font with the <code>import</code> statement: <code>import &quot;./my_custom_font.ttf&quot;</code> in a .60 file. This
+instructions the SixtyFPS compiler to include the font and makes the font families globally available for use with
+<code>font-family</code> properties.</p>
+<p>For example:</p>
+<pre><code class="language-60">import &quot;./NotoSans-Regular.ttf&quot;;
+
+Example := Window {
+    default-font-family: &quot;Noto Sans&quot;;
+
+    Text {
+        text: &quot;Hello World&quot;;
+    }
+}
+</code></pre>
+<h1 id="" class="section-header"><a href="#"></a></h1>
+<p>Next: <a href="../builtin_elements/index.html">Builtin Elements</a></p>
+</div></details></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="sixtyfps" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+    <script src="../../../main.js"></script>
+</body></html>

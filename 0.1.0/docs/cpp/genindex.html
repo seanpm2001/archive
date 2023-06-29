@@ -1,0 +1,912 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Index &mdash; SixtyFPS C++ 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_tweak.css" type="text/css" />
+  <link rel="stylesheet" href="_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+<!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-integration.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.0/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+    //import * as sixtyfps from 'https://sixtyfps.io/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+
+        await sixtyfps.default();
+
+        var elements = document.querySelectorAll("code.language-60, div.highlight-60 div");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            div.innerHTML = "<p>Preview:</p>";
+            elements[i].parentElement.insertBefore(div, elements[i])
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SixtyFPS C++
+          
+
+          
+            
+            <img src="_static/logo.drawio.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmake.html">Installing and Building with CMake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#building-from-sources">Building from Sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cmake.html#cross-compiling">Cross-compiling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#binary-packages">Binary Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#tutorial">Tutorial</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/library_root.html">C++ API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/library_root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/library_root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/library_root.html#full-api">Full API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/library_root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/namespace_sixtyfps.html">Namespace sixtyfps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/namespace_sixtyfps__interpreter.html">Namespace sixtyfps::interpreter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/namespace_sixtyfps__testing.html">Namespace sixtyfps::testing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/library_root.html#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1Size.html">Struct Size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structsixtyfps_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1Color.html">Class Color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classsixtyfps_1_1VectorModel.html">Template Class VectorModel</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/library_root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/enum_namespacesixtyfps_1_1interpreter_1a85ae006089fa9b6fad66b2c5c73d4f3b.html">Enum DiagnosticLevel</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/library_root.html#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/function_namespacesixtyfps_1acfc4b71092d63a5fbd0cbc8471e4da52.html">Template Function sixtyfps::invoke_from_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/function_namespacesixtyfps_1a19e5480ac7f0311efafac58b65b38b20.html">Function sixtyfps::quit_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/function_namespacesixtyfps_1ab1b9b4016714eee96dba1457ce2a3b22.html">Function sixtyfps::run_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/function_sixtyfps__interpreter_8h_1a1fb76b7fe83dc1239891629feca150bd.html">Function sixtyfps::testing::send_keyboard_string_sequence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="language.html">The .60 UI Design Language</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="markdown/langref.html">Language Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#files"><code class="docutils literal notranslate"><span class="pre">.60</span></code> files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#container-components">Container Components</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#identifiers">Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#properties">Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#bindings">Bindings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#two-way-bindings">Two-way Bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#types">Types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#structs">Structs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#custom-named-structures">Custom named structures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#arrays-model">Arrays / Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#conversions">Conversions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#relative-lengths">Relative Lengths</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#callback">Callback</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#callback-aliases">Callback aliases</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#expressions">Expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#strings">Strings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#colors">Colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#images">Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#arrays-structs">Arrays/Structs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#statements">Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#repetition">Repetition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#conditional-element">Conditional element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#animations">Animations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#states">States</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/langref.html#transitions">Transitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#global-singletons">Global Singletons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#modules">Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#focus-handling">Focus Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#builtin-functions">Builtin functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/langref.html#font-handling">Font Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markdown/builtin_elements.html">Builtin Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#common-properties">Common properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#drop-shadows">Drop Shadows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#properties">Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id1">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id2">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#text"><code class="docutils literal notranslate"><span class="pre">Text</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id4">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id5">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#common-path-properties">Common Path Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#toucharea"><code class="docutils literal notranslate"><span class="pre">TouchArea</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id11">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id12">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#focusscope"><code class="docutils literal notranslate"><span class="pre">FocusScope</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id13">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id14">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id15">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#verticallayout-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> / <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#id16">Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#id17">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#gridlayout"><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id18">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#pathlayout"><code class="docutils literal notranslate"><span class="pre">PathLayout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#flickable"><code class="docutils literal notranslate"><span class="pre">Flickable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#textinput"><code class="docutils literal notranslate"><span class="pre">TextInput</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id19">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id20">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id21">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id22">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#clip"><code class="docutils literal notranslate"><span class="pre">Clip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#popupwindow"><code class="docutils literal notranslate"><span class="pre">PopupWindow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id23">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id24">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markdown/builtin_elements.html#builtin-structures">Builtin Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#keyevent"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#fields">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#keyboardmodifiers"><code class="docutils literal notranslate"><span class="pre">KeyboardModifiers</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id25">Fields</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markdown/builtin_elements.html#builtin-enums">Builtin Enums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#texthorizontalalignment"><code class="docutils literal notranslate"><span class="pre">TextHorizontalAlignment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#values">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#textverticalalignment"><code class="docutils literal notranslate"><span class="pre">TextVerticalAlignment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id26">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#textwrap"><code class="docutils literal notranslate"><span class="pre">TextWrap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id27">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#textoverflow"><code class="docutils literal notranslate"><span class="pre">TextOverflow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id28">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#eventresult"><code class="docutils literal notranslate"><span class="pre">EventResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id29">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/builtin_elements.html#fillrule"><code class="docutils literal notranslate"><span class="pre">FillRule</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/builtin_elements.html#id30">Values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markdown/widgets.html">Widgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#properties">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#checkbox"><code class="docutils literal notranslate"><span class="pre">CheckBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id1">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id2">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#spinbox"><code class="docutils literal notranslate"><span class="pre">SpinBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id4">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id5">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#slider"><code class="docutils literal notranslate"><span class="pre">Slider</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id6">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id7">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#groupbox"><code class="docutils literal notranslate"><span class="pre">GroupBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id8">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id9">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#lineedit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id10">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id11">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id12">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#scrollview"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id13">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id14">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#listview"><code class="docutils literal notranslate"><span class="pre">ListView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id15">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id16">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#standardlistview"><code class="docutils literal notranslate"><span class="pre">StandardListView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id17">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/widgets.html#id18">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/widgets.html#horizontalbox-verticalbox-gridbox"><code class="docutils literal notranslate"><span class="pre">HorizontalBox</span></code>, <code class="docutils literal notranslate"><span class="pre">VerticalBox</span></code>, <code class="docutils literal notranslate"><span class="pre">GridBox</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markdown/layouting.html">Positioning and Layout of Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="markdown/layouting.html#explicit-placement">Explicit Placement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/layouting.html#automatic-placement-using-layouts">Automatic Placement using Layouts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/layouting.html#common-properties-on-layout-elements">Common Properties on Layout Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/layouting.html#verticallayout-and-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="markdown/layouting.html#alignment">Alignment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/layouting.html#stretch-algorithm">Stretch algorithm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="markdown/layouting.html#for"><code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/layouting.html#gridlayout">GridLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="markdown/layouting.html#pathlayout"><code class="docutils literal notranslate"><span class="pre">PathLayout</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Type Mapping to C++</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="types.html#structures">Structures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="generated_code.html">Example Generated Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated_code.html#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SixtyFPS C++</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Index</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#S"><strong>S</strong></a>
+ 
+</div>
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/classsixtyfps_1_1Brush.html#_CPPv4N8sixtyfps5BrushE">sixtyfps::Brush (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Brush.html#_CPPv4N8sixtyfps5Brush5BrushERK5Color">sixtyfps::Brush::Brush (C++ function)</a>, <a href="api/classsixtyfps_1_1Brush.html#_CPPv4N8sixtyfps5Brush5BrushEv">[1]</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Brush.html#_CPPv4NK8sixtyfps5Brush5colorEv">sixtyfps::Brush::color (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5ColorE">sixtyfps::Color (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color5alphaEv">sixtyfps::Color::alpha (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color15as_argb_encodedEv">sixtyfps::Color::as_argb_encoded (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color4blueEv">sixtyfps::Color::blue (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color8brighterEf">sixtyfps::Color::brighter (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5Color5ColorERK9RgbaColorI7uint8_tE">sixtyfps::Color::Color (C++ function)</a>, <a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5Color5ColorERK9RgbaColorIfE">[1]</a>, <a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5Color5ColorEv">[2]</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color6darkerEf">sixtyfps::Color::darker (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5Color17from_argb_encodedE8uint32_t">sixtyfps::Color::from_argb_encoded (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5Color15from_argb_floatEffff">sixtyfps::Color::from_argb_float (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5Color15from_argb_uint8E7uint8_t7uint8_t7uint8_t7uint8_t">sixtyfps::Color::from_argb_uint8 (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5Color14from_rgb_floatEfff">sixtyfps::Color::from_rgb_float (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4N8sixtyfps5Color14from_rgb_uint8E7uint8_t7uint8_t7uint8_t">sixtyfps::Color::from_rgb_uint8 (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color5greenEv">sixtyfps::Color::green (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color3redEv">sixtyfps::Color::red (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color13to_argb_floatEv">sixtyfps::Color::to_argb_float (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Color.html#_CPPv4NK8sixtyfps5Color12to_argb_uintEv">sixtyfps::Color::to_argb_uint (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1ComponentHandle.html#_CPPv4I0EN8sixtyfps15ComponentHandleE">sixtyfps::ComponentHandle (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1ComponentHandle.html#_CPPv4N8sixtyfps15ComponentHandle15ComponentHandleERKN6vtable3VRcIN11private_api15ComponentVTableE1TEE">sixtyfps::ComponentHandle::ComponentHandle (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1ComponentHandle.html#_CPPv4NK8sixtyfps15ComponentHandle8into_dynEv">sixtyfps::ComponentHandle::into_dyn (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1ComponentHandle.html#_CPPv4NK8sixtyfps15ComponentHandlemlEv">sixtyfps::ComponentHandle::operator* (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1ComponentHandle.html#_CPPv4NK8sixtyfps15ComponentHandleptEv">sixtyfps::ComponentHandle::operator-&gt; (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1ComponentWeakHandle.html#_CPPv4I0EN8sixtyfps19ComponentWeakHandleE">sixtyfps::ComponentWeakHandle (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1ComponentWeakHandle.html#_CPPv4N8sixtyfps19ComponentWeakHandle19ComponentWeakHandleERK15ComponentHandleI1TE">sixtyfps::ComponentWeakHandle::ComponentWeakHandle (C++ function)</a>, <a href="api/classsixtyfps_1_1ComponentWeakHandle.html#_CPPv4N8sixtyfps19ComponentWeakHandle19ComponentWeakHandleEv">[1]</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1ComponentWeakHandle.html#_CPPv4NK8sixtyfps19ComponentWeakHandle4lockEv">sixtyfps::ComponentWeakHandle::lock (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Image.html#_CPPv4N8sixtyfps5ImageE">sixtyfps::Image (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Image.html#_CPPv4N8sixtyfps5Image5ImageEv">sixtyfps::Image::Image (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Image.html#_CPPv4N8sixtyfps5Image14load_from_pathERK12SharedString">sixtyfps::Image::load_from_path (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Image.html#_CPPv4NK8sixtyfps5Image4sizeEv">sixtyfps::Image::size (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N8sixtyfps11interpreter17ComponentCompilerE">sixtyfps::interpreter::ComponentCompiler (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N8sixtyfps11interpreter17ComponentCompiler15build_from_pathENSt11string_viewE">sixtyfps::interpreter::ComponentCompiler::build_from_path (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N8sixtyfps11interpreter17ComponentCompiler17build_from_sourceENSt11string_viewENSt11string_viewE">sixtyfps::interpreter::ComponentCompiler::build_from_source (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N8sixtyfps11interpreter17ComponentCompiler17ComponentCompilerEv">sixtyfps::interpreter::ComponentCompiler::ComponentCompiler (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4NK8sixtyfps11interpreter17ComponentCompiler11diagnosticsEv">sixtyfps::interpreter::ComponentCompiler::diagnostics (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4NK8sixtyfps11interpreter17ComponentCompiler13include_pathsEv">sixtyfps::interpreter::ComponentCompiler::include_paths (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N8sixtyfps11interpreter17ComponentCompiler17set_include_pathsERKN8sixtyfps12SharedVectorIN8sixtyfps12SharedStringEEE">sixtyfps::interpreter::ComponentCompiler::set_include_paths (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N8sixtyfps11interpreter17ComponentCompiler9set_styleENSt11string_viewE">sixtyfps::interpreter::ComponentCompiler::set_style (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4NK8sixtyfps11interpreter17ComponentCompiler5styleEv">sixtyfps::interpreter::ComponentCompiler::style (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N8sixtyfps11interpreter17ComponentCompilerD0Ev">sixtyfps::interpreter::ComponentCompiler::~ComponentCompiler (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N8sixtyfps11interpreter19ComponentDefinitionE">sixtyfps::interpreter::ComponentDefinition (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK8sixtyfps11interpreter19ComponentDefinition9callbacksEv">sixtyfps::interpreter::ComponentDefinition::callbacks (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N8sixtyfps11interpreter19ComponentDefinition19ComponentDefinitionERK19ComponentDefinition">sixtyfps::interpreter::ComponentDefinition::ComponentDefinition (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK8sixtyfps11interpreter19ComponentDefinition6createEv">sixtyfps::interpreter::ComponentDefinition::create (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK8sixtyfps11interpreter19ComponentDefinition4nameEv">sixtyfps::interpreter::ComponentDefinition::name (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N8sixtyfps11interpreter19ComponentDefinitionaSERK19ComponentDefinition">sixtyfps::interpreter::ComponentDefinition::operator= (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK8sixtyfps11interpreter19ComponentDefinition10propertiesEv">sixtyfps::interpreter::ComponentDefinition::properties (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N8sixtyfps11interpreter19ComponentDefinitionD0Ev">sixtyfps::interpreter::ComponentDefinition::~ComponentDefinition (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4N8sixtyfps11interpreter17ComponentInstanceE">sixtyfps::interpreter::ComponentInstance (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK8sixtyfps11interpreter17ComponentInstance12get_propertyENSt11string_viewE">sixtyfps::interpreter::ComponentInstance::get_property (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK8sixtyfps11interpreter17ComponentInstance4hideEv">sixtyfps::interpreter::ComponentInstance::hide (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK8sixtyfps11interpreter17ComponentInstance15invoke_callbackENSt11string_viewE5SliceI5ValueE">sixtyfps::interpreter::ComponentInstance::invoke_callback (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK8sixtyfps11interpreter17ComponentInstance7qwidgetEv">sixtyfps::interpreter::ComponentInstance::qwidget (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK8sixtyfps11interpreter17ComponentInstance3runEv">sixtyfps::interpreter::ComponentInstance::run (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4I0ENK8sixtyfps11interpreter17ComponentInstance12set_callbackEbNSt11string_viewE1F">sixtyfps::interpreter::ComponentInstance::set_callback (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK8sixtyfps11interpreter17ComponentInstance12set_propertyENSt11string_viewERK5Value">sixtyfps::interpreter::ComponentInstance::set_property (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK8sixtyfps11interpreter17ComponentInstance4showEv">sixtyfps::interpreter::ComponentInstance::show (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Diagnostic.html#_CPPv4N8sixtyfps11interpreter10DiagnosticE">sixtyfps::interpreter::Diagnostic (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Diagnostic.html#_CPPv4N8sixtyfps11interpreter10Diagnostic6columnE">sixtyfps::interpreter::Diagnostic::column (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Diagnostic.html#_CPPv4N8sixtyfps11interpreter10Diagnostic5levelE">sixtyfps::interpreter::Diagnostic::level (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Diagnostic.html#_CPPv4N8sixtyfps11interpreter10Diagnostic4lineE">sixtyfps::interpreter::Diagnostic::line (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Diagnostic.html#_CPPv4N8sixtyfps11interpreter10Diagnostic7messageE">sixtyfps::interpreter::Diagnostic::message (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Diagnostic.html#_CPPv4N8sixtyfps11interpreter10Diagnostic11source_fileE">sixtyfps::interpreter::Diagnostic::source_file (C++ member)</a>
+</li>
+      <li><a href="api/enum_namespacesixtyfps_1_1interpreter_1a85ae006089fa9b6fad66b2c5c73d4f3b.html#_CPPv4N8sixtyfps11interpreter15DiagnosticLevelE">sixtyfps::interpreter::DiagnosticLevel (C++ enum)</a>
+</li>
+      <li><a href="api/enum_namespacesixtyfps_1_1interpreter_1a85ae006089fa9b6fad66b2c5c73d4f3b.html#_CPPv4N8sixtyfps11interpreter15DiagnosticLevel5ErrorE">sixtyfps::interpreter::DiagnosticLevel::Error (C++ enumerator)</a>
+</li>
+      <li><a href="api/enum_namespacesixtyfps_1_1interpreter_1a85ae006089fa9b6fad66b2c5c73d4f3b.html#_CPPv4N8sixtyfps11interpreter15DiagnosticLevel7WarningE">sixtyfps::interpreter::DiagnosticLevel::Warning (C++ enumerator)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1PropertyDescriptor.html#_CPPv4N8sixtyfps11interpreter18PropertyDescriptorE">sixtyfps::interpreter::PropertyDescriptor (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1PropertyDescriptor.html#_CPPv4N8sixtyfps11interpreter18PropertyDescriptor13property_nameE">sixtyfps::interpreter::PropertyDescriptor::property_name (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1PropertyDescriptor.html#_CPPv4N8sixtyfps11interpreter18PropertyDescriptor13property_typeE">sixtyfps::interpreter::PropertyDescriptor::property_type (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6StructE">sixtyfps::interpreter::Struct (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4NK8sixtyfps11interpreter6Struct5beginEv">sixtyfps::interpreter::Struct::begin (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4NK8sixtyfps11interpreter6Struct3endEv">sixtyfps::interpreter::Struct::end (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4NK8sixtyfps11interpreter6Struct9get_fieldENSt11string_viewE">sixtyfps::interpreter::Struct::get_field (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratorE">sixtyfps::interpreter::Struct::iterator (C++ struct)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratorE">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct8iterator8iteratorERK8iterator">sixtyfps::interpreter::Struct::iterator::iterator (C++ function)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct8iterator8iteratorERR8iterator">[1]</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N8sixtyfps11interpreter6Struct8iterator8iteratorERK8iterator">[2]</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N8sixtyfps11interpreter6Struct8iterator8iteratorERR8iterator">[3]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4NK8sixtyfps11interpreter6Struct8iteratormlEv">sixtyfps::interpreter::Struct::iterator::operator* (C++ function)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4NK8sixtyfps11interpreter6Struct8iteratormlEv">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratorppEv">sixtyfps::interpreter::Struct::iterator::operator++ (C++ function)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratorppEv">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratoraSERK8iterator">sixtyfps::interpreter::Struct::iterator::operator= (C++ function)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratoraSERR8iterator">[1]</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratoraSERK8iterator">[2]</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratoraSERR8iterator">[3]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct8iterator10value_typeE">sixtyfps::interpreter::Struct::iterator::value_type (C++ type)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N8sixtyfps11interpreter6Struct8iterator10value_typeE">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratorD0Ev">sixtyfps::interpreter::Struct::iterator::~iterator (C++ function)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N8sixtyfps11interpreter6Struct8iteratorD0Ev">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6StructaSERK6Struct">sixtyfps::interpreter::Struct::operator= (C++ function)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6StructaSERR6Struct">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct9set_fieldENSt11string_viewERK5Value">sixtyfps::interpreter::Struct::set_field (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4I0EN8sixtyfps11interpreter6Struct6StructE13InputIterator13InputIterator">sixtyfps::interpreter::Struct::Struct (C++ function)</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct6StructENSt16initializer_listINSt4pairINSt11string_viewE5ValueEEEE">[1]</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct6StructERK6Struct">[2]</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct6StructERR6Struct">[3]</a>, <a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6Struct6StructEv">[4]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/structsixtyfps_1_1interpreter_1_1Struct.html#_CPPv4N8sixtyfps11interpreter6StructD0Ev">sixtyfps::interpreter::Struct::~Struct (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5ValueE">sixtyfps::interpreter::Value (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5ValueaSERK5Value">sixtyfps::interpreter::Value::operator= (C++ function)</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5ValueaSERR5Value">[1]</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4NK8sixtyfps11interpreter5Value8to_arrayEv">sixtyfps::interpreter::Value::to_array (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4NK8sixtyfps11interpreter5Value7to_boolEv">sixtyfps::interpreter::Value::to_bool (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4NK8sixtyfps11interpreter5Value8to_brushEv">sixtyfps::interpreter::Value::to_brush (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4NK8sixtyfps11interpreter5Value9to_numberEv">sixtyfps::interpreter::Value::to_number (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4NK8sixtyfps11interpreter5Value9to_stringEv">sixtyfps::interpreter::Value::to_string (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4NK8sixtyfps11interpreter5Value9to_structEv">sixtyfps::interpreter::Value::to_struct (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4TypeE">sixtyfps::interpreter::Value::Type (C++ enum)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4NK8sixtyfps11interpreter5Value4typeEv">sixtyfps::interpreter::Value::type (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type5ArrayE">sixtyfps::interpreter::Value::Type::Array (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type4BoolE">sixtyfps::interpreter::Value::Type::Bool (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type5BrushE">sixtyfps::interpreter::Value::Type::Brush (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type5ImageE">sixtyfps::interpreter::Value::Type::Image (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type5ModelE">sixtyfps::interpreter::Value::Type::Model (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type6NumberE">sixtyfps::interpreter::Value::Type::Number (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type5OtherE">sixtyfps::interpreter::Value::Type::Other (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type6StringE">sixtyfps::interpreter::Value::Type::String (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type6StructE">sixtyfps::interpreter::Value::Type::Struct (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value4Type4VoidE">sixtyfps::interpreter::Value::Type::Void (C++ enumerator)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueERK12SharedString">sixtyfps::interpreter::Value::Value (C++ function)</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueERK12SharedVectorI5ValueE">[1]</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueERK5Value">[2]</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueERK6Struct">[3]</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueERKN8sixtyfps5BrushE">[4]</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueERKNSt10shared_ptrIN8sixtyfps5ModelI5ValueEEEE">[5]</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueERR5Value">[6]</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueEb">[7]</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueEd">[8]</a>, <a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5Value5ValueEv">[9]</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1interpreter_1_1Value.html#_CPPv4N8sixtyfps11interpreter5ValueD0Ev">sixtyfps::interpreter::Value::~Value (C++ function)</a>
+</li>
+      <li><a href="api/function_namespacesixtyfps_1acfc4b71092d63a5fbd0cbc8471e4da52.html#_CPPv4I0EN8sixtyfps22invoke_from_event_loopEv7Functor">sixtyfps::invoke_from_event_loop (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4I0EN8sixtyfps5ModelE">sixtyfps::Model (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4N8sixtyfps5Model5ModelERK5Model">sixtyfps::Model::Model (C++ function)</a>, <a href="api/classsixtyfps_1_1Model.html#_CPPv4N8sixtyfps5Model5ModelEv">[1]</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4N8sixtyfps5ModelaSERK5Model">sixtyfps::Model::operator= (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4N8sixtyfps5Model9row_addedEii">sixtyfps::Model::row_added (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4N8sixtyfps5Model11row_changedEi">sixtyfps::Model::row_changed (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4NK8sixtyfps5Model9row_countEv">sixtyfps::Model::row_count (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4NK8sixtyfps5Model8row_dataEi">sixtyfps::Model::row_data (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4N8sixtyfps5Model11row_removedEii">sixtyfps::Model::row_removed (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4N8sixtyfps5Model12set_row_dataEiRK9ModelData">sixtyfps::Model::set_row_data (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1Model.html#_CPPv4N8sixtyfps5ModelD0Ev">sixtyfps::Model::~Model (C++ function)</a>
+</li>
+      <li><a href="api/function_namespacesixtyfps_1a19e5480ac7f0311efafac58b65b38b20.html#_CPPv4N8sixtyfps15quit_event_loopEv">sixtyfps::quit_event_loop (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1RgbaColor.html#_CPPv4I0EN8sixtyfps9RgbaColorE">sixtyfps::RgbaColor (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1RgbaColor.html#_CPPv4N8sixtyfps9RgbaColor5alphaE">sixtyfps::RgbaColor::alpha (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1RgbaColor.html#_CPPv4N8sixtyfps9RgbaColor4blueE">sixtyfps::RgbaColor::blue (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1RgbaColor.html#_CPPv4N8sixtyfps9RgbaColor5greenE">sixtyfps::RgbaColor::green (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1RgbaColor.html#_CPPv4N8sixtyfps9RgbaColor3redE">sixtyfps::RgbaColor::red (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1RgbaColor.html#_CPPv4N8sixtyfps9RgbaColor9RgbaColorERK5Color">sixtyfps::RgbaColor::RgbaColor (C++ function)</a>, <a href="api/structsixtyfps_1_1RgbaColor.html#_CPPv4N8sixtyfps9RgbaColor9RgbaColorERK5Color">[1]</a>, <a href="api/structsixtyfps_1_1RgbaColor.html#_CPPv4N8sixtyfps9RgbaColor9RgbaColorERK5Color">[2]</a>
+</li>
+      <li><a href="api/function_namespacesixtyfps_1ab1b9b4016714eee96dba1457ce2a3b22.html#_CPPv4N8sixtyfps14run_event_loopEv">sixtyfps::run_event_loop (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringE">sixtyfps::SharedString (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4NK8sixtyfps12SharedString5beginEv">sixtyfps::SharedString::begin (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4NK8sixtyfps12SharedString4dataEv">sixtyfps::SharedString::data (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4NK8sixtyfps12SharedString5emptyEv">sixtyfps::SharedString::empty (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4NK8sixtyfps12SharedString3endEv">sixtyfps::SharedString::end (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4NK8sixtyfps12SharedString9ends_withENSt11string_viewE">sixtyfps::SharedString::ends_with (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedString11from_numberEd">sixtyfps::SharedString::from_number (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4NK8sixtyfps12SharedStringcvNSt11string_viewEEv">sixtyfps::SharedString::operator std::string_view (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringpLENSt11string_viewE">sixtyfps::SharedString::operator+= (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringaSENSt11string_viewE">sixtyfps::SharedString::operator= (C++ function)</a>, <a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringaSEPKc">[1]</a>, <a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringaSERK12SharedString">[2]</a>, <a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringaSERR12SharedString">[3]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedString12SharedStringENSt11string_viewE">sixtyfps::SharedString::SharedString (C++ function)</a>, <a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedString12SharedStringEPKc">[1]</a>, <a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedString12SharedStringERK12SharedString">[2]</a>, <a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedString12SharedStringEv">[3]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4NK8sixtyfps12SharedString11starts_withENSt11string_viewE">sixtyfps::SharedString::starts_with (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringD0Ev">sixtyfps::SharedString::~SharedString (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4I0EN8sixtyfps12SharedVectorE">sixtyfps::SharedVector (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4NK8sixtyfps12SharedVector2atENSt6size_tE">sixtyfps::SharedVector::at (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVector5beginEv">sixtyfps::SharedVector::begin (C++ function)</a>, <a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4NK8sixtyfps12SharedVector5beginEv">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4NK8sixtyfps12SharedVector6cbeginEv">sixtyfps::SharedVector::cbegin (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4NK8sixtyfps12SharedVector4cendEv">sixtyfps::SharedVector::cend (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4NK8sixtyfps12SharedVector5emptyEv">sixtyfps::SharedVector::empty (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVector3endEv">sixtyfps::SharedVector::end (C++ function)</a>, <a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4NK8sixtyfps12SharedVector3endEv">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVectoraSERK12SharedVector">sixtyfps::SharedVector::operator= (C++ function)</a>, <a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVectoraSERR12SharedVector">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVectorixENSt6size_tE">sixtyfps::SharedVector::operator[] (C++ function)</a>, <a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4NK8sixtyfps12SharedVectorixENSt6size_tE">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVector9push_backERK1T">sixtyfps::SharedVector::push_back (C++ function)</a>, <a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVector9push_backERR1T">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVector12SharedVectorENSt16initializer_listI1TEE">sixtyfps::SharedVector::SharedVector (C++ function)</a>, <a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVector12SharedVectorERK12SharedVector">[1]</a>, <a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVector12SharedVectorEv">[2]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4NK8sixtyfps12SharedVector4sizeEv">sixtyfps::SharedVector::size (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1SharedVector.html#_CPPv4N8sixtyfps12SharedVectorD0Ev">sixtyfps::SharedVector::~SharedVector (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Size.html#_CPPv4N8sixtyfps4SizeE">sixtyfps::Size (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Size.html#_CPPv4N8sixtyfps4Size6heightE">sixtyfps::Size::height (C++ member)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Size.html#_CPPv4N8sixtyfps4Size5widthE">sixtyfps::Size::width (C++ member)</a>
+</li>
+      <li><a href="api/function_sixtyfps__interpreter_8h_1a1fb76b7fe83dc1239891629feca150bd.html#_CPPv4N8sixtyfps7testing29send_keyboard_string_sequenceEPKN8sixtyfps11interpreter17ComponentInstanceERKN8sixtyfps12SharedStringE17KeyboardModifiers">sixtyfps::testing::send_keyboard_string_sequence (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Timer.html#_CPPv4N8sixtyfps5TimerE">sixtyfps::Timer (C++ struct)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Timer.html#_CPPv4N8sixtyfps5TimeraSERK5Timer">sixtyfps::Timer::operator= (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Timer.html#_CPPv4I0EN8sixtyfps5Timer11single_shotEvNSt6chrono12millisecondsE1F">sixtyfps::Timer::single_shot (C++ function)</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Timer.html#_CPPv4I0EN8sixtyfps5Timer5TimerENSt6chrono12millisecondsE1F">sixtyfps::Timer::Timer (C++ function)</a>, <a href="api/structsixtyfps_1_1Timer.html#_CPPv4N8sixtyfps5Timer5TimerERK5Timer">[1]</a>
+</li>
+      <li><a href="api/structsixtyfps_1_1Timer.html#_CPPv4N8sixtyfps5TimerD0Ev">sixtyfps::Timer::~Timer (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1VectorModel.html#_CPPv4I0EN8sixtyfps11VectorModelE">sixtyfps::VectorModel (C++ class)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1VectorModel.html#_CPPv4N8sixtyfps11VectorModel5eraseEi">sixtyfps::VectorModel::erase (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1VectorModel.html#_CPPv4N8sixtyfps11VectorModel9push_backERK9ModelData">sixtyfps::VectorModel::push_back (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1VectorModel.html#_CPPv4NK8sixtyfps11VectorModel9row_countEv">sixtyfps::VectorModel::row_count (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1VectorModel.html#_CPPv4NK8sixtyfps11VectorModel8row_dataEi">sixtyfps::VectorModel::row_data (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1VectorModel.html#_CPPv4N8sixtyfps11VectorModel12set_row_dataEiRK9ModelData">sixtyfps::VectorModel::set_row_data (C++ function)</a>
+</li>
+      <li><a href="api/classsixtyfps_1_1VectorModel.html#_CPPv4N8sixtyfps11VectorModel11VectorModelENSt6vectorI9ModelDataEE">sixtyfps::VectorModel::VectorModel (C++ function)</a>, <a href="api/classsixtyfps_1_1VectorModel.html#_CPPv4N8sixtyfps11VectorModel11VectorModelEv">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, info@sixtyfps.io.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

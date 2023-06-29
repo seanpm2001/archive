@@ -1,0 +1,1503 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_qt_internal.h:
+
+Program Listing for File slint_qt_internal.h
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_qt_internal.h>` (``cppdocs/generated_include/slint_qt_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.20.0 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   #include "slint_internal.h"
+   
+   namespace slint {
+   namespace cbindgen_private {
+   
+   struct FloatArg;
+   
+   using QStyle_StandardPixmap = unsigned int;
+   
+   using Qt_KeyboardModifier = unsigned int;
+   
+   using Qt_AlignmentFlag = unsigned int;
+   
+   using Qt_TextFlag = unsigned int;
+   
+   using Qt_Key = unsigned int;
+   
+   using Qt_CursorShape = unsigned int;
+   
+   using Qt_FillRule = unsigned int;
+   
+   struct NativeButton {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<SharedString> text;
+       Property<Image> icon;
+       Property<bool> enabled;
+       Property<bool> pressed;
+       private_api::CallbackHelper<void> clicked;
+       Property<StandardButtonKind> standard_button_kind;
+       Property<bool> is_standard_button;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct NativeSpinBoxData {
+       uint32_t active_controls;
+       bool pressed;
+   };
+   
+   struct NativeSpinBox {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<bool> enabled;
+       Property<bool> has_focus;
+       Property<int32_t> value;
+       Property<int32_t> minimum;
+       Property<int32_t> maximum;
+       CachedRenderingData cached_rendering_data;
+       private_api::CallbackHelper<KeyEvent, EventResult> key_pressed;
+       private_api::CallbackHelper<KeyEvent, EventResult> key_released;
+       Property<NativeSpinBoxData> data;
+   };
+   
+   struct NativeCheckBox {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<bool> enabled;
+       private_api::CallbackHelper<void> toggled;
+       Property<SharedString> text;
+       Property<bool> checked;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct NativeSliderData {
+       uint32_t active_controls;
+       uint8_t pressed;
+       float pressed_x;
+       float pressed_val;
+   };
+   
+   struct NativeSlider {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<bool> enabled;
+       Property<float> value;
+       Property<float> minimum;
+       Property<float> maximum;
+       CachedRenderingData cached_rendering_data;
+       Property<NativeSliderData> data;
+       private_api::CallbackHelper<FloatArg> changed;
+   };
+   
+   struct NativeGroupBox {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<bool> enabled;
+       Property<SharedString> title;
+       CachedRenderingData cached_rendering_data;
+       Property<float> native_padding_left;
+       Property<float> native_padding_right;
+       Property<float> native_padding_top;
+       Property<float> native_padding_bottom;
+   };
+   
+   struct NativeLineEdit {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       CachedRenderingData cached_rendering_data;
+       Property<float> native_padding_left;
+       Property<float> native_padding_right;
+       Property<float> native_padding_top;
+       Property<float> native_padding_bottom;
+       Property<bool> has_focus;
+       Property<bool> enabled;
+       Property<InputType> input_type;
+   };
+   
+   struct NativeScrollView {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<float> horizontal_max;
+       Property<float> horizontal_page_size;
+       Property<float> horizontal_value;
+       Property<float> vertical_max;
+       Property<float> vertical_page_size;
+       Property<float> vertical_value;
+       CachedRenderingData cached_rendering_data;
+       Property<float> native_padding_left;
+       Property<float> native_padding_right;
+       Property<float> native_padding_top;
+       Property<float> native_padding_bottom;
+       Property<bool> enabled;
+       Property<bool> has_focus;
+       Property<NativeSliderData> data;
+   };
+   
+   struct NativeStandardListViewItem {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<StandardListViewItem> item;
+       Property<int32_t> index;
+       Property<bool> is_selected;
+       CachedRenderingData cached_rendering_data;
+       Property<bool> has_hover;
+   };
+   
+   struct NativeComboBox {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<bool> enabled;
+       Property<bool> pressed;
+       Property<bool> is_open;
+       Property<SharedString> current_value;
+       CachedRenderingData cached_rendering_data;
+       private_api::CallbackHelper<void> open_popup;
+   };
+   
+   struct NativeComboBoxPopup {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct NativeTabWidget {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       CachedRenderingData cached_rendering_data;
+       Property<float> content_min_height;
+       Property<float> content_min_width;
+       Property<float> tabbar_preferred_height;
+       Property<float> tabbar_preferred_width;
+       Property<float> content_x;
+       Property<float> content_y;
+       Property<float> content_height;
+       Property<float> content_width;
+       Property<float> tabbar_x;
+       Property<float> tabbar_y;
+       Property<float> tabbar_height;
+       Property<float> tabbar_width;
+   };
+   
+   struct NativeTab {
+       Property<float> x;
+       Property<float> y;
+       Property<float> width;
+       Property<float> height;
+       Property<SharedString> title;
+       Property<Image> icon;
+       Property<bool> enabled;
+       Property<bool> pressed;
+       Property<int32_t> current;
+       Property<int32_t> num_tabs;
+       Property<int32_t> tab_index;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct NativeStyleMetrics {
+       Property<float> layout_spacing;
+       Property<float> layout_padding;
+       Property<float> text_cursor_width;
+       Property<Color> window_background;
+       Property<Color> default_text_color;
+       Property<Color> textedit_background;
+       Property<Color> textedit_text_color;
+       Property<Color> textedit_background_disabled;
+       Property<Color> textedit_text_color_disabled;
+       Property<Color> placeholder_color;
+       Property<Color> placeholder_color_disabled;
+       Property<bool> dark_style;
+       const uint8_t *style_change_listener;
+       inline explicit NativeStyleMetrics(void* = nullptr); inline ~NativeStyleMetrics();
+   };
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TitleBarMenuButton = 0;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TitleBarMinButton = 1;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TitleBarMaxButton = 2;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TitleBarCloseButton = 3;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TitleBarNormalButton = 4;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TitleBarShadeButton = 5;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TitleBarUnshadeButton = 6;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TitleBarContextHelpButton = 7;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DockWidgetCloseButton = 8;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MessageBoxInformation = 9;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MessageBoxWarning = 10;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MessageBoxCritical = 11;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MessageBoxQuestion = 12;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DesktopIcon = 13;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_TrashIcon = 14;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ComputerIcon = 15;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DriveFDIcon = 16;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DriveHDIcon = 17;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DriveCDIcon = 18;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DriveDVDIcon = 19;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DriveNetIcon = 20;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DirOpenIcon = 21;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DirClosedIcon = 22;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DirLinkIcon = 23;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DirLinkOpenIcon = 24;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileIcon = 25;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileLinkIcon = 26;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ToolBarHorizontalExtensionButton = 27;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ToolBarVerticalExtensionButton = 28;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogStart = 29;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogEnd = 30;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogToParent = 31;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogNewFolder = 32;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogDetailedView = 33;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogInfoView = 34;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogContentsView = 35;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogListView = 36;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_FileDialogBack = 37;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DirIcon = 38;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogOkButton = 39;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogCancelButton = 40;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogHelpButton = 41;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogOpenButton = 42;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogSaveButton = 43;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogCloseButton = 44;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogApplyButton = 45;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogResetButton = 46;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogDiscardButton = 47;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogYesButton = 48;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogNoButton = 49;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ArrowUp = 50;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ArrowDown = 51;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ArrowLeft = 52;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ArrowRight = 53;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ArrowBack = 54;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_ArrowForward = 55;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DirHomeIcon = 56;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_CommandLink = 57;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_VistaShield = 58;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_BrowserReload = 59;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_BrowserStop = 60;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaPlay = 61;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaStop = 62;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaPause = 63;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaSkipForward = 64;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaSkipBackward = 65;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaSeekForward = 66;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaSeekBackward = 67;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaVolume = 68;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_MediaVolumeMuted = 69;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_LineEditClearButton = 70;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogYesToAllButton = 71;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogNoToAllButton = 72;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogSaveAllButton = 73;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogAbortButton = 74;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogRetryButton = 75;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_DialogIgnoreButton = 76;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_RestoreDefaultsButton = 77;
+   
+   static const QStyle_StandardPixmap QStyle_StandardPixmap_SP_CustomBase = 4026531840;
+   
+   static const Qt_KeyboardModifier Qt_KeyboardModifier_NoModifier = 0;
+   
+   static const Qt_KeyboardModifier Qt_KeyboardModifier_ShiftModifier = 33554432;
+   
+   static const Qt_KeyboardModifier Qt_KeyboardModifier_ControlModifier = 67108864;
+   
+   static const Qt_KeyboardModifier Qt_KeyboardModifier_AltModifier = 134217728;
+   
+   static const Qt_KeyboardModifier Qt_KeyboardModifier_MetaModifier = 268435456;
+   
+   static const Qt_KeyboardModifier Qt_KeyboardModifier_KeypadModifier = 536870912;
+   
+   static const Qt_KeyboardModifier Qt_KeyboardModifier_GroupSwitchModifier = 1073741824;
+   
+   static const Qt_KeyboardModifier Qt_KeyboardModifier_KeyboardModifierMask = 4261412864;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignLeft = 1;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignLeading = 1;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignRight = 2;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignTrailing = 2;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignHCenter = 4;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignJustify = 8;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignAbsolute = 16;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignHorizontal_Mask = 31;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignTop = 32;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignBottom = 64;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignVCenter = 128;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignBaseline = 256;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignVertical_Mask = 480;
+   
+   static const Qt_AlignmentFlag Qt_AlignmentFlag_AlignCenter = 132;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextSingleLine = 256;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextDontClip = 512;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextExpandTabs = 1024;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextShowMnemonic = 2048;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextWordWrap = 4096;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextWrapAnywhere = 8192;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextDontPrint = 16384;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextIncludeTrailingSpaces = 134217728;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextHideMnemonic = 32768;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextJustificationForced = 65536;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextForceLeftToRight = 131072;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextForceRightToLeft = 262144;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextLongestVariant = 524288;
+   
+   static const Qt_TextFlag Qt_TextFlag_TextBypassShaping = 1048576;
+   
+   static const Qt_Key Qt_Key_Key_Escape = 16777216;
+   
+   static const Qt_Key Qt_Key_Key_Tab = 16777217;
+   
+   static const Qt_Key Qt_Key_Key_Backtab = 16777218;
+   
+   static const Qt_Key Qt_Key_Key_Backspace = 16777219;
+   
+   static const Qt_Key Qt_Key_Key_Return = 16777220;
+   
+   static const Qt_Key Qt_Key_Key_Enter = 16777221;
+   
+   static const Qt_Key Qt_Key_Key_Insert = 16777222;
+   
+   static const Qt_Key Qt_Key_Key_Delete = 16777223;
+   
+   static const Qt_Key Qt_Key_Key_Pause = 16777224;
+   
+   static const Qt_Key Qt_Key_Key_Print = 16777225;
+   
+   static const Qt_Key Qt_Key_Key_SysReq = 16777226;
+   
+   static const Qt_Key Qt_Key_Key_Clear = 16777227;
+   
+   static const Qt_Key Qt_Key_Key_Home = 16777232;
+   
+   static const Qt_Key Qt_Key_Key_End = 16777233;
+   
+   static const Qt_Key Qt_Key_Key_Left = 16777234;
+   
+   static const Qt_Key Qt_Key_Key_Up = 16777235;
+   
+   static const Qt_Key Qt_Key_Key_Right = 16777236;
+   
+   static const Qt_Key Qt_Key_Key_Down = 16777237;
+   
+   static const Qt_Key Qt_Key_Key_PageUp = 16777238;
+   
+   static const Qt_Key Qt_Key_Key_PageDown = 16777239;
+   
+   static const Qt_Key Qt_Key_Key_Shift = 16777248;
+   
+   static const Qt_Key Qt_Key_Key_Control = 16777249;
+   
+   static const Qt_Key Qt_Key_Key_Meta = 16777250;
+   
+   static const Qt_Key Qt_Key_Key_Alt = 16777251;
+   
+   static const Qt_Key Qt_Key_Key_CapsLock = 16777252;
+   
+   static const Qt_Key Qt_Key_Key_NumLock = 16777253;
+   
+   static const Qt_Key Qt_Key_Key_ScrollLock = 16777254;
+   
+   static const Qt_Key Qt_Key_Key_F1 = 16777264;
+   
+   static const Qt_Key Qt_Key_Key_F2 = 16777265;
+   
+   static const Qt_Key Qt_Key_Key_F3 = 16777266;
+   
+   static const Qt_Key Qt_Key_Key_F4 = 16777267;
+   
+   static const Qt_Key Qt_Key_Key_F5 = 16777268;
+   
+   static const Qt_Key Qt_Key_Key_F6 = 16777269;
+   
+   static const Qt_Key Qt_Key_Key_F7 = 16777270;
+   
+   static const Qt_Key Qt_Key_Key_F8 = 16777271;
+   
+   static const Qt_Key Qt_Key_Key_F9 = 16777272;
+   
+   static const Qt_Key Qt_Key_Key_F10 = 16777273;
+   
+   static const Qt_Key Qt_Key_Key_F11 = 16777274;
+   
+   static const Qt_Key Qt_Key_Key_F12 = 16777275;
+   
+   static const Qt_Key Qt_Key_Key_F13 = 16777276;
+   
+   static const Qt_Key Qt_Key_Key_F14 = 16777277;
+   
+   static const Qt_Key Qt_Key_Key_F15 = 16777278;
+   
+   static const Qt_Key Qt_Key_Key_F16 = 16777279;
+   
+   static const Qt_Key Qt_Key_Key_F17 = 16777280;
+   
+   static const Qt_Key Qt_Key_Key_F18 = 16777281;
+   
+   static const Qt_Key Qt_Key_Key_F19 = 16777282;
+   
+   static const Qt_Key Qt_Key_Key_F20 = 16777283;
+   
+   static const Qt_Key Qt_Key_Key_F21 = 16777284;
+   
+   static const Qt_Key Qt_Key_Key_F22 = 16777285;
+   
+   static const Qt_Key Qt_Key_Key_F23 = 16777286;
+   
+   static const Qt_Key Qt_Key_Key_F24 = 16777287;
+   
+   static const Qt_Key Qt_Key_Key_F25 = 16777288;
+   
+   static const Qt_Key Qt_Key_Key_F26 = 16777289;
+   
+   static const Qt_Key Qt_Key_Key_F27 = 16777290;
+   
+   static const Qt_Key Qt_Key_Key_F28 = 16777291;
+   
+   static const Qt_Key Qt_Key_Key_F29 = 16777292;
+   
+   static const Qt_Key Qt_Key_Key_F30 = 16777293;
+   
+   static const Qt_Key Qt_Key_Key_F31 = 16777294;
+   
+   static const Qt_Key Qt_Key_Key_F32 = 16777295;
+   
+   static const Qt_Key Qt_Key_Key_F33 = 16777296;
+   
+   static const Qt_Key Qt_Key_Key_F34 = 16777297;
+   
+   static const Qt_Key Qt_Key_Key_F35 = 16777298;
+   
+   static const Qt_Key Qt_Key_Key_Super_L = 16777299;
+   
+   static const Qt_Key Qt_Key_Key_Super_R = 16777300;
+   
+   static const Qt_Key Qt_Key_Key_Menu = 16777301;
+   
+   static const Qt_Key Qt_Key_Key_Hyper_L = 16777302;
+   
+   static const Qt_Key Qt_Key_Key_Hyper_R = 16777303;
+   
+   static const Qt_Key Qt_Key_Key_Help = 16777304;
+   
+   static const Qt_Key Qt_Key_Key_Direction_L = 16777305;
+   
+   static const Qt_Key Qt_Key_Key_Direction_R = 16777312;
+   
+   static const Qt_Key Qt_Key_Key_Space = 32;
+   
+   static const Qt_Key Qt_Key_Key_Any = 32;
+   
+   static const Qt_Key Qt_Key_Key_Exclam = 33;
+   
+   static const Qt_Key Qt_Key_Key_QuoteDbl = 34;
+   
+   static const Qt_Key Qt_Key_Key_NumberSign = 35;
+   
+   static const Qt_Key Qt_Key_Key_Dollar = 36;
+   
+   static const Qt_Key Qt_Key_Key_Percent = 37;
+   
+   static const Qt_Key Qt_Key_Key_Ampersand = 38;
+   
+   static const Qt_Key Qt_Key_Key_Apostrophe = 39;
+   
+   static const Qt_Key Qt_Key_Key_ParenLeft = 40;
+   
+   static const Qt_Key Qt_Key_Key_ParenRight = 41;
+   
+   static const Qt_Key Qt_Key_Key_Asterisk = 42;
+   
+   static const Qt_Key Qt_Key_Key_Plus = 43;
+   
+   static const Qt_Key Qt_Key_Key_Comma = 44;
+   
+   static const Qt_Key Qt_Key_Key_Minus = 45;
+   
+   static const Qt_Key Qt_Key_Key_Period = 46;
+   
+   static const Qt_Key Qt_Key_Key_Slash = 47;
+   
+   static const Qt_Key Qt_Key_Key_0 = 48;
+   
+   static const Qt_Key Qt_Key_Key_1 = 49;
+   
+   static const Qt_Key Qt_Key_Key_2 = 50;
+   
+   static const Qt_Key Qt_Key_Key_3 = 51;
+   
+   static const Qt_Key Qt_Key_Key_4 = 52;
+   
+   static const Qt_Key Qt_Key_Key_5 = 53;
+   
+   static const Qt_Key Qt_Key_Key_6 = 54;
+   
+   static const Qt_Key Qt_Key_Key_7 = 55;
+   
+   static const Qt_Key Qt_Key_Key_8 = 56;
+   
+   static const Qt_Key Qt_Key_Key_9 = 57;
+   
+   static const Qt_Key Qt_Key_Key_Colon = 58;
+   
+   static const Qt_Key Qt_Key_Key_Semicolon = 59;
+   
+   static const Qt_Key Qt_Key_Key_Less = 60;
+   
+   static const Qt_Key Qt_Key_Key_Equal = 61;
+   
+   static const Qt_Key Qt_Key_Key_Greater = 62;
+   
+   static const Qt_Key Qt_Key_Key_Question = 63;
+   
+   static const Qt_Key Qt_Key_Key_At = 64;
+   
+   static const Qt_Key Qt_Key_Key_A = 65;
+   
+   static const Qt_Key Qt_Key_Key_B = 66;
+   
+   static const Qt_Key Qt_Key_Key_C = 67;
+   
+   static const Qt_Key Qt_Key_Key_D = 68;
+   
+   static const Qt_Key Qt_Key_Key_E = 69;
+   
+   static const Qt_Key Qt_Key_Key_F = 70;
+   
+   static const Qt_Key Qt_Key_Key_G = 71;
+   
+   static const Qt_Key Qt_Key_Key_H = 72;
+   
+   static const Qt_Key Qt_Key_Key_I = 73;
+   
+   static const Qt_Key Qt_Key_Key_J = 74;
+   
+   static const Qt_Key Qt_Key_Key_K = 75;
+   
+   static const Qt_Key Qt_Key_Key_L = 76;
+   
+   static const Qt_Key Qt_Key_Key_M = 77;
+   
+   static const Qt_Key Qt_Key_Key_N = 78;
+   
+   static const Qt_Key Qt_Key_Key_O = 79;
+   
+   static const Qt_Key Qt_Key_Key_P = 80;
+   
+   static const Qt_Key Qt_Key_Key_Q = 81;
+   
+   static const Qt_Key Qt_Key_Key_R = 82;
+   
+   static const Qt_Key Qt_Key_Key_S = 83;
+   
+   static const Qt_Key Qt_Key_Key_T = 84;
+   
+   static const Qt_Key Qt_Key_Key_U = 85;
+   
+   static const Qt_Key Qt_Key_Key_V = 86;
+   
+   static const Qt_Key Qt_Key_Key_W = 87;
+   
+   static const Qt_Key Qt_Key_Key_X = 88;
+   
+   static const Qt_Key Qt_Key_Key_Y = 89;
+   
+   static const Qt_Key Qt_Key_Key_Z = 90;
+   
+   static const Qt_Key Qt_Key_Key_BracketLeft = 91;
+   
+   static const Qt_Key Qt_Key_Key_Backslash = 92;
+   
+   static const Qt_Key Qt_Key_Key_BracketRight = 93;
+   
+   static const Qt_Key Qt_Key_Key_AsciiCircum = 94;
+   
+   static const Qt_Key Qt_Key_Key_Underscore = 95;
+   
+   static const Qt_Key Qt_Key_Key_QuoteLeft = 96;
+   
+   static const Qt_Key Qt_Key_Key_BraceLeft = 123;
+   
+   static const Qt_Key Qt_Key_Key_Bar = 124;
+   
+   static const Qt_Key Qt_Key_Key_BraceRight = 125;
+   
+   static const Qt_Key Qt_Key_Key_AsciiTilde = 126;
+   
+   static const Qt_Key Qt_Key_Key_nobreakspace = 160;
+   
+   static const Qt_Key Qt_Key_Key_exclamdown = 161;
+   
+   static const Qt_Key Qt_Key_Key_cent = 162;
+   
+   static const Qt_Key Qt_Key_Key_sterling = 163;
+   
+   static const Qt_Key Qt_Key_Key_currency = 164;
+   
+   static const Qt_Key Qt_Key_Key_yen = 165;
+   
+   static const Qt_Key Qt_Key_Key_brokenbar = 166;
+   
+   static const Qt_Key Qt_Key_Key_section = 167;
+   
+   static const Qt_Key Qt_Key_Key_diaeresis = 168;
+   
+   static const Qt_Key Qt_Key_Key_copyright = 169;
+   
+   static const Qt_Key Qt_Key_Key_ordfeminine = 170;
+   
+   static const Qt_Key Qt_Key_Key_guillemotleft = 171;
+   
+   static const Qt_Key Qt_Key_Key_notsign = 172;
+   
+   static const Qt_Key Qt_Key_Key_hyphen = 173;
+   
+   static const Qt_Key Qt_Key_Key_registered = 174;
+   
+   static const Qt_Key Qt_Key_Key_macron = 175;
+   
+   static const Qt_Key Qt_Key_Key_degree = 176;
+   
+   static const Qt_Key Qt_Key_Key_plusminus = 177;
+   
+   static const Qt_Key Qt_Key_Key_twosuperior = 178;
+   
+   static const Qt_Key Qt_Key_Key_threesuperior = 179;
+   
+   static const Qt_Key Qt_Key_Key_acute = 180;
+   
+   static const Qt_Key Qt_Key_Key_mu = 181;
+   
+   static const Qt_Key Qt_Key_Key_paragraph = 182;
+   
+   static const Qt_Key Qt_Key_Key_periodcentered = 183;
+   
+   static const Qt_Key Qt_Key_Key_cedilla = 184;
+   
+   static const Qt_Key Qt_Key_Key_onesuperior = 185;
+   
+   static const Qt_Key Qt_Key_Key_masculine = 186;
+   
+   static const Qt_Key Qt_Key_Key_guillemotright = 187;
+   
+   static const Qt_Key Qt_Key_Key_onequarter = 188;
+   
+   static const Qt_Key Qt_Key_Key_onehalf = 189;
+   
+   static const Qt_Key Qt_Key_Key_threequarters = 190;
+   
+   static const Qt_Key Qt_Key_Key_questiondown = 191;
+   
+   static const Qt_Key Qt_Key_Key_Agrave = 192;
+   
+   static const Qt_Key Qt_Key_Key_Aacute = 193;
+   
+   static const Qt_Key Qt_Key_Key_Acircumflex = 194;
+   
+   static const Qt_Key Qt_Key_Key_Atilde = 195;
+   
+   static const Qt_Key Qt_Key_Key_Adiaeresis = 196;
+   
+   static const Qt_Key Qt_Key_Key_Aring = 197;
+   
+   static const Qt_Key Qt_Key_Key_AE = 198;
+   
+   static const Qt_Key Qt_Key_Key_Ccedilla = 199;
+   
+   static const Qt_Key Qt_Key_Key_Egrave = 200;
+   
+   static const Qt_Key Qt_Key_Key_Eacute = 201;
+   
+   static const Qt_Key Qt_Key_Key_Ecircumflex = 202;
+   
+   static const Qt_Key Qt_Key_Key_Ediaeresis = 203;
+   
+   static const Qt_Key Qt_Key_Key_Igrave = 204;
+   
+   static const Qt_Key Qt_Key_Key_Iacute = 205;
+   
+   static const Qt_Key Qt_Key_Key_Icircumflex = 206;
+   
+   static const Qt_Key Qt_Key_Key_Idiaeresis = 207;
+   
+   static const Qt_Key Qt_Key_Key_ETH = 208;
+   
+   static const Qt_Key Qt_Key_Key_Ntilde = 209;
+   
+   static const Qt_Key Qt_Key_Key_Ograve = 210;
+   
+   static const Qt_Key Qt_Key_Key_Oacute = 211;
+   
+   static const Qt_Key Qt_Key_Key_Ocircumflex = 212;
+   
+   static const Qt_Key Qt_Key_Key_Otilde = 213;
+   
+   static const Qt_Key Qt_Key_Key_Odiaeresis = 214;
+   
+   static const Qt_Key Qt_Key_Key_multiply = 215;
+   
+   static const Qt_Key Qt_Key_Key_Ooblique = 216;
+   
+   static const Qt_Key Qt_Key_Key_Ugrave = 217;
+   
+   static const Qt_Key Qt_Key_Key_Uacute = 218;
+   
+   static const Qt_Key Qt_Key_Key_Ucircumflex = 219;
+   
+   static const Qt_Key Qt_Key_Key_Udiaeresis = 220;
+   
+   static const Qt_Key Qt_Key_Key_Yacute = 221;
+   
+   static const Qt_Key Qt_Key_Key_THORN = 222;
+   
+   static const Qt_Key Qt_Key_Key_ssharp = 223;
+   
+   static const Qt_Key Qt_Key_Key_division = 247;
+   
+   static const Qt_Key Qt_Key_Key_ydiaeresis = 255;
+   
+   static const Qt_Key Qt_Key_Key_AltGr = 16781571;
+   
+   static const Qt_Key Qt_Key_Key_Multi_key = 16781600;
+   
+   static const Qt_Key Qt_Key_Key_Codeinput = 16781623;
+   
+   static const Qt_Key Qt_Key_Key_SingleCandidate = 16781628;
+   
+   static const Qt_Key Qt_Key_Key_MultipleCandidate = 16781629;
+   
+   static const Qt_Key Qt_Key_Key_PreviousCandidate = 16781630;
+   
+   static const Qt_Key Qt_Key_Key_Mode_switch = 16781694;
+   
+   static const Qt_Key Qt_Key_Key_Kanji = 16781601;
+   
+   static const Qt_Key Qt_Key_Key_Muhenkan = 16781602;
+   
+   static const Qt_Key Qt_Key_Key_Henkan = 16781603;
+   
+   static const Qt_Key Qt_Key_Key_Romaji = 16781604;
+   
+   static const Qt_Key Qt_Key_Key_Hiragana = 16781605;
+   
+   static const Qt_Key Qt_Key_Key_Katakana = 16781606;
+   
+   static const Qt_Key Qt_Key_Key_Hiragana_Katakana = 16781607;
+   
+   static const Qt_Key Qt_Key_Key_Zenkaku = 16781608;
+   
+   static const Qt_Key Qt_Key_Key_Hankaku = 16781609;
+   
+   static const Qt_Key Qt_Key_Key_Zenkaku_Hankaku = 16781610;
+   
+   static const Qt_Key Qt_Key_Key_Touroku = 16781611;
+   
+   static const Qt_Key Qt_Key_Key_Massyo = 16781612;
+   
+   static const Qt_Key Qt_Key_Key_Kana_Lock = 16781613;
+   
+   static const Qt_Key Qt_Key_Key_Kana_Shift = 16781614;
+   
+   static const Qt_Key Qt_Key_Key_Eisu_Shift = 16781615;
+   
+   static const Qt_Key Qt_Key_Key_Eisu_toggle = 16781616;
+   
+   static const Qt_Key Qt_Key_Key_Hangul = 16781617;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_Start = 16781618;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_End = 16781619;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_Hanja = 16781620;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_Jamo = 16781621;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_Romaja = 16781622;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_Jeonja = 16781624;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_Banja = 16781625;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_PreHanja = 16781626;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_PostHanja = 16781627;
+   
+   static const Qt_Key Qt_Key_Key_Hangul_Special = 16781631;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Grave = 16781904;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Acute = 16781905;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Circumflex = 16781906;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Tilde = 16781907;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Macron = 16781908;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Breve = 16781909;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Abovedot = 16781910;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Diaeresis = 16781911;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Abovering = 16781912;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Doubleacute = 16781913;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Caron = 16781914;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Cedilla = 16781915;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Ogonek = 16781916;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Iota = 16781917;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Voiced_Sound = 16781918;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Semivoiced_Sound = 16781919;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowdot = 16781920;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Hook = 16781921;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Horn = 16781922;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Stroke = 16781923;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Abovecomma = 16781924;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Abovereversedcomma = 16781925;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Doublegrave = 16781926;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowring = 16781927;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowmacron = 16781928;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowcircumflex = 16781929;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowtilde = 16781930;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowbreve = 16781931;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowdiaeresis = 16781932;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Invertedbreve = 16781933;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowcomma = 16781934;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Currency = 16781935;
+   
+   static const Qt_Key Qt_Key_Key_Dead_a = 16781952;
+   
+   static const Qt_Key Qt_Key_Key_Dead_A = 16781953;
+   
+   static const Qt_Key Qt_Key_Key_Dead_e = 16781954;
+   
+   static const Qt_Key Qt_Key_Key_Dead_E = 16781955;
+   
+   static const Qt_Key Qt_Key_Key_Dead_i = 16781956;
+   
+   static const Qt_Key Qt_Key_Key_Dead_I = 16781957;
+   
+   static const Qt_Key Qt_Key_Key_Dead_o = 16781958;
+   
+   static const Qt_Key Qt_Key_Key_Dead_O = 16781959;
+   
+   static const Qt_Key Qt_Key_Key_Dead_u = 16781960;
+   
+   static const Qt_Key Qt_Key_Key_Dead_U = 16781961;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Small_Schwa = 16781962;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Capital_Schwa = 16781963;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Greek = 16781964;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Lowline = 16781968;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Aboveverticalline = 16781969;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Belowverticalline = 16781970;
+   
+   static const Qt_Key Qt_Key_Key_Dead_Longsolidusoverlay = 16781971;
+   
+   static const Qt_Key Qt_Key_Key_Back = 16777313;
+   
+   static const Qt_Key Qt_Key_Key_Forward = 16777314;
+   
+   static const Qt_Key Qt_Key_Key_Stop = 16777315;
+   
+   static const Qt_Key Qt_Key_Key_Refresh = 16777316;
+   
+   static const Qt_Key Qt_Key_Key_VolumeDown = 16777328;
+   
+   static const Qt_Key Qt_Key_Key_VolumeMute = 16777329;
+   
+   static const Qt_Key Qt_Key_Key_VolumeUp = 16777330;
+   
+   static const Qt_Key Qt_Key_Key_BassBoost = 16777331;
+   
+   static const Qt_Key Qt_Key_Key_BassUp = 16777332;
+   
+   static const Qt_Key Qt_Key_Key_BassDown = 16777333;
+   
+   static const Qt_Key Qt_Key_Key_TrebleUp = 16777334;
+   
+   static const Qt_Key Qt_Key_Key_TrebleDown = 16777335;
+   
+   static const Qt_Key Qt_Key_Key_MediaPlay = 16777344;
+   
+   static const Qt_Key Qt_Key_Key_MediaStop = 16777345;
+   
+   static const Qt_Key Qt_Key_Key_MediaPrevious = 16777346;
+   
+   static const Qt_Key Qt_Key_Key_MediaNext = 16777347;
+   
+   static const Qt_Key Qt_Key_Key_MediaRecord = 16777348;
+   
+   static const Qt_Key Qt_Key_Key_MediaPause = 16777349;
+   
+   static const Qt_Key Qt_Key_Key_MediaTogglePlayPause = 16777350;
+   
+   static const Qt_Key Qt_Key_Key_HomePage = 16777360;
+   
+   static const Qt_Key Qt_Key_Key_Favorites = 16777361;
+   
+   static const Qt_Key Qt_Key_Key_Search = 16777362;
+   
+   static const Qt_Key Qt_Key_Key_Standby = 16777363;
+   
+   static const Qt_Key Qt_Key_Key_OpenUrl = 16777364;
+   
+   static const Qt_Key Qt_Key_Key_LaunchMail = 16777376;
+   
+   static const Qt_Key Qt_Key_Key_LaunchMedia = 16777377;
+   
+   static const Qt_Key Qt_Key_Key_Launch0 = 16777378;
+   
+   static const Qt_Key Qt_Key_Key_Launch1 = 16777379;
+   
+   static const Qt_Key Qt_Key_Key_Launch2 = 16777380;
+   
+   static const Qt_Key Qt_Key_Key_Launch3 = 16777381;
+   
+   static const Qt_Key Qt_Key_Key_Launch4 = 16777382;
+   
+   static const Qt_Key Qt_Key_Key_Launch5 = 16777383;
+   
+   static const Qt_Key Qt_Key_Key_Launch6 = 16777384;
+   
+   static const Qt_Key Qt_Key_Key_Launch7 = 16777385;
+   
+   static const Qt_Key Qt_Key_Key_Launch8 = 16777386;
+   
+   static const Qt_Key Qt_Key_Key_Launch9 = 16777387;
+   
+   static const Qt_Key Qt_Key_Key_LaunchA = 16777388;
+   
+   static const Qt_Key Qt_Key_Key_LaunchB = 16777389;
+   
+   static const Qt_Key Qt_Key_Key_LaunchC = 16777390;
+   
+   static const Qt_Key Qt_Key_Key_LaunchD = 16777391;
+   
+   static const Qt_Key Qt_Key_Key_LaunchE = 16777392;
+   
+   static const Qt_Key Qt_Key_Key_LaunchF = 16777393;
+   
+   static const Qt_Key Qt_Key_Key_MonBrightnessUp = 16777394;
+   
+   static const Qt_Key Qt_Key_Key_MonBrightnessDown = 16777395;
+   
+   static const Qt_Key Qt_Key_Key_KeyboardLightOnOff = 16777396;
+   
+   static const Qt_Key Qt_Key_Key_KeyboardBrightnessUp = 16777397;
+   
+   static const Qt_Key Qt_Key_Key_KeyboardBrightnessDown = 16777398;
+   
+   static const Qt_Key Qt_Key_Key_PowerOff = 16777399;
+   
+   static const Qt_Key Qt_Key_Key_WakeUp = 16777400;
+   
+   static const Qt_Key Qt_Key_Key_Eject = 16777401;
+   
+   static const Qt_Key Qt_Key_Key_ScreenSaver = 16777402;
+   
+   static const Qt_Key Qt_Key_Key_WWW = 16777403;
+   
+   static const Qt_Key Qt_Key_Key_Memo = 16777404;
+   
+   static const Qt_Key Qt_Key_Key_LightBulb = 16777405;
+   
+   static const Qt_Key Qt_Key_Key_Shop = 16777406;
+   
+   static const Qt_Key Qt_Key_Key_History = 16777407;
+   
+   static const Qt_Key Qt_Key_Key_AddFavorite = 16777408;
+   
+   static const Qt_Key Qt_Key_Key_HotLinks = 16777409;
+   
+   static const Qt_Key Qt_Key_Key_BrightnessAdjust = 16777410;
+   
+   static const Qt_Key Qt_Key_Key_Finance = 16777411;
+   
+   static const Qt_Key Qt_Key_Key_Community = 16777412;
+   
+   static const Qt_Key Qt_Key_Key_AudioRewind = 16777413;
+   
+   static const Qt_Key Qt_Key_Key_BackForward = 16777414;
+   
+   static const Qt_Key Qt_Key_Key_ApplicationLeft = 16777415;
+   
+   static const Qt_Key Qt_Key_Key_ApplicationRight = 16777416;
+   
+   static const Qt_Key Qt_Key_Key_Book = 16777417;
+   
+   static const Qt_Key Qt_Key_Key_CD = 16777418;
+   
+   static const Qt_Key Qt_Key_Key_Calculator = 16777419;
+   
+   static const Qt_Key Qt_Key_Key_ToDoList = 16777420;
+   
+   static const Qt_Key Qt_Key_Key_ClearGrab = 16777421;
+   
+   static const Qt_Key Qt_Key_Key_Close = 16777422;
+   
+   static const Qt_Key Qt_Key_Key_Copy = 16777423;
+   
+   static const Qt_Key Qt_Key_Key_Cut = 16777424;
+   
+   static const Qt_Key Qt_Key_Key_Display = 16777425;
+   
+   static const Qt_Key Qt_Key_Key_DOS = 16777426;
+   
+   static const Qt_Key Qt_Key_Key_Documents = 16777427;
+   
+   static const Qt_Key Qt_Key_Key_Excel = 16777428;
+   
+   static const Qt_Key Qt_Key_Key_Explorer = 16777429;
+   
+   static const Qt_Key Qt_Key_Key_Game = 16777430;
+   
+   static const Qt_Key Qt_Key_Key_Go = 16777431;
+   
+   static const Qt_Key Qt_Key_Key_iTouch = 16777432;
+   
+   static const Qt_Key Qt_Key_Key_LogOff = 16777433;
+   
+   static const Qt_Key Qt_Key_Key_Market = 16777434;
+   
+   static const Qt_Key Qt_Key_Key_Meeting = 16777435;
+   
+   static const Qt_Key Qt_Key_Key_MenuKB = 16777436;
+   
+   static const Qt_Key Qt_Key_Key_MenuPB = 16777437;
+   
+   static const Qt_Key Qt_Key_Key_MySites = 16777438;
+   
+   static const Qt_Key Qt_Key_Key_News = 16777439;
+   
+   static const Qt_Key Qt_Key_Key_OfficeHome = 16777440;
+   
+   static const Qt_Key Qt_Key_Key_Option = 16777441;
+   
+   static const Qt_Key Qt_Key_Key_Paste = 16777442;
+   
+   static const Qt_Key Qt_Key_Key_Phone = 16777443;
+   
+   static const Qt_Key Qt_Key_Key_Calendar = 16777444;
+   
+   static const Qt_Key Qt_Key_Key_Reply = 16777445;
+   
+   static const Qt_Key Qt_Key_Key_Reload = 16777446;
+   
+   static const Qt_Key Qt_Key_Key_RotateWindows = 16777447;
+   
+   static const Qt_Key Qt_Key_Key_RotationPB = 16777448;
+   
+   static const Qt_Key Qt_Key_Key_RotationKB = 16777449;
+   
+   static const Qt_Key Qt_Key_Key_Save = 16777450;
+   
+   static const Qt_Key Qt_Key_Key_Send = 16777451;
+   
+   static const Qt_Key Qt_Key_Key_Spell = 16777452;
+   
+   static const Qt_Key Qt_Key_Key_SplitScreen = 16777453;
+   
+   static const Qt_Key Qt_Key_Key_Support = 16777454;
+   
+   static const Qt_Key Qt_Key_Key_TaskPane = 16777455;
+   
+   static const Qt_Key Qt_Key_Key_Terminal = 16777456;
+   
+   static const Qt_Key Qt_Key_Key_Tools = 16777457;
+   
+   static const Qt_Key Qt_Key_Key_Travel = 16777458;
+   
+   static const Qt_Key Qt_Key_Key_Video = 16777459;
+   
+   static const Qt_Key Qt_Key_Key_Word = 16777460;
+   
+   static const Qt_Key Qt_Key_Key_Xfer = 16777461;
+   
+   static const Qt_Key Qt_Key_Key_ZoomIn = 16777462;
+   
+   static const Qt_Key Qt_Key_Key_ZoomOut = 16777463;
+   
+   static const Qt_Key Qt_Key_Key_Away = 16777464;
+   
+   static const Qt_Key Qt_Key_Key_Messenger = 16777465;
+   
+   static const Qt_Key Qt_Key_Key_WebCam = 16777466;
+   
+   static const Qt_Key Qt_Key_Key_MailForward = 16777467;
+   
+   static const Qt_Key Qt_Key_Key_Pictures = 16777468;
+   
+   static const Qt_Key Qt_Key_Key_Music = 16777469;
+   
+   static const Qt_Key Qt_Key_Key_Battery = 16777470;
+   
+   static const Qt_Key Qt_Key_Key_Bluetooth = 16777471;
+   
+   static const Qt_Key Qt_Key_Key_WLAN = 16777472;
+   
+   static const Qt_Key Qt_Key_Key_UWB = 16777473;
+   
+   static const Qt_Key Qt_Key_Key_AudioForward = 16777474;
+   
+   static const Qt_Key Qt_Key_Key_AudioRepeat = 16777475;
+   
+   static const Qt_Key Qt_Key_Key_AudioRandomPlay = 16777476;
+   
+   static const Qt_Key Qt_Key_Key_Subtitle = 16777477;
+   
+   static const Qt_Key Qt_Key_Key_AudioCycleTrack = 16777478;
+   
+   static const Qt_Key Qt_Key_Key_Time = 16777479;
+   
+   static const Qt_Key Qt_Key_Key_Hibernate = 16777480;
+   
+   static const Qt_Key Qt_Key_Key_View = 16777481;
+   
+   static const Qt_Key Qt_Key_Key_TopMenu = 16777482;
+   
+   static const Qt_Key Qt_Key_Key_PowerDown = 16777483;
+   
+   static const Qt_Key Qt_Key_Key_Suspend = 16777484;
+   
+   static const Qt_Key Qt_Key_Key_ContrastAdjust = 16777485;
+   
+   static const Qt_Key Qt_Key_Key_LaunchG = 16777486;
+   
+   static const Qt_Key Qt_Key_Key_LaunchH = 16777487;
+   
+   static const Qt_Key Qt_Key_Key_TouchpadToggle = 16777488;
+   
+   static const Qt_Key Qt_Key_Key_TouchpadOn = 16777489;
+   
+   static const Qt_Key Qt_Key_Key_TouchpadOff = 16777490;
+   
+   static const Qt_Key Qt_Key_Key_MicMute = 16777491;
+   
+   static const Qt_Key Qt_Key_Key_Red = 16777492;
+   
+   static const Qt_Key Qt_Key_Key_Green = 16777493;
+   
+   static const Qt_Key Qt_Key_Key_Yellow = 16777494;
+   
+   static const Qt_Key Qt_Key_Key_Blue = 16777495;
+   
+   static const Qt_Key Qt_Key_Key_ChannelUp = 16777496;
+   
+   static const Qt_Key Qt_Key_Key_ChannelDown = 16777497;
+   
+   static const Qt_Key Qt_Key_Key_Guide = 16777498;
+   
+   static const Qt_Key Qt_Key_Key_Info = 16777499;
+   
+   static const Qt_Key Qt_Key_Key_Settings = 16777500;
+   
+   static const Qt_Key Qt_Key_Key_MicVolumeUp = 16777501;
+   
+   static const Qt_Key Qt_Key_Key_MicVolumeDown = 16777502;
+   
+   static const Qt_Key Qt_Key_Key_New = 16777504;
+   
+   static const Qt_Key Qt_Key_Key_Open = 16777505;
+   
+   static const Qt_Key Qt_Key_Key_Find = 16777506;
+   
+   static const Qt_Key Qt_Key_Key_Undo = 16777507;
+   
+   static const Qt_Key Qt_Key_Key_Redo = 16777508;
+   
+   static const Qt_Key Qt_Key_Key_MediaLast = 16842751;
+   
+   static const Qt_Key Qt_Key_Key_Select = 16842752;
+   
+   static const Qt_Key Qt_Key_Key_Yes = 16842753;
+   
+   static const Qt_Key Qt_Key_Key_No = 16842754;
+   
+   static const Qt_Key Qt_Key_Key_Cancel = 16908289;
+   
+   static const Qt_Key Qt_Key_Key_Printer = 16908290;
+   
+   static const Qt_Key Qt_Key_Key_Execute = 16908291;
+   
+   static const Qt_Key Qt_Key_Key_Sleep = 16908292;
+   
+   static const Qt_Key Qt_Key_Key_Play = 16908293;
+   
+   static const Qt_Key Qt_Key_Key_Zoom = 16908294;
+   
+   static const Qt_Key Qt_Key_Key_Exit = 16908298;
+   
+   static const Qt_Key Qt_Key_Key_Context1 = 17825792;
+   
+   static const Qt_Key Qt_Key_Key_Context2 = 17825793;
+   
+   static const Qt_Key Qt_Key_Key_Context3 = 17825794;
+   
+   static const Qt_Key Qt_Key_Key_Context4 = 17825795;
+   
+   static const Qt_Key Qt_Key_Key_Call = 17825796;
+   
+   static const Qt_Key Qt_Key_Key_Hangup = 17825797;
+   
+   static const Qt_Key Qt_Key_Key_Flip = 17825798;
+   
+   static const Qt_Key Qt_Key_Key_ToggleCallHangup = 17825799;
+   
+   static const Qt_Key Qt_Key_Key_VoiceDial = 17825800;
+   
+   static const Qt_Key Qt_Key_Key_LastNumberRedial = 17825801;
+   
+   static const Qt_Key Qt_Key_Key_Camera = 17825824;
+   
+   static const Qt_Key Qt_Key_Key_CameraFocus = 17825825;
+   
+   static const Qt_Key Qt_Key_Key_unknown = 33554431;
+   
+   static const Qt_CursorShape Qt_CursorShape_ArrowCursor = 0;
+   
+   static const Qt_CursorShape Qt_CursorShape_UpArrowCursor = 1;
+   
+   static const Qt_CursorShape Qt_CursorShape_CrossCursor = 2;
+   
+   static const Qt_CursorShape Qt_CursorShape_WaitCursor = 3;
+   
+   static const Qt_CursorShape Qt_CursorShape_IBeamCursor = 4;
+   
+   static const Qt_CursorShape Qt_CursorShape_SizeVerCursor = 5;
+   
+   static const Qt_CursorShape Qt_CursorShape_SizeHorCursor = 6;
+   
+   static const Qt_CursorShape Qt_CursorShape_SizeBDiagCursor = 7;
+   
+   static const Qt_CursorShape Qt_CursorShape_SizeFDiagCursor = 8;
+   
+   static const Qt_CursorShape Qt_CursorShape_SizeAllCursor = 9;
+   
+   static const Qt_CursorShape Qt_CursorShape_BlankCursor = 10;
+   
+   static const Qt_CursorShape Qt_CursorShape_SplitVCursor = 11;
+   
+   static const Qt_CursorShape Qt_CursorShape_SplitHCursor = 12;
+   
+   static const Qt_CursorShape Qt_CursorShape_PointingHandCursor = 13;
+   
+   static const Qt_CursorShape Qt_CursorShape_ForbiddenCursor = 14;
+   
+   static const Qt_CursorShape Qt_CursorShape_WhatsThisCursor = 15;
+   
+   static const Qt_CursorShape Qt_CursorShape_BusyCursor = 16;
+   
+   static const Qt_CursorShape Qt_CursorShape_OpenHandCursor = 17;
+   
+   static const Qt_CursorShape Qt_CursorShape_ClosedHandCursor = 18;
+   
+   static const Qt_CursorShape Qt_CursorShape_DragCopyCursor = 19;
+   
+   static const Qt_CursorShape Qt_CursorShape_DragMoveCursor = 20;
+   
+   static const Qt_CursorShape Qt_CursorShape_DragLinkCursor = 21;
+   
+   static const Qt_CursorShape Qt_CursorShape_LastCursor = 21;
+   
+   static const Qt_CursorShape Qt_CursorShape_BitmapCursor = 24;
+   
+   static const Qt_CursorShape Qt_CursorShape_CustomCursor = 25;
+   
+   static const Qt_FillRule Qt_FillRule_OddEvenFill = 0;
+   
+   static const Qt_FillRule Qt_FillRule_WindingFill = 1;
+   
+   extern "C" {
+   
+   void *slint_qt_get_widget(const WindowRc *window);
+   
+   void *slint_qt_get_widget(const WindowRc*);
+   
+   } // extern "C"
+   
+   } // namespace cbindgen_private
+   } // namespace slint
+   
+   
+   namespace slint::private_api {
+   #define SLINT_DECL_ITEM(ItemName) \
+       extern const cbindgen_private::ItemVTable ItemName##VTable; \
+       extern SLINT_DLL_IMPORT const cbindgen_private::ItemVTable* slint_get_##ItemName##VTable();
+   
+   extern "C" {
+   SLINT_DECL_ITEM(NativeButton);
+   SLINT_DECL_ITEM(NativeSpinBox);
+   SLINT_DECL_ITEM(NativeCheckBox);
+   SLINT_DECL_ITEM(NativeSlider);
+   SLINT_DECL_ITEM(NativeGroupBox);
+   SLINT_DECL_ITEM(NativeLineEdit);
+   SLINT_DECL_ITEM(NativeScrollView);
+   SLINT_DECL_ITEM(NativeStandardListViewItem);
+   SLINT_DECL_ITEM(NativeComboBox);
+   SLINT_DECL_ITEM(NativeComboBoxPopup);
+   SLINT_DECL_ITEM(NativeTabWidget);
+   SLINT_DECL_ITEM(NativeTab);
+   SLINT_DECL_ITEM(NativeStyleMetrics);
+   }
+   
+   #undef SLINT_DECL_ITEM
+   }

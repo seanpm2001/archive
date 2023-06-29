@@ -1,0 +1,57 @@
+
+.. _program_listing_file_cppdocs_generated_include_sixtyfps_color_internal.h:
+
+Program Listing for File sixtyfps_color_internal.h
+==================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_sixtyfps_color_internal.h>` (``cppdocs/generated_include/sixtyfps_color_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.20.0 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   
+   namespace sixtyfps {
+   namespace cbindgen_private {
+   namespace types {
+   
+   struct Color {
+       uint8_t red;
+       uint8_t green;
+       uint8_t blue;
+       uint8_t alpha;
+   
+       bool operator==(const Color& other) const {
+           return red == other.red &&
+                  green == other.green &&
+                  blue == other.blue &&
+                  alpha == other.alpha;
+       }
+       bool operator!=(const Color& other) const {
+           return red != other.red ||
+                  green != other.green ||
+                  blue != other.blue ||
+                  alpha != other.alpha;
+       }
+   };
+   
+   extern "C" {
+   
+   void sixtyfps_color_brighter(const Color *col, float factor, Color *out);
+   
+   void sixtyfps_color_darker(const Color *col, float factor, Color *out);
+   
+   } // extern "C"
+   
+   } // namespace types
+   } // namespace cbindgen_private
+   } // namespace sixtyfps

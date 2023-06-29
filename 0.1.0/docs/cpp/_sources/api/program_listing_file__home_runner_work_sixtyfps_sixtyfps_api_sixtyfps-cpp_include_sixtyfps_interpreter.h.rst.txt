@@ -1,0 +1,676 @@
+
+.. _program_listing_file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_interpreter.h:
+
+Program Listing for File sixtyfps_interpreter.h
+===============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_interpreter.h>` (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include/sixtyfps_interpreter.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /* LICENSE BEGIN
+       This file is part of the SixtyFPS Project -- https://sixtyfps.io
+       Copyright (c) 2021 Olivier Goffart <olivier.goffart@sixtyfps.io>
+       Copyright (c) 2021 Simon Hausmann <simon.hausmann@sixtyfps.io>
+   
+       SPDX-License-Identifier: GPL-3.0-only
+       This file is also available under commercial licensing terms.
+       Please contact info@sixtyfps.io for more information.
+   LICENSE END */
+   #pragma once
+   
+   #include "sixtyfps.h"
+   
+   #include "sixtyfps_interpreter_internal.h"
+   
+   #include <optional>
+   
+   #if !defined(DOXYGEN)
+   #    define SIXTYFPS_QT_INTEGRATION // In the future, should be defined by cmake only if this is
+                                       // enabled
+   #endif
+   #ifdef SIXTYFPS_QT_INTEGRATION
+   class QWidget;
+   #endif
+   
+   namespace sixtyfps::cbindgen_private {
+   //  This has to stay opaque, but VRc don't compile if it is just forward declared
+   struct ErasedComponentBox : vtable::Dyn
+   {
+       ~ErasedComponentBox() = delete;
+       ErasedComponentBox() = delete;
+       ErasedComponentBox(ErasedComponentBox &) = delete;
+   };
+   }
+   
+   namespace sixtyfps::interpreter {
+   
+   class Value;
+   
+   struct Struct
+   {
+   public:
+       Struct() { cbindgen_private::sixtyfps_interpreter_struct_new(&inner); }
+   
+       Struct(const Struct &other)
+       {
+           cbindgen_private::sixtyfps_interpreter_struct_clone(&other.inner, &inner);
+       }
+       Struct(Struct &&other)
+       {
+           inner = other.inner;
+           cbindgen_private::sixtyfps_interpreter_struct_new(&other.inner);
+       }
+       Struct &operator=(const Struct &other)
+       {
+           if (this == &other)
+               return *this;
+           cbindgen_private::sixtyfps_interpreter_struct_destructor(&inner);
+           sixtyfps_interpreter_struct_clone(&other.inner, &inner);
+           return *this;
+       }
+       Struct &operator=(Struct &&other)
+       {
+           if (this == &other)
+               return *this;
+           cbindgen_private::sixtyfps_interpreter_struct_destructor(&inner);
+           inner = other.inner;
+           cbindgen_private::sixtyfps_interpreter_struct_new(&other.inner);
+           return *this;
+       }
+       ~Struct() { cbindgen_private::sixtyfps_interpreter_struct_destructor(&inner); }
+   
+       inline Struct(std::initializer_list<std::pair<std::string_view, Value>> args);
+   
+       template<typename InputIterator
+   // Doxygen doesn't understand this template wizardry
+   #if !defined(DOXYGEN)
+                ,
+                typename std::enable_if_t<
+                        std::is_convertible<decltype(std::get<0>(*std::declval<InputIterator>())),
+                                            std::string_view>::value
+                        && std::is_convertible<decltype(std::get<1>(*std::declval<InputIterator>())),
+                                               Value>::value
+   
+                        > * = nullptr
+   #endif
+                >
+       Struct(InputIterator it, InputIterator end) : Struct()
+       {
+           for (; it != end; ++it) {
+               auto [key, value] = *it;
+               set_field(key, value);
+           }
+       }
+   
+       // FIXME: this probably miss a lot of iterator api
+       struct iterator
+       {
+           using value_type = std::pair<std::string_view, const Value &>;
+   
+       private:
+           cbindgen_private::StructIteratorOpaque inner;
+           const Value *v = nullptr;
+           std::string_view k;
+           friend Struct;
+           explicit iterator(cbindgen_private::StructIteratorOpaque inner) : inner(inner) { next(); }
+           // construct a end iterator
+           iterator() = default;
+           void next()
+           {
+               auto next = cbindgen_private::sixtyfps_interpreter_struct_iterator_next(&inner);
+               v = reinterpret_cast<const Value *>(next.v);
+               k = std::string_view(reinterpret_cast<char *>(next.k.ptr), next.k.len);
+               if (!v) {
+                   cbindgen_private::sixtyfps_interpreter_struct_iterator_destructor(&inner);
+               }
+           }
+   
+       public:
+           ~iterator()
+           {
+               if (v) {
+                   cbindgen_private::sixtyfps_interpreter_struct_iterator_destructor(&inner);
+               }
+           }
+           // FIXME i believe iterator are supposed to be copy constructible
+           iterator(const iterator &) = delete;
+           iterator &operator=(const iterator &) = delete;
+           iterator(iterator &&other) = default;
+           iterator &operator=(iterator &&other) = default;
+           iterator &operator++()
+           {
+               if (v)
+                   next();
+               return *this;
+           }
+           value_type operator*() const { return { k, *v }; }
+           friend bool operator==(const iterator &a, const iterator &b) { return a.v == b.v; }
+           friend bool operator!=(const iterator &a, const iterator &b) { return a.v != b.v; }
+       };
+   
+       iterator begin() const
+       {
+           return iterator(cbindgen_private::sixtyfps_interpreter_struct_make_iter(&inner));
+       }
+       iterator end() const { return iterator(); }
+   
+       inline std::optional<Value> get_field(std::string_view name) const;
+       inline void set_field(std::string_view name, const Value &value);
+   
+       Struct(const sixtyfps::cbindgen_private::StructOpaque &other)
+       {
+           cbindgen_private::sixtyfps_interpreter_struct_clone(&other, &inner);
+       }
+   
+   private:
+       using StructOpaque = sixtyfps::cbindgen_private::StructOpaque;
+       StructOpaque inner;
+       friend class Value;
+   };
+   
+   class Value
+   {
+   public:
+       Value() { cbindgen_private::sixtyfps_interpreter_value_new(&inner); }
+   
+       Value(const Value &other) { sixtyfps_interpreter_value_clone(&other.inner, &inner); }
+       Value(Value &&other)
+       {
+           inner = other.inner;
+           cbindgen_private::sixtyfps_interpreter_value_new(&other.inner);
+       }
+       Value &operator=(const Value &other)
+       {
+           if (this == &other)
+               return *this;
+           cbindgen_private::sixtyfps_interpreter_value_destructor(&inner);
+           sixtyfps_interpreter_value_clone(&other.inner, &inner);
+           return *this;
+       }
+       Value &operator=(Value &&other)
+       {
+           if (this == &other)
+               return *this;
+           cbindgen_private::sixtyfps_interpreter_value_destructor(&inner);
+           inner = other.inner;
+           cbindgen_private::sixtyfps_interpreter_value_new(&other.inner);
+           return *this;
+       }
+       ~Value() { cbindgen_private::sixtyfps_interpreter_value_destructor(&inner); }
+   
+   #if !defined(DOXYGEN)
+       using Type = cbindgen_private::ValueType;
+   #else
+       enum Type {
+           Void,
+           Number,
+           String,
+           Bool,
+           Array,
+           Model,
+           Struct,
+           Brush,
+           Image,
+           Other = -1,
+       };
+   #endif // else !defined(DOXYGEN)
+   
+       // optional<int> to_int() const;
+       // optional<float> to_float() const;
+       std::optional<double> to_number() const
+       {
+           if (auto *number = cbindgen_private::sixtyfps_interpreter_value_to_number(&inner)) {
+               return *number;
+           } else {
+               return {};
+           }
+       }
+   
+       std::optional<sixtyfps::SharedString> to_string() const
+       {
+           if (auto *str = cbindgen_private::sixtyfps_interpreter_value_to_string(&inner)) {
+               return *str;
+           } else {
+               return {};
+           }
+       }
+   
+       std::optional<bool> to_bool() const
+       {
+           if (auto *b = cbindgen_private::sixtyfps_interpreter_value_to_bool(&inner)) {
+               return *b;
+           } else {
+               return {};
+           }
+       }
+   
+       inline std::optional<sixtyfps::SharedVector<Value>> to_array() const;
+   
+       std::optional<sixtyfps::Brush> to_brush() const
+       {
+           if (auto *brush = cbindgen_private::sixtyfps_interpreter_value_to_brush(&inner)) {
+               return *brush;
+           } else {
+               return {};
+           }
+       }
+   
+       std::optional<Struct> to_struct() const
+       {
+           if (auto *opaque_struct = cbindgen_private::sixtyfps_interpreter_value_to_struct(&inner)) {
+               return Struct(*opaque_struct);
+           } else {
+               return {};
+           }
+       }
+   
+       // template<typename T> std::optional<T> get() const;
+   
+       Value(double value) { cbindgen_private::sixtyfps_interpreter_value_new_double(value, &inner); }
+       Value(const SharedString &str)
+       {
+           cbindgen_private::sixtyfps_interpreter_value_new_string(&str, &inner);
+       }
+       Value(bool b) { cbindgen_private::sixtyfps_interpreter_value_new_bool(b, &inner); }
+       inline Value(const SharedVector<Value> &v);
+       Value(const std::shared_ptr<sixtyfps::Model<Value>> &m);
+       Value(const sixtyfps::Brush &brush)
+       {
+           cbindgen_private::sixtyfps_interpreter_value_new_brush(&brush, &inner);
+       }
+       Value(const Struct &struc)
+       {
+           cbindgen_private::sixtyfps_interpreter_value_new_struct(&struc.inner, &inner);
+       }
+   
+       Type type() const { return cbindgen_private::sixtyfps_interpreter_value_type(&inner); }
+   
+       friend bool operator==(const Value &a, const Value &b)
+       {
+           return cbindgen_private::sixtyfps_interpreter_value_eq(&a.inner, &b.inner);
+       }
+       friend bool operator!=(const Value &a, const Value &b)
+       {
+           return !cbindgen_private::sixtyfps_interpreter_value_eq(&a.inner, &b.inner);
+       }
+   
+   private:
+       inline Value(const void *) = delete; // Avoid that for example Value("foo") turns to Value(bool)
+       using ValueOpaque = sixtyfps::cbindgen_private::ValueOpaque;
+       ValueOpaque inner;
+       friend struct Struct;
+       friend class ComponentInstance;
+       // Internal constructor that takes ownership of the value
+       explicit Value(ValueOpaque &inner) : inner(inner) { }
+   };
+   
+   inline Value::Value(const sixtyfps::SharedVector<Value> &array)
+   {
+       cbindgen_private::sixtyfps_interpreter_value_new_array(
+               &reinterpret_cast<const sixtyfps::SharedVector<ValueOpaque> &>(array), &inner);
+   }
+   
+   inline std::optional<sixtyfps::SharedVector<Value>> Value::to_array() const
+   {
+       if (auto *array = cbindgen_private::sixtyfps_interpreter_value_to_array(&inner)) {
+           return *reinterpret_cast<const sixtyfps::SharedVector<Value> *>(array);
+       } else {
+           return {};
+       }
+   }
+   inline Value::Value(const std::shared_ptr<sixtyfps::Model<Value>> &model)
+   {
+       using cbindgen_private::ModelAdaptorVTable;
+       using vtable::VRef;
+       struct ModelWrapper : private_api::AbstractRepeaterView
+       {
+           std::shared_ptr<sixtyfps::Model<Value>> model;
+           cbindgen_private::ModelNotifyOpaque notify;
+           // This kind of mean that the rust code has ownership of "this" until the drop function is
+           // called
+           std::shared_ptr<AbstractRepeaterView> self;
+           ~ModelWrapper() { cbindgen_private::sixtyfps_interpreter_model_notify_destructor(&notify); }
+   
+           void row_added(int index, int count) override
+           {
+               cbindgen_private::sixtyfps_interpreter_model_notify_row_added(&notify, index, count);
+           }
+           void row_changed(int index) override
+           {
+               cbindgen_private::sixtyfps_interpreter_model_notify_row_changed(&notify, index);
+           }
+           void row_removed(int index, int count) override
+           {
+               cbindgen_private::sixtyfps_interpreter_model_notify_row_removed(&notify, index, count);
+           }
+       };
+   
+       auto wrapper = std::make_shared<ModelWrapper>();
+       wrapper->model = model;
+       wrapper->self = wrapper;
+       cbindgen_private::sixtyfps_interpreter_model_notify_new(&wrapper->notify);
+       model->attach_peer(wrapper);
+   
+       auto row_count = [](VRef<ModelAdaptorVTable> self) -> uintptr_t {
+           return reinterpret_cast<ModelWrapper *>(self.instance)->model->row_count();
+       };
+       auto row_data = [](VRef<ModelAdaptorVTable> self, uintptr_t row, ValueOpaque *out) {
+           Value v = reinterpret_cast<ModelWrapper *>(self.instance)->model->row_data(int(row));
+           *out = v.inner;
+           cbindgen_private::sixtyfps_interpreter_value_new(&v.inner);
+       };
+       auto set_row_data = [](VRef<ModelAdaptorVTable> self, uintptr_t row, const ValueOpaque *value) {
+           Value v = *reinterpret_cast<const Value *>(value);
+           reinterpret_cast<ModelWrapper *>(self.instance)->model->set_row_data(int(row), v);
+       };
+       auto get_notify =
+               [](VRef<ModelAdaptorVTable> self) -> const cbindgen_private::ModelNotifyOpaque * {
+           return &reinterpret_cast<ModelWrapper *>(self.instance)->notify;
+       };
+       auto drop = [](vtable::VRefMut<ModelAdaptorVTable> self) {
+           reinterpret_cast<ModelWrapper *>(self.instance)->self = nullptr;
+       };
+   
+       static const ModelAdaptorVTable vt { row_count, row_data, set_row_data, get_notify, drop };
+       vtable::VBox<ModelAdaptorVTable> wrap { &vt, wrapper.get() };
+       cbindgen_private::sixtyfps_interpreter_value_new_model(wrap, &inner);
+   }
+   
+   inline Struct::Struct(std::initializer_list<std::pair<std::string_view, Value>> args)
+       : Struct(args.begin(), args.end())
+   {
+   }
+   
+   inline std::optional<Value> Struct::get_field(std::string_view name) const
+   {
+       cbindgen_private::Slice<uint8_t> name_view {
+           const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(name.data())),
+           name.size()
+       };
+       if (auto *value = cbindgen_private::sixtyfps_interpreter_struct_get_field(&inner, name_view)) {
+           return *reinterpret_cast<const Value *>(value);
+       } else {
+           return {};
+       }
+   }
+   inline void Struct::set_field(std::string_view name, const Value &value)
+   {
+       cbindgen_private::Slice<uint8_t> name_view {
+           const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(name.data())),
+           name.size()
+       };
+       cbindgen_private::sixtyfps_interpreter_struct_set_field(&inner, name_view, &value.inner);
+   }
+   
+   class ComponentInstance : vtable::Dyn
+   {
+       ComponentInstance() = delete;
+       ComponentInstance(ComponentInstance &) = delete;
+       ComponentInstance &operator=(ComponentInstance &) = delete;
+       friend class ComponentDefinition;
+   
+       // ComponentHandle<ComponentInstance>  is in fact a VRc<ComponentVTable, ErasedComponentBox>
+       const cbindgen_private::ErasedComponentBox *inner() const
+       {
+           return reinterpret_cast<const cbindgen_private::ErasedComponentBox *>(this);
+       }
+   
+   public:
+       void show() const
+       {
+           cbindgen_private::sixtyfps_interpreter_component_instance_show(inner(), true);
+       }
+       void hide() const
+       {
+           cbindgen_private::sixtyfps_interpreter_component_instance_show(inner(), false);
+       }
+       void run() const
+       {
+           show();
+           cbindgen_private::sixtyfps_run_event_loop();
+           hide();
+       }
+   #if defined(SIXTYFPS_QT_INTEGRATION) || defined(DOXYGEN)
+       QWidget *qwidget() const
+       {
+           cbindgen_private::ComponentWindowOpaque win;
+           cbindgen_private::sixtyfps_interpreter_component_instance_window(inner(), &win);
+           auto wid = reinterpret_cast<QWidget *>(cbindgen_private::sixtyfps_qt_get_widget(
+                   reinterpret_cast<cbindgen_private::ComponentWindow *>(&win)));
+           cbindgen_private::sixtyfps_component_window_drop(&win);
+           return wid;
+       }
+   #endif
+   
+       bool set_property(std::string_view name, const Value &value) const
+       {
+           using namespace cbindgen_private;
+           return sixtyfps_interpreter_component_instance_set_property(
+                   inner(), sixtyfps::private_api::string_to_slice(name), &value.inner);
+       }
+       std::optional<Value> get_property(std::string_view name) const
+       {
+           using namespace cbindgen_private;
+           ValueOpaque out;
+           if (sixtyfps_interpreter_component_instance_get_property(
+                       inner(), sixtyfps::private_api::string_to_slice(name), &out)) {
+               return Value(out);
+           } else {
+               return {};
+           }
+       }
+       // FIXME! Slice in public API?  Should be std::span (c++20) or we need to improve the Slice API
+       std::optional<Value> invoke_callback(std::string_view name, Slice<Value> args) const
+       {
+           using namespace cbindgen_private;
+           Slice<ValueOpaque> args_view { reinterpret_cast<ValueOpaque *>(args.ptr), args.len };
+           ValueOpaque out;
+           if (sixtyfps_interpreter_component_instance_invoke_callback(
+                       inner(), sixtyfps::private_api::string_to_slice(name), args_view, &out)) {
+               return Value(out);
+           } else {
+               return {};
+           }
+       }
+   
+       template<typename F>
+       bool set_callback(std::string_view name, F callback) const
+       {
+           using cbindgen_private::ValueOpaque;
+           auto actual_cb = [](void *data, Slice<ValueOpaque> arg, ValueOpaque *ret) {
+               Slice<Value> args_view { reinterpret_cast<Value *>(arg.ptr), arg.len };
+               Value r = (*reinterpret_cast<F *>(data))(args_view);
+               new (ret) Value(std::move(r));
+           };
+           return cbindgen_private::sixtyfps_interpreter_component_instance_set_callback(
+                   inner(), sixtyfps::private_api::string_to_slice(name), actual_cb,
+                   new F(std::move(callback)), [](void *data) { delete reinterpret_cast<F *>(data); });
+       }
+   };
+   
+   #if !defined(DOXYGEN)
+   using PropertyDescriptor = sixtyfps::cbindgen_private::PropertyDescriptor;
+   #else
+   struct PropertyDescriptor
+   {
+       SharedString property_name;
+       Value::Type property_type;
+   };
+   #endif // else !defined(DOXYGEN)
+   
+   class ComponentDefinition
+   {
+       friend class ComponentCompiler;
+   
+       using ComponentDefinitionOpaque = sixtyfps::cbindgen_private::ComponentDefinitionOpaque;
+       ComponentDefinitionOpaque inner;
+   
+       ComponentDefinition() = delete;
+       // Internal constructor that takes ownership of the component definition
+       explicit ComponentDefinition(ComponentDefinitionOpaque &inner) : inner(inner) { }
+   
+   public:
+       ComponentDefinition(const ComponentDefinition &other)
+       {
+           sixtyfps_interpreter_component_definition_clone(&other.inner, &inner);
+       }
+       ComponentDefinition &operator=(const ComponentDefinition &other)
+       {
+           using namespace sixtyfps::cbindgen_private;
+   
+           if (this == &other)
+               return *this;
+   
+           sixtyfps_interpreter_component_definition_destructor(&inner);
+           sixtyfps_interpreter_component_definition_clone(&other.inner, &inner);
+   
+           return *this;
+       }
+       ~ComponentDefinition() { sixtyfps_interpreter_component_definition_destructor(&inner); }
+       ComponentHandle<ComponentInstance> create() const
+       {
+           union CI {
+               cbindgen_private::ComponentInstance i;
+               ComponentHandle<ComponentInstance> result;
+               ~CI() { result.~ComponentHandle(); }
+               CI() { }
+           } u;
+           cbindgen_private::sixtyfps_interpreter_component_instance_create(&inner, &u.i);
+           return u.result;
+       }
+   
+       sixtyfps::SharedVector<PropertyDescriptor> properties() const
+       {
+           sixtyfps::SharedVector<PropertyDescriptor> props;
+           cbindgen_private::sixtyfps_interpreter_component_definition_properties(&inner, &props);
+           return props;
+       }
+   
+       sixtyfps::SharedVector<sixtyfps::SharedString> callbacks() const
+       {
+           sixtyfps::SharedVector<sixtyfps::SharedString> callbacks;
+           cbindgen_private::sixtyfps_interpreter_component_definition_callbacks(&inner, &callbacks);
+           return callbacks;
+       }
+   
+       sixtyfps::SharedString name() const
+       {
+           sixtyfps::SharedString name;
+           cbindgen_private::sixtyfps_interpreter_component_definition_name(&inner, &name);
+           return name;
+       }
+   };
+   
+   #if !defined(DOXYGEN)
+   using DiagnosticLevel = sixtyfps::cbindgen_private::CDiagnosticLevel;
+   using Diagnostic = sixtyfps::cbindgen_private::CDiagnostic;
+   #else
+   enum DiagnosticLevel {
+       Error,
+       Warning,
+   };
+   struct Diagnostic
+   {
+       SharedString message;
+       SharedString source_file;
+       uintptr_t line;
+       uintptr_t column;
+       DiagnosticLevel level;
+   };
+   #endif // else !defined(DOXYGEN)
+   
+   class ComponentCompiler
+   {
+       cbindgen_private::ComponentCompilerOpaque inner;
+   
+       ComponentCompiler(ComponentCompiler &) = delete;
+       ComponentCompiler &operator=(ComponentCompiler &) = delete;
+   
+   public:
+       ComponentCompiler() { cbindgen_private::sixtyfps_interpreter_component_compiler_new(&inner); }
+   
+       ~ComponentCompiler()
+       {
+           cbindgen_private::sixtyfps_interpreter_component_compiler_destructor(&inner);
+       }
+   
+       void set_include_paths(const sixtyfps::SharedVector<sixtyfps::SharedString> &paths)
+       {
+           cbindgen_private::sixtyfps_interpreter_component_compiler_set_include_paths(&inner, &paths);
+       }
+   
+       void set_style(std::string_view style)
+       {
+           cbindgen_private::sixtyfps_interpreter_component_compiler_set_style(
+                   &inner, sixtyfps::private_api::string_to_slice(style));
+       }
+   
+       sixtyfps::SharedString style() const
+       {
+           sixtyfps::SharedString s;
+           cbindgen_private::sixtyfps_interpreter_component_compiler_get_style(&inner, &s);
+           return s;
+       }
+   
+       sixtyfps::SharedVector<sixtyfps::SharedString> include_paths() const
+       {
+           sixtyfps::SharedVector<sixtyfps::SharedString> paths;
+           cbindgen_private::sixtyfps_interpreter_component_compiler_get_include_paths(&inner, &paths);
+           return paths;
+       }
+   
+       sixtyfps::SharedVector<Diagnostic> diagnostics() const
+       {
+           sixtyfps::SharedVector<Diagnostic> result;
+           cbindgen_private::sixtyfps_interpreter_component_compiler_get_diagnostics(&inner, &result);
+           return result;
+       }
+   
+       std::optional<ComponentDefinition> build_from_source(std::string_view source_code,
+                                                            std::string_view path)
+       {
+           cbindgen_private::ComponentDefinitionOpaque result;
+           if (cbindgen_private::sixtyfps_interpreter_component_compiler_build_from_source(
+                       &inner, sixtyfps::private_api::string_to_slice(source_code),
+                       sixtyfps::private_api::string_to_slice(path), &result)) {
+   
+               return ComponentDefinition(result);
+           } else {
+               return {};
+           }
+       }
+   
+       std::optional<ComponentDefinition> build_from_path(std::string_view path)
+       {
+           cbindgen_private::ComponentDefinitionOpaque result;
+           if (cbindgen_private::sixtyfps_interpreter_component_compiler_build_from_path(
+                       &inner, sixtyfps::private_api::string_to_slice(path), &result)) {
+   
+               return ComponentDefinition(result);
+           } else {
+               return {};
+           }
+       }
+   };
+   
+   }
+   
+   namespace sixtyfps::testing {
+   
+   using cbindgen_private::KeyboardModifiers;
+   
+   inline void send_keyboard_string_sequence(const sixtyfps::interpreter::ComponentInstance *component,
+                                             const sixtyfps::SharedString &str,
+                                             KeyboardModifiers modifiers = {})
+   {
+       cbindgen_private::ComponentWindowOpaque win;
+       cbindgen_private::sixtyfps_interpreter_component_instance_window(
+               reinterpret_cast<const cbindgen_private::ErasedComponentBox *>(component), &win);
+       cbindgen_private::send_keyboard_string_sequence(
+               &str, modifiers, reinterpret_cast<cbindgen_private::ComponentWindow *>(&win));
+       cbindgen_private::sixtyfps_component_window_drop(&win);
+   }
+   }

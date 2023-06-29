@@ -1,0 +1,16 @@
+{
+  "name": "plotter",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "version": "0.3.5",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "files": [
+    "plotter_bg.wasm",
+    "plotter.js",
+    "plotter.d.ts"
+  ],
+  "module": "plotter.js",
+  "types": "plotter.d.ts",
+  "sideEffects": false
+}

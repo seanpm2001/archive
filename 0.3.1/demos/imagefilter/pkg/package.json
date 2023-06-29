@@ -1,0 +1,16 @@
+{
+  "name": "imagefilter",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "version": "0.3.1",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "files": [
+    "imagefilter_bg.wasm",
+    "imagefilter.js",
+    "imagefilter.d.ts"
+  ],
+  "module": "imagefilter.js",
+  "types": "imagefilter.d.ts",
+  "sideEffects": false
+}

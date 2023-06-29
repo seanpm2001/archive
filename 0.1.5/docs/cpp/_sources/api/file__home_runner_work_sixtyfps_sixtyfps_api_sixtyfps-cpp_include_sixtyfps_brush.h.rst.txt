@@ -1,0 +1,57 @@
+
+.. _file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_brush.h:
+
+File sixtyfps_brush.h
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include>` (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include/sixtyfps_brush.h``)
+----------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_brush.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``sixtyfps_brush_internal.h``
+
+- ``sixtyfps_color.h`` (:ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_color.h`)
+
+- ``sixtyfps_string.h`` (:ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_string.h`)
+
+- ``string_view``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_sixtyfps`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classsixtyfps_1_1Brush`
+

@@ -1,0 +1,57 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_interpreter_generated_public.h:
+
+Program Listing for File slint_interpreter_generated_public.h
+=============================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_interpreter_generated_public.h>` (``cppdocs/generated_include/slint_interpreter_generated_public.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.23.0 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   
+   namespace slint {
+   namespace interpreter {
+   
+   enum class DiagnosticLevel {
+       Error,
+       Warning,
+   };
+   
+   enum class ValueType : int8_t {
+       Void,
+       Number,
+       String,
+       Bool,
+       Model,
+       Struct,
+       Brush,
+       Image,
+       Other = -1,
+   };
+   
+   struct Diagnostic {
+       SharedString message;
+       SharedString source_file;
+       uintptr_t line;
+       uintptr_t column;
+       DiagnosticLevel level;
+   };
+   
+   struct PropertyDescriptor {
+       SharedString property_name;
+       ValueType property_type;
+   };
+   
+   } // namespace interpreter
+   } // namespace slint

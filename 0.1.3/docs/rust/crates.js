@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["sixtyfps","sixtyfps_build","sixtyfps_interpreter"];

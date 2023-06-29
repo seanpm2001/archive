@@ -1,0 +1,16 @@
+{
+  "name": "memory",
+  "collaborators": [
+    "SixtyFPS <info@sixtyfps.io>"
+  ],
+  "version": "0.1.2",
+  "license": "GPL-3.0-only",
+  "files": [
+    "memory_bg.wasm",
+    "memory.js",
+    "memory.d.ts"
+  ],
+  "module": "memory.js",
+  "types": "memory.d.ts",
+  "sideEffects": false
+}

@@ -1,0 +1,13 @@
+.. _exhale_enum_namespacesixtyfps_1a4ec7bb57017bccdc7e1630b01e3f63c8:
+
+Enum TimerMode
+==============
+
+- Defined in :ref:`file_cppdocs_generated_include_sixtyfps_generated_public.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: sixtyfps::TimerMode

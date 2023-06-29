@@ -1,0 +1,16 @@
+.. _exhale_struct_structsixtyfps_1_1interpreter_1_1Diagnostic:
+
+Struct Diagnostic
+=================
+
+- Defined in :ref:`file_cppdocs_generated_include_sixtyfps_interpreter_generated_public.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: sixtyfps::interpreter::Diagnostic
+   :members:
+   :protected-members:
+   :undoc-members:

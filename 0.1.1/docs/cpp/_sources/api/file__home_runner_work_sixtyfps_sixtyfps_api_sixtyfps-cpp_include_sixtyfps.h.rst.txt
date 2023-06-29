@@ -1,0 +1,96 @@
+
+.. _file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h:
+
+File sixtyfps.h
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include>` (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include/sixtyfps.h``)
+----------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``chrono``
+
+- ``iostream``
+
+- ``memory``
+
+- ``optional``
+
+- ``sixtyfps_backend_internal.h``
+
+- ``sixtyfps_internal.h``
+
+- ``sixtyfps_qt_internal.h``
+
+- ``thread``
+
+- ``vector`` (:ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_sharedvector.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_interpreter.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_sixtyfps`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structsixtyfps_1_1Timer`
+
+- :ref:`exhale_class_classsixtyfps_1_1ComponentHandle`
+
+- :ref:`exhale_class_classsixtyfps_1_1ComponentWeakHandle`
+
+- :ref:`exhale_class_classsixtyfps_1_1Model`
+
+- :ref:`exhale_class_classsixtyfps_1_1VectorModel`
+
+- :ref:`exhale_class_classsixtyfps_1_1Window`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacesixtyfps_1acfc4b71092d63a5fbd0cbc8471e4da52`
+
+- :ref:`exhale_function_namespacesixtyfps_1a19e5480ac7f0311efafac58b65b38b20`
+
+- :ref:`exhale_function_namespacesixtyfps_1ab1b9b4016714eee96dba1457ce2a3b22`
+

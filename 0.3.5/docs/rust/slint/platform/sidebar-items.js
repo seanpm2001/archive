@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Key","PointerEventButton","SetPlatformError","WindowEvent"],"fn":["duration_until_next_timer_update","set_platform","update_timers_and_animations"],"mod":["software_renderer"],"trait":["EventLoopProxy","Platform","WindowAdapter"]};

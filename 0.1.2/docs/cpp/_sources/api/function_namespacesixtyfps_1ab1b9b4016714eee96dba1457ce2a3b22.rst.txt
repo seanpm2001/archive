@@ -1,0 +1,13 @@
+.. _exhale_function_namespacesixtyfps_1ab1b9b4016714eee96dba1457ce2a3b22:
+
+Function sixtyfps::run_event_loop
+=================================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: sixtyfps::run_event_loop()

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["send_keyboard_string_sequence","Wrapper around [`i_slint_core::tests::send_keyboard_string_sequence`]"],["send_mouse_click","Wrapper around [`i_slint_core::tests::slint_send_mouse_click`]"]]});

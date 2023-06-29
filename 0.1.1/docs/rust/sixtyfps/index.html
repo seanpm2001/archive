@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="SixtyFPS"><meta name="keywords" content="rust, rustlang, rust-lang, sixtyfps"><title>sixtyfps - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"><!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.1/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+    //import * as sixtyfps from 'https://sixtyfps.io/snapshots/master/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+        await sixtyfps.default();
+        var elements = document.querySelectorAll("code.language-60, .rustdoc pre.language-60, div.highlight-60");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.60` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://sixtyfps.io/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://sixtyfps.io/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("60", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'sixtyfps',
+      aliases: ['60'],
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .60 blocks, leave the others to rustdoc
+      for (dot60Block of document.querySelectorAll(".language-60")) {
+        hljs.highlightElement(dot60Block)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-60.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-60 div.highlight pre, div.highlight-60-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+<style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../sixtyfps/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;sixtyfps.io&#x2F;resources&#x2F;logo.drawio.svg' alt='logo'></div></a><h2 class="location">Crate sixtyfps</h2><div class="block version"><div class="narrow-helper"></div><p>Version 0.1.1</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all sixtyfps's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><div id="sidebar-vars" data-name="sixtyfps" data-ty="mod" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">sixtyfps</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/sixtyfps/lib.rs.html#10-661" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h1 id="sixtyfps" class="section-header"><a href="#sixtyfps">SixtyFPS</a></h1>
+<p>This crate is the main entry point for embedding user interfaces designed with
+<a href="https://sixtyfps.io/">SixtyFPS UI</a> in Rust programs.</p>
+<p>Included in this documentation is also the <a href="docs/langref/index.html">language reference</a>,
+documentation of <a href="docs/builtin_elements/index.html">builtin elements</a>, <a href="docs/widgets/index.html">widgets</a> and <a href="docs/layouting/index.html">layouting</a>.</p>
+<p>If you are new to SixtyFPS, you might also consider going through our <a href="https://sixtyfps.io/docs/tutorial/rust">Walk-through tutorial</a>.</p>
+<h2 id="how-to-use" class="section-header"><a href="#how-to-use">How to use:</a></h2>
+<p>The user interfaces are described in the <code>.60</code> design markup language. There are two ways
+of including the design in Rust:</p>
+<ul>
+<li>The <code>.60</code> code is inline in a macro.</li>
+<li>The <code>.60</code> code in external files compiled with <code>build.rs</code></li>
+</ul>
+<p>This markup code is translated to Rust code and each component is turned into a Rust
+struct with functions to instantiated, show or access properties. This documentation
+includes an <a href="docs/generated_code/struct.SampleComponent.html">example</a> of how the API looks
+like.</p>
+<h3 id="the-60-code-in-a-macro" class="section-header"><a href="#the-60-code-in-a-macro">The .60 code in a macro</a></h3>
+<p>This method combines your Rust code with the <code>.60</code> design markup in one file, using a macro:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="macro">sixtyfps::sixtyfps!</span>{
+    <span class="ident">HelloWorld</span> :<span class="op">=</span> <span class="ident">Window</span> {
+        <span class="ident">Text</span> {
+            <span class="ident">text</span>: <span class="string">&quot;hello world&quot;</span>;
+            <span class="ident">color</span>: <span class="ident">green</span>;
+        }
+    }
+}
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="ident">HelloWorld::new</span>().<span class="ident">run</span>();
+}</pre></div>
+<h3 id="the-60-file-in-external-files-compiled-with-buildrs" class="section-header"><a href="#the-60-file-in-external-files-compiled-with-buildrs">The .60 file in external files compiled with <code>build.rs</code></a></h3>
+<p>This method allows you to a separate <code>.60</code> file on the file system, which works well if
+your design becomes bigger and you split it up across multiple files. You need to use a
+so-called <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">build script</a>
+to trigger the compilation of the <code>.60</code> file.</p>
+<p>In your Cargo.toml:</p>
+<div class="example-wrap"><pre class="language-toml">[package]
+...
+build = &quot;build.rs&quot;
+resolver = &quot;2&quot; # avoid dependency conflicts on some platforms
+edition = &quot;2018&quot;
+
+[dependencies]
+sixtyfps = &quot;0.1.1&quot;
+...
+
+[build-dependencies]
+sixtyfps-build = &quot;0.1.1&quot;</pre></div>
+<p>In the <code>build.rs</code> file:</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="ident">sixtyfps_build::compile</span>(<span class="string">&quot;ui/hello.60&quot;</span>).<span class="ident">unwrap</span>();
+}</pre></div>
+<p>Then in your main file</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="macro">sixtyfps::include_modules!</span>();
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="ident">HelloWorld::new</span>().<span class="ident">run</span>();
+}</pre></div>
+<h2 id="generated-components" class="section-header"><a href="#generated-components">Generated components</a></h2>
+<p>As of now, only the last component of a .60 source is generated. It is planned to generate all exported components.</p>
+<p>The component is generated and re-exported at the location of the <a href="macro.include_modules.html" title="include_modules!"><code>include_modules!</code></a>  or <a href="macro.sixtyfps.html" title="sixtyfps!"><code>sixtyfps!</code></a> macro.
+it consist of a struct of the same name of the component.
+For example, if you have <code>export MyComponent := Window { /*...*/ }</code> in the .60 file, it will create a <code>struct MyComponent{ /*...*/ }</code>.
+This documentation contains a documented generated component: <a href="docs/generated_code/struct.SampleComponent.html" title="docs::generated_code::SampleComponent"><code>docs::generated_code::SampleComponent</code></a>.</p>
+<p>The component is created using the <a href="docs/generated_code/struct.SampleComponent.html#method.new"><code>fn new() -&gt; Self</code></a> function. In addition
+the following convenience functions are available through the <a href="trait.ComponentHandle.html" title="ComponentHandle"><code>ComponentHandle</code></a> implementation:</p>
+<ul>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.clone_strong"><code>fn clone_strong(&amp;self) -&gt; Self</code></a>: to create a strongly referenced clone.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.as_weak"><code>fn as_weak(&amp;self) -&gt; Weak</code></a>: to create a <a href="struct.Weak.html">weak</a> reference.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.show"><code>fn show(&amp;self)</code></a>: to show the window of the component.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.hide"><code>fn hide(&amp;self)</code></a>: to hide the window of the component.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.run"><code>fn run(&amp;self)</code></a>: a convenience function that first calls <code>show()</code>,
+followed by spinning the event loop, and <code>hide()</code> when returning from the event loop.</li>
+</ul>
+<p>For each top-level property</p>
+<ul>
+<li>A setter <a href="docs/generated_code/struct.SampleComponent.html#method.set_counter"><code>fn set_&lt;property_name&gt;(&amp;self, value: &lt;PropertyType&gt;)</code></a></li>
+<li>A getter <a href="docs/generated_code/struct.SampleComponent.html#method.get_counter"><code>fn get_&lt;property_name&gt;(&amp;self) -&gt; &lt;PropertyType&gt;</code></a></li>
+</ul>
+<p>For each top-level callback</p>
+<ul>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.invoke_hello"><code>fn invoke_&lt;callback_name&gt;(&amp;self)</code></a>: to invoke the callback</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.on_hello"><code>fn on_&lt;callback_name&gt;(&amp;self, callback: impl Fn(&lt;CallbackArgs&gt;) + 'static)</code></a>: to set the callback handler.</li>
+</ul>
+<p>After instantiating the component you can call just <a href="trait.ComponentHandle.html#tymethod.run" title="ComponentHandle::run()"><code>ComponentHandle::run()</code></a> on it, in order to show it and spin the event loop to
+render and react to input events. If you want to show multiple components simultaneously, then you can also call just
+<a href="trait.ComponentHandle.html#tymethod.show" title="ComponentHandle::show()"><code>ComponentHandle::show()</code></a> first. When you’re ready to enter the event loop, just call <a href="fn.run_event_loop.html" title="run_event_loop()"><code>run_event_loop()</code></a>.</p>
+<p>The generated component struct act as a handle holding a strong reference (similar to a <code>Rc</code>). It does not implement
+<code>Clone</code> because we want to make explicit if we are cloning a strong reference (with <a href="trait.ComponentHandle.html#tymethod.clone_strong" title="ComponentHandle::clone_strong"><code>ComponentHandle::clone_strong</code></a>),
+or a weak reference (with  <a href="trait.ComponentHandle.html#tymethod.as_weak" title="ComponentHandle::as_weak"><code>ComponentHandle::as_weak</code></a>). A strong reference should not be captured by the closures
+given to a callback, as this would produce a reference loop and leak the component. Instead, the callback function
+should capture a weak component.</p>
+<h2 id="threading-and-event-loop" class="section-header"><a href="#threading-and-event-loop">Threading and Event-loop</a></h2>
+<p>For platform-specific reasons, the event loop must run in the main thread, in most backends, and all the components
+must be created in the same thread as the thread the event loop is running or is going to run.</p>
+<p>Ideally, you should perform the minimum amount of work in the main thread and delegate the actual logic to another
+thread. To communicate from your worker thread to the UI thread, the <a href="fn.invoke_from_event_loop.html" title="invoke_from_event_loop"><code>invoke_from_event_loop</code></a> function can be used.</p>
+<p>To run a function with a delay or with an interval you can use a <a href="struct.Timer.html" title="Timer"><code>Timer</code></a>.</p>
+<h2 id="type-mappings" class="section-header"><a href="#type-mappings">Type Mappings</a></h2>
+<p>The types used for properties in <code>.60</code> design markup each translate to specific types in Rust.
+The follow table summarizes the entire mapping:</p>
+<table><thead><tr><th><code>.60</code> Type</th><th>Rust Type</th><th>Note</th></tr></thead><tbody>
+<tr><td><code>int</code></td><td><code>i32</code></td><td></td></tr>
+<tr><td><code>float</code></td><td><code>f32</code></td><td></td></tr>
+<tr><td><code>string</code></td><td><a href="struct.SharedString.html" title="SharedString"><code>SharedString</code></a></td><td>A reference-counted string type that can be easily converted to a str reference.</td></tr>
+<tr><td><code>color</code></td><td><a href="struct.Color.html" title="Color"><code>Color</code></a></td><td></td></tr>
+<tr><td><code>brush</code></td><td><a href="enum.Brush.html" title="Brush"><code>Brush</code></a></td><td></td></tr>
+<tr><td><code>image</code></td><td><a href="struct.Image.html" title="Image"><code>Image</code></a></td><td></td></tr>
+<tr><td><code>physical_length</code></td><td><code>f32</code></td><td>The unit are physical pixels.</td></tr>
+<tr><td><code>length</code></td><td><code>f32</code></td><td>At run-time, logical lengths are automatically translated to physical pixels using the device pixel ratio.</td></tr>
+<tr><td><code>duration</code></td><td><code>i64</code></td><td>At run-time, durations are always represented as signed 64-bit integers with millisecond precision.</td></tr>
+<tr><td><code>angle</code></td><td><code>f32</code></td><td>The value in degrees</td></tr>
+<tr><td>structure</td><td><code>struct</code> of the same name</td><td></td></tr>
+<tr><td>array</td><td><a href="struct.ModelHandle.html" title="ModelHandle"><code>ModelHandle</code></a></td><td></td></tr>
+</tbody></table>
+<p>For user defined structures in the .60, an extra struct is generated.
+For example, if the <code>.60</code> contains</p>
+<div class="example-wrap"><pre class="language-60">export struct MyStruct := {
+    foo: int,
+    bar: string,
+}</pre></div>
+<p>The following struct would be generated:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">struct</span> <span class="ident">MyStruct</span> {
+    <span class="ident">foo</span> : <span class="ident">i32</span>,
+    <span class="ident">bar</span>: <span class="ident">sixtyfps::SharedString</span>,
+}</pre></div>
+</div></details><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<div class="item-table"><div class="item-left module-item"><a class="mod" href="docs/index.html" title="sixtyfps::docs mod">docs</a></div><div class="item-right docblock-short"><p>This is a pseudo module which only exist for documentation purposes as a way to show
+the SixtyFPS documentation as part of rustdoc.</p>
+</div><div class="item-left module-item"><a class="mod" href="testing/index.html" title="sixtyfps::testing mod">testing</a></div><div class="item-right docblock-short"><p>This module contains functions useful for unit tests</p>
+</div></div><h2 id="macros" class="section-header"><a href="#macros">Macros</a></h2>
+<div class="item-table"><div class="item-left module-item"><a class="macro" href="macro.include_modules.html" title="sixtyfps::include_modules macro">include_modules</a></div><div class="item-right docblock-short"><p>Include the code generated with the sixtyfps-build crate from the build script. After calling <code>sixtyfps_build::compile</code>
+in your <code>build.rs</code> build script, the use of this macro includes the generated Rust code and makes the exported types
+available for you to instantiate.</p>
+</div><div class="item-left module-item"><a class="macro" href="macro.sixtyfps.html" title="sixtyfps::sixtyfps macro">sixtyfps</a></div><div class="item-right docblock-short"><p>This macro allows you to use the <code>.60</code> design markup language inline in Rust code. Within the braces of the macro
+you can use place <code>.60</code> code and the named exported components will be available for instantiation.</p>
+</div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-left module-item"><a class="struct" href="struct.Color.html" title="sixtyfps::Color struct">Color</a></div><div class="item-right docblock-short"><p>Color represents a color in the SixtyFPS run-time, represented using 8-bit channels for
+red, green, blue and the alpha (opacity).
+It can be conveniently converted using the <code>to_</code> and <code>from_</code> (a)rgb helper functions:</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.Image.html" title="sixtyfps::Image struct">Image</a></div><div class="item-right docblock-short"><p>An image type that can be displayed by the Image element. You can construct
+Image objects from a path to an image file on disk, using <a href="struct.Image.html#method.load_from_path" title="Self::load_from_path"><code>Self::load_from_path</code></a>.</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.LoadImageError.html" title="sixtyfps::LoadImageError struct">LoadImageError</a></div><div class="item-right docblock-short"><p>Error generated if an image cannot be loaded for any reasons.</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.ModelHandle.html" title="sixtyfps::ModelHandle struct">ModelHandle</a></div><div class="item-right docblock-short"><p>Properties of type array in the .60 language are represented as
+an <a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="Option"><code>Option</code></a> of an <a href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="Rc"><code>Rc</code></a> of something implemented the <a href="trait.Model.html" title="Model"><code>Model</code></a> trait</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.ModelNotify.html" title="sixtyfps::ModelNotify struct">ModelNotify</a></div><div class="item-right docblock-short"><p>Dispatch notifications from a <a href="trait.Model.html" title="Model"><code>Model</code></a> to one or several <a href="struct.ModelPeer.html" title="ModelPeer"><code>ModelPeer</code></a>.
+Typically, you would want to put this in the implementation of the Model</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.ModelPeer.html" title="sixtyfps::ModelPeer struct">ModelPeer</a></div><div class="item-right docblock-short"><p>Represent a handle to a view that listens to changes to a model. See <a href="trait.Model.html#tymethod.attach_peer" title="Model::attach_peer"><code>Model::attach_peer</code></a> and <a href="struct.ModelNotify.html" title="ModelNotify"><code>ModelNotify</code></a></p>
+</div><div class="item-left module-item"><a class="struct" href="struct.RgbaColor.html" title="sixtyfps::RgbaColor struct">RgbaColor</a></div><div class="item-right docblock-short"><p>RgbaColor stores the red, green, blue and alpha components of a color
+with the precision of the generic parameter T. For example if T is f32,
+the values are normalized between 0 and 1. If T is u8, they values range
+is 0 to 255.
+This is merely a helper class for use with <a href="struct.Color.html" title="Color"><code>Color</code></a>.</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.SharedPixelBuffer.html" title="sixtyfps::SharedPixelBuffer struct">SharedPixelBuffer</a></div><div class="item-right docblock-short"><p>SharedPixelBuffer is a container for storing image data as pixels. It is
+internally reference counted and cheap to clone.</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.SharedString.html" title="sixtyfps::SharedString struct">SharedString</a></div><div class="item-right docblock-short"><p>A string type used by the SixtyFPS run-time.</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.SharedVector.html" title="sixtyfps::SharedVector struct">SharedVector</a></div><div class="item-right docblock-short"><p>SharedVector holds a reference-counted read-only copy of <code>[T]</code>.</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.StandardListViewItem.html" title="sixtyfps::StandardListViewItem struct">StandardListViewItem</a></div><div class="item-right docblock-short"><p>Represent an item in a StandardListView</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.Timer.html" title="sixtyfps::Timer struct">Timer</a></div><div class="item-right docblock-short"><p>Timer is a handle to the timer system that allows triggering a callback to be called
+after a specified period of time.</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.VecModel.html" title="sixtyfps::VecModel struct">VecModel</a></div><div class="item-right docblock-short"><p>A model backed by a SharedVector</p>
+</div><div class="item-left module-item"><a class="struct" href="struct.Weak.html" title="sixtyfps::Weak struct">Weak</a></div><div class="item-right docblock-short"><p>Struct that’s used to hold weak references of <a href="index.html#generated-components">SixtyFPS component</a></p>
+</div><div class="item-left module-item"><a class="struct" href="struct.Window.html" title="sixtyfps::Window struct">Window</a></div><div class="item-right docblock-short"><p>This type represents a window towards the windowing system, that’s used to render the
+scene of a component. It provides API to control windowing system specific aspects such
+as the position on the screen.</p>
+</div></div><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<div class="item-table"><div class="item-left module-item"><a class="enum" href="enum.Brush.html" title="sixtyfps::Brush enum">Brush</a></div><div class="item-right docblock-short"><p>A brush is a data structure that is used to describe how
+a shape, such as a rectangle, path or even text, shall be filled.
+A brush can also be applied to the outline of a shape, that means
+the fill of the outline itself.</p>
+</div><div class="item-left module-item"><a class="enum" href="enum.TimerMode.html" title="sixtyfps::TimerMode enum">TimerMode</a></div><div class="item-right docblock-short"><p>The TimerMode specifies what should happen after the timer fired.</p>
+</div></div><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<div class="item-table"><div class="item-left module-item"><a class="trait" href="trait.ComponentHandle.html" title="sixtyfps::ComponentHandle trait">ComponentHandle</a></div><div class="item-right docblock-short"><p>This trait describes the common public API of a strongly referenced SixtyFPS component.
+It allows creating strongly-referenced clones, a conversion into/ a weak pointer as well
+as other convenience functions.</p>
+</div><div class="item-left module-item"><a class="trait" href="trait.Model.html" title="sixtyfps::Model trait">Model</a></div><div class="item-right docblock-short"><p>A Model is providing Data for the Repeater or ListView elements of the <code>.60</code> language</p>
+</div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<div class="item-table"><div class="item-left module-item"><a class="fn" href="fn.invoke_from_event_loop.html" title="sixtyfps::invoke_from_event_loop fn">invoke_from_event_loop</a></div><div class="item-right docblock-short"><p>Adds the specified function to an internal queue, notifies the event loop to wake up.
+Once woken up, any queued up functors will be invoked.</p>
+</div><div class="item-left module-item"><a class="fn" href="fn.quit_event_loop.html" title="sixtyfps::quit_event_loop fn">quit_event_loop</a></div><div class="item-right docblock-short"><p>Schedules the main event loop for termination. This function is meant
+to be called from callbacks triggered by the UI. After calling the function,
+it will return immediately and once control is passed back to the event loop,
+the initial call to <a href="fn.run_event_loop.html" title="run_event_loop()"><code>run_event_loop()</code></a> will return.</p>
+</div><div class="item-left module-item"><a class="fn" href="fn.run_event_loop.html" title="sixtyfps::run_event_loop fn">run_event_loop</a></div><div class="item-right docblock-short"><p>Enters the main event loop. This is necessary in order to receive
+events from the windowing system in order to render to the screen
+and react to user input.</p>
+</div></div><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<div class="item-table"><div class="item-left module-item"><a class="type" href="type.Rgb8Pixel.html" title="sixtyfps::Rgb8Pixel type">Rgb8Pixel</a></div><div class="item-right docblock-short"><p>Convenience alias for a pixel with three color channels (red, green and blue), each
+encoded as u8.</p>
+</div><div class="item-left module-item"><a class="type" href="type.Rgba8Pixel.html" title="sixtyfps::Rgba8Pixel type">Rgba8Pixel</a></div><div class="item-right docblock-short"><p>Convenience alias for a pixel with four color channels (red, green, blue and alpha), each
+encoded as u8.</p>
+</div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="sixtyfps" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+    <script src="../main.js"></script>
+</body></html>

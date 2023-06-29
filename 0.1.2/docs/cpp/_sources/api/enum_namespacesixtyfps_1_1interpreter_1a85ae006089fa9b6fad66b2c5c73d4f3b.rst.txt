@@ -1,0 +1,13 @@
+.. _exhale_enum_namespacesixtyfps_1_1interpreter_1a85ae006089fa9b6fad66b2c5c73d4f3b:
+
+Enum DiagnosticLevel
+====================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_interpreter.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: sixtyfps::interpreter::DiagnosticLevel

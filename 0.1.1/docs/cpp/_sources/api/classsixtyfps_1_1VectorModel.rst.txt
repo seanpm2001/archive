@@ -1,0 +1,25 @@
+.. _exhale_class_classsixtyfps_1_1VectorModel:
+
+Template Class VectorModel
+==========================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public sixtyfps::Model< ModelData >`` (:ref:`exhale_class_classsixtyfps_1_1Model`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: sixtyfps::VectorModel
+   :members:
+   :protected-members:
+   :undoc-members:

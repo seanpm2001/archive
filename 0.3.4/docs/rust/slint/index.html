@@ -1,0 +1,537 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Slint"><meta name="keywords" content="rust, rustlang, rust-lang, slint"><title>slint - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-6d262342be62306e.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../static.files/light-5f7299aa2b503fb1.css"><link rel="stylesheet" disabled href="../static.files/dark-dfb18ef8114bb428.css"><link rel="stylesheet" disabled href="../static.files/ayu-4047a6aaddd3789d.css"><script id="default-settings" ></script><script src="../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/0.3.4/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/0.3.4/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it is mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint", "div.highlight-slint\\,no-auto-preview"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+
+    // Select C++ blocks in rustdoc generated code and hide them, while opening the <details> of Rust snippets
+    // Similarly, in Sphinx generated HTML, hide Rust blocks and open C++.
+    function select_code_snippet_variants(options) {
+        // When the CSS has pseudo class becomes available, we can probably use that directly
+        // in a stylesheet instead of JS here.
+
+        let selector_for_language = (language) => {
+            return `details[data-snippet-language="${language}"]`;
+        };
+
+        for (let details_element_to_hide of document.querySelectorAll(selector_for_language(options.hide))) {
+            details_element_to_hide.style = "display: none";
+        }
+
+        for (let details_element_to_show of document.querySelectorAll(selector_for_language(options.show))) {
+            details_element_to_show.open = true;
+        }
+    }
+
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+        select_code_snippet_variants({ hide: "cpp", show: "rust" })
+    } else {
+        select_code_snippet_variants({ hide: "rust", show: "cpp" })
+    }
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../slint/index.html"><img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../slint/index.html">
+                <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></a><h2 class="location"><a href="#">Crate slint</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.3.4</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">slint</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/slint/lib.rs.html#6-306">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="slint"><a href="#slint">Slint</a></h2>
+<p>This crate is the main entry point for embedding user interfaces designed with
+<a href="https://slint-ui.com/">Slint UI</a> in Rust programs.</p>
+<p>If you are new to Slint, start with the <a href="https://slint-ui.com/docs/tutorial/rust">Walk-through tutorial</a>.
+If you are already familiar with Slint, the following topics provide related information.</p>
+<h3 id="related-topics"><a href="#related-topics">Related topics</a></h3>
+<ul>
+<li><a href="docs/recipes/index.html">Examples and Recipes</a></li>
+<li><a href="docs/langref/index.html">The <code>.slint</code> language reference</a></li>
+<li><a href="docs/builtin_elements/index.html">Builtin Elements</a></li>
+<li><a href="docs/builtin_enums/index.html">Builtin Enums</a></li>
+<li><a href="docs/widgets/index.html">Widgets</a></li>
+<li><a href="docs/layouting/index.html">Positioning and Layout of Elements</a></li>
+<li><a href="docs/debugging_techniques/index.html">Debugging Techniques</a></li>
+<li><a href="docs/mcu/index.html">Slint on Microcontrollers</a></li>
+</ul>
+<h3 id="how-to-use-this-crate"><a href="#how-to-use-this-crate">How to use this crate:</a></h3>
+<p>Designs of user interfaces are described in the <code>.slint</code> design markup language. There are three ways
+of including them in Rust:</p>
+<ul>
+<li>The <code>.slint</code> code is <a href="#the-slint-code-in-a-macro">inline in a macro</a>.</li>
+<li>The <code>.slint</code> code in <a href="#the-slint-code-in-external-files-is-compiled-with-buildrs">external files compiled with <code>build.rs</code></a></li>
+<li>The <code>.slint</code> code is loaded dynamically at run-time from the file system, by using the <a href="https://docs.rs/slint-interpreter">interpreter API</a>.</li>
+</ul>
+<p>With the first two methods, the markup code is translated to Rust code and each component is turned into a Rust
+struct with functions. Use these functions to instantiate and show the component, and
+to access declared properties. Check out our <a href="docs/generated_code/struct.SampleComponent.html">sample component</a> for more
+information about the generation functions and how to use them.</p>
+<h4 id="the-slint-code-in-a-macro"><a href="#the-slint-code-in-a-macro">The .slint code in a macro</a></h4>
+<p>This method combines your Rust code with the <code>.slint</code> design markup in one file, using a macro:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="macro">slint::slint!</span>{
+    export component HelloWorld {
+        Text {
+            text: <span class="string">&quot;hello world&quot;</span>;
+            color: green;
+        }
+    }
+}
+<span class="kw">fn </span>main() {
+    HelloWorld::new().run();
+}</code></pre></div>
+<h4 id="the-slint-code-in-external-files-is-compiled-with-buildrs"><a href="#the-slint-code-in-external-files-is-compiled-with-buildrs">The .slint code in external files is compiled with <code>build.rs</code></a></h4>
+<p>When your design becomes bigger in terms of markup code, you may want move it to a dedicated
+<code>.slint</code> file. It’s also possible to split a <code>.slint</code> file into multiple files using <a href="docs/langref/index.html#modules">modules</a>.
+Use a <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">build script</a> to compile
+your main <code>.slint</code> file:</p>
+<p>In your Cargo.toml add a <code>build</code> assignment and use the <code>slint-build</code> crate in <code>build-dependencies</code>:</p>
+<div class="example-wrap"><pre class="language-toml"><code>[package]
+...
+build = &quot;build.rs&quot;
+edition = &quot;2021&quot;
+
+[dependencies]
+slint = &quot;0.3.4&quot;
+...
+
+[build-dependencies]
+slint-build = &quot;0.3.4&quot;
+</code></pre></div>
+<p>Use the API of the slint-build crate in the <code>build.rs</code> file:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">fn </span>main() {
+    slint_build::compile(<span class="string">&quot;ui/hello.slint&quot;</span>).unwrap();
+}</code></pre></div>
+<p>Finally, use the <a href="macro.include_modules.html" title="include_modules!"><code>include_modules!</code></a> macro in your <code>main.rs</code>:</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="macro">slint::include_modules!</span>();
+<span class="kw">fn </span>main() {
+    HelloWorld::new().run();
+}</code></pre></div>
+<p>The <a href="https://github.com/cargo-generate/cargo-generate">cargo-generate</a> tool is a great tool to up and running quickly with a new
+Rust project. You can use it in combination with our <a href="https://github.com/slint-ui/slint-rust-template">Template Repository</a> to
+create a skeleton file hierarchy that uses this method:</p>
+<div class="example-wrap"><pre class="language-bash"><code>cargo install cargo-generate
+cargo generate --git https://github.com/slint-ui/slint-rust-template
+</code></pre></div><h3 id="generated-components"><a href="#generated-components">Generated components</a></h3>
+<p>Currently, only the last component in a <code>.slint</code> source file is mapped to a Rust structure that be instantiated. We are tracking the
+resolution of this limitation in <a href="https://github.com/slint-ui/slint/issues/784">https://github.com/slint-ui/slint/issues/784</a>.</p>
+<p>The component is generated and re-exported to the location of the <a href="macro.include_modules.html" title="include_modules!"><code>include_modules!</code></a>  or <a href="macro.slint.html" title="slint!"><code>slint!</code></a> macro. It is represented
+as a struct with the same name as the component.</p>
+<p>For example, if you have</p>
+<div class="example-wrap"><pre class="language-slint,no-preview"><code>export MyComponent := Window { /*...*/ }
+</code></pre></div>
+<p>in the .slint file, it will create a</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">struct </span>MyComponent{ <span class="comment">/*...*/ </span>}</code></pre></div>
+<p>See also our <a href="docs/generated_code/struct.SampleComponent.html">sample component</a> for more information about the API of the generated struct.</p>
+<p>A component is instantiated using the <a href="docs/generated_code/struct.SampleComponent.html#method.new"><code>fn new() -&gt; Self</code></a> function. The following
+convenience functions are available through the <a href="trait.ComponentHandle.html" title="ComponentHandle"><code>ComponentHandle</code></a> implementation:</p>
+<ul>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.clone_strong"><code>fn clone_strong(&amp;self) -&gt; Self</code></a>: creates a strongly referenced clone of the component instance.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.as_weak"><code>fn as_weak(&amp;self) -&gt; Weak</code></a>: to create a <a href="struct.Weak.html">weak</a> reference to the component instance.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.show"><code>fn show(&amp;self)</code></a>: to show the window of the component.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.hide"><code>fn hide(&amp;self)</code></a>: to hide the window of the component.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.run"><code>fn run(&amp;self)</code></a>: a convenience function that first calls <code>show()</code>,
+followed by spinning the event loop, and <code>hide()</code> when returning from the event loop.</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.global"><code>fn global&lt;T: Global&lt;Self&gt;&gt;(&amp;self) -&gt; T</code></a>: an accessor to the global singletons,</li>
+</ul>
+<p>For each top-level property</p>
+<ul>
+<li>A setter <a href="docs/generated_code/struct.SampleComponent.html#method.set_counter"><code>fn set_&lt;property_name&gt;(&amp;self, value: &lt;PropertyType&gt;)</code></a></li>
+<li>A getter <a href="docs/generated_code/struct.SampleComponent.html#method.get_counter"><code>fn get_&lt;property_name&gt;(&amp;self) -&gt; &lt;PropertyType&gt;</code></a></li>
+</ul>
+<p>For each top-level callback</p>
+<ul>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.invoke_hello"><code>fn invoke_&lt;callback_name&gt;(&amp;self)</code></a>: to invoke the callback</li>
+<li><a href="docs/generated_code/struct.SampleComponent.html#method.on_hello"><code>fn on_&lt;callback_name&gt;(&amp;self, callback: impl Fn(&lt;CallbackArgs&gt;) + 'static)</code></a>: to set the callback handler.</li>
+</ul>
+<p>Note: All dashes (<code>-</code>) are replaced by underscores (<code>_</code>) in names of types or functions.</p>
+<p>After instantiating the component, call <a href="trait.ComponentHandle.html#tymethod.run" title="ComponentHandle::run()"><code>ComponentHandle::run()</code></a> on show it on the screen and spin the event loop to
+react to input events. To show multiple components simultaneously, call <a href="trait.ComponentHandle.html#tymethod.show" title="ComponentHandle::show()"><code>ComponentHandle::show()</code></a> on each instance.
+Call <a href="fn.run_event_loop.html" title="run_event_loop()"><code>run_event_loop()</code></a> when you’re ready to enter the event loop.</p>
+<p>The generated component struct acts as a handle holding a strong reference (similar to an <code>Rc</code>). The <code>Clone</code> trait is
+not implemented. Instead you need to make explicit <a href="trait.ComponentHandle.html#tymethod.clone_strong" title="ComponentHandle::clone_strong"><code>ComponentHandle::clone_strong</code></a> and <a href="trait.ComponentHandle.html#tymethod.as_weak" title="ComponentHandle::as_weak"><code>ComponentHandle::as_weak</code></a>
+calls. A strong reference should not be captured by the closures given to a callback, as this would produce a reference
+loop and leak the component. Instead, the callback function should capture a weak component.</p>
+<h3 id="threading-and-event-loop"><a href="#threading-and-event-loop">Threading and Event-loop</a></h3>
+<p>For platform-specific reasons, the event loop must run in the main thread, in most backends, and all the components
+must be created in the same thread as the thread the event loop is running or is going to run.</p>
+<p>You should perform the minimum amount of work in the main thread and delegate the actual logic to another
+thread to avoid blocking animations. Use the <a href="fn.invoke_from_event_loop.html" title="invoke_from_event_loop"><code>invoke_from_event_loop</code></a> function to communicate from your worker thread to the UI thread.</p>
+<p>To run a function with a delay or with an interval use a <a href="struct.Timer.html" title="Timer"><code>Timer</code></a>.</p>
+<h3 id="type-mappings"><a href="#type-mappings">Type Mappings</a></h3>
+<p>The types used for properties in <code>.slint</code> design markup each translate to specific types in Rust.
+The follow table summarizes the entire mapping:</p>
+<div><table><thead><tr><th><code>.slint</code> Type</th><th>Rust Type</th><th>Note</th></tr></thead><tbody>
+<tr><td><code>int</code></td><td><code>i32</code></td><td></td></tr>
+<tr><td><code>float</code></td><td><code>f32</code></td><td></td></tr>
+<tr><td><code>bool</code></td><td><code>bool</code></td><td></td></tr>
+<tr><td><code>string</code></td><td><a href="struct.SharedString.html" title="SharedString"><code>SharedString</code></a></td><td>A reference-counted string type that can be easily converted to a str reference.</td></tr>
+<tr><td><code>color</code></td><td><a href="struct.Color.html" title="Color"><code>Color</code></a></td><td></td></tr>
+<tr><td><code>brush</code></td><td><a href="enum.Brush.html" title="Brush"><code>Brush</code></a></td><td></td></tr>
+<tr><td><code>image</code></td><td><a href="struct.Image.html" title="Image"><code>Image</code></a></td><td></td></tr>
+<tr><td><code>physical_length</code></td><td><code>f32</code></td><td>The unit are physical pixels.</td></tr>
+<tr><td><code>length</code></td><td><code>f32</code></td><td>At run-time, logical lengths are automatically translated to physical pixels using the device pixel ratio.</td></tr>
+<tr><td><code>duration</code></td><td><code>i64</code></td><td>At run-time, durations are always represented as signed 64-bit integers with millisecond precision.</td></tr>
+<tr><td><code>angle</code></td><td><code>f32</code></td><td>The value in degrees</td></tr>
+<tr><td><code>relative-font-size</code></td><td><code>f32</code></td><td>Relative font size factor that is multiplied with the <code>Window.default-font-size</code> and can be converted to a <code>length</code>.</td></tr>
+<tr><td>structure</td><td><code>struct</code> of the same name</td><td></td></tr>
+<tr><td>array</td><td><a href="struct.ModelRc.html" title="ModelRc"><code>ModelRc</code></a></td><td></td></tr>
+</tbody></table>
+</div>
+<p>For user defined structures in the .slint, an extra struct is generated.
+For example, if the <code>.slint</code> contains</p>
+<div class="example-wrap"><pre class="language-slint,ignore"><code>export struct MyStruct := {
+    foo: int,
+    bar: string,
+}
+</code></pre></div>
+<p>The following struct would be generated:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[derive(Default, Clone, Debug, PartialEq)]
+</span><span class="kw">struct </span>MyStruct {
+    foo : i32,
+    bar: slint::SharedString,
+}</code></pre></div>
+<h3 id="exported-global-singletons"><a href="#exported-global-singletons">Exported Global singletons</a></h3>
+<p>When you export a <a href="docs/langref/index.html#global-singletons">global singleton</a> from the main file,
+it is also generated with the exported name. Like the main component, the generated struct have
+inherent method to access the properties and callback:</p>
+<p>For each property</p>
+<ul>
+<li>A setter: <code>fn set_&lt;property_name&gt;(&amp;self, value: &lt;PropertyType&gt;)</code></li>
+<li>A getter: <code>fn get_&lt;property_name&gt;(&amp;self) -&gt; &lt;PropertyType&gt;</code></li>
+</ul>
+<p>For each callback</p>
+<ul>
+<li><code>fn invoke_&lt;callback_name&gt;(&amp;self, &lt;CallbackArgs&gt;) -&gt; &lt;ReturnValue&gt;</code> to invoke the callback</li>
+<li><code>fn on_&lt;callback_name&gt;(&amp;self, callback: impl Fn(&lt;CallbackArgs&gt;) + 'static)</code> to set the callback handler.</li>
+</ul>
+<p>The global can be accessed with the <a href="trait.ComponentHandle.html#tymethod.global" title="ComponentHandle::global()"><code>ComponentHandle::global()</code></a> function, or with <a href="trait.Global.html#tymethod.get" title="Global::get()"><code>Global::get()</code></a></p>
+<p>See the <a href="trait.Global.html">documentation of the <code>Global</code> trait</a> for an example.</p>
+<h3 id="feature-flags"><a href="#feature-flags">Feature flags</a></h3>
+<ul>
+<li>
+<p><strong><code>compat-0-3-0</code></strong> <em>(enabled by default)</em> —  Mandatory feature:
+This feature is required to keep the compatibility with Slint 0.3.0
+Newer patch version may put current functionality behind a new feature
+that would be enabled by default only if this feature was added.
+<a href="https://slint-ui.com/blog/rust-adding-default-cargo-feature.html">More info in this blog post</a></p>
+</li>
+<li>
+<p><strong><code>std</code></strong> <em>(enabled by default)</em> —  Enable use of the Rust standard library.</p>
+</li>
+<li>
+<p><strong><code>libm</code></strong> —  This feature enables floating point arithmetic emulation using the <a href="https://crates.io/crates/libm">libm</a> crate. Use this
+in MCU environments where the processor does not support floating point arithmetic.</p>
+</li>
+<li>
+<p><strong><code>log</code></strong> —  If enabled, calls of <code>debug()</code> in <code>.slint</code> files use to the <a href="https://docs.rs/log/0.4.17/log/macro.debug.html" title="log::debug!()"><code>log::debug!()</code></a> macro
+of the <a href="https://crates.io/crates/log">log</a> crate instead of just <code>println!()</code>.</p>
+</li>
+<li>
+<p><strong><code>unsafe-single-threaded</code></strong> —  Slint uses internally some <code>thread_local</code> state.</p>
+<p>When the <code>std</code> feature is enabled, Slint can use <a href="https://doc.rust-lang.org/nightly/std/macro.thread_local.html" title="std::thread_local!"><code>std::thread_local!</code></a>, but when in a <code>#![no_std]</code>
+environment, we need a replacement. Using this feature, Slint will just use static variable
+disregarding Rust’s Send and Sync safety</p>
+<p><strong>Safety</strong> : You must ensure that there is only one single thread that call into the Slint API</p>
+</li>
+</ul>
+<h4 id="backends"><a href="#backends">Backends</a></h4>
+<p>Slint needs a backend that will act as liaison between Slint and the OS.
+By default, Slint will use the Qt backend, if Qt is installed, otherwise, it
+will use <a href="https://crates.io/crates/winit">Winit</a> with <a href="https://crates.io/crates/femtovg">Femtovg</a>.
+Both backends are compiled in. If you want to not compile one of these you need
+to disable the default feature and re-enable one backend. It is also possible
+to use Slint without backend if you provide the platform abstraction yourself
+with <a href="platform/fn.set_platform.html" title="platform::set_platform()"><code>platform::set_platform()</code></a>.</p>
+<p>If you enable the Winit backend, you need to also include a renderer.
+<code>renderer-winit-femtovg</code> is the only stable renderer, the other ones are experimental</p>
+<p>It is also possible to select the backend and renderer at runtime when several
+are enabled, using the <code>SLINT_BACKEND</code>  environment variable.</p>
+<ul>
+<li><code>SLINT_BACKEND=Qt</code> selects the Qt backend</li>
+<li><code>SLINT_BACKEND=winit</code> selects the winit backend</li>
+<li><code>SLINT_BACKEND=winit-femtovg</code> selects the winit backend with the femtovg renderer</li>
+<li><code>SLINT_BACKEND=winit-skia</code> selects the winit backend with the skia renderer</li>
+<li><code>SLINT_BACKEND=winit-software</code> selects the winit backend with the software renderer</li>
+</ul>
+<p>If the selected backend is not available, the default will be used.</p>
+<p>Here are the cargo features controlling the backend:</p>
+<ul>
+<li>
+<p><strong><code>backend-qt</code></strong> <em>(enabled by default)</em> —  The Qt backend feature uses Qt for the windowing system integration and rendering.
+This backend also provides the <code>native</code> style.
+It requires Qt 5.15 or later to be installed. If Qt is not installed, the
+backend will not be operational</p>
+</li>
+<li>
+<p><strong><code>backend-winit</code></strong> <em>(enabled by default)</em> —  The <a href="https://crates.io/crates/log">winit</a> crate is used for the event loop and windowing system integration.
+It supports Windows, macOS, web browsers, X11 and Wayland. X11 and wayland are only available when
+compiling for Linux or other Unix-like operating systems. With this feature, both X11 and Wayland are supported.
+For a smaller build, omit this feature and select one of the other specific <code>backend-winit-XX</code> features.</p>
+</li>
+<li>
+<p><strong><code>backend-winit-x11</code></strong> —  Simliar to <code>backend-winit</code> this enables the winit based event loop but only
+with support for the X Window System on Unix.</p>
+</li>
+<li>
+<p><strong><code>backend-winit-wayland</code></strong> —  Simliar to <code>backend-winit</code> this enables the winit based event loop but only
+with support for the Wayland window system on Unix.</p>
+</li>
+<li>
+<p><strong><code>renderer-winit-femtovg</code></strong> <em>(enabled by default)</em> —  Enable the <code>winit</code> backend and make it capable of renderer using the
+<a href="https://crates.io/crates/femtovg">femtovg</a> crate.</p>
+</li>
+<li>
+<p><strong><code>renderer-winit-skia</code></strong> —  Enable the <code>winit</code> backend and make it capable of renderer using <a href="https://skia.org/">Skia</a></p>
+</li>
+<li>
+<p><strong><code>renderer-winit-skia-opengl</code></strong> —  Same as <code>renderer-winit-skia</code>, but Skia will always use OpenGL.</p>
+</li>
+<li>
+<p><strong><code>renderer-winit-software</code></strong> —  Enable the <code>winit</code> backend and make it capable of renderer using the software renderer</p>
+</li>
+</ul>
+</div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="docs/index.html" title="slint::docs mod">docs</a></div><div class="item-right docblock-short">This is a pseudo module which only exist for documentation purposes as a way to show
+the Slint documentation as part of rustdoc.</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="platform/index.html" title="slint::platform mod">platform</a></div><div class="item-right docblock-short">This module contains items that you need to use or implement if you want use Slint in an environment without
+one of the supplied platform backends such as qt or winit.</div></div></div><h2 id="macros" class="small-section-header"><a href="#macros">Macros</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="macro" href="macro.format.html" title="slint::format macro">format</a></div><div class="item-right docblock-short">This macro is the same as <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html" title="std::format!"><code>std::format!</code></a>, but it returns a <a href="struct.SharedString.html" title="SharedString"><code>SharedString</code></a> instead.</div></div><div class="item-row"><div class="item-left module-item"><a class="macro" href="macro.include_modules.html" title="slint::include_modules macro">include_modules</a></div><div class="item-right docblock-short">Include the code generated with the slint-build crate from the build script. After calling <code>slint_build::compile</code>
+in your <code>build.rs</code> build script, the use of this macro includes the generated Rust code and makes the exported types
+available for you to instantiate.</div></div><div class="item-row"><div class="item-left module-item"><a class="macro" href="macro.slint.html" title="slint::slint macro">slint</a></div><div class="item-right docblock-short">This macro allows you to use the <code>.slint</code> design markup language inline in Rust code. Within the braces of the macro
+you can use place <code>.slint</code> code and the named exported components will be available for instantiation.</div></div></div><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Color.html" title="slint::Color struct">Color</a></div><div class="item-right docblock-short">Color represents a color in the Slint run-time, represented using 8-bit channels for
+red, green, blue and the alpha (opacity).
+It can be conveniently converted using the <code>to_</code> and <code>from_</code> (a)rgb helper functions:</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.FilterModel.html" title="slint::FilterModel struct">FilterModel</a></div><div class="item-right docblock-short">Provides a filtered subset of rows by another <a href="trait.Model.html" title="Model"><code>Model</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Image.html" title="slint::Image struct">Image</a></div><div class="item-right docblock-short">An image type that can be displayed by the Image element. You can construct
+Image objects from a path to an image file on disk, using <a href="struct.Image.html#method.load_from_path" title="Self::load_from_path"><code>Self::load_from_path</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.LoadImageError.html" title="slint::LoadImageError struct">LoadImageError</a></div><div class="item-right docblock-short">Error generated if an image cannot be loaded for any reasons.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.LogicalPosition.html" title="slint::LogicalPosition struct">LogicalPosition</a></div><div class="item-right docblock-short">A position represented in the coordinate space of logical pixels. That is the space before applying
+a display device specific scale factor.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.LogicalSize.html" title="slint::LogicalSize struct">LogicalSize</a></div><div class="item-right docblock-short">A size represented in the coordinate space of logical pixels. That is the space before applying
+a display device specific scale factor.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.MapModel.html" title="slint::MapModel struct">MapModel</a></div><div class="item-right docblock-short">Provides rows that are generated by a map function based on the rows of another Model</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ModelNotify.html" title="slint::ModelNotify struct">ModelNotify</a></div><div class="item-right docblock-short">Dispatch notifications from a <a href="trait.Model.html" title="Model"><code>Model</code></a> to one or several <a href="struct.ModelPeer.html" title="ModelPeer"><code>ModelPeer</code></a>.
+Typically, you would want to put this in the implementation of the Model</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ModelPeer.html" title="slint::ModelPeer struct">ModelPeer</a></div><div class="item-right docblock-short">Represent a handle to a view that listens to changes to a model.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ModelRc.html" title="slint::ModelRc struct">ModelRc</a></div><div class="item-right docblock-short">A Reference counted <a href="trait.Model.html" title="Model"><code>Model</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.PhysicalPosition.html" title="slint::PhysicalPosition struct">PhysicalPosition</a></div><div class="item-right docblock-short">A position represented in the coordinate space of physical device pixels. That is the space after applying
+a display device specific scale factor to pixels from the logical coordinate space.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.PhysicalSize.html" title="slint::PhysicalSize struct">PhysicalSize</a></div><div class="item-right docblock-short">A size represented in the coordinate space of physical device pixels. That is the space after applying
+a display device specific scale factor to pixels from the logical coordinate space.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RgbaColor.html" title="slint::RgbaColor struct">RgbaColor</a></div><div class="item-right docblock-short">RgbaColor stores the red, green, blue and alpha components of a color
+with the precision of the generic parameter T. For example if T is f32,
+the values are normalized between 0 and 1. If T is u8, they values range
+is 0 to 255.
+This is merely a helper class for use with <a href="struct.Color.html" title="Color"><code>Color</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SharedPixelBuffer.html" title="slint::SharedPixelBuffer struct">SharedPixelBuffer</a></div><div class="item-right docblock-short">SharedPixelBuffer is a container for storing image data as pixels. It is
+internally reference counted and cheap to clone.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SharedString.html" title="slint::SharedString struct">SharedString</a></div><div class="item-right docblock-short">A string type used by the Slint run-time.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SharedVector.html" title="slint::SharedVector struct">SharedVector</a></div><div class="item-right docblock-short">SharedVector holds a reference-counted read-only copy of <code>[T]</code>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SortModel.html" title="slint::SortModel struct">SortModel</a></div><div class="item-right docblock-short">Provides a sorted view of rows by another <a href="trait.Model.html" title="Model"><code>Model</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.StandardListViewItem.html" title="slint::StandardListViewItem struct">StandardListViewItem</a></div><div class="item-right docblock-short">Represents an item in a StandardListView and a StandardTableView. This is the Rust/C++ type for
+the StandardListViewItem type in Slint files, when declaring for example a <code>property &lt;[StandardListViewItem]&gt; my-list-view-model;</code>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.TableColumn.html" title="slint::TableColumn struct">TableColumn</a></div><div class="item-right docblock-short">Represent an TableColumn header</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Timer.html" title="slint::Timer struct">Timer</a></div><div class="item-right docblock-short">Timer is a handle to the timer system that allows triggering a callback to be called
+after a specified period of time.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.VecModel.html" title="slint::VecModel struct">VecModel</a></div><div class="item-right docblock-short">A model backed by a <code>Vec&lt;T&gt;</code></div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Weak.html" title="slint::Weak struct">Weak</a></div><div class="item-right docblock-short">Struct that’s used to hold weak references of a <a href="mod@crate#generated-components">Slint component</a></div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Window.html" title="slint::Window struct">Window</a></div><div class="item-right docblock-short">This type represents a window towards the windowing system, that’s used to render the
+scene of a component. It provides API to control windowing system specific aspects such
+as the position on the screen.</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Brush.html" title="slint::Brush enum">Brush</a></div><div class="item-right docblock-short">A brush is a data structure that is used to describe how
+a shape, such as a rectangle, path or even text, shall be filled.
+A brush can also be applied to the outline of a shape, that means
+the fill of the outline itself.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.CloseRequestResponse.html" title="slint::CloseRequestResponse enum">CloseRequestResponse</a></div><div class="item-right docblock-short">This enum describes whether a Window is allowed to be hidden when the user tries to close the window.
+It is the return type of the callback provided to <a href="struct.Window.html#method.on_close_requested" title="Window::on_close_requested">Window::on_close_requested</a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.EventLoopError.html" title="slint::EventLoopError enum">EventLoopError</a></div><div class="item-right docblock-short">Error returned from the <a href="fn.invoke_from_event_loop.html" title="invoke_from_event_loop()"><code>invoke_from_event_loop()</code></a> and <a href="fn.quit_event_loop.html" title="quit_event_loop()"><code>quit_event_loop()</code></a> function</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.GraphicsAPI.html" title="slint::GraphicsAPI enum">GraphicsAPI</a></div><div class="item-right docblock-short">This enum describes a low-level access to specific graphics APIs used
+by the renderer.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.RenderingState.html" title="slint::RenderingState enum">RenderingState</a></div><div class="item-right docblock-short">This enum describes the different rendering states, that will be provided
+to the parameter of the callback for <code>set_rendering_notifier</code> on the <code>slint::Window</code>.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.SetRenderingNotifierError.html" title="slint::SetRenderingNotifierError enum">SetRenderingNotifierError</a></div><div class="item-right docblock-short">This enum describes the different error scenarios that may occur when the application
+registers a rendering notifier on a <a href="struct.Window.html"><code>crate::Window</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.TimerMode.html" title="slint::TimerMode enum">TimerMode</a></div><div class="item-right docblock-short">The TimerMode specifies what should happen after the timer fired.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.WindowPosition.html" title="slint::WindowPosition enum">WindowPosition</a></div><div class="item-right docblock-short">The position of the window in either physical or logical pixels. This is used
+with <a href="struct.Window.html#method.set_position" title="Window::set_position"><code>Window::set_position</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.WindowSize.html" title="slint::WindowSize enum">WindowSize</a></div><div class="item-right docblock-short">The size of a window represented in either physical or logical pixels. This is used
+with <a href="struct.Window.html#method.set_size" title="Window::set_size"><code>Window::set_size</code></a>.</div></div></div><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.ComponentHandle.html" title="slint::ComponentHandle trait">ComponentHandle</a></div><div class="item-right docblock-short">This trait describes the common public API of a strongly referenced Slint component.
+It allows creating strongly-referenced clones, a conversion into/ a weak pointer as well
+as other convenience functions.</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Global.html" title="slint::Global trait">Global</a></div><div class="item-right docblock-short">This trait is used to obtain references to global singletons exported in <code>.slint</code>
+markup. Alternatively, you can use <a href="trait.ComponentHandle.html#tymethod.global" title="ComponentHandle::global"><code>ComponentHandle::global</code></a> to obtain access.</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Model.html" title="slint::Model trait">Model</a></div><div class="item-right docblock-short">A Model is providing Data for the Repeater or ListView elements of the <code>.slint</code> language</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.ModelExt.html" title="slint::ModelExt trait">ModelExt</a></div><div class="item-right docblock-short">Extension trait with extra methods implemented on types that implement <a href="trait.Model.html" title="Model"><code>Model</code></a></div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.ModelTracker.html" title="slint::ModelTracker trait">ModelTracker</a></div><div class="item-right docblock-short">This trait defines the interface that users of a model can use to track changes
+to a model. It is supplied via <a href="trait.Model.html#tymethod.model_tracker" title="Model::model_tracker"><code>Model::model_tracker</code></a> and implementation usually
+return a reference to its field of <a href="struct.ModelNotify.html" title="ModelNotify"><code>ModelNotify</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.RenderingNotifier.html" title="slint::RenderingNotifier trait">RenderingNotifier</a></div><div class="item-right docblock-short">Internal trait that’s used to map rendering state callbacks to either a Rust-API provided
+impl FnMut or a struct that invokes a C callback and implements Drop to release the closure
+on the C++ side.</div></div></div><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.invoke_from_event_loop.html" title="slint::invoke_from_event_loop fn">invoke_from_event_loop</a></div><div class="item-right docblock-short">Adds the specified function to an internal queue, notifies the event loop to wake up.
+Once woken up, any queued up functors will be invoked.</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.quit_event_loop.html" title="slint::quit_event_loop fn">quit_event_loop</a></div><div class="item-right docblock-short">Schedules the main event loop for termination. This function is meant
+to be called from callbacks triggered by the UI. After calling the function,
+it will return immediately and once control is passed back to the event loop,
+the initial call to <code>slint::run_event_loop()</code> will return.</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.run_event_loop.html" title="slint::run_event_loop fn">run_event_loop</a></div><div class="item-right docblock-short">Enters the main event loop. This is necessary in order to receive
+events from the windowing system in order to render to the screen
+and react to user input.</div></div></div><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.PointerEventButton.html" title="slint::PointerEventButton type">PointerEventButton</a><span class="stab deprecated" title="">Deprecated</span></div><div class="item-right docblock-short">Deprecated type alias for <a href="platform/enum.PointerEventButton.html"><code>slint::platform::PointerEventButton</code></a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.Rgb8Pixel.html" title="slint::Rgb8Pixel type">Rgb8Pixel</a></div><div class="item-right docblock-short">Convenience alias for a pixel with three color channels (red, green and blue), each
+encoded as u8.</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.Rgba8Pixel.html" title="slint::Rgba8Pixel type">Rgba8Pixel</a></div><div class="item-right docblock-short">Convenience alias for a pixel with four color channels (red, green, blue and alpha), each
+encoded as u8.</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.WindowEvent.html" title="slint::WindowEvent type">WindowEvent</a><span class="stab deprecated" title="">Deprecated</span></div><div class="item-right docblock-short">Deprecated type alias for <a href="platform/enum.WindowEvent.html"><code>slint::platform::WindowEvent</code></a>.</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="slint" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (c8e6a9e8b 2023-01-23)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

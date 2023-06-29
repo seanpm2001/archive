@@ -1,0 +1,14 @@
+.. _exhale_enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6:
+
+Enum DiagnosticLevel
+====================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_interpreter_generated_public.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: slint::interpreter::DiagnosticLevel
+   :project: Slint

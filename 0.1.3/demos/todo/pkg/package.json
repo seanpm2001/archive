@@ -1,0 +1,16 @@
+{
+  "name": "todo",
+  "collaborators": [
+    "SixtyFPS <info@sixtyfps.io>"
+  ],
+  "version": "0.1.3",
+  "license": "GPL-3.0-only",
+  "files": [
+    "todo_bg.wasm",
+    "todo.js",
+    "todo.d.ts"
+  ],
+  "module": "todo.js",
+  "types": "todo.d.ts",
+  "sideEffects": false
+}

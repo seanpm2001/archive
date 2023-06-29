@@ -1,0 +1,178 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_properties_internal.h:
+
+Program Listing for File slint_properties_internal.h
+====================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_properties_internal.h>` (``cppdocs/generated_include/slint_properties_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.20.0 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   namespace slint { class Color; class Brush; }
+   
+   namespace slint {
+   namespace cbindgen_private {
+   
+   using PropertyHandle = uintptr_t;
+   
+   struct PropertyHandleOpaque {
+       PropertyHandle _0;
+   
+       bool operator==(const PropertyHandleOpaque& other) const {
+           return _0 == other._0;
+       }
+       bool operator!=(const PropertyHandleOpaque& other) const {
+           return _0 != other._0;
+       }
+   };
+   
+   struct PropertyTrackerOpaque {
+       uintptr_t dependencies;
+       uintptr_t dep_nodes[2];
+       uintptr_t vtable;
+       bool dirty;
+   };
+   
+   struct CallbackOpaque {
+       const void *_0;
+       const void *_1;
+   
+       bool operator==(const CallbackOpaque& other) const {
+           return _0 == other._0 &&
+                  _1 == other._1;
+       }
+       bool operator!=(const CallbackOpaque& other) const {
+           return _0 != other._0 ||
+                  _1 != other._1;
+       }
+   };
+   
+   struct StateInfo {
+       using Instant = uint64_t;
+       int32_t current_state;
+       int32_t previous_state;
+       Instant change_time;
+   
+       bool operator==(const StateInfo& other) const {
+           return current_state == other.current_state &&
+                  previous_state == other.previous_state &&
+                  change_time == other.change_time;
+       }
+       bool operator!=(const StateInfo& other) const {
+           return current_state != other.current_state ||
+                  previous_state != other.previous_state ||
+                  change_time != other.change_time;
+       }
+   };
+   
+   extern "C" {
+   
+   void slint_property_init(PropertyHandleOpaque *out);
+   
+   void slint_property_update(const PropertyHandleOpaque *handle, void *val);
+   
+   void slint_property_set_changed(const PropertyHandleOpaque *handle, const void *value);
+   
+   void slint_property_set_binding(const PropertyHandleOpaque *handle,
+                                   void (*binding)(void *user_data, void *pointer_to_value),
+                                   void *user_data,
+                                   void (*drop_user_data)(void*),
+                                   bool (*intercept_set)(void *user_data, const void *pointer_to_Value),
+                                   bool (*intercept_set_binding)(void *user_data, void *new_binding));
+   
+   void slint_property_set_binding_internal(const PropertyHandleOpaque *handle, void *binding);
+   
+   bool slint_property_is_dirty(const PropertyHandleOpaque *handle);
+   
+   void slint_property_mark_dirty(const PropertyHandleOpaque *handle);
+   
+   void slint_property_drop(PropertyHandleOpaque *handle);
+   
+   void slint_property_set_animated_value_int(const PropertyHandleOpaque *handle,
+                                              int32_t from,
+                                              int32_t to,
+                                              const PropertyAnimation *animation_data);
+   
+   void slint_property_set_animated_value_float(const PropertyHandleOpaque *handle,
+                                                float from,
+                                                float to,
+                                                const PropertyAnimation *animation_data);
+   
+   void slint_property_set_animated_value_color(const PropertyHandleOpaque *handle,
+                                                Color from,
+                                                Color to,
+                                                const PropertyAnimation *animation_data);
+   
+   void slint_property_set_animated_binding_int(const PropertyHandleOpaque *handle,
+                                                void (*binding)(void*, int32_t*),
+                                                void *user_data,
+                                                void (*drop_user_data)(void*),
+                                                const PropertyAnimation *animation_data,
+                                                PropertyAnimation (*transition_data)(void *user_data, uint64_t *start_instant));
+   
+   void slint_property_set_animated_binding_float(const PropertyHandleOpaque *handle,
+                                                  void (*binding)(void*, float*),
+                                                  void *user_data,
+                                                  void (*drop_user_data)(void*),
+                                                  const PropertyAnimation *animation_data,
+                                                  PropertyAnimation (*transition_data)(void *user_data, uint64_t *start_instant));
+   
+   void slint_property_set_animated_binding_color(const PropertyHandleOpaque *handle,
+                                                  void (*binding)(void*, Color*),
+                                                  void *user_data,
+                                                  void (*drop_user_data)(void*),
+                                                  const PropertyAnimation *animation_data,
+                                                  PropertyAnimation (*transition_data)(void *user_data, uint64_t *start_instant));
+   
+   void slint_property_set_animated_binding_brush(const PropertyHandleOpaque *handle,
+                                                  void (*binding)(void*, Brush*),
+                                                  void *user_data,
+                                                  void (*drop_user_data)(void*),
+                                                  const PropertyAnimation *animation_data,
+                                                  PropertyAnimation (*transition_data)(void *user_data, uint64_t *start_instant));
+   
+   void slint_property_set_state_binding(const PropertyHandleOpaque *handle,
+                                         int32_t (*binding)(void*),
+                                         void *user_data,
+                                         void (*drop_user_data)(void*));
+   
+   void slint_property_tracker_init(PropertyTrackerOpaque *out);
+   
+   void slint_property_tracker_evaluate(const PropertyTrackerOpaque *handle,
+                                        void (*callback)(void *user_data),
+                                        void *user_data);
+   
+   void slint_property_tracker_evaluate_as_dependency_root(const PropertyTrackerOpaque *handle,
+                                                           void (*callback)(void *user_data),
+                                                           void *user_data);
+   
+   bool slint_property_tracker_is_dirty(const PropertyTrackerOpaque *handle);
+   
+   void slint_property_tracker_drop(PropertyTrackerOpaque *handle);
+   
+   void slint_callback_init(CallbackOpaque *out);
+   
+   void slint_callback_call(const CallbackOpaque *sig, const void *arg, void *ret);
+   
+   void slint_callback_set_handler(const CallbackOpaque *sig,
+                                   void (*binding)(void *user_data, const void *arg, void *ret),
+                                   void *user_data,
+                                   void (*drop_user_data)(void*));
+   
+   void slint_callback_drop(CallbackOpaque *handle);
+   
+   } // extern "C"
+   
+   } // namespace cbindgen_private
+   } // namespace slint

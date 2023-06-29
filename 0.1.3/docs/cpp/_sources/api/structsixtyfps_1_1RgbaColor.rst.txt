@@ -1,0 +1,16 @@
+.. _exhale_struct_structsixtyfps_1_1RgbaColor:
+
+Template Struct RgbaColor
+=========================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_color.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: sixtyfps::RgbaColor
+   :members:
+   :protected-members:
+   :undoc-members:

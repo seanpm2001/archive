@@ -1,0 +1,38 @@
+[package]
+name = "src"
+version = "0.1.2"
+authors = ["SixtyFPS <info@sixtyfps.io>"]
+edition = "2018"
+license = "GPL-3.0-only"
+description = "Binaries for Rust version of Memory Tutorial of SixtyFPS"
+repository = "https://github.com/sixtyfpsui/sixtyfps"
+homepage = "https://sixtyfps.io"
+publish = false
+
+[[bin]]
+name = "memory_tutorial_initial"
+path = "main_initial.rs"
+
+[[bin]]
+name = "memory_tutorial_tile"
+path = "main_memory_tile.rs"
+
+[[bin]]
+name = "memory_tutorial_polishing_the_tile"
+path = "main_polishing_the_tile.rs"
+
+[[bin]]
+name = "memory_tutorial_multiple_tiles"
+path = "main_multiple_tiles.rs"
+
+[[bin]]
+name = "memory_tutorial_tiles_from_rust"
+path = "main_tiles_from_rust.rs"
+
+[[bin]]
+name = "memory_tutorial_game_logic_in_rust"
+path = "main_game_logic_in_rust.rs"
+
+[dependencies]
+sixtyfps = { path = "../../../../api/sixtyfps-rs" }
+rand = "0.8"

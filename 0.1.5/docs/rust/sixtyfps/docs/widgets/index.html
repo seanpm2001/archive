@@ -1,0 +1,456 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Widgets"><meta name="keywords" content="rust, rustlang, rust-lang, widgets"><title>sixtyfps::docs::widgets - Rust</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.5/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+        await sixtyfps.default();
+        var elements = document.querySelectorAll("code.language-60, .rustdoc pre.language-60, div.highlight-60");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.60` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://sixtyfps.io/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://sixtyfps.io/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("60", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'sixtyfps',
+      aliases: ['60'],
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .60 blocks, leave the others to rustdoc
+      for (dot60Block of document.querySelectorAll(".language-60")) {
+        hljs.highlightElement(dot60Block)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-60.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-60 div.highlight pre, div.highlight-60-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+<style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../sixtyfps/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;sixtyfps.io&#x2F;resources&#x2F;logo.drawio.svg' alt='logo'></div></a><h2 class="location">Module widgets</h2><div class="sidebar-elems"><div id="sidebar-vars" data-name="widgets" data-ty="mod" data-relpath="./"></div><script defer src="./sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../../index.html">sixtyfps</a>::<wbr><a href="../index.html">docs</a>::<wbr><a class="mod" href="#">widgets</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../../src/sixtyfps/docs.rs.html#37-42" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="widgets" class="section-header"><a href="#widgets">Widgets</a></h2>
+<p>Widgets are not imported by default, and need to be imported from <code>&quot;sixtyfps_widgets.60&quot;</code></p>
+<p>Their appearance can change depending on the style</p>
+<h3 id="button" class="section-header"><a href="#button"><code>Button</code></a></h3><h4 id="properties" class="section-header"><a href="#properties">Properties</a></h4>
+<ul>
+<li><strong><code>text</code></strong> (<em>string</em>): The text written in the button.</li>
+<li><strong><code>icon</code></strong> (<em>image</em>): The image to show in the button. Note that not all styles support drawing icons.</li>
+<li><strong><code>pressed</code></strong>: (<em>bool</em>): Set to true when the button is pressed.</li>
+<li><strong><code>enabled</code></strong>: (<em>bool</em>): Defaults to true. When false, the button cannot be pressed</li>
+</ul>
+<h4 id="callbacks" class="section-header"><a href="#callbacks">Callbacks</a></h4>
+<ul>
+<li><strong><code>clicked</code></strong></li>
+</ul>
+<h4 id="example" class="section-header"><a href="#example">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { Button } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    Button {
+        width: parent.width;
+        height: parent.height;
+        text: &quot;Click Me&quot;;
+        clicked =&gt; { self.text = &quot;Clicked&quot;; }
+    }
+}</code></pre></div><h3 id="standardbutton" class="section-header"><a href="#standardbutton"><code>StandardButton</code></a></h3>
+<p>The StandardButton looks like a button, but instead of customizing with <code>text</code> and <code>icon</code>,
+it can used one of the pre-defined <code>kind</code> and the text and icon will depend on the style.</p>
+<h4 id="properties-1" class="section-header"><a href="#properties-1">Properties</a></h4>
+<ul>
+<li><strong><code>kind</code></strong> (<em>enum</em>): The kind of button, one of
+<code>ok</code> <code>cancel</code>, <code>apply</code>, <code>close</code>, <code>reset</code>, <code>help</code>, <code>yes</code>, <code>no,</code> <code>abort</code>, <code>retry</code> or <code>ignore</code></li>
+<li><strong><code>enabled</code></strong>: (<em>bool</em>): Defaults to true. When false, the button cannot be pressed</li>
+</ul>
+<h4 id="callbacks-1" class="section-header"><a href="#callbacks-1">Callbacks</a></h4>
+<ul>
+<li><strong><code>clicked</code></strong></li>
+</ul>
+<h4 id="example-1" class="section-header"><a href="#example-1">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { StandardButton, VerticalBox } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+  VerticalBox {
+    StandardButton { kind: ok; }
+    StandardButton { kind: apply; }
+    StandardButton { kind: cancel; }
+  }
+}</code></pre></div><h3 id="checkbox" class="section-header"><a href="#checkbox"><code>CheckBox</code></a></h3><h4 id="properties-2" class="section-header"><a href="#properties-2">Properties</a></h4>
+<ul>
+<li><strong><code>text</code></strong> (<em>string</em>): The text written next to the checkbox.</li>
+<li><strong><code>checked</code></strong>: (<em>bool</em>): Whether the checkbox is checked or not.</li>
+</ul>
+<h4 id="callbacks-2" class="section-header"><a href="#callbacks-2">Callbacks</a></h4>
+<ul>
+<li><strong><code>toggled</code></strong>: The checkbox value changed</li>
+</ul>
+<h4 id="example-2" class="section-header"><a href="#example-2">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { CheckBox } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 25px;
+    CheckBox {
+        width: parent.width;
+        height: parent.height;
+        text: &quot;Hello World&quot;;
+    }
+}</code></pre></div><h3 id="spinbox" class="section-header"><a href="#spinbox"><code>SpinBox</code></a></h3><h4 id="properties-3" class="section-header"><a href="#properties-3">Properties</a></h4>
+<ul>
+<li><strong><code>value</code></strong> (<em>int</em>): The value.</li>
+<li><strong><code>minimum</code></strong> (<em>int</em>): The minimum value (default: 0).</li>
+<li><strong><code>maximum</code></strong> (<em>int</em>): The maximum value (default: 100).</li>
+</ul>
+<h4 id="example-3" class="section-header"><a href="#example-3">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { SpinBox } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 25px;
+    SpinBox {
+        width: parent.width;
+        height: parent.height;
+        value: 42;
+    }
+}</code></pre></div><h3 id="slider" class="section-header"><a href="#slider"><code>Slider</code></a></h3><h4 id="properties-4" class="section-header"><a href="#properties-4">Properties</a></h4>
+<ul>
+<li><strong><code>value</code></strong> (<em>float</em>): The value.</li>
+<li><strong><code>minimum</code></strong> (<em>float</em>): The minimum value (default: 0)</li>
+<li><strong><code>maximum</code></strong> (<em>float</em>): The maximum value (default: 100)</li>
+</ul>
+<h4 id="callbacks-3" class="section-header"><a href="#callbacks-3">Callbacks</a></h4>
+<ul>
+<li><strong><code>changed(float)</code></strong>: The value was changed</li>
+</ul>
+<h4 id="example-4" class="section-header"><a href="#example-4">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { Slider } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 25px;
+    Slider {
+        width: parent.width;
+        height: parent.height;
+        value: 42;
+    }
+}</code></pre></div><h3 id="groupbox" class="section-header"><a href="#groupbox"><code>GroupBox</code></a></h3><h4 id="properties-5" class="section-header"><a href="#properties-5">Properties</a></h4>
+<ul>
+<li><strong><code>title</code></strong> (<em>string</em>): A text written as the title of the group box.</li>
+</ul>
+<h4 id="example-5" class="section-header"><a href="#example-5">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { GroupBox } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 100px;
+    GroupBox {
+        title: &quot;A Nice Title&quot;;
+        Text {
+            text: &quot;Hello World&quot;;
+            color: blue;
+        }
+    }
+}</code></pre></div><h3 id="lineedit" class="section-header"><a href="#lineedit"><code>LineEdit</code></a></h3>
+<p>A widget used to enter a single line of text</p>
+<h4 id="properties-6" class="section-header"><a href="#properties-6">Properties</a></h4>
+<ul>
+<li><strong><code>text</code></strong> (<em>string</em>): The text being edited</li>
+<li><strong><code>has-focus</code></strong>: (<em>bool</em>): Set to true when the line edit currently has the focus</li>
+<li><strong><code>placeholder-text</code></strong>: (<em>string</em>): A placeholder text being shown when there is no text in the edit field</li>
+<li><strong><code>enabled</code></strong>: (<em>bool</em>): Defaults to true. When false, nothing can be entered</li>
+</ul>
+<h4 id="callbacks-4" class="section-header"><a href="#callbacks-4">Callbacks</a></h4>
+<ul>
+<li><strong><code>accepted</code></strong>: Enter was pressed</li>
+<li><strong><code>edited</code></strong>: Emitted when the text has changed because the user modified it</li>
+</ul>
+<h4 id="example-6" class="section-header"><a href="#example-6">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { LineEdit } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 25px;
+    LineEdit {
+        width: parent.width;
+        height: parent.height;
+        placeholder-text: &quot;Enter text here&quot;;
+    }
+}</code></pre></div><h3 id="textedit" class="section-header"><a href="#textedit"><code>TextEdit</code></a></h3>
+<p>Similar to LineEdit, but can be used to enter several lines of text</p>
+<p><em>Note:</em> The current implementation only implement very few basic shortcut. More
+shortcut will be implemented in a future version: <a href="https://github.com/sixtyfpsui/sixtyfps/issues/474">https://github.com/sixtyfpsui/sixtyfps/issues/474</a></p>
+<h4 id="properties-7" class="section-header"><a href="#properties-7">Properties</a></h4>
+<ul>
+<li><strong><code>text</code></strong> (<em>string</em>): The text being edited</li>
+<li><strong><code>has-focus</code></strong>: (<em>bool</em>): Set to true when the widget currently has the focus</li>
+<li><strong><code>enabled</code></strong>: (<em>bool</em>): Defaults to true. When false, nothing can be entered</li>
+<li><strong><code>wrap</code></strong> (<em>enum <a href="builtin_elements.md#textwrap"><code>TextWrap</code></a></em>): The way the text wraps (default: word-wrap).</li>
+</ul>
+<h4 id="callbacks-5" class="section-header"><a href="#callbacks-5">Callbacks</a></h4>
+<ul>
+<li><strong><code>edited</code></strong>: Emitted when the text has changed because the user modified it</li>
+</ul>
+<h4 id="example-7" class="section-header"><a href="#example-7">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { TextEdit } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 200px;
+    TextEdit {
+        width: parent.width;
+        height: parent.height;
+        text: &quot;Lorem ipsum dolor sit amet\n, consectetur adipisici elit&quot;;
+    }
+}</code></pre></div><h3 id="scrollview" class="section-header"><a href="#scrollview"><code>ScrollView</code></a></h3>
+<p>A Scrollview contains a viewport that is bigger than the view and can be scrolled.
+It has scrollbar to interact with.</p>
+<h4 id="properties-8" class="section-header"><a href="#properties-8">Properties</a></h4>
+<ul>
+<li><strong><code>viewport-width</code></strong> and <strong><code>viewport-height</code></strong> (<em>length</em>): The <code>width</code> and <code>length</code> properties of the viewport</li>
+<li><strong><code>viewport-x</code></strong> and <strong><code>viewport-y</code></strong> (<em>length</em>): The <code>x</code> and <code>y</code> properties of the viewport. Usually these are negative</li>
+<li><strong><code>visible-width</code></strong> and <strong><code>visible-height</code></strong> (<em>length</em>): The size of the visible area of the ScrollView (not including the scrollbar)</li>
+<li><strong><code>enabled</code></strong> and <strong><code>has-focus</code></strong> (bool): property that are only used to render the frame as disabled or focused, but do not
+change the behavior of the widget.</li>
+</ul>
+<h4 id="example-8" class="section-header"><a href="#example-8">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { ScrollView } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 200px;
+    ScrollView {
+        width: 200px;
+        height: 200px;
+        viewport-width: 300px;
+        viewport-height: 300px;
+        Rectangle { width: 30px; height: 30px; x: 275px; y: 50px; background: blue; }
+        Rectangle { width: 30px; height: 30px; x: 175px; y: 130px; background: red; }
+        Rectangle { width: 30px; height: 30px; x: 25px; y: 210px; background: yellow; }
+        Rectangle { width: 30px; height: 30px; x: 98px; y: 55px; background: orange; }
+    }
+}</code></pre></div><h3 id="listview" class="section-header"><a href="#listview"><code>ListView</code></a></h3>
+<p>A ListView is like a Scrollview but it should have a <code>for</code> element, and the content are
+automatically layed out in a list.
+Elements are only instantiated if they are visible</p>
+<h4 id="properties-9" class="section-header"><a href="#properties-9">Properties</a></h4>
+<p>Same as ScrollView</p>
+<h4 id="example-9" class="section-header"><a href="#example-9">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { ListView } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 150px;
+    height: 150px;
+    ListView {
+        width: 150px;
+        height: 150px;
+        for data in [
+            { text: &quot;Blue&quot;, color: #0000ff, bg: #eeeeee},
+            { text: &quot;Red&quot;, color: #ff0000, bg: #eeeeee},
+            { text: &quot;Green&quot;, color: #00ff00, bg: #eeeeee},
+            { text: &quot;Yellow&quot;, color: #ffff00, bg: #222222 },
+            { text: &quot;Black&quot;, color: #000000, bg: #eeeeee },
+            { text: &quot;White&quot;, color: #ffffff, bg: #222222 },
+            { text: &quot;Magenta&quot;, color: #ff00ff, bg: #eeeeee },
+            { text: &quot;Cyan&quot;, color: #00ffff, bg: #222222 },
+        ] : Rectangle {
+            height: 30px;
+            background: data.bg;
+            width: parent.width;
+            Text {
+                text: data.text;
+                color: data.color;
+            }
+        }
+    }
+}</code></pre></div><h3 id="standardlistview" class="section-header"><a href="#standardlistview"><code>StandardListView</code></a></h3>
+<p>Like ListView, but with a default delegate, and a <code>model</code> property which is a model of type
+<code>StandardListViewItem</code></p>
+<p>The <code>StandardListViewItem</code> is equivalent to <code>{ text: string }</code> but will be improved in the future with <code>icon</code>, <code>checked</code> and so on (TODO)</p>
+<h4 id="properties-10" class="section-header"><a href="#properties-10">Properties</a></h4>
+<p>Same as ListView, and in addition:</p>
+<ul>
+<li><strong><code>model</code></strong> (<em><code>[StandardListViewItem]</code></em>): The model</li>
+<li><strong><code>current-item</code></strong> (<em>int</em>): The index of the currently active item. -1 mean none is selected, which is the default</li>
+</ul>
+<h4 id="example-10" class="section-header"><a href="#example-10">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { StandardListView } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 150px;
+    height: 150px;
+    StandardListView {
+        width: 150px;
+        height: 150px;
+        model: [ { text: &quot;Blue&quot;}, { text: &quot;Red&quot; }, { text: &quot;Green&quot; },
+            { text: &quot;Yellow&quot; }, { text: &quot;Black&quot;}, { text: &quot;White&quot;},
+            { text: &quot;Magenta&quot; }, { text: &quot;Cyan&quot; },
+        ];
+    }
+}</code></pre></div><h3 id="combobox" class="section-header"><a href="#combobox"><code>ComboBox</code></a></h3>
+<p>A button that, when clicked, opens a popup to select a value.</p>
+<h4 id="properties-11" class="section-header"><a href="#properties-11">Properties</a></h4>
+<ul>
+<li><strong><code>model</code></strong> (<em>[string]</em>): The list of possible values</li>
+<li><strong><code>current-index</code></strong>: (<em>int</em>): The index of the selected value (-1 if no value is selected)</li>
+<li><strong><code>current-value</code></strong>: (<em>string</em>): The currently selected text</li>
+<li><strong><code>enabled</code></strong>: (<em>bool</em>): When false, the combobox cannot be opened (default: true)</li>
+</ul>
+<h4 id="callbacks-6" class="section-header"><a href="#callbacks-6">Callbacks</a></h4>
+<ul>
+<li><strong><code>selected(string)</code></strong>: A value was selected from the combo box. The argument is the currently selected value.</li>
+</ul>
+<h4 id="example-11" class="section-header"><a href="#example-11">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { ComboBox } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 25px;
+    ComboBox {
+        width: preferred-width;
+        height: preferred-height;
+        model: [&quot;first&quot;, &quot;second&quot;, &quot;third&quot;];
+        current-value: &quot;first&quot;;
+    }
+}</code></pre></div><h3 id="tabwidget" class="section-header"><a href="#tabwidget"><code>TabWidget</code></a></h3>
+<p>TabWidget is a container for a set of tabs. It can only have <code>Tab</code> elements as children and only one tab will be visible at
+a time.</p>
+<h4 id="properties-12" class="section-header"><a href="#properties-12">Properties</a></h4>
+<ul>
+<li><strong><code>current-index</code></strong> (<em>int</em>): The index of the currently visible tab</li>
+</ul>
+<h4 id="properties-of-the-tab-element" class="section-header"><a href="#properties-of-the-tab-element">Properties of the <code>Tab</code> element</a></h4>
+<ul>
+<li><strong><code>title</code></strong> (<em>string</em>): The text written in the tab bar.</li>
+</ul>
+<h4 id="example-12" class="section-header"><a href="#example-12">Example</a></h4><div class="example-wrap"><pre class="language-60"><code>import { TabWidget } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 200px;
+    height: 200px;
+    TabWidget {
+        Tab {
+            title: &quot;First&quot;;
+            Rectangle { background: orange; }
+        }
+        Tab {
+            title: &quot;Second&quot;;
+            Rectangle { background: pink; }
+        }
+    }
+}</code></pre></div><h3 id="horizontalbox-verticalbox-gridbox" class="section-header"><a href="#horizontalbox-verticalbox-gridbox"><code>HorizontalBox</code>, <code>VerticalBox</code>, <code>GridBox</code></a></h3>
+<p>That’s the same as <code>HorizontalLayout</code>, <code>VerticalLayout</code> or <code>GridLayout</code> but the spacing and padding values
+depending on the style instead of defaulting to 0.</p>
+<h3 id="aboutsixtyfps" class="section-header"><a href="#aboutsixtyfps"><code>AboutSixtyFPS</code></a></h3>
+<p>This element displays the a “Made with SixtyFPS” badge.</p>
+<div class="example-wrap"><pre class="language-60"><code>import { AboutSixtyFPS } from &quot;sixtyfps_widgets.60&quot;;
+Example := Window {
+    width: 128px;
+    height: 128px;
+    AboutSixtyFPS {        
+    }
+}</code></pre></div><h2 id="" class="section-header"><a href="#"></a></h2>
+<p>Next: <a href="../layouting/index.html">Layouting</a></p>
+</div></details></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="sixtyfps" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+</body></html>

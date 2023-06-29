@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["MinimalSoftwareWindow","PremultipliedRgbaColor","Rgb565Pixel","SoftwareRenderer"],"trait":["LineBufferProvider","TargetPixel"]};

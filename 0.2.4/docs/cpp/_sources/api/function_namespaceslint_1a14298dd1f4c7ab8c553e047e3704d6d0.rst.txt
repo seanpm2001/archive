@@ -1,0 +1,14 @@
+.. _exhale_function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0:
+
+Function slint::quit_event_loop
+===============================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: slint::quit_event_loop()
+   :project: Slint

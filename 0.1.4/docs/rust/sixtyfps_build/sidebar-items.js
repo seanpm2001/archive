@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["CompileError","Error returned by the `compile` function"]],"fn":[["compile","Compile the `.60` file and generate rust code for it."],["compile_with_config","Same as [`compile`], but allow to specify a configuration."]],"struct":[["CompilerConfiguration","The structure for configuring aspects of the compilation of `.60` markup files to Rust."]]});

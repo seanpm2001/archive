@@ -1,0 +1,16 @@
+.. _exhale_struct_structsixtyfps_1_1SharedString:
+
+Struct SharedString
+===================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_string.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: sixtyfps::SharedString
+   :members:
+   :protected-members:
+   :undoc-members:

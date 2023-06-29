@@ -1,0 +1,16 @@
+.. _exhale_struct_structsixtyfps_1_1Size:
+
+Struct Size
+===========
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_image.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: sixtyfps::Size
+   :members:
+   :protected-members:
+   :undoc-members:

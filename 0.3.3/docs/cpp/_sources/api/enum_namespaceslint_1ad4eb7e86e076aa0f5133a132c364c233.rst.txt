@@ -1,0 +1,14 @@
+.. _exhale_enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233:
+
+Enum SetRenderingNotifierError
+==============================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_generated_public.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: slint::SetRenderingNotifierError
+   :project: Slint

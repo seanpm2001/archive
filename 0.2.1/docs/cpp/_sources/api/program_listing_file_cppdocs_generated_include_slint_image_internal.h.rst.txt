@@ -1,0 +1,473 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_image_internal.h:
+
+Program Listing for File slint_image_internal.h
+===============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_image_internal.h>` (``cppdocs/generated_include/slint_image_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.20.0 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   
+   namespace slint {
+   namespace cbindgen_private {
+   namespace types {
+   
+   enum class PixelFormat : uint8_t {
+       Rgb,
+       Rgba,
+       AlphaMap,
+   };
+   
+   using IntSize = Size2D<uint32_t>;
+   
+   struct Rgb8Pixel {
+       uint8_t r;
+       uint8_t g;
+       uint8_t b;
+   
+       bool operator==(const Rgb8Pixel& other) const {
+           return r == other.r &&
+                  g == other.g &&
+                  b == other.b;
+       }
+       bool operator!=(const Rgb8Pixel& other) const {
+           return r != other.r ||
+                  g != other.g ||
+                  b != other.b;
+       }
+   };
+   
+   template<typename Pixel>
+   struct SharedPixelBuffer {
+       uint32_t width;
+       uint32_t height;
+       uint32_t stride;
+       SharedVector<Pixel> data;
+   
+       bool operator==(const SharedPixelBuffer& other) const {
+           return width == other.width &&
+                  height == other.height &&
+                  stride == other.stride &&
+                  data == other.data;
+       }
+       bool operator!=(const SharedPixelBuffer& other) const {
+           return width != other.width ||
+                  height != other.height ||
+                  stride != other.stride ||
+                  data != other.data;
+       }
+   };
+   
+   struct Rgba8Pixel {
+       uint8_t r;
+       uint8_t g;
+       uint8_t b;
+   
+       bool operator==(const Rgba8Pixel& other) const {
+           return r == other.r &&
+                  g == other.g &&
+                  b == other.b;
+       }
+       bool operator!=(const Rgba8Pixel& other) const {
+           return r != other.r ||
+                  g != other.g ||
+                  b != other.b;
+       }
+   };
+   
+   struct SharedImageBuffer {
+       enum class Tag {
+           RGB8,
+           RGBA8,
+           RGBA8Premultiplied,
+       };
+   
+       struct RGB8_Body {
+           SharedPixelBuffer<Rgb8Pixel> _0;
+   
+           bool operator==(const RGB8_Body& other) const {
+               return _0 == other._0;
+           }
+           bool operator!=(const RGB8_Body& other) const {
+               return _0 != other._0;
+           }
+       };
+   
+       struct RGBA8_Body {
+           SharedPixelBuffer<Rgba8Pixel> _0;
+   
+           bool operator==(const RGBA8_Body& other) const {
+               return _0 == other._0;
+           }
+           bool operator!=(const RGBA8_Body& other) const {
+               return _0 != other._0;
+           }
+       };
+   
+       struct RGBA8Premultiplied_Body {
+           SharedPixelBuffer<Rgba8Pixel> _0;
+   
+           bool operator==(const RGBA8Premultiplied_Body& other) const {
+               return _0 == other._0;
+           }
+           bool operator!=(const RGBA8Premultiplied_Body& other) const {
+               return _0 != other._0;
+           }
+       };
+   
+       Tag tag;
+       union {
+           RGB8_Body rgb8;
+           RGBA8_Body rgba8;
+           RGBA8Premultiplied_Body rgba8_premultiplied;
+       };
+   
+       static SharedImageBuffer RGB8(const SharedPixelBuffer<Rgb8Pixel> &_0) {
+           SharedImageBuffer result;
+           ::new (&result.rgb8._0) (SharedPixelBuffer<Rgb8Pixel>)(_0);
+           result.tag = Tag::RGB8;
+           return result;
+       }
+   
+       bool IsRGB8() const {
+           return tag == Tag::RGB8;
+       }
+   
+       static SharedImageBuffer RGBA8(const SharedPixelBuffer<Rgba8Pixel> &_0) {
+           SharedImageBuffer result;
+           ::new (&result.rgba8._0) (SharedPixelBuffer<Rgba8Pixel>)(_0);
+           result.tag = Tag::RGBA8;
+           return result;
+       }
+   
+       bool IsRGBA8() const {
+           return tag == Tag::RGBA8;
+       }
+   
+       static SharedImageBuffer RGBA8Premultiplied(const SharedPixelBuffer<Rgba8Pixel> &_0) {
+           SharedImageBuffer result;
+           ::new (&result.rgba8_premultiplied._0) (SharedPixelBuffer<Rgba8Pixel>)(_0);
+           result.tag = Tag::RGBA8Premultiplied;
+           return result;
+       }
+   
+       bool IsRGBA8Premultiplied() const {
+           return tag == Tag::RGBA8Premultiplied;
+       }
+   
+       bool operator==(const SharedImageBuffer& other) const {
+           if (tag != other.tag) {
+               return false;
+           }
+           switch (tag) {
+               case Tag::RGB8: return rgb8 == other.rgb8;
+               case Tag::RGBA8: return rgba8 == other.rgba8;
+               case Tag::RGBA8Premultiplied: return rgba8_premultiplied == other.rgba8_premultiplied;
+   
+           }
+           return true;
+       }
+   
+       bool operator!=(const SharedImageBuffer& other) const {
+           return !(*this == other);
+       }
+   
+       private:
+       SharedImageBuffer() {
+   
+       }
+       public:
+   
+   
+       ~SharedImageBuffer() {
+           switch (tag) {
+               case Tag::RGB8: rgb8.~RGB8_Body(); break;
+               case Tag::RGBA8: rgba8.~RGBA8_Body(); break;
+               case Tag::RGBA8Premultiplied: rgba8_premultiplied.~RGBA8Premultiplied_Body(); break;
+   
+           }
+       }
+   
+       SharedImageBuffer(const SharedImageBuffer& other)
+        : tag(other.tag) {
+           switch (tag) {
+               case Tag::RGB8: ::new (&rgb8) (RGB8_Body)(other.rgb8); break;
+               case Tag::RGBA8: ::new (&rgba8) (RGBA8_Body)(other.rgba8); break;
+               case Tag::RGBA8Premultiplied: ::new (&rgba8_premultiplied) (RGBA8Premultiplied_Body)(other.rgba8_premultiplied); break;
+   
+           }
+       }
+       SharedImageBuffer& operator=(const SharedImageBuffer& other) {
+           if (this != &other) {
+               this->~SharedImageBuffer();
+               new (this) SharedImageBuffer(other);
+           }
+           return *this;
+       }
+   };
+   
+   struct IntRect {
+       int32_t x;
+       int32_t y;
+       int32_t width;
+       int32_t height;
+   
+       bool operator==(const IntRect& other) const {
+           return x == other.x &&
+                  y == other.y &&
+                  width == other.width &&
+                  height == other.height;
+       }
+       bool operator!=(const IntRect& other) const {
+           return x != other.x ||
+                  y != other.y ||
+                  width != other.width ||
+                  height != other.height;
+       }
+   };
+   
+   struct StaticTexture {
+       IntRect rect;
+       PixelFormat format;
+       Color color;
+       uintptr_t index;
+   
+       bool operator==(const StaticTexture& other) const {
+           return rect == other.rect &&
+                  format == other.format &&
+                  color == other.color &&
+                  index == other.index;
+       }
+       bool operator!=(const StaticTexture& other) const {
+           return rect != other.rect ||
+                  format != other.format ||
+                  color != other.color ||
+                  index != other.index;
+       }
+   };
+   
+   struct StaticTextures {
+       IntSize size;
+       IntSize original_size;
+       Slice<uint8_t> data;
+       Slice<StaticTexture> textures;
+   
+       bool operator==(const StaticTextures& other) const {
+           return size == other.size &&
+                  original_size == other.original_size &&
+                  data == other.data &&
+                  textures == other.textures;
+       }
+       bool operator!=(const StaticTextures& other) const {
+           return size != other.size ||
+                  original_size != other.original_size ||
+                  data != other.data ||
+                  textures != other.textures;
+       }
+   };
+   
+   union ImageInner {
+       enum class Tag : uint8_t {
+           ImageInner_None,
+           ImageInner_AbsoluteFilePath,
+           ImageInner_EmbeddedData,
+           ImageInner_EmbeddedImage,
+           ImageInner_StaticTextures,
+       };
+   
+       struct ImageInner_AbsoluteFilePath_Body {
+           Tag tag;
+           SharedString _0;
+   
+           bool operator==(const ImageInner_AbsoluteFilePath_Body& other) const {
+               return _0 == other._0;
+           }
+           bool operator!=(const ImageInner_AbsoluteFilePath_Body& other) const {
+               return _0 != other._0;
+           }
+       };
+   
+       struct ImageInner_EmbeddedData_Body {
+           Tag tag;
+           Slice<uint8_t> data;
+           Slice<uint8_t> format;
+   
+           bool operator==(const ImageInner_EmbeddedData_Body& other) const {
+               return data == other.data &&
+                      format == other.format;
+           }
+           bool operator!=(const ImageInner_EmbeddedData_Body& other) const {
+               return data != other.data ||
+                      format != other.format;
+           }
+       };
+   
+       struct ImageInner_EmbeddedImage_Body {
+           Tag tag;
+           SharedImageBuffer _0;
+   
+           bool operator==(const ImageInner_EmbeddedImage_Body& other) const {
+               return _0 == other._0;
+           }
+           bool operator!=(const ImageInner_EmbeddedImage_Body& other) const {
+               return _0 != other._0;
+           }
+       };
+   
+       struct ImageInner_StaticTextures_Body {
+           Tag tag;
+           const StaticTextures *_0;
+   
+           bool operator==(const ImageInner_StaticTextures_Body& other) const {
+               return _0 == other._0;
+           }
+           bool operator!=(const ImageInner_StaticTextures_Body& other) const {
+               return _0 != other._0;
+           }
+       };
+   
+       struct {
+           Tag tag;
+       };
+       ImageInner_AbsoluteFilePath_Body absolute_file_path;
+       ImageInner_EmbeddedData_Body embedded_data;
+       ImageInner_EmbeddedImage_Body embedded_image;
+       ImageInner_StaticTextures_Body static_textures;
+   
+       static ImageInner ImageInner_None() {
+           ImageInner result;
+           result.tag = Tag::ImageInner_None;
+           return result;
+       }
+   
+       bool IsImageInner_None() const {
+           return tag == Tag::ImageInner_None;
+       }
+   
+       static ImageInner ImageInner_AbsoluteFilePath(const SharedString &_0) {
+           ImageInner result;
+           ::new (&result.absolute_file_path._0) (SharedString)(_0);
+           result.tag = Tag::ImageInner_AbsoluteFilePath;
+           return result;
+       }
+   
+       bool IsImageInner_AbsoluteFilePath() const {
+           return tag == Tag::ImageInner_AbsoluteFilePath;
+       }
+   
+       static ImageInner ImageInner_EmbeddedData(const Slice<uint8_t> &data,
+                                                 const Slice<uint8_t> &format) {
+           ImageInner result;
+           ::new (&result.embedded_data.data) (Slice<uint8_t>)(data);
+           ::new (&result.embedded_data.format) (Slice<uint8_t>)(format);
+           result.tag = Tag::ImageInner_EmbeddedData;
+           return result;
+       }
+   
+       bool IsImageInner_EmbeddedData() const {
+           return tag == Tag::ImageInner_EmbeddedData;
+       }
+   
+       static ImageInner ImageInner_EmbeddedImage(const SharedImageBuffer &_0) {
+           ImageInner result;
+           ::new (&result.embedded_image._0) (SharedImageBuffer)(_0);
+           result.tag = Tag::ImageInner_EmbeddedImage;
+           return result;
+       }
+   
+       bool IsImageInner_EmbeddedImage() const {
+           return tag == Tag::ImageInner_EmbeddedImage;
+       }
+   
+       static ImageInner ImageInner_StaticTextures(const StaticTextures *const &_0) {
+           ImageInner result;
+           ::new (&result.static_textures._0) (const StaticTextures*)(_0);
+           result.tag = Tag::ImageInner_StaticTextures;
+           return result;
+       }
+   
+       bool IsImageInner_StaticTextures() const {
+           return tag == Tag::ImageInner_StaticTextures;
+       }
+   
+       bool operator==(const ImageInner& other) const {
+           if (tag != other.tag) {
+               return false;
+           }
+           switch (tag) {
+               case Tag::ImageInner_AbsoluteFilePath: return absolute_file_path == other.absolute_file_path;
+               case Tag::ImageInner_EmbeddedData: return embedded_data == other.embedded_data;
+               case Tag::ImageInner_EmbeddedImage: return embedded_image == other.embedded_image;
+               case Tag::ImageInner_StaticTextures: return static_textures == other.static_textures;
+               default: break;
+           }
+           return true;
+       }
+   
+       bool operator!=(const ImageInner& other) const {
+           return !(*this == other);
+       }
+   
+       private:
+       ImageInner() {
+   
+       }
+       public:
+   
+   
+       ~ImageInner() {
+           switch (tag) {
+               case Tag::ImageInner_AbsoluteFilePath: absolute_file_path.~ImageInner_AbsoluteFilePath_Body(); break;
+               case Tag::ImageInner_EmbeddedData: embedded_data.~ImageInner_EmbeddedData_Body(); break;
+               case Tag::ImageInner_EmbeddedImage: embedded_image.~ImageInner_EmbeddedImage_Body(); break;
+               case Tag::ImageInner_StaticTextures: static_textures.~ImageInner_StaticTextures_Body(); break;
+               default: break;
+           }
+       }
+   
+       ImageInner(const ImageInner& other)
+        : tag(other.tag) {
+           switch (tag) {
+               case Tag::ImageInner_AbsoluteFilePath: ::new (&absolute_file_path) (ImageInner_AbsoluteFilePath_Body)(other.absolute_file_path); break;
+               case Tag::ImageInner_EmbeddedData: ::new (&embedded_data) (ImageInner_EmbeddedData_Body)(other.embedded_data); break;
+               case Tag::ImageInner_EmbeddedImage: ::new (&embedded_image) (ImageInner_EmbeddedImage_Body)(other.embedded_image); break;
+               case Tag::ImageInner_StaticTextures: ::new (&static_textures) (ImageInner_StaticTextures_Body)(other.static_textures); break;
+               default: break;
+           }
+       }
+       ImageInner& operator=(const ImageInner& other) {
+           if (this != &other) {
+               this->~ImageInner();
+               new (this) ImageInner(other);
+           }
+           return *this;
+       }
+   };
+   
+   using Image = ImageInner;
+   
+   using Size = Size2D<float>;
+   
+   extern "C" {
+   
+   IntSize slint_image_size(const Image *image);
+   
+   const SharedString *slint_image_path(const Image *image);
+   
+   } // extern "C"
+   
+   } // namespace types
+   } // namespace cbindgen_private
+   } // namespace slint

@@ -1,0 +1,37 @@
+
+.. _file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_config.h:
+
+File sixtyfps_config.h
+======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include>` (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include/sixtyfps_config.h``)
+-----------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_config.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cstdint``
+
+
+
+
+

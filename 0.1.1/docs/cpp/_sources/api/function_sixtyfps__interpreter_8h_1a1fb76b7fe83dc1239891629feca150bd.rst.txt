@@ -1,0 +1,13 @@
+.. _exhale_function_sixtyfps__interpreter_8h_1a1fb76b7fe83dc1239891629feca150bd:
+
+Function sixtyfps::testing::send_keyboard_string_sequence
+=========================================================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_interpreter.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: sixtyfps::testing::send_keyboard_string_sequence(const sixtyfps::interpreter::ComponentInstance *, const sixtyfps::SharedString&, KeyboardModifiers)

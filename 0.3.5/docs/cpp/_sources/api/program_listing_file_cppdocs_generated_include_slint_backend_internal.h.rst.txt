@@ -1,0 +1,130 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_backend_internal.h:
+
+Program Listing for File slint_backend_internal.h
+=================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_backend_internal.h>` (``cppdocs/generated_include/slint_backend_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.24.3 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   #include "slint_image_internal.h"
+   #include "slint_internal.h"
+   namespace slint::cbindgen_private { using slint::cbindgen_private::types::Rgb8Pixel; }
+   
+   namespace slint {
+   namespace cbindgen_private {
+   
+   using WindowAdapterUserData = void*;
+   
+   struct RendererPtr {
+       const void *_a;
+       const void *_b;
+   };
+   
+   using PlatformUserData = void*;
+   
+   using SoftwareRendererOpaque = const void*;
+   
+   using SkiaRendererOpaque = const void*;
+   
+   extern "C" {
+   
+   void slint_windowrc_init(WindowAdapterRcOpaque *out);
+   
+   void slint_run_event_loop();
+   
+   void slint_post_event(void (*event)(void *user_data),
+                         void *user_data,
+                         void (*drop_user_data)(void*));
+   
+   void slint_quit_event_loop();
+   
+   void slint_register_font_from_path(const WindowAdapterRcOpaque *win,
+                                      const SharedString *path,
+                                      SharedString *error_str);
+   
+   void slint_register_font_from_data(const WindowAdapterRcOpaque *win,
+                                      Slice<uint8_t> data,
+                                      SharedString *error_str);
+   
+   void slint_testing_init_backend();
+   
+   void slint_window_adapter_new(WindowAdapterUserData user_data,
+                                 void (*drop)(WindowAdapterUserData),
+                                 RendererPtr (*get_renderer_ref)(WindowAdapterUserData),
+                                 void (*show)(WindowAdapterUserData),
+                                 void (*hide)(WindowAdapterUserData),
+                                 void (*request_redraw)(WindowAdapterUserData),
+                                 WindowAdapterRcOpaque *target);
+   
+   void slint_platform_register(PlatformUserData user_data,
+                                void (*drop)(PlatformUserData),
+                                void (*window_factory)(PlatformUserData, WindowAdapterRcOpaque*));
+   
+   bool slint_windowrc_has_active_animations(const WindowAdapterRcOpaque *handle);
+   
+   void slint_platform_update_timers_and_animations();
+   
+   SoftwareRendererOpaque slint_software_renderer_new(uint32_t buffer_age,
+                                                      const WindowAdapterRcOpaque *window);
+   
+   void slint_software_renderer_drop(uint32_t buffer_age, SoftwareRendererOpaque r);
+   
+   void slint_software_renderer_render_rgb8(uint32_t buffer_age,
+                                            SoftwareRendererOpaque r,
+                                            Rgb8Pixel *buffer,
+                                            uintptr_t buffer_len,
+                                            uintptr_t buffer_stride);
+   
+   RendererPtr slint_software_renderer_handle(uint32_t buffer_age, SoftwareRendererOpaque r);
+   
+   SkiaRendererOpaque slint_skia_renderer_new(const WindowAdapterRcOpaque *window);
+   
+   void slint_skia_renderer_drop(SkiaRendererOpaque r);
+   
+   void slint_skia_renderer_show_win32(SkiaRendererOpaque r,
+                                       void *hwnd,
+                                       void *hinstance,
+                                       IntSize size);
+   
+   void slint_skia_renderer_show_x11(SkiaRendererOpaque r,
+                                     uint32_t window,
+                                     uint32_t visual_id,
+                                     void *connection,
+                                     int screen,
+                                     IntSize size);
+   
+   void slint_skia_renderer_show_wayland(SkiaRendererOpaque r,
+                                         void *surface,
+                                         void *display,
+                                         IntSize size);
+   
+   void slint_skia_renderer_show_appkit(SkiaRendererOpaque r,
+                                        void *ns_view,
+                                        void *ns_window,
+                                        IntSize size);
+   
+   void slint_skia_renderer_hide(SkiaRendererOpaque r);
+   
+   void slint_skia_renderer_resize(SkiaRendererOpaque r, IntSize size);
+   
+   void slint_skia_renderer_render(SkiaRendererOpaque r, IntSize size);
+   
+   RendererPtr slint_skia_renderer_handle(SkiaRendererOpaque r);
+   
+   } // extern "C"
+   
+   } // namespace cbindgen_private
+   } // namespace slint

@@ -1,0 +1,16 @@
+{
+  "name": "printerdemo",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "version": "0.3.5",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "files": [
+    "printerdemo_bg.wasm",
+    "printerdemo.js",
+    "printerdemo.d.ts"
+  ],
+  "module": "printerdemo.js",
+  "types": "printerdemo.d.ts",
+  "sideEffects": false
+}

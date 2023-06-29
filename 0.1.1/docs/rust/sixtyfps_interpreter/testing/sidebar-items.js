@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["send_keyboard_string_sequence","Wrapper around [`sixtyfps_corelib::tests::send_keyboard_string_sequence`]"],["send_mouse_click","Wrapper around [`sixtyfps_corelib::tests::sixtyfps_send_mouse_click`]"]]});

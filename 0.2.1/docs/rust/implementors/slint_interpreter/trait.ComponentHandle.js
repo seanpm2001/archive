@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["slint_interpreter"] = [{"text":"impl <a class=\"trait\" href=\"slint_interpreter/trait.ComponentHandle.html\" title=\"trait slint_interpreter::ComponentHandle\">ComponentHandle</a> for <a class=\"struct\" href=\"slint_interpreter/struct.ComponentInstance.html\" title=\"struct slint_interpreter::ComponentInstance\">ComponentInstance</a>","synthetic":false,"types":["slint_interpreter::api::ComponentInstance"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

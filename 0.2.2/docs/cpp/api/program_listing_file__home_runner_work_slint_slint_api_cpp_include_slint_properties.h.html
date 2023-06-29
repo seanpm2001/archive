@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Program Listing for File slint_properties.h &mdash; Slint C++  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_tweak.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/js/theme.js"></script>
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/0.2.2/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/0.2.2/editor/";
+    //import * as slint from 'https://slint-ui.com/snapshots/master/wasm-interpreter/slint_wasm_interpreter.js';
+    //const editor_url = "https://slint-ui.com/snapshots/master/editor/";
+
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no_run])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            let link = document.createElement("div");
+            link.innerHTML = `<a href="${editor_url}?snippet=${encodeURIComponent(source)}" target="_blank">📝</a>`;
+            elements[i].append(link);
+            await render_or_error(source, div);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+    // Select C++ blocks in rustdoc generated code and hide them, while opening the <details> of Rust snippets
+    // Similarly, in Sphinx generated HTML, hide Rust blocks and open C++.
+    function select_code_snippet_variants(options) {
+        // When the CSS has pseudo class becomes available, we can probably use that directly
+        // in a stylesheet instead of JS here.
+
+        let selector_for_language = (language) => {
+            return `details[data-snippet-language="${language}"]`;
+        };
+
+        for (let details_element_to_hide of document.querySelectorAll(selector_for_language(options.hide))) {
+            details_element_to_hide.style = "display: none";
+        }
+
+        for (let details_element_to_show of document.querySelectorAll(selector_for_language(options.show))) {
+            details_element_to_show.open = true;
+        }
+    }
+
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+        select_code_snippet_variants({ hide: "cpp", show: "rust" })
+    } else {
+        select_code_snippet_variants({ hide: "rust", show: "cpp" })
+    }
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Slint C++
+            <img src="https://slint-ui.com/logo/slint-logo-small-light.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.2.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cmake.html">Installing or Building with CMake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cmake.html#binary-packages">Binary Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cmake.html#building-from-sources">Building from Sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cmake.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cmake.html#cross-compiling">Cross-compiling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">First Steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#tutorial">Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#template">Template</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/recipes/recipes.html">Recipes and Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/recipes/recipes.html#get-started">Get Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#a-clickable-button">A clickable Button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#react-to-a-button-in-native-code">React to a Button in native code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#use-property-bindings-to-synchronize-controls">Use property bindings to synchronize controls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/recipes/recipes.html#animations">Animations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#animate-the-position-of-an-element">Animate the position of an element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#animation-sequence">Animation Sequence</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/recipes/recipes.html#states">States</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#associate-multiple-property-values-with-states">Associate multiple property values with states</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#transitions">Transitions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/recipes/recipes.html#layouts">Layouts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#vertical">Vertical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#horizontal">Horizontal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#grid">Grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/recipes/recipes.html#global-callbacks">Global Callbacks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#invoke-a-globally-registered-native-callback-from-slint">Invoke a globally registered native callback from Slint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/recipes/recipes.html#custom-widgets">Custom widgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#custom-button">Custom Button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#toggleswitch">ToggleSwitch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#customslider">CustomSlider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/recipes/recipes.html#custom-tabs">Custom Tabs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#compiled-slint-designs">Compiled <code class="docutils literal notranslate"><span class="pre">.slint</span></code> designs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#run-time-interpreted-slint-designs">Run-time interpreted <code class="docutils literal notranslate"><span class="pre">.slint</span></code> designs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">Type Mapping to C++</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../types.html#structures">Structures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../generated_code.html">Example Generated Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../generated_code.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated_code.html#global-singletons">Global Singletons</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="library_root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library_root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library_root.html#full-api">Full API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library_root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_slint__testing.html">Namespace slint::testing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library_root.html#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classslint_1_1Window.html">Class Window</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library_root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html">Enum DiagnosticLevel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html">Enum ValueType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html">Enum RenderingState</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html">Enum TimerMode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library_root.html#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="function_namespaceslint_1a4f026c3c245251fd8d3c133cf9e1c81b.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_slint__interpreter_8h_1ab3132e4566b63d602a642a6dda0ce23e.html">Function slint::testing::send_keyboard_string_sequence</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library_root.html#defines">Defines</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">The .slint UI Design Language</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/langref.html">Language Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#slint-files"><code class="docutils literal notranslate"><span class="pre">.slint</span></code> files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#container-components">Container Components</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#identifiers">Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#properties">Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#bindings">Bindings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#two-way-bindings">Two-way Bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#types">Types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#structs">Structs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#custom-named-structures">Custom named structures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#arrays-model">Arrays / Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#conversions">Conversions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#relative-lengths">Relative Lengths</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#callback">Callback</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#callback-aliases">Callback aliases</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#expressions">Expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#strings">Strings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#colors-and-brushes">Colors and Brushes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#images">Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#arrays-structs">Arrays/Structs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#statements">Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#repetition">Repetition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#conditional-element">Conditional element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#animations">Animations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#states">States</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#transitions">Transitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#global-singletons">Global Singletons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#modules">Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#focus-handling">Focus Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#builtin-functions">Builtin functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#math-namespace"><code class="docutils literal notranslate"><span class="pre">Math</span></code> namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#colors-namespace"><code class="docutils literal notranslate"><span class="pre">Colors</span></code> namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#font-handling">Font Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/builtin_elements.html">Builtin Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#common-properties">Common properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#drop-shadows">Drop Shadows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#properties">Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id1">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id2">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#text"><code class="docutils literal notranslate"><span class="pre">Text</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id4">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id5">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#common-path-properties">Common Path Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#toucharea"><code class="docutils literal notranslate"><span class="pre">TouchArea</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id11">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id12">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#focusscope"><code class="docutils literal notranslate"><span class="pre">FocusScope</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id13">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id14">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id15">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#verticallayout-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> / <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#id16">Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#id17">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#gridlayout"><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id18">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#pathlayout"><code class="docutils literal notranslate"><span class="pre">PathLayout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#flickable"><code class="docutils literal notranslate"><span class="pre">Flickable</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id19">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id20">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#textinput"><code class="docutils literal notranslate"><span class="pre">TextInput</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id21">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id22">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id23">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id24">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#popupwindow"><code class="docutils literal notranslate"><span class="pre">PopupWindow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id25">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id26">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#dialog"><code class="docutils literal notranslate"><span class="pre">Dialog</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id27">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id28">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/builtin_elements.html#builtin-structures">Builtin Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#point"><code class="docutils literal notranslate"><span class="pre">Point</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#fields">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#keyevent"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id29">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#keyboardmodifiers"><code class="docutils literal notranslate"><span class="pre">KeyboardModifiers</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id30">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#pointerevent"><code class="docutils literal notranslate"><span class="pre">PointerEvent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id31">Fields</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/builtin_elements.html#builtin-enums">Builtin Enums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#texthorizontalalignment"><code class="docutils literal notranslate"><span class="pre">TextHorizontalAlignment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#values">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#textverticalalignment"><code class="docutils literal notranslate"><span class="pre">TextVerticalAlignment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id32">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#textwrap"><code class="docutils literal notranslate"><span class="pre">TextWrap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id33">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#textoverflow"><code class="docutils literal notranslate"><span class="pre">TextOverflow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id34">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#eventresult"><code class="docutils literal notranslate"><span class="pre">EventResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id35">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#fillrule"><code class="docutils literal notranslate"><span class="pre">FillRule</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id36">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#dialogbuttonrole"><code class="docutils literal notranslate"><span class="pre">DialogButtonRole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id37">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#mousecursor"><code class="docutils literal notranslate"><span class="pre">MouseCursor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id38">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#inputtype"><code class="docutils literal notranslate"><span class="pre">InputType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id39">Values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/builtin_elements.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#keys"><code class="docutils literal notranslate"><span class="pre">Keys</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#colors"><code class="docutils literal notranslate"><span class="pre">Colors</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/widgets.html">Widgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#properties">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#standardbutton"><code class="docutils literal notranslate"><span class="pre">StandardButton</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id1">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id2">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#checkbox"><code class="docutils literal notranslate"><span class="pre">CheckBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id4">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id5">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id6">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#spinbox"><code class="docutils literal notranslate"><span class="pre">SpinBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id7">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id8">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#slider"><code class="docutils literal notranslate"><span class="pre">Slider</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id9">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id10">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id11">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#groupbox"><code class="docutils literal notranslate"><span class="pre">GroupBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id12">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id13">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#lineedit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id14">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id15">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id16">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#textedit"><code class="docutils literal notranslate"><span class="pre">TextEdit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id17">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id18">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id19">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#scrollview"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id20">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id21">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#listview"><code class="docutils literal notranslate"><span class="pre">ListView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id22">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id23">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#standardlistview"><code class="docutils literal notranslate"><span class="pre">StandardListView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id24">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id25">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#combobox"><code class="docutils literal notranslate"><span class="pre">ComboBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id26">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id27">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id28">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#tabwidget"><code class="docutils literal notranslate"><span class="pre">TabWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id29">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#properties-of-the-tab-element">Properties of the <code class="docutils literal notranslate"><span class="pre">Tab</span></code> element</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id30">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#horizontalbox-verticalbox-gridbox"><code class="docutils literal notranslate"><span class="pre">HorizontalBox</span></code>, <code class="docutils literal notranslate"><span class="pre">VerticalBox</span></code>, <code class="docutils literal notranslate"><span class="pre">GridBox</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#aboutslint"><code class="docutils literal notranslate"><span class="pre">AboutSlint</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/layouting.html">Positioning and Layout of Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#explicit-placement">Explicit Placement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#automatic-placement-using-layouts">Automatic Placement using Layouts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#common-properties-on-layout-elements">Common Properties on Layout Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#verticallayout-and-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/layouting.html#alignment">Alignment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/layouting.html#stretch-algorithm">Stretch algorithm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/layouting.html#for"><code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#gridlayout">GridLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#pathlayout"><code class="docutils literal notranslate"><span class="pre">PathLayout</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/debugging_techniques.html">Debugging Techniques</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/debugging_techniques.html#slow-motion-animations">Slow Motion Animations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/debugging_techniques.html#user-interface-scaling">User Interface Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/debugging_techniques.html#performance-debugging">Performance Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp_migration.html">Migrating from Older Versions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cpp_migration.html#migrating-from-version-0-1-x-to-0-2-0">Migrating from Version 0.1.x to 0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cpp_migration.html#cmake-interface">CMake interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpp_migration.html#models">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpp_migration.html#c-interpreter-api">C++ Interpreter API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cpp_migration.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cpp_migration.html#id1">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Slint C++</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Program Listing for File slint_properties.h</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="program-listing-for-file-slint-properties-h">
+<span id="program-listing-file-home-runner-work-slint-slint-api-cpp-include-slint-properties-h"></span><h1>Program Listing for File slint_properties.h<a class="headerlink" href="#program-listing-for-file-slint-properties-h" title="Permalink to this headline"></a></h1>
+<p>↰ <a class="reference internal" href="file__home_runner_work_slint_slint_api_cpp_include_slint_properties.h.html#file-home-runner-work-slint-slint-api-cpp-include-slint-properties-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/runner/work/slint/slint/api/cpp/include/slint_properties.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copyright © SixtyFPS GmbH &lt;info@slint-ui.com&gt;</span>
+<span class="c1">// SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-commercial</span>
+
+<span class="cp">#pragma once</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string_view&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">slint</span><span class="o">::</span><span class="nn">cbindgen_private</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">PropertyAnimation</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;slint_properties_internal.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">slint</span><span class="o">::</span><span class="nn">private_api</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="k">using</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">StateInfo</span><span class="p">;</span><span class="w"></span>
+
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">slint_property_set_animated_binding_helper</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyHandleOpaque</span><span class="w"> </span><span class="o">*</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">binding</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="o">*</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">drop_user_data</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="o">*</span><span class="n">animation_data</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">transition_data</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">))</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_animated_binding_int</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="n">binding</span><span class="p">,</span><span class="w"> </span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="n">drop_user_data</span><span class="p">,</span><span class="w"> </span><span class="n">animation_data</span><span class="p">,</span><span class="w"> </span><span class="n">transition_data</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">slint_property_set_animated_binding_helper</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyHandleOpaque</span><span class="w"> </span><span class="o">*</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">binding</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">drop_user_data</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="o">*</span><span class="n">animation_data</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">transition_data</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">))</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_animated_binding_float</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="n">binding</span><span class="p">,</span><span class="w"> </span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="n">drop_user_data</span><span class="p">,</span><span class="w"> </span><span class="n">animation_data</span><span class="p">,</span><span class="w"> </span><span class="n">transition_data</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">slint_property_set_animated_binding_helper</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyHandleOpaque</span><span class="w"> </span><span class="o">*</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">binding</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="o">*</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">drop_user_data</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="o">*</span><span class="n">animation_data</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">transition_data</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">))</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_animated_binding_color</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="n">binding</span><span class="p">,</span><span class="w"> </span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="n">drop_user_data</span><span class="p">,</span><span class="w"> </span><span class="n">animation_data</span><span class="p">,</span><span class="w"> </span><span class="n">transition_data</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">slint_property_set_animated_binding_helper</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyHandleOpaque</span><span class="w"> </span><span class="o">*</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">binding</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">Brush</span><span class="w"> </span><span class="o">*</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">drop_user_data</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="o">*</span><span class="n">animation_data</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">transition_data</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="p">))</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_animated_binding_brush</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="n">binding</span><span class="p">,</span><span class="w"> </span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="n">drop_user_data</span><span class="p">,</span><span class="w"> </span><span class="n">animation_data</span><span class="p">,</span><span class="w"> </span><span class="n">transition_data</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Property</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Property</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="o">~</span><span class="n">Property</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_drop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">Property</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Property</span><span class="w"> </span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">Property</span><span class="p">(</span><span class="n">Property</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">Property</span><span class="w"> </span><span class="o">&amp;</span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Property</span><span class="w"> </span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Property</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&amp;</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Should it be implicit?</span>
+<span class="cm">    void operator=(const T &amp;value) {</span>
+<span class="cm">        set(value);</span>
+<span class="cm">    }*/</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">set</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&amp;</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_changed</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&amp;</span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">value</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">set_binding</span><span class="p">(</span><span class="n">F</span><span class="w"> </span><span class="n">binding</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_binding</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">))();</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">F</span><span class="p">(</span><span class="n">binding</span><span class="p">),</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">delete</span><span class="w"> </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">);</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">set_animated_value</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&amp;</span><span class="n">value</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                   </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="o">&amp;</span><span class="n">animation_data</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="n">set_animated_binding</span><span class="p">(</span><span class="n">F</span><span class="w"> </span><span class="n">binding</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="o">&amp;</span><span class="n">animation_data</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">private_api</span><span class="o">::</span><span class="n">slint_property_set_animated_binding_helper</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">))();</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">F</span><span class="p">(</span><span class="n">binding</span><span class="p">),</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">delete</span><span class="w"> </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">);</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="o">&amp;</span><span class="n">animation_data</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Trans</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">set_animated_binding_for_transition</span><span class="p">(</span><span class="n">F</span><span class="w"> </span><span class="n">binding</span><span class="p">,</span><span class="w"> </span><span class="n">Trans</span><span class="w"> </span><span class="n">animation</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="nc">UserData</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">F</span><span class="w"> </span><span class="n">binding</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">Trans</span><span class="w"> </span><span class="n">animation</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="n">private_api</span><span class="o">::</span><span class="n">slint_property_set_animated_binding_helper</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                            </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">UserData</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">binding</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">UserData</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">binding</span><span class="p">,</span><span class="w"> </span><span class="n">animation</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">delete</span><span class="w"> </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">UserData</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">);</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">instant</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">UserData</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">animation</span><span class="p">(</span><span class="n">instant</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_dirty</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_is_dirty</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">mark_dirty</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_mark_dirty</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">link_two_way</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Property</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Property</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">p2</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyHandleOpaque</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">p2</span><span class="o">-&gt;</span><span class="n">inner</span><span class="p">.</span><span class="n">_0</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mb">0b10</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mb">0b10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="k">const_cast</span><span class="o">&lt;</span><span class="n">Property</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">inner</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">common_property</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Property</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">value</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="nc">TwoWayBinding</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Property</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">common_property</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">del_fn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">delete</span><span class="w"> </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">TwoWayBinding</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">);</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">call_fn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                    </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">TwoWayBinding</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">common_property</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">intercept_fn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">TwoWayBinding</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">common_property</span><span class="o">-&gt;</span><span class="n">set</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">));</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">intercept_binding_fn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_binding_internal</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="o">&amp;</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">TwoWayBinding</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">common_property</span><span class="o">-&gt;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_binding</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p1</span><span class="o">-&gt;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="n">call_fn</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                     </span><span class="k">new</span><span class="w"> </span><span class="n">TwoWayBinding</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">common_property</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">del_fn</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                     </span><span class="n">intercept_fn</span><span class="p">,</span><span class="w"> </span><span class="n">intercept_binding_fn</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_binding</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p2</span><span class="o">-&gt;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="n">call_fn</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                     </span><span class="k">new</span><span class="w"> </span><span class="n">TwoWayBinding</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">common_property</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">del_fn</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                     </span><span class="n">intercept_fn</span><span class="p">,</span><span class="w"> </span><span class="n">intercept_binding_fn</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Property</span><span class="p">(</span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyHandleOpaque</span><span class="w"> </span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">inner</span><span class="p">(</span><span class="n">inner</span><span class="p">),</span><span class="w"> </span><span class="n">value</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">value</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyHandleOpaque</span><span class="w"> </span><span class="n">inner</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">mutable</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">set_state_binding</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Property</span><span class="o">&lt;</span><span class="n">StateInfo</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">property</span><span class="p">,</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">binding</span><span class="p">);</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"></span>
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">Property</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;::</span><span class="n">set_animated_value</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="o">&amp;</span><span class="n">new_value</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="o">&amp;</span><span class="n">animation_data</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_animated_value_int</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">new_value</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                            </span><span class="o">&amp;</span><span class="n">animation_data</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"></span>
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"></span>
+<span class="n">Property</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;::</span><span class="n">set_animated_value</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">&amp;</span><span class="n">new_value</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="k">const</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyAnimation</span><span class="w"> </span><span class="o">&amp;</span><span class="n">animation_data</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_animated_value_float</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">new_value</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                              </span><span class="o">&amp;</span><span class="n">animation_data</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">set_state_binding</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Property</span><span class="o">&lt;</span><span class="n">StateInfo</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">property</span><span class="p">,</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">binding</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_set_state_binding</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="o">&amp;</span><span class="n">property</span><span class="p">.</span><span class="n">inner</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">))();</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">F</span><span class="p">(</span><span class="n">binding</span><span class="p">),</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">delete</span><span class="w"> </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">user_data</span><span class="p">);</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">PropertyTracker</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">PropertyTracker</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_tracker_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="o">~</span><span class="n">PropertyTracker</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_tracker_drop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">PropertyTracker</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PropertyTracker</span><span class="w"> </span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PropertyTracker</span><span class="w"> </span><span class="o">&amp;</span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PropertyTracker</span><span class="w"> </span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">is_dirty</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_tracker_is_dirty</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inner</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">evaluate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="o">&amp;</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">()),</span><span class="w"> </span><span class="kt">void</span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_tracker_evaluate</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">))();</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="k">const_cast</span><span class="o">&lt;</span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">evaluate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="o">&amp;</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">            </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;!</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">()),</span><span class="w"> </span><span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">())</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">())</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">evaluate</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">evaluate_as_dependency_root</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="o">&amp;</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">            </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">()),</span><span class="w"> </span><span class="kt">void</span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">slint_property_tracker_evaluate_as_dependency_root</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="o">&amp;</span><span class="n">inner</span><span class="p">,</span><span class="w"> </span><span class="p">[](</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">))();</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="k">const_cast</span><span class="o">&lt;</span><span class="n">F</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">evaluate_as_dependency_root</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="o">&amp;</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">            </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;!</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">()),</span><span class="w"> </span><span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">())</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">())</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">evaluate_as_dependency_root</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">cbindgen_private</span><span class="o">::</span><span class="n">PropertyTrackerOpaque</span><span class="w"> </span><span class="n">inner</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"> </span><span class="c1">// namespace slint::private_api</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, info@slint-ui.com.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

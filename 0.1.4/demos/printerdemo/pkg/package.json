@@ -1,0 +1,16 @@
+{
+  "name": "printerdemo",
+  "collaborators": [
+    "SixtyFPS <info@sixtyfps.io>"
+  ],
+  "version": "0.1.4",
+  "license": "GPL-3.0-only",
+  "files": [
+    "printerdemo_bg.wasm",
+    "printerdemo.js",
+    "printerdemo.d.ts"
+  ],
+  "module": "printerdemo.js",
+  "types": "printerdemo.d.ts",
+  "sideEffects": false
+}

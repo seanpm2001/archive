@@ -1,0 +1,16 @@
+{
+  "name": "opengl_underlay",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "version": "0.2.4",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "files": [
+    "opengl_underlay_bg.wasm",
+    "opengl_underlay.js",
+    "opengl_underlay.d.ts"
+  ],
+  "module": "opengl_underlay.js",
+  "types": "opengl_underlay.d.ts",
+  "sideEffects": false
+}

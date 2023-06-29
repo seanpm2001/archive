@@ -1,0 +1,17 @@
+.. _exhale_class_classslint_1_1Color:
+
+Class Color
+===========
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_color.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::Color
+   :project: Slint
+   :members:
+   :protected-members:
+   :undoc-members:

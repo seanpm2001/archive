@@ -1,0 +1,16 @@
+.. _dir_cppdocs:
+
+
+Directory cppdocs
+=================
+
+
+*Directory path:* ``cppdocs``
+
+Subdirectories
+--------------
+
+- :ref:`dir_cppdocs_generated_include`
+
+
+

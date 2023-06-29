@@ -1,0 +1,60 @@
+
+.. _file_cppdocs_generated_include_sixtyfps_backend_internal.h:
+
+File sixtyfps_backend_internal.h
+================================
+
+|exhale_lsh| :ref:`Parent directory <dir_cppdocs_generated_include>` (``cppdocs/generated_include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``cppdocs/generated_include/sixtyfps_backend_internal.h``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_cppdocs_generated_include_sixtyfps_backend_internal.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cstdarg``
+
+- ``cstdint``
+
+- ``cstdlib``
+
+- ``new``
+
+- ``ostream``
+
+- ``sixtyfps_internal.h`` (:ref:`file_cppdocs_generated_include_sixtyfps_internal.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_sixtyfps`
+

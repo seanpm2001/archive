@@ -1,0 +1,13 @@
+.. _exhale_function_namespacesixtyfps_1a60bd318798158c03db499054d4586aa7:
+
+Template Function sixtyfps::blocking_invoke_from_event_loop
+===========================================================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: sixtyfps::blocking_invoke_from_event_loop(Functor)

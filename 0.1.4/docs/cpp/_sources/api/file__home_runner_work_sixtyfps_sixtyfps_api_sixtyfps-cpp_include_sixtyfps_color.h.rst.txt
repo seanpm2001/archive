@@ -1,0 +1,63 @@
+
+.. _file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_color.h:
+
+File sixtyfps_color.h
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include>` (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/runner/work/sixtyfps/sixtyfps/api/sixtyfps-cpp/include/sixtyfps_color.h``)
+----------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_color.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``sixtyfps_color_internal.h``
+
+- ``sixtyfps_properties.h`` (:ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_properties.h`)
+
+- ``stdint.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_brush.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_sixtyfps`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structsixtyfps_1_1RgbaColor`
+
+- :ref:`exhale_class_classsixtyfps_1_1Color`
+

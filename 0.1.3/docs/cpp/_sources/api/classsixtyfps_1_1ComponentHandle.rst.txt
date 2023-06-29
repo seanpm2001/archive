@@ -1,0 +1,16 @@
+.. _exhale_class_classsixtyfps_1_1ComponentHandle:
+
+Template Class ComponentHandle
+==============================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: sixtyfps::ComponentHandle
+   :members:
+   :protected-members:
+   :undoc-members:

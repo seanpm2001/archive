@@ -1,0 +1,16 @@
+{
+  "name": "imagefilter",
+  "collaborators": [
+    "SixtyFPS <info@sixtyfps.io>"
+  ],
+  "version": "0.1.6",
+  "license": "(GPL-3.0-only OR LicenseRef-SixtyFPS-commercial)",
+  "files": [
+    "imagefilter_bg.wasm",
+    "imagefilter.js",
+    "imagefilter.d.ts"
+  ],
+  "module": "imagefilter.js",
+  "types": "imagefilter.d.ts",
+  "sideEffects": false
+}

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacesixtyfps_1acfc4b71092d63a5fbd0cbc8471e4da52:
+
+Template Function sixtyfps::invoke_from_event_loop
+==================================================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: sixtyfps::invoke_from_event_loop(Functor)

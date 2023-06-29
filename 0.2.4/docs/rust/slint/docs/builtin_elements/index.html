@@ -1,0 +1,1032 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Builtin Elements"><meta name="keywords" content="rust, rustlang, rust-lang, builtin_elements"><title>slint::docs::builtin_elements - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/0.2.4/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/0.2.4/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no_run])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            let link = document.createElement("div");
+            link.innerHTML = `<a href="${editor_url}?snippet=${encodeURIComponent(source)}" target="_blank">📝</a>`;
+            elements[i].append(link);
+            await render_or_error(source, div);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+    // Select C++ blocks in rustdoc generated code and hide them, while opening the <details> of Rust snippets
+    // Similarly, in Sphinx generated HTML, hide Rust blocks and open C++.
+    function select_code_snippet_variants(options) {
+        // When the CSS has pseudo class becomes available, we can probably use that directly
+        // in a stylesheet instead of JS here.
+
+        let selector_for_language = (language) => {
+            return `details[data-snippet-language="${language}"]`;
+        };
+
+        for (let details_element_to_hide of document.querySelectorAll(selector_for_language(options.hide))) {
+            details_element_to_hide.style = "display: none";
+        }
+
+        for (let details_element_to_show of document.querySelectorAll(selector_for_language(options.show))) {
+            details_element_to_show.open = true;
+        }
+    }
+
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+        select_code_snippet_variants({ hide: "cpp", show: "rust" })
+    } else {
+        select_code_snippet_variants({ hide: "rust", show: "cpp" })
+    }
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../slint/index.html"><div class="logo-container"><img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../../slint/index.html"><div class="logo-container">
+                    <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div>
+        </a><h2 class="location"><a href="#">Module builtin_elements</a></h2><div class="sidebar-elems"><div id="sidebar-vars" data-name="builtin_elements" data-ty="mod" data-relpath="./"></div><script defer src="./sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../slint/index.html">
+                        <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Module <a href="../../index.html">slint</a>::<wbr><a href="../index.html">docs</a>::<wbr><a class="mod" href="#">builtin_elements</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../../../src/slint/docs.rs.html#34-39">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="builtin-elements"><a href="#builtin-elements">Builtin Elements</a></h2><h3 id="common-properties"><a href="#common-properties">Common properties</a></h3>
+<p>These properties are valid on all visible items</p>
+<ul>
+<li><strong><code>x</code></strong> and <strong><code>y</code></strong> (<em>length</em>): the position of the element relative to its parent</li>
+<li><strong><code>z</code></strong> (<em>float</em>): Allows to specify a different order to stack the items with its siblings. (default: 0)</li>
+<li><strong><code>width</code></strong> and <strong><code>height</code></strong> (<em>length</em>): The size of the element. When set, this overrides the default size.</li>
+<li><strong><code>max-width</code></strong> and <strong><code>max-height</code></strong> (<em>length</em>): The maximum size of an element when used in a layout.</li>
+<li><strong><code>min-width</code></strong> and <strong><code>min-height</code></strong> (<em>length</em>): The minimum size of an element when used in a layout.</li>
+<li><strong><code>preferred-width</code></strong> and <strong><code>preferred-height</code></strong> (<em>length</em>): The preferred size of an element when used in a layout.</li>
+<li><strong><code>col</code></strong>, <strong><code>row</code></strong>, <strong><code>colspan</code></strong>, <strong><code>rowspan</code></strong> (<em>int</em>): See <a href="#gridlayout"><code>GridLayout</code></a>.</li>
+<li><strong><code>horizontal-stretch</code></strong> and <strong><code>vertical-stretch</code></strong> (<em>float</em>): Specify how much relative space these elements are stretching in a layout.
+When 0, this means that the elements will not be stretched unless all elements are 0. Builtin widgets have a value of either 0 or 1</li>
+<li><strong><code>opacity</code></strong> (<em>float</em>): A value between 0 and 1 (or a percentage) that is used to draw the element and its
+children with transparency. 0 is fully transparent (invisible), and 1 is fully opaque. (default: 1)</li>
+<li><strong><code>visible</code></strong> (<em>bool</em>): When set to <code>false</code>, the element and all his children will not be drawn
+and not react to mouse input (default: <code>true</code>)</li>
+<li><strong><code>cache-rendering-hint</code></strong> (<em>bool</em>): When set to <code>true</code>, this provides a hint
+to the renderer to cache the contents of the element and all the children into an intermediate
+cached layer. For complex sub-trees that rarely change this may speed up the rendering, at the
+expense of increased memory consumption. Not all rendering backends support this, so this is
+merely a hint. (default: <code>false</code>)</li>
+<li><strong><code>dialog-button-role</code></strong> (<em>enum DialogButtonRole</em>): Specify that this is a button in a <code>Dialog</code>.</li>
+</ul>
+<h4 id="drop-shadows"><a href="#drop-shadows">Drop Shadows</a></h4>
+<p>To achieve the graphical effect of a visually elevated shape that shows a shadow effect underneath the frame of
+an element, it is possible to set the following <code>drop-shadow</code> properties:</p>
+<ul>
+<li><strong><code>drop-shadow-offset-x</code></strong> and <strong><code>drop-shadow-offset-y</code></strong> (<em>length</em>): The horizontal and vertical distance
+of the shadow from the element’s frame. A negative value places the shadow left / above of the element.</li>
+<li><strong><code>drop-shadow-color</code></strong> (<em>color</em>): The base color of the shadow to use. Typically that color is the starting color
+of a gradient that fades into transparency.</li>
+<li><strong><code>drop-shadow-blur</code></strong> (<em>length</em>): The radius of the shadow that also describes the level of blur applied to the shadow.
+Negative values are ignored and zero means no blur (default).</li>
+</ul>
+<p>The <code>drop-shadow</code> effect is supported for <code>Rectangle</code> elements.</p>
+<h3 id="window"><a href="#window"><code>Window</code></a></h3>
+<p>Window is the root of what is on the screen</p>
+<p>The Window geometry will be restricted by its layout constraints: setting the <code>width</code> will result in a fixed width,
+and the window manager will respect the <code>min-width</code> and <code>max-width</code> so the window can’t be resized bigger
+or smaller. The initial width can be controlled with the <code>preferred-width</code> property. The same applies for the height.</p>
+<h4 id="properties"><a href="#properties">Properties</a></h4>
+<ul>
+<li><strong><code>title</code></strong> (<em>string</em>): The window title that is shown in the title bar.</li>
+<li><strong><code>icon</code></strong> (<em>image</em>): The window icon shown in the title bar or the task bar on window managers supporting it.</li>
+<li><strong><code>no-frame</code></strong> (<em>bool</em>): Whether the window should be borderless/frameless or not.</li>
+<li><strong><code>background</code></strong> (<em>color</em>): The background color of the Window. (default value: depends on the style)</li>
+<li><strong><code>default-font-family</code></strong> (<em>string</em>): The font family to use as default in text elements inside this window, that don’t
+have their family set.</li>
+<li><strong><code>default-font-size</code></strong> (<em>length</em>): The font size to use as default in text elements inside this window, that don’t
+have their size set.</li>
+<li><strong><code>default-font-weight</code></strong> (<em>int</em>): The font weight to use as default in text elements inside this window, that don’t
+have their weight set. The values range from 100 (lightest) to 900 (thickest). 400 is the normal weight.</li>
+</ul>
+<h3 id="rectangle"><a href="#rectangle"><code>Rectangle</code></a></h3>
+<p>By default, the rectangle is just an empty item that shows nothing. By setting a color or a border
+it is then possible to draw a simple rectangle on the screen</p>
+<p>When not part of a layout, its width or height defaults to 100% of the parent element when not specified.</p>
+<h4 id="properties-1"><a href="#properties-1">Properties</a></h4>
+<ul>
+<li><strong><code>background</code></strong> (<em>brush</em>): The background brush of the Rectangle, typically a color. (default value: transparent)</li>
+<li><strong><code>border-width</code></strong> (<em>length</em>): The width of the border. (default value: 0)</li>
+<li><strong><code>border-color</code></strong> (<em>brush</em>): The color of the border. (default value: transparent)</li>
+<li><strong><code>border-radius</code></strong> (<em>length</em>): The size of the radius. (default value: 0)</li>
+<li><strong><code>clip</code></strong> (<em>bool</em>): By default, when an item is bigger or outside another item, it is still shown.
+But when this property is set to <code>true</code>, then the children element of this Rectangle are going
+to be clipped. (default: <code>false</code>)</li>
+</ul>
+<h4 id="example"><a href="#example">Example</a></h4><div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 270px;
+    height: 100px;
+
+    Rectangle {
+        x: 10px;
+        y: 10px;
+        width: 50px;
+        height: 50px;
+        background: blue;
+    }
+
+    // Rectangle with a border
+    Rectangle {
+        x: 70px;
+        y: 10px;
+        width: 50px;
+        height: 50px;
+        background: green;
+        border-width: 2px;
+        border-color: red;
+    }
+
+    // Transparent Rectangle with a border and a radius
+    Rectangle {
+        x: 140px;
+        y: 10px;
+        width: 50px;
+        height: 50px;
+        border-width: 4px;
+        border-color: black;
+        border-radius: 10px;
+    }
+
+    // A radius of width/2 makes it a circle
+    Rectangle {
+        x: 210px;
+        y: 10px;
+        width: 50px;
+        height: 50px;
+        background: yellow;
+        border-width: 2px;
+        border-color: blue;
+        border-radius: width/2;
+    }
+}</code></pre></div><h3 id="image"><a href="#image"><code>Image</code></a></h3>
+<p>An Image can be used to represent an image loaded from an image file.</p>
+<h4 id="properties-2"><a href="#properties-2">Properties</a></h4>
+<ul>
+<li>
+<p><strong><code>source</code></strong> (<em>image</em>): The image to load. In order to reference image, one uses the <code>@image-url(&quot;...&quot;)</code> macro
+which loads the file relative to the directory containing the .slint file.</p>
+</li>
+<li>
+<p><strong><code>source-clip-x</code></strong>, <strong><code>source-clip-y</code></strong>, <strong><code>source-clip-width</code></strong>, <strong><code>source-clip-height</code></strong> (<em>int</em>): properties in source
+image coordinates that, when specified, can be used to render only a portion of the specified image.</p>
+</li>
+<li>
+<p><strong><code>image-fit</code></strong> (<em>enum</em>): Specifies how the source image shall be fit into the image element. Possible values are:</p>
+<ul>
+<li><code>fill</code>: Scales and stretches the image to fit the width and height of the element.</li>
+<li><code>contain</code>: The source image is scaled to fit into the image element’s dimension while preserving the aspect ratio.</li>
+<li><code>cover</code>: The source image is scaled to cover into the image element’s dimension while preserving the aspect ratio.</li>
+</ul>
+<p>When the <code>Image</code> element is part of a layout, the default value for <strong><code>image-fit</code></strong> is <code>contain</code>. Otherwise it is <code>fill</code>.</p>
+</li>
+<li>
+<p><strong><code>image-rendering</code></strong> (<em>enum</em>): Specifies how the source image will be scaled. Possible values are:</p>
+<ul>
+<li><code>smooth</code>: The image is scaled with a linear interpolation algorithm.</li>
+<li><code>pixelated</code>: The image is scaled with the nearest neighbor algorithm.</li>
+</ul>
+<p>The default value is <code>smooth</code>.</p>
+</li>
+<li>
+<p><strong><code>colorize</code></strong> (<em>brush</em>): When set, the image is used as an alpha mask and is drown in the given color (or with the gradient)</p>
+</li>
+<li>
+<p><strong><code>width</code></strong>, <strong><code>height</code></strong> (<em>length</em>): The width and height of the image as it appears on the screen.The default values are
+the sizes provided by the <strong><code>source</code></strong> image. If the <code>Image</code> is <strong>not</strong> in a layout and only <strong>one</strong> of the two sizes are
+specified, then the other defaults to the specified value scaled according to the aspect ratio of the <strong><code>source</code></strong> image.</p>
+</li>
+</ul>
+<h4 id="example-1"><a href="#example-1">Example</a></h4><div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 100px;
+    height: 100px;
+    VerticalLayout {
+        Image {
+            source: @image-url(&quot;https://slint-ui.com/logo/slint-logo-full-light.svg&quot;);
+            // image-fit default is `contain` when in layout, preserving aspect ratio
+        }
+        Image {
+            source: @image-url(&quot;https://slint-ui.com/logo/slint-logo-full-light.svg&quot;);
+            colorize: red;
+        }
+    }
+}</code></pre></div>
+<p>Scaled while preserving the aspect ratio:</p>
+<div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 100px;
+    height: 150px;
+    VerticalLayout {
+        Image {
+            source: @image-url(&quot;https://slint-ui.com/logo/slint-logo-full-light.svg&quot;);
+            width: 100px;
+            // implicit default, preserving aspect ratio:
+            // height: self.width * natural_height / natural_width;
+        }
+    }
+}</code></pre></div><h3 id="text"><a href="#text"><code>Text</code></a></h3>
+<p>The <code>Text</code> element is responsible for rendering text. Besides the <code>text</code> property, that specifies which text to render,
+it also allows configuring different visual aspects through the <code>font-family</code>, <code>font-size</code>, <code>font-weight</code> and <code>color</code> properties.</p>
+<p>The <code>Text</code> element can break long text into multiple lines of text. A line feed character (<code>\n</code>) in the string of the <code>text</code>
+property will trigger a manual line break. For automatic line breaking you need to set the <code>wrap</code> property to a value other than
+<code>no-wrap</code> and it is important to specify a <code>width</code> and <code>height</code> for the <code>Text</code> element, in order to know where to break. It’s
+recommended to place the <code>Text</code> element in a layout and let it set the <code>width</code> and <code>height</code> based on the available screen space
+and the text itself.</p>
+<h4 id="properties-3"><a href="#properties-3">Properties</a></h4>
+<ul>
+<li><strong><code>text</code></strong> (<em>string</em>): The actual text.</li>
+<li><strong><code>font-family</code></strong> (<em>string</em>): The font name</li>
+<li><strong><code>font-size</code></strong> (<em>length</em>): The font size of the text</li>
+<li><strong><code>font-weight</code></strong> (<em>int</em>): The weight of the font. The values range from 100 (lightest) to 900 (thickest). 400 is the normal weight.</li>
+<li><strong><code>color</code></strong> (<em>brush</em>): The color of the text (default value: depends on the style)</li>
+<li><strong><code>horizontal-alignment</code></strong> (<em>enum <a href="#texthorizontalalignment"><code>TextHorizontalAlignment</code></a></em>): The horizontal alignment of the text.</li>
+<li><strong><code>vertical-alignment</code></strong> (<em>enum <a href="#textverticalalignment"><code>TextVerticalAlignment</code></a></em>): The vertical alignment of the text.</li>
+<li><strong><code>wrap</code></strong> (<em>enum <a href="#textwrap"><code>TextWrap</code></a></em>): The way the text wraps (default: no-wrap).</li>
+<li><strong><code>overflow</code></strong> (<em>enum <a href="#textoverflow"><code>TextOverflow</code></a></em>): What happens when the text overflows (default: clip).</li>
+<li><strong><code>letter-spacing</code></strong> (<em>length</em>): The letter spacing allows changing the spacing between the glyphs. A positive value increases the spacing
+and a negative value decreases the distance. The default value is 0.</li>
+</ul>
+<h4 id="example-2"><a href="#example-2">Example</a></h4>
+<p>This example shows the text “Hello World” in red, using the default font:</p>
+<div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 270px;
+    height: 100px;
+
+    Text {
+        text: &quot;Hello World&quot;;
+        color: red;
+    }
+}</code></pre></div>
+<p>This example breaks a longer paragraph of text into multiple lines, by setting a <code>wrap</code>
+policy and assigning a limited <code>width</code> and enough <code>height</code> for the text to flow down:</p>
+<div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 270px;
+    height: 300px;
+
+    Text {
+        text: &quot;This paragraph breaks into multiple lines of text&quot;;
+        wrap: word-wrap;
+        width: 150px;
+        height: 100%;
+    }
+}</code></pre></div><h3 id="path"><a href="#path"><code>Path</code></a></h3>
+<p>The <code>Path</code> element allows rendering a generic shape, composed of different geometric commands. A path
+shape can be filled and outlined.</p>
+<p>When not part of a layout, its width or height defaults to 100% of the parent element when not specified.</p>
+<p>A path can be defined in two different ways:</p>
+<ul>
+<li>Using SVG path commands as a string</li>
+<li>Using path command elements in <code>.slint</code> markup.</li>
+</ul>
+<p>The coordinates used in the geometric commands are within the imaginary coordinate system of the path.
+When rendering on the screen, the shape is drawn relative to the <code>x</code> and <code>y</code> properties. If the <code>width</code>
+and <code>height</code> properties are non-zero, then the entire shape is fit into these bounds - by scaling
+accordingly.</p>
+<h4 id="common-path-properties"><a href="#common-path-properties">Common Path Properties</a></h4>
+<ul>
+<li>
+<p><strong><code>fill</code></strong> (<em>brush</em>): The color for filling the shape of the path.</p>
+</li>
+<li>
+<p><strong><code>fill-rule</code></strong> (enum <em><a href="#fillrule"><code>FillRule</code></a></em>): The fill rule to use for the path. (default value: <code>nonzero</code>)</p>
+</li>
+<li>
+<p><strong><code>stroke</code></strong> (<em>brush</em>): The color for drawing the outline of the path.</p>
+</li>
+<li>
+<p><strong><code>stroke-width</code></strong> (<em>length</em>): The width of the outline.</p>
+</li>
+<li>
+<p><strong><code>width</code></strong> (<em>length</em>): If non-zero, the path will be scaled to fit into the specified width.</p>
+</li>
+<li>
+<p><strong><code>height</code></strong> (<em>length</em>): If non-zero, the path will be scaled to fit into the specified height.</p>
+</li>
+<li>
+<p><strong><code>viewbox-x</code></strong>/<strong><code>viewbox-y</code></strong>/<strong><code>viewbox-width</code></strong>/<strong><code>viewbox-height</code></strong> (<em>float</em>) These four
+properties allow defining the position and size of the viewport of the path in path coordinates.</p>
+<p>If the <code>viewbox-width</code> or <code>viewbox-height</code> is less or equal than zero, the viewbox properties are
+ignored and instead the bounding rectangle of all path elements is used to define the view port.</p>
+</li>
+<li>
+<p><strong><code>clip</code></strong> (<em>bool</em>): By default, when a path has a view box defined and the elements render
+outside of it, they are still rendered. When this property is set to <code>true</code>, then rendering will be
+clipped at the boundaries of the view box.
+This property must be a literal <code>true</code> or <code>false</code> (default: <code>false</code>)</p>
+</li>
+</ul>
+<h5 id="path-using-svg-commands"><a href="#path-using-svg-commands">Path Using SVG commands</a></h5>
+<p>SVG is a popular file format for defining scalable graphics, which are often composed of paths. In SVG
+paths are composed using <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#path_commands">commands</a>,
+which in turn are written in a string. In <code>.slint</code> the path commands are provided to the <code>commands</code>
+property. The following example renders a shape consists of an arc and a rectangle, composed of <code>line-to</code>,
+<code>move-to</code> and <code>arc</code> commands:</p>
+<div class="example-wrap"><pre class="language-slint"><code>Example := Path {
+    width: 100px;
+    height: 100px;
+    commands: &quot;M 0 0 L 0 100 A 1 1 0 0 0 100 100 L 100 0 Z&quot;;
+    stroke: red;
+    stroke-width: 1px;
+}</code></pre></div>
+<p>The commands are provided in a property:</p>
+<ul>
+<li><strong><code>commands</code></strong> (*string): A string providing the commands according to the SVG path specification.</li>
+</ul>
+<h5 id="path-using-svg-path-elements"><a href="#path-using-svg-path-elements">Path Using SVG Path Elements</a></h5>
+<p>The shape of the path can also be described using elements that resemble the SVG path commands but use the
+<code>.slint</code> markup syntax. The earlier example using SVG commands can also be written like that:</p>
+<div class="example-wrap"><pre class="language-slint"><code>Example := Path {
+    width: 100px;
+    height: 100px;
+    stroke: blue;
+    stroke-width: 1px;
+
+    MoveTo {
+        x: 0;
+        y: 0;
+    }
+    LineTo {
+        x: 0;
+        y: 100;
+    }
+    ArcTo {
+        radius-x: 1;
+        radius-y: 1;
+        x: 100;
+        y: 100;
+    }
+    LineTo {
+        x: 100;
+        y: 0;
+    }
+    Close {
+    }
+}</code></pre></div>
+<p>Note how the coordinates of the path elements do not use units - they operate within the imaginary
+coordinate system of the scalable path.</p>
+<h6 id="moveto-sub-element-for-path"><a href="#moveto-sub-element-for-path"><code>MoveTo</code> Sub-element for <code>Path</code></a></h6>
+<p>The <code>MoveTo</code> sub-element closes the current sub-path, if present, and moves the current point
+to the location specified by the <code>x</code> and <code>y</code> properties. Subsequent elements such as <code>LineTo</code>
+will use this new position as their starting point, therefore this starts a new sub-path.</p>
+<h6 id="properties-4"><a href="#properties-4">Properties</a></h6>
+<ul>
+<li><strong><code>x</code></strong> (<em>float</em>): The x position of the new current point.</li>
+<li><strong><code>y</code></strong> (<em>float</em>): The y position of the new current point.</li>
+</ul>
+<h6 id="lineto-sub-element-for-path"><a href="#lineto-sub-element-for-path"><code>LineTo</code> Sub-element for <code>Path</code></a></h6>
+<p>The <code>LineTo</code> sub-element describes a line from the path’s current position to the
+location specified by the <code>x</code> and <code>y</code> properties.</p>
+<h6 id="properties-5"><a href="#properties-5">Properties</a></h6>
+<ul>
+<li><strong><code>x</code></strong> (<em>float</em>): The target x position of the line.</li>
+<li><strong><code>y</code></strong> (<em>float</em>): The target y position of the line.</li>
+</ul>
+<h6 id="arcto-sub-element-for-path"><a href="#arcto-sub-element-for-path"><code>ArcTo</code> Sub-element for <code>Path</code></a></h6>
+<p>The <code>ArcTo</code> sub-element describes the portion of an ellipse. The arc is drawn from the path’s
+current position to the location specified by the <code>x</code> and <code>y</code> properties. The remaining properties
+are modelled after the SVG specification and allow tuning visual features such as the direction
+or angle.</p>
+<h6 id="properties-6"><a href="#properties-6">Properties</a></h6>
+<ul>
+<li><strong><code>x</code></strong> (<em>float</em>): The target x position of the line.</li>
+<li><strong><code>y</code></strong> (<em>float</em>): The target y position of the line.</li>
+<li><strong><code>radius-x</code></strong> (<em>float</em>): The x-radius of the ellipse.</li>
+<li><strong><code>radius-y</code></strong> (<em>float</em>): The y-radius of the ellipse.</li>
+<li><strong><code>x-rotation</code></strong> (<em>float</em>): The x-axis of the ellipse will be rotated by the value of this
+properties, specified in as angle in degrees from 0 to 360.</li>
+<li><strong><code>large-arc</code></strong> (<em>bool</em>): Out of the two arcs of a closed ellipse, this flag selects that the
+larger arc is to be rendered. If the property is <code>false</code>, the shorter arc is rendered instead.</li>
+<li><strong><code>sweep</code></strong> (<em>bool</em>): If the property is <code>true</code>, the arc will be drawn as a clockwise turning arc;
+anti-clockwise otherwise.</li>
+</ul>
+<h6 id="cubicto-sub-element-for-path"><a href="#cubicto-sub-element-for-path"><code>CubicTo</code> Sub-element for <code>Path</code></a></h6>
+<p>The <code>CubicTo</code> sub-element describes a smooth Bézier from the path’s current position to the
+location specified by the <code>x</code> and <code>y</code> properties, using two control points specified by their
+respective properties.</p>
+<h6 id="properties-7"><a href="#properties-7">Properties</a></h6>
+<ul>
+<li><strong><code>x</code></strong> (<em>float</em>): The target x position of the curve.</li>
+<li><strong><code>y</code></strong> (<em>float</em>): The target y position of the curve.</li>
+<li><strong><code>control-1-x</code></strong> (<em>float</em>): The x coordinate of the curve’s first control point.</li>
+<li><strong><code>control-1-y</code></strong> (<em>float</em>): The y coordinate of the curve’s first control point.</li>
+<li><strong><code>control-2-x</code></strong> (<em>float</em>): The x coordinate of the curve’s second control point.</li>
+<li><strong><code>control-2-y</code></strong> (<em>float</em>): The y coordinate of the curve’s second control point.</li>
+</ul>
+<h6 id="quadraticto-sub-element-for-path"><a href="#quadraticto-sub-element-for-path"><code>QuadraticTo</code> Sub-element for <code>Path</code></a></h6>
+<p>The <code>QuadraticTo</code> sub-element describes a smooth Bézier from the path’s current position to the
+location specified by the <code>x</code> and <code>y</code> properties, using the control points specified by the
+<code>control-x</code> and <code>control-y</code> properties.</p>
+<h6 id="properties-8"><a href="#properties-8">Properties</a></h6>
+<ul>
+<li><strong><code>x</code></strong> (<em>float</em>): The target x position of the curve.</li>
+<li><strong><code>y</code></strong> (<em>float</em>): The target y position of the curve.</li>
+<li><strong><code>control-x</code></strong> (<em>float</em>): The x coordinate of the curve’s control point.</li>
+<li><strong><code>control-y</code></strong> (<em>float</em>): The y coordinate of the curve’s control point.</li>
+</ul>
+<h6 id="close-sub-element-for-path"><a href="#close-sub-element-for-path"><code>Close</code> Sub-element for <code>Path</code></a></h6>
+<p>The <code>Close</code> element closes the current sub-path and draws a straight line from the current
+position to the beginning of the path.</p>
+<h3 id="toucharea"><a href="#toucharea"><code>TouchArea</code></a></h3>
+<p>The TouchArea control what happens when the zone covered by it is touched or interacted with
+using the mouse.</p>
+<p>When not part of a layout, its width or height default to 100% of the parent element if not specified.</p>
+<h4 id="properties-9"><a href="#properties-9">Properties</a></h4>
+<ul>
+<li><strong><code>pressed</code></strong> (<em>bool</em>): Set to <code>true</code> by the TouchArea when the mouse is pressed over it.</li>
+<li><strong><code>has-hover</code></strong> (<em>bool</em>): Set to <code>true</code> by the TouchArea when the mouse is over it.</li>
+<li><strong><code>mouse-x</code></strong>, <strong><code>mouse-y</code></strong> (<em>length</em>): Set by the TouchArea to the position of the mouse within it.</li>
+<li><strong><code>pressed-x</code></strong>, <strong><code>pressed-y</code></strong> (<em>length</em>): Set to <code>true</code> by the TouchArea to the position of the mouse at the moment it was last pressed.</li>
+<li><strong><code>mouse-cursor</code></strong> (enum <em><a href="#mousecursor"><code>MouseCursor</code></a></em>): The mouse cursor type when the mouse is hovering the TouchArea.</li>
+</ul>
+<h4 id="callbacks"><a href="#callbacks">Callbacks</a></h4>
+<ul>
+<li><strong><code>clicked</code></strong>: Emitted when clicked (the mouse is pressed, then released on this element)</li>
+<li><strong><code>moved</code></strong>: The mouse has been moved. This will only be called if the mouse is also pressed.</li>
+<li><strong><code>pointer-event(PointerEvent)</code></strong>: Received when a button was pressed or released.</li>
+</ul>
+<h4 id="example-3"><a href="#example-3">Example</a></h4><div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 200px;
+    height: 100px;
+    area := TouchArea {
+        width: parent.width;
+        height: parent.height;
+        clicked =&gt; {
+            rect2.background = #ff0;
+        }
+    }
+    Rectangle {
+        width: parent.width / 2;
+        height: parent.height;
+        background: area.pressed ? blue: red;
+    }
+    rect2 := Rectangle {
+        x: parent.width / 2;
+        width: parent.width / 2;
+        height: parent.height;
+    }
+}</code></pre></div><h3 id="focusscope"><a href="#focusscope"><code>FocusScope</code></a></h3>
+<p>The FocusScope exposes callback to intercept the pressed key when it has focus.</p>
+<p>The KeyEvent has a text property which is a character of the key entered.
+When a non-printable key is pressed, the character will be either a control character,
+or it will be mapped to a private unicode character. The mapping of these non-printable, special characters is available in the <a href="#keys"><code>Keys</code></a> namespace</p>
+<h4 id="properties-10"><a href="#properties-10">Properties</a></h4>
+<ul>
+<li><strong><code>has-focus</code></strong> (<em>bool</em>): Set to <code>true</code> when item is focused and receives keyboard events.</li>
+</ul>
+<h4 id="methods"><a href="#methods">Methods</a></h4>
+<ul>
+<li><strong><code>focus()</code></strong> Call this function to focus the text input and make it receive future keyboard events.</li>
+</ul>
+<h4 id="callbacks-1"><a href="#callbacks-1">Callbacks</a></h4>
+<ul>
+<li><strong><code>key-pressed(KeyEvent) -&gt; EventResult</code></strong>: Emitted when a key is pressed, the argument is a <code>KeyEvent</code> struct</li>
+<li><strong><code>key-released(KeyEvent) -&gt; EventResult</code></strong>: Emitted when a key is released, the argument is a <code>KeyEvent</code> struct</li>
+</ul>
+<h4 id="example-4"><a href="#example-4">Example</a></h4><div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 100px;
+    height: 100px;
+    forward-focus: my-key-handler;
+    my-key-handler := FocusScope {
+        key-pressed(event) =&gt; {
+            debug(event.text);
+            if (event.modifiers.control) {
+                debug(&quot;control was pressed during this event&quot;);
+            }
+            if (event.text == Keys.Escape) {
+                debug(&quot;Esc key was pressed&quot;)
+            }
+            accept
+        }
+    }
+}</code></pre></div><h3 id="verticallayout--horizontallayout"><a href="#verticallayout--horizontallayout"><code>VerticalLayout</code> / <code>HorizontalLayout</code></a></h3>
+<p>These layouts place their children next to each other vertically or horizontally.
+The size of elements can either be fixed with the <code>width</code> or <code>height</code> property, or if they are not set
+they will be computed by the layout respecting the minimum and maximum sizes and the stretch factor.</p>
+<h3 id="properties-11"><a href="#properties-11">Properties</a></h3>
+<ul>
+<li><strong><code>spacing</code></strong> (<em>length</em>): The distance between the elements in the layout.</li>
+<li><strong><code>padding</code></strong> (<em>length</em>): the padding within the layout.</li>
+<li><strong><code>padding-left</code></strong>, <strong><code>padding-right</code></strong>, <strong><code>padding-top</code></strong> and <strong><code>padding-bottom</code></strong> (<em>length</em>):
+override the padding in specific sides.</li>
+<li><strong><code>alignment</code></strong> (<em>FIXME enum</em>): Can be one of  <code>stretch</code>, <code>center</code>, <code>start</code>, <code>end</code>,
+<code>space-between</code>, <code>space-around</code>. Defaults to <code>stretch</code>. Matches the CSS flex.</li>
+</ul>
+<h3 id="example-5"><a href="#example-5">Example</a></h3><div class="example-wrap"><pre class="language-slint"><code>Foo := Window {
+    width: 200px;
+    height: 100px;
+    HorizontalLayout {
+        spacing: 5px;
+        Rectangle { background: red; width: 10px; }
+        Rectangle { background: blue; min-width: 10px; }
+        Rectangle { background: yellow; horizontal-stretch: 1; }
+        Rectangle { background: green; horizontal-stretch: 2; }
+    }
+}</code></pre></div><h3 id="gridlayout"><a href="#gridlayout"><code>GridLayout</code></a></h3>
+<p><code>GridLayout</code> places the elements in a grid. <code>GridLayout</code> adds properties to each item: <code>col</code>, <code>row</code>, <code>colspan</code>, <code>rowspan</code>.
+You can control the position of elements with <code>col</code> and <code>row</code>.
+If <code>col</code> or <code>row</code> is not specified, they are automatically computed such that the item is next to the previous item, in the same row.
+Alternatively, the item can be put in a <code>Row</code> element.</p>
+<h4 id="properties-12"><a href="#properties-12">Properties</a></h4>
+<ul>
+<li><strong><code>spacing</code></strong> (<em>length</em>): The distance between the elements in the layout.</li>
+<li><strong><code>padding</code></strong> (<em>length</em>): the padding within the layout.</li>
+<li><strong><code>padding-left</code></strong>, <strong><code>padding-right</code></strong>, <strong><code>padding-top</code></strong> and <strong><code>padding-bottom</code></strong> (<em>length</em>):
+override the padding in specific sides.</li>
+</ul>
+<h4 id="examples"><a href="#examples">Examples</a></h4>
+<p>This example uses the <code>Row</code> element</p>
+<div class="example-wrap"><pre class="language-slint"><code>Foo := Window {
+    width: 200px;
+    height: 200px;
+    GridLayout {
+        spacing: 5px;
+        Row {
+            Rectangle { background: red; }
+            Rectangle { background: blue; }
+        }
+        Row {
+            Rectangle { background: yellow; }
+            Rectangle { background: green; }
+        }
+    }
+}</code></pre></div>
+<p>This example uses the <code>col</code> and <code>row</code> properties</p>
+<div class="example-wrap"><pre class="language-slint"><code>Foo := Window {
+    width: 200px;
+    height: 150px;
+    GridLayout {
+        Rectangle { background: red; }
+        Rectangle { background: blue; }
+        Rectangle { background: yellow; row: 1; }
+        Rectangle { background: green; }
+        Rectangle { background: black; col: 2; row: 0; }
+    }
+}</code></pre></div><h3 id="pathlayout"><a href="#pathlayout"><code>PathLayout</code></a></h3>
+<p>FIXME: write docs</p>
+<h3 id="flickable"><a href="#flickable"><code>Flickable</code></a></h3>
+<p>The <code>Flickable</code> is a lower-level item that is the base for scrollable
+elements, such as the ScrollView widget. When the <code>viewport-width</code> or the
+<code>viewport-height</code> is greater than the parent width or parent height
+respectively the element becomes scrollable although the <code>Flickable</code>
+does not create a scrollbar. When unset, the <code>viewport-width</code> and <code>viewport-height</code> are
+calculated automatically based on the content. Excepted when using a <code>for</code> loop to populate
+the elements, that is tracked in issue #407.
+The maximum and preferred size of the Flickable are based on those of the viewport.</p>
+<p>When not part of a layout, its width or height defaults to 100% of the parent element when not specified.</p>
+<h4 id="properties-13"><a href="#properties-13">Properties</a></h4>
+<ul>
+<li><strong><code>viewport-height</code></strong>, <strong><code>viewport-width</code></strong> (<em>length</em>): The total size of the scrollable element</li>
+<li><strong><code>viewport-x</code></strong>, <strong><code>viewport-y</code></strong> (<em>length</em>): The position of the scrollable element relative to the Flickable.  This is usually a negative value.</li>
+<li><strong><code>interactive</code></strong> (<em>bool</em>): When true, the viewport can be scrolled by clicking on it and dragging it with the cursor. (default: true)</li>
+</ul>
+<h4 id="example-6"><a href="#example-6">Example</a></h4><div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 270px;
+    height: 100px;
+
+    Flickable {
+        viewport-height: 300px;
+        Text {
+            y: 150px;
+            text: &quot;This is some text that you have to scroll to see&quot;;
+        }
+    }
+}</code></pre></div><h3 id="textinput"><a href="#textinput"><code>TextInput</code></a></h3>
+<p>The <code>TextInput</code> is a lower-level item that shows text and allows entering text.</p>
+<p>When not part of a layout, its width or height defaults to 100% of the parent element when not specified.</p>
+<h4 id="properties-14"><a href="#properties-14">Properties</a></h4>
+<ul>
+<li><strong><code>text</code></strong> (<em>string</em>): The actual text.</li>
+<li><strong><code>font-family</code></strong> (<em>string</em>): The font name</li>
+<li><strong><code>font-size</code></strong> (<em>length</em>): The font size of the text</li>
+<li><strong><code>font-weight</code></strong> (<em>int</em>): The weight of the font. The values range from 100 (lightest) to 900 (thickest). 400 is the normal weight.</li>
+<li><strong><code>color</code></strong> (<em>brush</em>): The color of the text (default value: depends on the style)</li>
+<li><strong><code>horizontal-alignment</code></strong> (enum <em><a href="#texthorizontalalignment"><code>TextHorizontalAlignment</code></a></em>): The horizontal alignment of the text.</li>
+<li><strong><code>vertical-alignment</code></strong> (enum <em><a href="#textverticalalignment"><code>TextVerticalAlignment</code></a></em>): The vertical alignment of the text.</li>
+<li><strong><code>has-focus</code></strong> (<em>bool</em>): Set to <code>true</code> when item is focused and receives keyboard events.</li>
+<li><strong><code>letter-spacing</code></strong> (<em>length</em>): The letter spacing allows changing the spacing between the glyphs. A positive value increases the spacing
+and a negative value decreases the distance. The default value is 0.</li>
+<li><strong><code>single-line</code></strong> (bool): When set to <code>true</code>, no newlines are allowed (default value: <code>true</code>)</li>
+<li><strong><code>wrap</code></strong> (<em>enum <a href="#textwrap"><code>TextWrap</code></a></em>): The way the text input wraps.  Only makes sense when <code>single-line</code> is false. (default: no-wrap)</li>
+<li><strong><code>input-type</code></strong> (<em>enum <a href="#InputType"><code>InputType</code></a></em>): The way to allow special input viewing properties such as password fields (default value: <code>text</code>).</li>
+</ul>
+<h4 id="methods-1"><a href="#methods-1">Methods</a></h4>
+<ul>
+<li><strong><code>focus()</code></strong> Call this function to focus the text input and make it receive future keyboard events.</li>
+</ul>
+<h4 id="callbacks-2"><a href="#callbacks-2">Callbacks</a></h4>
+<ul>
+<li><strong><code>accepted()</code></strong>: Emitted when enter key is pressed</li>
+<li><strong><code>edited()</code></strong>: Emitted when the text has changed because the user modified it</li>
+<li><strong><code>cursor-position-changed(Point)</code></strong>: The cursor was moved to the new (x, y) position</li>
+</ul>
+<h4 id="example-7"><a href="#example-7">Example</a></h4><div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 270px;
+    height: 100px;
+
+    TextInput {
+        text: &quot;Replace me with a name&quot;;
+    }
+}</code></pre></div><h3 id="popupwindow"><a href="#popupwindow"><code>PopupWindow</code></a></h3>
+<p>This allow to show a popup window like a tooltip or a popup menu.</p>
+<p>Note: It is not allowed to access properties of elements within the popup from outside of the popup.</p>
+<h4 id="methods-2"><a href="#methods-2">Methods</a></h4>
+<ul>
+<li><strong><code>show()</code></strong> Call this function to show the popup.</li>
+</ul>
+<h4 id="example-8"><a href="#example-8">Example</a></h4><div class="example-wrap"><pre class="language-slint"><code>Example := Window {
+    width: 100px;
+    height: 100px;
+
+    popup := PopupWindow {
+        Rectangle { height:100%; width: 100%; background: yellow; }
+        x: 20px; y: 20px; height: 50px; width: 50px;
+    }
+
+    TouchArea {
+        height:100%; width: 100%;
+        clicked =&gt; { popup.show(); }
+    }
+}</code></pre></div><h3 id="dialog"><a href="#dialog"><code>Dialog</code></a></h3>
+<p>Dialog is like a window, but it has buttons that are automatically laid out.</p>
+<p>A Dialog should have one main element for the content, that is not a button.
+And the window can have any number of <code>StandardButton</code> widgets or other button
+with the <code>dialog-button-role</code> property.
+The button will be layed out in an order that depends on the platform.</p>
+<p>The <code>kind</code> property of the <code>StandardButton</code>s and the <code>dialog-button-role</code> properties needs to be set to a specific value,
+it cannot be a complex expression.
+There cannot be several StandardButton of the same kind.</p>
+<p>A callback <code>&lt;kind&gt;_clicked</code> is automatically added for each StandardButton which does not have an explicit
+callback handler, so it can be handled from the native code. (e.g. if there is a button of kind <code>cancel</code>,
+a <code>cancel_clicked</code> callback will be added).</p>
+<p>When viewed with the <code>slint-viewer</code> program, the <code>ok</code>, <code>cancel</code>, and <code>close</code> button will cause the dialog to close.</p>
+<h4 id="properties-15"><a href="#properties-15">Properties</a></h4>
+<ul>
+<li><strong><code>title</code></strong> (<em>string</em>): The window title that is shown in the title bar.</li>
+<li><strong><code>icon</code></strong> (<em>image</em>): The window icon shown in the title bar or the task bar on window managers supporting it.</li>
+</ul>
+<h4 id="example-9"><a href="#example-9">Example</a></h4><div class="example-wrap"><pre class="language-slint"><code>import { StandardButton, Button } from &quot;std-widgets.slint&quot;;
+Example := Dialog {
+    Text {
+      text: &quot;This is a dialog box&quot;;
+    }
+    StandardButton { kind: ok; }
+    StandardButton { kind: cancel; }
+    Button {
+      text: &quot;More Info&quot;;
+      dialog-button-role: action;
+    }
+}</code></pre></div><h2 id="builtin-structures"><a href="#builtin-structures">Builtin Structures</a></h2><h3 id="point"><a href="#point"><code>Point</code></a></h3>
+<p>This structure represents a point with x and y coordinate</p>
+<h4 id="fields-1"><a href="#fields-1">Fields</a></h4>
+<ul>
+<li><strong><code>x</code></strong> (<em>length</em>)</li>
+<li><strong><code>y</code></strong> (<em>length</em>)</li>
+</ul>
+<h3 id="keyevent"><a href="#keyevent"><code>KeyEvent</code></a></h3>
+<p>This structure is generated and passed to the key press and release
+callbacks of the <code>FocusScope</code> element.</p>
+<h4 id="fields-2"><a href="#fields-2">Fields</a></h4>
+<ul>
+<li><strong><code>text</code></strong> (<em>string</em>): The string representation of the key</li>
+<li><strong><code>modifiers</code></strong> (<em>KeyboardModifiers</em>): The keyboard modifiers pressed during the event</li>
+</ul>
+<h3 id="keyboardmodifiers"><a href="#keyboardmodifiers"><code>KeyboardModifiers</code></a></h3>
+<p>This structure is generated as part of <code>KeyEvent</code>, to indicate which modifier keys
+are pressed during the generation of a key event.</p>
+<h4 id="fields-3"><a href="#fields-3">Fields</a></h4>
+<ul>
+<li><strong><code>control</code></strong> (<em>bool</em>): <code>true</code> if the control key is pressed. On macOS this corresponds to the command key.</li>
+<li><strong><code>alt</code></strong> (<em>bool</em>): <code>true</code> if alt key is pressed.</li>
+<li><strong><code>shift</code></strong> (<em>bool</em>): <code>true</code> if the shift key is pressed.</li>
+<li><strong><code>meta</code></strong> (<em>bool</em>): <code>true</code> if the windows key is pressed on Windows, or the control key on macOS.</li>
+</ul>
+<h3 id="pointerevent"><a href="#pointerevent"><code>PointerEvent</code></a></h3>
+<p>This structure is generated and passed to the <code>pointer-event</code> callback of the <code>TouchArea</code> element.</p>
+<h4 id="fields-4"><a href="#fields-4">Fields</a></h4>
+<ul>
+<li><strong><code>kind</code></strong> (<em>enum PointerEventKind</em>): The kind of the event: one of the following
+<ul>
+<li><code>down</code>: The button was pressed.</li>
+<li><code>up</code>: The button was released.</li>
+<li><code>cancel</code>: Another element or window took hold of the grab. This applies to all pressed button and the <code>button</code> is not relevent.</li>
+</ul>
+</li>
+<li><strong><code>button</code></strong> (<em>enum PointerEventButton</em>): The button that was pressed or released. <code>left</code>, <code>right</code>, <code>middle</code>, or <code>none</code>.</li>
+</ul>
+<h2 id="builtin-enums"><a href="#builtin-enums">Builtin Enums</a></h2>
+<p>The default value of each enum type is always the first value.</p>
+<h3 id="texthorizontalalignment"><a href="#texthorizontalalignment"><code>TextHorizontalAlignment</code></a></h3>
+<p>This enum describes the different types of alignment of text along the horizontal axis.</p>
+<h4 id="values"><a href="#values">Values</a></h4>
+<ul>
+<li><strong><code>TextHorizontalAlignment.left</code></strong>: The text will be aligned with the left edge of the containing box.</li>
+<li><strong><code>TextHorizontalAlignment.center</code></strong>: The text will be horizontally centered within the containing box.</li>
+<li><strong><code>TextHorizontalAlignment.right</code></strong> The text will be aligned to the right of the containing box.</li>
+</ul>
+<h3 id="textverticalalignment"><a href="#textverticalalignment"><code>TextVerticalAlignment</code></a></h3>
+<p>This enum describes the different types of alignment of text along the vertical axis.</p>
+<h4 id="values-1"><a href="#values-1">Values</a></h4>
+<ul>
+<li><strong><code>TextVerticalAlignment.top</code></strong>: The text will be aligned to the top of the containing box.</li>
+<li><strong><code>TextVerticalAlignment.center</code></strong>: The text will be vertically centered within the containing box.</li>
+<li><strong><code>TextVerticalAlignment.bottom</code></strong> The text will be alignt to the bottom of the containing box.</li>
+</ul>
+<h3 id="textwrap"><a href="#textwrap"><code>TextWrap</code></a></h3>
+<p>This enum describes the how the text wrap if it is too wide to fit in the Text width.</p>
+<h4 id="values-2"><a href="#values-2">Values</a></h4>
+<ul>
+<li><strong><code>TextWrap.no-wrap</code></strong>: The text will not wrap, but instead will overflow.</li>
+<li><strong><code>TextWrap.word-wrap</code></strong>: The text will be wrapped at word boundaries.</li>
+</ul>
+<h3 id="textoverflow"><a href="#textoverflow"><code>TextOverflow</code></a></h3>
+<p>This enum describes the how the text appear if it is too wide to fit in the Text width.</p>
+<h4 id="values-3"><a href="#values-3">Values</a></h4>
+<ul>
+<li><strong><code>TextOverflow.clip</code></strong>: The text will simply be clipped.</li>
+<li><strong><code>TextOverflow.elide</code></strong>: The text will be elided with <code>…</code>.</li>
+</ul>
+<h3 id="eventresult"><a href="#eventresult"><code>EventResult</code></a></h3>
+<p>This enum describes whether an event was rejected or accepted by an event handler.</p>
+<h4 id="values-4"><a href="#values-4">Values</a></h4>
+<ul>
+<li><strong><code>EventResult.reject</code></strong>: The event is rejected by this event handler and may then be handled by the parent item</li>
+<li><strong><code>EventResult.accept</code></strong>: The event is accepted and won’t be processed further</li>
+</ul>
+<h3 id="fillrule"><a href="#fillrule"><code>FillRule</code></a></h3>
+<p>This enum describes the different ways of deciding what the inside of a shape described by a path shall be.</p>
+<h4 id="values-5"><a href="#values-5">Values</a></h4>
+<ul>
+<li><strong><code>FillRule.nonzero</code></strong>: The <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule#nonzero">“nonzero” fill rule as defined in SVG</a>.</li>
+<li><strong><code>FillRule.evenodd</code></strong>: The <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule#evenodd">“evenodd” fill rule as defined in SVG</a>.</li>
+</ul>
+<h3 id="dialogbuttonrole"><a href="#dialogbuttonrole"><code>DialogButtonRole</code></a></h3>
+<p>This enum represent the value of the <code>dialog-button-role</code> property which can be added to
+any element within a <code>Dialog</code> to put that item in the button row, and its exact position
+depends on the role and the platform.</p>
+<h4 id="values-6"><a href="#values-6">Values</a></h4>
+<ul>
+<li><strong><code>none</code></strong>: This is not a button means to go in the row of button of the dialog</li>
+<li><strong><code>accept</code></strong>: This is the role of the main button to click to accept the dialog. e.g. “Ok” or “Yes”</li>
+<li><strong><code>reject</code></strong>: This is the role of the main button to click to reject the dialog. e.g. “Cancel” or “No”</li>
+<li><strong><code>apply</code></strong>: This is the role of the “Apply” button</li>
+<li><strong><code>reset</code></strong>: This is the role of the “Reset” button</li>
+<li><strong><code>help</code></strong>: This is the role of the  “Help” button</li>
+<li><strong><code>action</code></strong>: This is the role of any other button that perform another action.</li>
+</ul>
+<h3 id="mousecursor"><a href="#mousecursor"><code>MouseCursor</code></a></h3>
+<p>This enum represents different types of mouse cursors. It is a subset of the mouse cursors available in CSS.
+For details and pictograms see the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#values">MDN Documentation for cursor</a>.
+Depending on the backend and used OS unidirectional resize cursors may be replaced with bidirectional ones.</p>
+<h4 id="values-7"><a href="#values-7">Values</a></h4>
+<ul>
+<li><strong><code>default</code></strong>: The systems default cursor.</li>
+<li><strong><code>none</code></strong>: No cursor is displayed.</li>
+<li><strong><code>help</code></strong>: A cursor indicating help information.</li>
+<li><strong><code>pointer</code></strong>: A pointing hand indicating a link.</li>
+<li><strong><code>progress</code></strong>: The program is busy but can still be interacted with.</li>
+<li><strong><code>wait</code></strong>: The program is busy.</li>
+<li><strong><code>crosshair</code></strong>: A crosshair.</li>
+<li><strong><code>text</code></strong>: A cursor indicating selectable text.</li>
+<li><strong><code>alias</code></strong>: An alias or shortcut is being created.</li>
+<li><strong><code>copy</code></strong>: A copy is being created.</li>
+<li><strong><code>move</code></strong>: Something is to be moved.</li>
+<li><strong><code>no-drop</code></strong>: Something cannot be dropped here.</li>
+<li><strong><code>not-allowed</code></strong>: An action is not allowed</li>
+<li><strong><code>grab</code></strong>: Something is grabbable.</li>
+<li><strong><code>grabbing</code></strong>: Something is being grabbed.</li>
+<li><strong><code>col-resize</code></strong>: Indicating that a column is resizable horizontally.</li>
+<li><strong><code>row-resize</code></strong>: Indicating that a row is resizable vertically.</li>
+<li><strong><code>n-resize</code></strong>: Unidirectional resize north.</li>
+<li><strong><code>e-resize</code></strong>: Unidirectional resize east.</li>
+<li><strong><code>s-resize</code></strong>: Unidirectional resize south.</li>
+<li><strong><code>w-resize</code></strong>: Unidirectional resize west.</li>
+<li><strong><code>ne-resize</code></strong>: Unidirectional resize north-east.</li>
+<li><strong><code>nw-resize</code></strong>: Unidirectional resize north-west.</li>
+<li><strong><code>se-resize</code></strong>: Unidirectional resize south-east.</li>
+<li><strong><code>sw-resize</code></strong>: Unidirectional resize south-west.</li>
+<li><strong><code>ew-resize</code></strong>: Bidirectional resize east-west.</li>
+<li><strong><code>ns-resize</code></strong>: Bidirectional resize north-south.</li>
+<li><strong><code>nesw-resize</code></strong>: Bidirectional resize north-east-south-west.</li>
+<li><strong><code>nwse-resize</code></strong>: Bidirectional resize north-west-south-east.</li>
+</ul>
+<h3 id="inputtype"><a href="#inputtype"><code>InputType</code></a></h3>
+<p>This enum is used to define the type of the input field. Currently this only differentiates between
+text and password inputs but in the future it could be expanded to also define what type of virtual keyboard
+should be shown, for example.</p>
+<h4 id="values-8"><a href="#values-8">Values</a></h4>
+<ul>
+<li><strong><code>text</code></strong>: The default value. This will render all characters normally</li>
+<li><strong><code>password</code></strong>: This will render all characters with a character that defaults to “*”</li>
+</ul>
+<h2 id="namespaces"><a href="#namespaces">Namespaces</a></h2>
+<p>The following namespaces provide access to common constants such as special keys or named colors.</p>
+<h3 id="keys"><a href="#keys"><code>Keys</code></a></h3>
+<p>Use the constants in the <code>Keys</code> namespace to handle pressing of keys that don’t have a printable character. Check the value of <a href="#keyevent"><code>KeyEvent</code></a>’s <code>text</code> property
+against the constants below.</p>
+<ul>
+<li><strong><code>Backspace</code></strong></li>
+<li><strong><code>Tab</code></strong></li>
+<li><strong><code>Return</code></strong></li>
+<li><strong><code>Escape</code></strong></li>
+<li><strong><code>Backtab</code></strong></li>
+<li><strong><code>Delete</code></strong></li>
+<li><strong><code>UpArrow</code></strong></li>
+<li><strong><code>DownArrow</code></strong></li>
+<li><strong><code>LeftArrow</code></strong></li>
+<li><strong><code>RightArrow</code></strong></li>
+<li><strong><code>F1</code></strong></li>
+<li><strong><code>F2</code></strong></li>
+<li><strong><code>F3</code></strong></li>
+<li><strong><code>F4</code></strong></li>
+<li><strong><code>F5</code></strong></li>
+<li><strong><code>F6</code></strong></li>
+<li><strong><code>F7</code></strong></li>
+<li><strong><code>F8</code></strong></li>
+<li><strong><code>F9</code></strong></li>
+<li><strong><code>F10</code></strong></li>
+<li><strong><code>F11</code></strong></li>
+<li><strong><code>F12</code></strong></li>
+<li><strong><code>F13</code></strong></li>
+<li><strong><code>F14</code></strong></li>
+<li><strong><code>F15</code></strong></li>
+<li><strong><code>F16</code></strong></li>
+<li><strong><code>F17</code></strong></li>
+<li><strong><code>F18</code></strong></li>
+<li><strong><code>F19</code></strong></li>
+<li><strong><code>F20</code></strong></li>
+<li><strong><code>F21</code></strong></li>
+<li><strong><code>F22</code></strong></li>
+<li><strong><code>F23</code></strong></li>
+<li><strong><code>F24</code></strong></li>
+<li><strong><code>Insert</code></strong></li>
+<li><strong><code>Home</code></strong></li>
+<li><strong><code>End</code></strong></li>
+<li><strong><code>PageUp</code></strong></li>
+<li><strong><code>PageDown</code></strong></li>
+<li><strong><code>ScrollLock</code></strong></li>
+<li><strong><code>Pause</code></strong></li>
+<li><strong><code>SysReq</code></strong></li>
+<li><strong><code>Stop</code></strong></li>
+<li><strong><code>Menu</code></strong></li>
+</ul>
+<h3 id="colors"><a href="#colors"><code>Colors</code></a></h3>
+<p>Use the colors namespace to select colors by their name. For example you can use <code>Colors.aquamarine</code> or <code>Colors.bisque</code>.
+The entire list of names is very long. You can find a complete list in the <a href="https://www.w3.org/TR/css-color-3/#svg-color">CSS Specification</a>.</p>
+<h2 id=""><a href="#"></a></h2>
+<p>Next: <a href="../widgets/index.html">Widgets</a></p>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="slint" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (cb1219871 2022-05-08)" ></div>
+</body></html>

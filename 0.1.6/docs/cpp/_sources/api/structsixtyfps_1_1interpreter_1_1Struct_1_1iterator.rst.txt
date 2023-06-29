@@ -1,0 +1,22 @@
+.. _exhale_struct_structsixtyfps_1_1interpreter_1_1Struct_1_1iterator:
+
+Struct Struct::iterator
+=======================
+
+- Defined in :ref:`file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_interpreter.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_struct_structsixtyfps_1_1interpreter_1_1Struct`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: sixtyfps::interpreter::Struct::iterator
+   :members:
+   :protected-members:
+   :undoc-members:

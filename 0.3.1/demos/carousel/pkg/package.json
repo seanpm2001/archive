@@ -1,0 +1,16 @@
+{
+  "name": "carousel",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "version": "0.3.1",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "files": [
+    "carousel_bg.wasm",
+    "carousel.js",
+    "carousel.d.ts"
+  ],
+  "module": "carousel.js",
+  "types": "carousel.d.ts",
+  "sideEffects": false
+}

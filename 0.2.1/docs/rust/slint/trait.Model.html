@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A Model is providing Data for the Repeater or ListView elements of the `.slint` language"><meta name="keywords" content="rust, rustlang, rust-lang, Model"><title>Model in slint - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><script defer src="../main.js"></script>
+    <noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/0.2.1/wasm-interpreter/slint_wasm_interpreter.js';
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        var elements = document.querySelectorAll("code.language-slint, .rustdoc pre.language-slint, div.highlight-slint");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            await render_or_error(source, div);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("slint", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll(".language-slint")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-slint div.highlight pre, div.highlight-slint-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../slint/index.html"><div class="logo-container"><img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../slint/index.html"><div class="logo-container">
+                    <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div>
+        </a><h2 class="location"><a href="#">Model</a></h2><div class="sidebar-elems"><section><div class="block"><h3 class="sidebar-title"><a href="#associated-types">Associated Types</a></h3><ul><li><a href="#associatedtype.Data">Data</a></li></ul></div><div class="block"><h3 class="sidebar-title"><a href="#required-methods">Required Methods</a></h3><ul><li><a href="#tymethod.model_tracker">model_tracker</a></li><li><a href="#tymethod.row_count">row_count</a></li><li><a href="#tymethod.row_data">row_data</a></li></ul></div><div class="block"><h3 class="sidebar-title"><a href="#provided-methods">Provided Methods</a></h3><ul><li><a href="#method.as_any">as_any</a></li><li><a href="#method.iter">iter</a></li><li><a href="#method.set_row_data">set_row_data</a></li></ul></div><div class="block"><h3 class="sidebar-title"><a href="#foreign-impls">Implementations on Foreign Types</a></h3><ul><li><a href="#impl-Model-for-SharedVectorModel%3CT%3E">SharedVectorModel&lt;T&gt;</a></li><li><a href="#impl-Model-for-bool">bool</a></li><li><a href="#impl-Model-for-usize">usize</a></li></ul></div><div class="block"><h3 class="sidebar-title"><a href="#implementors">Implementors</a></h3></div></section><h2 class="location"><a href="index.html">In slint</a></h2><div id="sidebar-vars" data-name="Model" data-ty="trait" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../slint/index.html">
+                        <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Trait <a href="index.html">slint</a>::<wbr><a class="trait" href="#">Model</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><pre class="rust trait"><code>pub trait Model {
+    type <a href="#associatedtype.Data" class="associatedtype">Data</a>;
+    fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>;
+<div class="item-spacer"></div>    fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>&gt;;
+<div class="item-spacer"></div>    fn <a href="#tymethod.model_tracker" class="fnname">model_tracker</a>(&amp;self) -&gt; &amp;dyn <a class="trait" href="trait.ModelTracker.html" title="trait slint::ModelTracker">ModelTracker</a>;
+
+    fn <a href="#method.set_row_data" class="fnname">set_row_data</a>(&amp;self, _row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, _data: Self::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>) { ... }
+<div class="item-spacer"></div>    fn <a href="#method.iter" class="fnname">iter</a>(&amp;self) -&gt; ModelIterator&lt;'_, Self::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for ModelIterator&lt;'a, T&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;'a, T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html" title="trait core::iter::traits::iterator::Iterator">Iterator</a> for ModelIterator&lt;'a, T&gt;</span><span class="where fmt-newline">    type <a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#associatedtype.Item" class="associatedtype">Item</a> = T;</span></code></span></span></span></span> { ... }
+<div class="item-spacer"></div>    fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static) { ... }
+}</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A Model is providing Data for the Repeater or ListView elements of the <code>.slint</code> language</p>
+<p>If the model can be changed, the type implementing the Model trait should holds
+a <a href="struct.ModelNotify.html" title="ModelNotify"><code>ModelNotify</code></a>, and is responsible to call functions on it to let the UI know that
+something has changed.</p>
+<h3 id="example"><a href="#example">Example</a></h3>
+<p>As an example, let’s see the implementation of <a href="struct.VecModel.html" title="VecModel"><code>VecModel</code></a>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VecModel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="comment">// the backing data, stored in a `RefCell` as this model can be modified</span>
+    <span class="ident">array</span>: <span class="ident">std::cell::RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="comment">// the ModelNotify will allow to notify the UI that the model changes</span>
+    <span class="ident">notify</span>: <span class="ident">ModelNotify</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">Model</span> <span class="kw">for</span> <span class="ident">VecModel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Data</span> <span class="op">=</span> <span class="ident">T</span>;
+
+    <span class="kw">fn</span> <span class="ident">row_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">array</span>.<span class="ident">borrow</span>().<span class="ident">len</span>()
+    }
+
+    <span class="kw">fn</span> <span class="ident">row_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">row</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Data</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">array</span>.<span class="ident">borrow</span>().<span class="ident">get</span>(<span class="ident">row</span>).<span class="ident">cloned</span>()
+    }
+
+    <span class="kw">fn</span> <span class="ident">set_row_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">row</span>: <span class="ident">usize</span>, <span class="ident">data</span>: <span class="ident"><span class="self">Self</span>::Data</span>) {
+        <span class="self">self</span>.<span class="ident">array</span>.<span class="ident">borrow_mut</span>()[<span class="ident">row</span>] <span class="op">=</span> <span class="ident">data</span>;
+        <span class="comment">// don&#39;t forget to call row_changed</span>
+        <span class="self">self</span>.<span class="ident">notify</span>.<span class="ident">row_changed</span>(<span class="ident">row</span>);
+    }
+
+    <span class="kw">fn</span> <span class="ident">model_tracker</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">ModelTracker</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">notify</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">as_any</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">core::any::Any</span> {
+        <span class="comment">// a typical implementation just return `self`</span>
+        <span class="self">self</span>
+    }
+}
+
+<span class="comment">// when modifying the model, we call the corresponding function in</span>
+<span class="comment">// the ModelNotify</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">VecModel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Add a row at the end of the model</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>) {
+        <span class="self">self</span>.<span class="ident">array</span>.<span class="ident">borrow_mut</span>().<span class="ident">push</span>(<span class="ident">value</span>);
+        <span class="self">self</span>.<span class="ident">notify</span>.<span class="ident">row_added</span>(<span class="self">self</span>.<span class="ident">array</span>.<span class="ident">borrow</span>().<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>, <span class="number">1</span>)
+    }
+
+    <span class="doccomment">/// Remove the row at the given index from the model</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) {
+        <span class="self">self</span>.<span class="ident">array</span>.<span class="ident">borrow_mut</span>().<span class="ident">remove</span>(<span class="ident">index</span>);
+        <span class="self">self</span>.<span class="ident">notify</span>.<span class="ident">row_removed</span>(<span class="ident">index</span>, <span class="number">1</span>)
+    }
+}</code></pre></div>
+</div></details><h2 id="associated-types" class="small-section-header">Associated Types<a href="#associated-types" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle" open><summary><div id="associatedtype.Data" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">type <a href="#associatedtype.Data" class="associatedtype">Data</a></h4></div></summary><div class="docblock"><p>The model data: A model is a set of row and each row has this data</p>
+</div></details></div><h2 id="required-methods" class="small-section-header">Required methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle" open><summary><div id="tymethod.row_count" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h4></div></summary><div class="docblock"><p>The amount of row in the model</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="tymethod.row_data" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>&gt;</h4></div></summary><div class="docblock"><p>Returns the data for a particular row. This function should be called with <code>row &lt; row_count()</code>.</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="tymethod.model_tracker" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#tymethod.model_tracker" class="fnname">model_tracker</a>(&amp;self) -&gt; &amp;dyn <a class="trait" href="trait.ModelTracker.html" title="trait slint::ModelTracker">ModelTracker</a></h4></div></summary><div class="docblock"><p>The implementation should return a reference to its <a href="struct.ModelNotify.html" title="ModelNotify"><code>ModelNotify</code></a> field.</p>
+<p>You can return <code>&amp;()</code> if you your <code>Model</code> is constant and does not have a ModelNotify field.</p>
+</div></details></div><h2 id="provided-methods" class="small-section-header">Provided methods<a href="#provided-methods" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle" open><summary><div id="method.set_row_data" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#method.set_row_data" class="fnname">set_row_data</a>(&amp;self, _row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, _data: Self::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>)</h4></div></summary><div class="docblock"><p>Sets the data for a particular row.</p>
+<p>This function should be called with <code>row &lt; row_count()</code>, otherwise the implementation can panic.</p>
+<p>If the model cannot support data changes, then it is ok to do nothing.
+The default implementation will print a warning to stderr.</p>
+<p>If the model can update the data, it should also call <a href="struct.ModelNotify.html#method.row_changed" title="ModelNotify::row_changed"><code>ModelNotify::row_changed</code></a> on its
+internal <a href="struct.ModelNotify.html" title="ModelNotify"><code>ModelNotify</code></a>.</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="method.iter" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#method.iter" class="fnname">iter</a>(&amp;self) -&gt; ModelIterator&lt;'_, Self::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<span class="notable-traits-tooltiptext"><span class="docblock"><span class="notable">Notable traits for ModelIterator&lt;'a, T&gt;</span><code class="content"><span class="where fmt-newline">impl&lt;'a, T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html" title="trait core::iter::traits::iterator::Iterator">Iterator</a> for ModelIterator&lt;'a, T&gt;</span><span class="where fmt-newline">    type <a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#associatedtype.Item" class="associatedtype">Item</a> = T;</span></code></span></span></span></span></h4></div></summary><div class="docblock"><p>Returns an iterator visiting all elements of the model.</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="method.as_any" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static)</h4></div></summary><div class="docblock"><p>Return something that can be downcast’ed (typically self)</p>
+<p>This is useful to get back to the actual model from a <a href="struct.ModelRc.html" title="ModelRc"><code>ModelRc</code></a> stored
+in a component.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">ModelRc::new</span>(<span class="ident">VecModel::from</span>(<span class="macro">vec!</span>[<span class="number">1i32</span>, <span class="number">2</span>, <span class="number">3</span>]));
+<span class="comment">// later:</span>
+<span class="ident">handle</span>.<span class="ident">as_any</span>().<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">VecModel</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">push</span>(<span class="number">4</span>);
+<span class="macro">assert_eq!</span>(<span class="ident">handle</span>.<span class="ident">row_data</span>(<span class="number">3</span>).<span class="ident">unwrap</span>(), <span class="number">4</span>);</code></pre></div>
+<p>Note: the default implementation returns nothing interesting. this method should be
+implemented by model implementation to return something useful. For example:</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore"><code><span class="kw">fn</span> <span class="ident">as_any</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">core::any::Any</span> { <span class="self">self</span> }</code></pre></div>
+</div></details></div><h2 id="foreign-impls" class="small-section-header">Implementations on Foreign Types<a href="#foreign-impls" class="anchor"></a></h2><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Model-for-usize" class="impl has-srclink"><a href="#impl-Model-for-usize" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h3></section></summary><div class="impl-items"><section id="associatedtype.Data-1" class="type trait-impl has-srclink"><a href="#associatedtype.Data-1" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Data" class="associatedtype">Data</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></h4></section><section id="method.row_count" class="method trait-impl has-srclink"><a href="#method.row_count" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h4></section><section id="method.row_data" class="method trait-impl has-srclink"><a href="#method.row_data" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> as <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a>&gt;::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>&gt;</h4></section><section id="method.as_any-1" class="method trait-impl has-srclink"><a href="#method.as_any-1" class="anchor"></a><h4 class="code-header">fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static)</h4></section><section id="method.model_tracker" class="method trait-impl has-srclink"><a href="#method.model_tracker" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.model_tracker" class="fnname">model_tracker</a>(&amp;self) -&gt; &amp;dyn <a class="trait" href="trait.ModelTracker.html" title="trait slint::ModelTracker">ModelTracker</a></h4></section></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Model-for-SharedVectorModel%3CT%3E" class="impl has-srclink"><a href="#impl-Model-for-SharedVectorModel%3CT%3E" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a> for SharedVectorModel&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,&nbsp;</span></h3></section></summary><div class="impl-items"><section id="associatedtype.Data-2" class="type trait-impl has-srclink"><a href="#associatedtype.Data-2" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Data" class="associatedtype">Data</a> = T</h4></section><section id="method.row_count-1" class="method trait-impl has-srclink"><a href="#method.row_count-1" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h4></section><section id="method.row_data-1" class="method trait-impl has-srclink"><a href="#method.row_data-1" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&lt;SharedVectorModel&lt;T&gt; as <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a>&gt;::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>&gt;</h4></section><section id="method.set_row_data-1" class="method trait-impl has-srclink"><a href="#method.set_row_data-1" class="anchor"></a><h4 class="code-header">fn <a href="#method.set_row_data" class="fnname">set_row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, data: &lt;SharedVectorModel&lt;T&gt; as <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a>&gt;::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>)</h4></section><section id="method.model_tracker-1" class="method trait-impl has-srclink"><a href="#method.model_tracker-1" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.model_tracker" class="fnname">model_tracker</a>(&amp;self) -&gt; &amp;dyn <a class="trait" href="trait.ModelTracker.html" title="trait slint::ModelTracker">ModelTracker</a></h4></section><section id="method.as_any-2" class="method trait-impl has-srclink"><a href="#method.as_any-2" class="anchor"></a><h4 class="code-header">fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static)</h4></section></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Model-for-bool" class="impl has-srclink"><a href="#impl-Model-for-bool" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></h3></section></summary><div class="impl-items"><section id="associatedtype.Data-3" class="type trait-impl has-srclink"><a href="#associatedtype.Data-3" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Data" class="associatedtype">Data</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a></h4></section><section id="method.row_count-2" class="method trait-impl has-srclink"><a href="#method.row_count-2" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h4></section><section id="method.row_data-2" class="method trait-impl has-srclink"><a href="#method.row_data-2" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> as <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a>&gt;::<a class="associatedtype" href="trait.Model.html#associatedtype.Data" title="type slint::Model::Data">Data</a>&gt;</h4></section><section id="method.as_any-3" class="method trait-impl has-srclink"><a href="#method.as_any-3" class="anchor"></a><h4 class="code-header">fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static)</h4></section><section id="method.model_tracker-2" class="method trait-impl has-srclink"><a href="#method.model_tracker-2" class="anchor"></a><h4 class="code-header">fn <a href="#tymethod.model_tracker" class="fnname">model_tracker</a>(&amp;self) -&gt; &amp;dyn <a class="trait" href="trait.ModelTracker.html" title="trait slint::ModelTracker">ModelTracker</a></h4></section></div></details><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor"></a></h2><div class="item-list" id="implementors-list"><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Model" class="impl has-srclink"><a href="#impl-Model" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a> for <a class="struct" href="struct.ModelRc.html" title="struct slint::ModelRc">ModelRc</a>&lt;T&gt;</h3></section></summary><div class="impl-items"><section id="associatedtype.Data-4" class="type trait-impl has-srclink"><a href="#associatedtype.Data-4" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Data" class="associatedtype">Data</a> = T</h4></section></div></details><details class="rustdoc-toggle implementors-toggle"><summary><section id="impl-Model-1" class="impl has-srclink"><a href="#impl-Model-1" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; <a class="trait" href="trait.Model.html" title="trait slint::Model">Model</a> for <a class="struct" href="struct.VecModel.html" title="struct slint::VecModel">VecModel</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,&nbsp;</span></h3></section></summary><div class="impl-items"><section id="associatedtype.Data-5" class="type trait-impl has-srclink"><a href="#associatedtype.Data-5" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Data" class="associatedtype">Data</a> = T</h4></section></div></details></div><script type="text/javascript" src="../implementors/i_slint_core/model/trait.Model.js" async></script></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="slint" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (458262b13 2022-03-09)" ></div>
+</body></html>

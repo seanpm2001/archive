@@ -1,0 +1,3674 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `internal/interpreter/dynamic_component.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dynamic_component.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/0.3.0/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/0.3.0/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no_run])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            let link = document.createElement("div");
+            link.innerHTML = `<a href="${editor_url}?snippet=${encodeURIComponent(source)}" target="_blank">📝</a>`;
+            elements[i].append(link);
+            await render_or_error(source, div);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+
+    // Select C++ blocks in rustdoc generated code and hide them, while opening the <details> of Rust snippets
+    // Similarly, in Sphinx generated HTML, hide Rust blocks and open C++.
+    function select_code_snippet_variants(options) {
+        // When the CSS has pseudo class becomes available, we can probably use that directly
+        // in a stylesheet instead of JS here.
+
+        let selector_for_language = (language) => {
+            return `details[data-snippet-language="${language}"]`;
+        };
+
+        for (let details_element_to_hide of document.querySelectorAll(selector_for_language(options.hide))) {
+            details_element_to_hide.style = "display: none";
+        }
+
+        for (let details_element_to_show of document.querySelectorAll(selector_for_language(options.show))) {
+            details_element_to_show.open = true;
+        }
+    }
+
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+        select_code_snippet_variants({ hide: "cpp", show: "rust" })
+    } else {
+        select_code_snippet_variants({ hide: "rust", show: "cpp" })
+    }
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../slint_interpreter/index.html"><div class="logo-container"><img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../slint_interpreter/index.html"><div class="logo-container">
+                    <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../slint_interpreter/index.html">
+                        <img src="https://slint-ui.com/logo/slint-logo-square-light.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
+<span id="676">676</span>
+<span id="677">677</span>
+<span id="678">678</span>
+<span id="679">679</span>
+<span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
+<span id="683">683</span>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
+<span id="705">705</span>
+<span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
+<span id="709">709</span>
+<span id="710">710</span>
+<span id="711">711</span>
+<span id="712">712</span>
+<span id="713">713</span>
+<span id="714">714</span>
+<span id="715">715</span>
+<span id="716">716</span>
+<span id="717">717</span>
+<span id="718">718</span>
+<span id="719">719</span>
+<span id="720">720</span>
+<span id="721">721</span>
+<span id="722">722</span>
+<span id="723">723</span>
+<span id="724">724</span>
+<span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
+<span id="803">803</span>
+<span id="804">804</span>
+<span id="805">805</span>
+<span id="806">806</span>
+<span id="807">807</span>
+<span id="808">808</span>
+<span id="809">809</span>
+<span id="810">810</span>
+<span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
+<span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
+<span id="917">917</span>
+<span id="918">918</span>
+<span id="919">919</span>
+<span id="920">920</span>
+<span id="921">921</span>
+<span id="922">922</span>
+<span id="923">923</span>
+<span id="924">924</span>
+<span id="925">925</span>
+<span id="926">926</span>
+<span id="927">927</span>
+<span id="928">928</span>
+<span id="929">929</span>
+<span id="930">930</span>
+<span id="931">931</span>
+<span id="932">932</span>
+<span id="933">933</span>
+<span id="934">934</span>
+<span id="935">935</span>
+<span id="936">936</span>
+<span id="937">937</span>
+<span id="938">938</span>
+<span id="939">939</span>
+<span id="940">940</span>
+<span id="941">941</span>
+<span id="942">942</span>
+<span id="943">943</span>
+<span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
+<span id="949">949</span>
+<span id="950">950</span>
+<span id="951">951</span>
+<span id="952">952</span>
+<span id="953">953</span>
+<span id="954">954</span>
+<span id="955">955</span>
+<span id="956">956</span>
+<span id="957">957</span>
+<span id="958">958</span>
+<span id="959">959</span>
+<span id="960">960</span>
+<span id="961">961</span>
+<span id="962">962</span>
+<span id="963">963</span>
+<span id="964">964</span>
+<span id="965">965</span>
+<span id="966">966</span>
+<span id="967">967</span>
+<span id="968">968</span>
+<span id="969">969</span>
+<span id="970">970</span>
+<span id="971">971</span>
+<span id="972">972</span>
+<span id="973">973</span>
+<span id="974">974</span>
+<span id="975">975</span>
+<span id="976">976</span>
+<span id="977">977</span>
+<span id="978">978</span>
+<span id="979">979</span>
+<span id="980">980</span>
+<span id="981">981</span>
+<span id="982">982</span>
+<span id="983">983</span>
+<span id="984">984</span>
+<span id="985">985</span>
+<span id="986">986</span>
+<span id="987">987</span>
+<span id="988">988</span>
+<span id="989">989</span>
+<span id="990">990</span>
+<span id="991">991</span>
+<span id="992">992</span>
+<span id="993">993</span>
+<span id="994">994</span>
+<span id="995">995</span>
+<span id="996">996</span>
+<span id="997">997</span>
+<span id="998">998</span>
+<span id="999">999</span>
+<span id="1000">1000</span>
+<span id="1001">1001</span>
+<span id="1002">1002</span>
+<span id="1003">1003</span>
+<span id="1004">1004</span>
+<span id="1005">1005</span>
+<span id="1006">1006</span>
+<span id="1007">1007</span>
+<span id="1008">1008</span>
+<span id="1009">1009</span>
+<span id="1010">1010</span>
+<span id="1011">1011</span>
+<span id="1012">1012</span>
+<span id="1013">1013</span>
+<span id="1014">1014</span>
+<span id="1015">1015</span>
+<span id="1016">1016</span>
+<span id="1017">1017</span>
+<span id="1018">1018</span>
+<span id="1019">1019</span>
+<span id="1020">1020</span>
+<span id="1021">1021</span>
+<span id="1022">1022</span>
+<span id="1023">1023</span>
+<span id="1024">1024</span>
+<span id="1025">1025</span>
+<span id="1026">1026</span>
+<span id="1027">1027</span>
+<span id="1028">1028</span>
+<span id="1029">1029</span>
+<span id="1030">1030</span>
+<span id="1031">1031</span>
+<span id="1032">1032</span>
+<span id="1033">1033</span>
+<span id="1034">1034</span>
+<span id="1035">1035</span>
+<span id="1036">1036</span>
+<span id="1037">1037</span>
+<span id="1038">1038</span>
+<span id="1039">1039</span>
+<span id="1040">1040</span>
+<span id="1041">1041</span>
+<span id="1042">1042</span>
+<span id="1043">1043</span>
+<span id="1044">1044</span>
+<span id="1045">1045</span>
+<span id="1046">1046</span>
+<span id="1047">1047</span>
+<span id="1048">1048</span>
+<span id="1049">1049</span>
+<span id="1050">1050</span>
+<span id="1051">1051</span>
+<span id="1052">1052</span>
+<span id="1053">1053</span>
+<span id="1054">1054</span>
+<span id="1055">1055</span>
+<span id="1056">1056</span>
+<span id="1057">1057</span>
+<span id="1058">1058</span>
+<span id="1059">1059</span>
+<span id="1060">1060</span>
+<span id="1061">1061</span>
+<span id="1062">1062</span>
+<span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
+<span id="1069">1069</span>
+<span id="1070">1070</span>
+<span id="1071">1071</span>
+<span id="1072">1072</span>
+<span id="1073">1073</span>
+<span id="1074">1074</span>
+<span id="1075">1075</span>
+<span id="1076">1076</span>
+<span id="1077">1077</span>
+<span id="1078">1078</span>
+<span id="1079">1079</span>
+<span id="1080">1080</span>
+<span id="1081">1081</span>
+<span id="1082">1082</span>
+<span id="1083">1083</span>
+<span id="1084">1084</span>
+<span id="1085">1085</span>
+<span id="1086">1086</span>
+<span id="1087">1087</span>
+<span id="1088">1088</span>
+<span id="1089">1089</span>
+<span id="1090">1090</span>
+<span id="1091">1091</span>
+<span id="1092">1092</span>
+<span id="1093">1093</span>
+<span id="1094">1094</span>
+<span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
+<span id="1110">1110</span>
+<span id="1111">1111</span>
+<span id="1112">1112</span>
+<span id="1113">1113</span>
+<span id="1114">1114</span>
+<span id="1115">1115</span>
+<span id="1116">1116</span>
+<span id="1117">1117</span>
+<span id="1118">1118</span>
+<span id="1119">1119</span>
+<span id="1120">1120</span>
+<span id="1121">1121</span>
+<span id="1122">1122</span>
+<span id="1123">1123</span>
+<span id="1124">1124</span>
+<span id="1125">1125</span>
+<span id="1126">1126</span>
+<span id="1127">1127</span>
+<span id="1128">1128</span>
+<span id="1129">1129</span>
+<span id="1130">1130</span>
+<span id="1131">1131</span>
+<span id="1132">1132</span>
+<span id="1133">1133</span>
+<span id="1134">1134</span>
+<span id="1135">1135</span>
+<span id="1136">1136</span>
+<span id="1137">1137</span>
+<span id="1138">1138</span>
+<span id="1139">1139</span>
+<span id="1140">1140</span>
+<span id="1141">1141</span>
+<span id="1142">1142</span>
+<span id="1143">1143</span>
+<span id="1144">1144</span>
+<span id="1145">1145</span>
+<span id="1146">1146</span>
+<span id="1147">1147</span>
+<span id="1148">1148</span>
+<span id="1149">1149</span>
+<span id="1150">1150</span>
+<span id="1151">1151</span>
+<span id="1152">1152</span>
+<span id="1153">1153</span>
+<span id="1154">1154</span>
+<span id="1155">1155</span>
+<span id="1156">1156</span>
+<span id="1157">1157</span>
+<span id="1158">1158</span>
+<span id="1159">1159</span>
+<span id="1160">1160</span>
+<span id="1161">1161</span>
+<span id="1162">1162</span>
+<span id="1163">1163</span>
+<span id="1164">1164</span>
+<span id="1165">1165</span>
+<span id="1166">1166</span>
+<span id="1167">1167</span>
+<span id="1168">1168</span>
+<span id="1169">1169</span>
+<span id="1170">1170</span>
+<span id="1171">1171</span>
+<span id="1172">1172</span>
+<span id="1173">1173</span>
+<span id="1174">1174</span>
+<span id="1175">1175</span>
+<span id="1176">1176</span>
+<span id="1177">1177</span>
+<span id="1178">1178</span>
+<span id="1179">1179</span>
+<span id="1180">1180</span>
+<span id="1181">1181</span>
+<span id="1182">1182</span>
+<span id="1183">1183</span>
+<span id="1184">1184</span>
+<span id="1185">1185</span>
+<span id="1186">1186</span>
+<span id="1187">1187</span>
+<span id="1188">1188</span>
+<span id="1189">1189</span>
+<span id="1190">1190</span>
+<span id="1191">1191</span>
+<span id="1192">1192</span>
+<span id="1193">1193</span>
+<span id="1194">1194</span>
+<span id="1195">1195</span>
+<span id="1196">1196</span>
+<span id="1197">1197</span>
+<span id="1198">1198</span>
+<span id="1199">1199</span>
+<span id="1200">1200</span>
+<span id="1201">1201</span>
+<span id="1202">1202</span>
+<span id="1203">1203</span>
+<span id="1204">1204</span>
+<span id="1205">1205</span>
+<span id="1206">1206</span>
+<span id="1207">1207</span>
+<span id="1208">1208</span>
+<span id="1209">1209</span>
+<span id="1210">1210</span>
+<span id="1211">1211</span>
+<span id="1212">1212</span>
+<span id="1213">1213</span>
+<span id="1214">1214</span>
+<span id="1215">1215</span>
+<span id="1216">1216</span>
+<span id="1217">1217</span>
+<span id="1218">1218</span>
+<span id="1219">1219</span>
+<span id="1220">1220</span>
+<span id="1221">1221</span>
+<span id="1222">1222</span>
+<span id="1223">1223</span>
+<span id="1224">1224</span>
+<span id="1225">1225</span>
+<span id="1226">1226</span>
+<span id="1227">1227</span>
+<span id="1228">1228</span>
+<span id="1229">1229</span>
+<span id="1230">1230</span>
+<span id="1231">1231</span>
+<span id="1232">1232</span>
+<span id="1233">1233</span>
+<span id="1234">1234</span>
+<span id="1235">1235</span>
+<span id="1236">1236</span>
+<span id="1237">1237</span>
+<span id="1238">1238</span>
+<span id="1239">1239</span>
+<span id="1240">1240</span>
+<span id="1241">1241</span>
+<span id="1242">1242</span>
+<span id="1243">1243</span>
+<span id="1244">1244</span>
+<span id="1245">1245</span>
+<span id="1246">1246</span>
+<span id="1247">1247</span>
+<span id="1248">1248</span>
+<span id="1249">1249</span>
+<span id="1250">1250</span>
+<span id="1251">1251</span>
+<span id="1252">1252</span>
+<span id="1253">1253</span>
+<span id="1254">1254</span>
+<span id="1255">1255</span>
+<span id="1256">1256</span>
+<span id="1257">1257</span>
+<span id="1258">1258</span>
+<span id="1259">1259</span>
+<span id="1260">1260</span>
+<span id="1261">1261</span>
+<span id="1262">1262</span>
+<span id="1263">1263</span>
+<span id="1264">1264</span>
+<span id="1265">1265</span>
+<span id="1266">1266</span>
+<span id="1267">1267</span>
+<span id="1268">1268</span>
+<span id="1269">1269</span>
+<span id="1270">1270</span>
+<span id="1271">1271</span>
+<span id="1272">1272</span>
+<span id="1273">1273</span>
+<span id="1274">1274</span>
+<span id="1275">1275</span>
+<span id="1276">1276</span>
+<span id="1277">1277</span>
+<span id="1278">1278</span>
+<span id="1279">1279</span>
+<span id="1280">1280</span>
+<span id="1281">1281</span>
+<span id="1282">1282</span>
+<span id="1283">1283</span>
+<span id="1284">1284</span>
+<span id="1285">1285</span>
+<span id="1286">1286</span>
+<span id="1287">1287</span>
+<span id="1288">1288</span>
+<span id="1289">1289</span>
+<span id="1290">1290</span>
+<span id="1291">1291</span>
+<span id="1292">1292</span>
+<span id="1293">1293</span>
+<span id="1294">1294</span>
+<span id="1295">1295</span>
+<span id="1296">1296</span>
+<span id="1297">1297</span>
+<span id="1298">1298</span>
+<span id="1299">1299</span>
+<span id="1300">1300</span>
+<span id="1301">1301</span>
+<span id="1302">1302</span>
+<span id="1303">1303</span>
+<span id="1304">1304</span>
+<span id="1305">1305</span>
+<span id="1306">1306</span>
+<span id="1307">1307</span>
+<span id="1308">1308</span>
+<span id="1309">1309</span>
+<span id="1310">1310</span>
+<span id="1311">1311</span>
+<span id="1312">1312</span>
+<span id="1313">1313</span>
+<span id="1314">1314</span>
+<span id="1315">1315</span>
+<span id="1316">1316</span>
+<span id="1317">1317</span>
+<span id="1318">1318</span>
+<span id="1319">1319</span>
+<span id="1320">1320</span>
+<span id="1321">1321</span>
+<span id="1322">1322</span>
+<span id="1323">1323</span>
+<span id="1324">1324</span>
+<span id="1325">1325</span>
+<span id="1326">1326</span>
+<span id="1327">1327</span>
+<span id="1328">1328</span>
+<span id="1329">1329</span>
+<span id="1330">1330</span>
+<span id="1331">1331</span>
+<span id="1332">1332</span>
+<span id="1333">1333</span>
+<span id="1334">1334</span>
+<span id="1335">1335</span>
+<span id="1336">1336</span>
+<span id="1337">1337</span>
+<span id="1338">1338</span>
+<span id="1339">1339</span>
+<span id="1340">1340</span>
+<span id="1341">1341</span>
+<span id="1342">1342</span>
+<span id="1343">1343</span>
+<span id="1344">1344</span>
+<span id="1345">1345</span>
+<span id="1346">1346</span>
+<span id="1347">1347</span>
+<span id="1348">1348</span>
+<span id="1349">1349</span>
+<span id="1350">1350</span>
+<span id="1351">1351</span>
+<span id="1352">1352</span>
+<span id="1353">1353</span>
+<span id="1354">1354</span>
+<span id="1355">1355</span>
+<span id="1356">1356</span>
+<span id="1357">1357</span>
+<span id="1358">1358</span>
+<span id="1359">1359</span>
+<span id="1360">1360</span>
+<span id="1361">1361</span>
+<span id="1362">1362</span>
+<span id="1363">1363</span>
+<span id="1364">1364</span>
+<span id="1365">1365</span>
+<span id="1366">1366</span>
+<span id="1367">1367</span>
+<span id="1368">1368</span>
+<span id="1369">1369</span>
+<span id="1370">1370</span>
+<span id="1371">1371</span>
+<span id="1372">1372</span>
+<span id="1373">1373</span>
+<span id="1374">1374</span>
+<span id="1375">1375</span>
+<span id="1376">1376</span>
+<span id="1377">1377</span>
+<span id="1378">1378</span>
+<span id="1379">1379</span>
+<span id="1380">1380</span>
+<span id="1381">1381</span>
+<span id="1382">1382</span>
+<span id="1383">1383</span>
+<span id="1384">1384</span>
+<span id="1385">1385</span>
+<span id="1386">1386</span>
+<span id="1387">1387</span>
+<span id="1388">1388</span>
+<span id="1389">1389</span>
+<span id="1390">1390</span>
+<span id="1391">1391</span>
+<span id="1392">1392</span>
+<span id="1393">1393</span>
+<span id="1394">1394</span>
+<span id="1395">1395</span>
+<span id="1396">1396</span>
+<span id="1397">1397</span>
+<span id="1398">1398</span>
+<span id="1399">1399</span>
+<span id="1400">1400</span>
+<span id="1401">1401</span>
+<span id="1402">1402</span>
+<span id="1403">1403</span>
+<span id="1404">1404</span>
+<span id="1405">1405</span>
+<span id="1406">1406</span>
+<span id="1407">1407</span>
+<span id="1408">1408</span>
+<span id="1409">1409</span>
+<span id="1410">1410</span>
+<span id="1411">1411</span>
+<span id="1412">1412</span>
+<span id="1413">1413</span>
+<span id="1414">1414</span>
+<span id="1415">1415</span>
+<span id="1416">1416</span>
+<span id="1417">1417</span>
+<span id="1418">1418</span>
+<span id="1419">1419</span>
+<span id="1420">1420</span>
+<span id="1421">1421</span>
+<span id="1422">1422</span>
+<span id="1423">1423</span>
+<span id="1424">1424</span>
+<span id="1425">1425</span>
+<span id="1426">1426</span>
+<span id="1427">1427</span>
+<span id="1428">1428</span>
+<span id="1429">1429</span>
+<span id="1430">1430</span>
+<span id="1431">1431</span>
+<span id="1432">1432</span>
+<span id="1433">1433</span>
+<span id="1434">1434</span>
+<span id="1435">1435</span>
+<span id="1436">1436</span>
+<span id="1437">1437</span>
+<span id="1438">1438</span>
+<span id="1439">1439</span>
+<span id="1440">1440</span>
+<span id="1441">1441</span>
+<span id="1442">1442</span>
+<span id="1443">1443</span>
+<span id="1444">1444</span>
+<span id="1445">1445</span>
+<span id="1446">1446</span>
+<span id="1447">1447</span>
+<span id="1448">1448</span>
+<span id="1449">1449</span>
+<span id="1450">1450</span>
+<span id="1451">1451</span>
+<span id="1452">1452</span>
+<span id="1453">1453</span>
+<span id="1454">1454</span>
+<span id="1455">1455</span>
+<span id="1456">1456</span>
+<span id="1457">1457</span>
+<span id="1458">1458</span>
+<span id="1459">1459</span>
+<span id="1460">1460</span>
+<span id="1461">1461</span>
+<span id="1462">1462</span>
+<span id="1463">1463</span>
+<span id="1464">1464</span>
+<span id="1465">1465</span>
+<span id="1466">1466</span>
+<span id="1467">1467</span>
+<span id="1468">1468</span>
+<span id="1469">1469</span>
+<span id="1470">1470</span>
+<span id="1471">1471</span>
+<span id="1472">1472</span>
+<span id="1473">1473</span>
+<span id="1474">1474</span>
+<span id="1475">1475</span>
+<span id="1476">1476</span>
+<span id="1477">1477</span>
+<span id="1478">1478</span>
+<span id="1479">1479</span>
+<span id="1480">1480</span>
+<span id="1481">1481</span>
+<span id="1482">1482</span>
+<span id="1483">1483</span>
+<span id="1484">1484</span>
+<span id="1485">1485</span>
+<span id="1486">1486</span>
+<span id="1487">1487</span>
+<span id="1488">1488</span>
+<span id="1489">1489</span>
+<span id="1490">1490</span>
+<span id="1491">1491</span>
+<span id="1492">1492</span>
+<span id="1493">1493</span>
+<span id="1494">1494</span>
+<span id="1495">1495</span>
+<span id="1496">1496</span>
+<span id="1497">1497</span>
+<span id="1498">1498</span>
+<span id="1499">1499</span>
+<span id="1500">1500</span>
+<span id="1501">1501</span>
+<span id="1502">1502</span>
+<span id="1503">1503</span>
+<span id="1504">1504</span>
+<span id="1505">1505</span>
+<span id="1506">1506</span>
+<span id="1507">1507</span>
+<span id="1508">1508</span>
+<span id="1509">1509</span>
+<span id="1510">1510</span>
+<span id="1511">1511</span>
+<span id="1512">1512</span>
+<span id="1513">1513</span>
+<span id="1514">1514</span>
+<span id="1515">1515</span>
+<span id="1516">1516</span>
+<span id="1517">1517</span>
+<span id="1518">1518</span>
+<span id="1519">1519</span>
+<span id="1520">1520</span>
+<span id="1521">1521</span>
+<span id="1522">1522</span>
+<span id="1523">1523</span>
+<span id="1524">1524</span>
+<span id="1525">1525</span>
+<span id="1526">1526</span>
+<span id="1527">1527</span>
+<span id="1528">1528</span>
+<span id="1529">1529</span>
+<span id="1530">1530</span>
+<span id="1531">1531</span>
+<span id="1532">1532</span>
+<span id="1533">1533</span>
+<span id="1534">1534</span>
+<span id="1535">1535</span>
+<span id="1536">1536</span>
+<span id="1537">1537</span>
+<span id="1538">1538</span>
+<span id="1539">1539</span>
+<span id="1540">1540</span>
+<span id="1541">1541</span>
+<span id="1542">1542</span>
+<span id="1543">1543</span>
+<span id="1544">1544</span>
+<span id="1545">1545</span>
+<span id="1546">1546</span>
+<span id="1547">1547</span>
+<span id="1548">1548</span>
+<span id="1549">1549</span>
+<span id="1550">1550</span>
+<span id="1551">1551</span>
+<span id="1552">1552</span>
+<span id="1553">1553</span>
+<span id="1554">1554</span>
+<span id="1555">1555</span>
+<span id="1556">1556</span>
+<span id="1557">1557</span>
+<span id="1558">1558</span>
+<span id="1559">1559</span>
+<span id="1560">1560</span>
+<span id="1561">1561</span>
+<span id="1562">1562</span>
+<span id="1563">1563</span>
+<span id="1564">1564</span>
+<span id="1565">1565</span>
+<span id="1566">1566</span>
+<span id="1567">1567</span>
+<span id="1568">1568</span>
+<span id="1569">1569</span>
+<span id="1570">1570</span>
+<span id="1571">1571</span>
+<span id="1572">1572</span>
+<span id="1573">1573</span>
+<span id="1574">1574</span>
+<span id="1575">1575</span>
+<span id="1576">1576</span>
+<span id="1577">1577</span>
+<span id="1578">1578</span>
+<span id="1579">1579</span>
+<span id="1580">1580</span>
+<span id="1581">1581</span>
+<span id="1582">1582</span>
+<span id="1583">1583</span>
+<span id="1584">1584</span>
+<span id="1585">1585</span>
+<span id="1586">1586</span>
+<span id="1587">1587</span>
+<span id="1588">1588</span>
+<span id="1589">1589</span>
+<span id="1590">1590</span>
+<span id="1591">1591</span>
+<span id="1592">1592</span>
+<span id="1593">1593</span>
+<span id="1594">1594</span>
+<span id="1595">1595</span>
+<span id="1596">1596</span>
+<span id="1597">1597</span>
+<span id="1598">1598</span>
+<span id="1599">1599</span>
+<span id="1600">1600</span>
+<span id="1601">1601</span>
+<span id="1602">1602</span>
+<span id="1603">1603</span>
+<span id="1604">1604</span>
+<span id="1605">1605</span>
+<span id="1606">1606</span>
+<span id="1607">1607</span>
+<span id="1608">1608</span>
+<span id="1609">1609</span>
+<span id="1610">1610</span>
+<span id="1611">1611</span>
+<span id="1612">1612</span>
+<span id="1613">1613</span>
+<span id="1614">1614</span>
+<span id="1615">1615</span>
+<span id="1616">1616</span>
+<span id="1617">1617</span>
+<span id="1618">1618</span>
+<span id="1619">1619</span>
+<span id="1620">1620</span>
+<span id="1621">1621</span>
+<span id="1622">1622</span>
+<span id="1623">1623</span>
+<span id="1624">1624</span>
+<span id="1625">1625</span>
+<span id="1626">1626</span>
+<span id="1627">1627</span>
+<span id="1628">1628</span>
+<span id="1629">1629</span>
+<span id="1630">1630</span>
+<span id="1631">1631</span>
+<span id="1632">1632</span>
+<span id="1633">1633</span>
+<span id="1634">1634</span>
+<span id="1635">1635</span>
+<span id="1636">1636</span>
+<span id="1637">1637</span>
+<span id="1638">1638</span>
+<span id="1639">1639</span>
+<span id="1640">1640</span>
+<span id="1641">1641</span>
+<span id="1642">1642</span>
+<span id="1643">1643</span>
+<span id="1644">1644</span>
+<span id="1645">1645</span>
+<span id="1646">1646</span>
+<span id="1647">1647</span>
+<span id="1648">1648</span>
+<span id="1649">1649</span>
+<span id="1650">1650</span>
+<span id="1651">1651</span>
+<span id="1652">1652</span>
+<span id="1653">1653</span>
+<span id="1654">1654</span>
+<span id="1655">1655</span>
+<span id="1656">1656</span>
+<span id="1657">1657</span>
+<span id="1658">1658</span>
+<span id="1659">1659</span>
+<span id="1660">1660</span>
+<span id="1661">1661</span>
+<span id="1662">1662</span>
+<span id="1663">1663</span>
+<span id="1664">1664</span>
+<span id="1665">1665</span>
+<span id="1666">1666</span>
+<span id="1667">1667</span>
+<span id="1668">1668</span>
+<span id="1669">1669</span>
+<span id="1670">1670</span>
+<span id="1671">1671</span>
+<span id="1672">1672</span>
+<span id="1673">1673</span>
+<span id="1674">1674</span>
+<span id="1675">1675</span>
+<span id="1676">1676</span>
+<span id="1677">1677</span>
+<span id="1678">1678</span>
+<span id="1679">1679</span>
+<span id="1680">1680</span>
+<span id="1681">1681</span>
+<span id="1682">1682</span>
+<span id="1683">1683</span>
+<span id="1684">1684</span>
+<span id="1685">1685</span>
+<span id="1686">1686</span>
+<span id="1687">1687</span>
+<span id="1688">1688</span>
+<span id="1689">1689</span>
+<span id="1690">1690</span>
+<span id="1691">1691</span>
+<span id="1692">1692</span>
+<span id="1693">1693</span>
+<span id="1694">1694</span>
+<span id="1695">1695</span>
+<span id="1696">1696</span>
+<span id="1697">1697</span>
+<span id="1698">1698</span>
+<span id="1699">1699</span>
+<span id="1700">1700</span>
+<span id="1701">1701</span>
+<span id="1702">1702</span>
+<span id="1703">1703</span>
+<span id="1704">1704</span>
+<span id="1705">1705</span>
+<span id="1706">1706</span>
+<span id="1707">1707</span>
+<span id="1708">1708</span>
+<span id="1709">1709</span>
+<span id="1710">1710</span>
+<span id="1711">1711</span>
+<span id="1712">1712</span>
+<span id="1713">1713</span>
+<span id="1714">1714</span>
+<span id="1715">1715</span>
+<span id="1716">1716</span>
+<span id="1717">1717</span>
+<span id="1718">1718</span>
+<span id="1719">1719</span>
+<span id="1720">1720</span>
+<span id="1721">1721</span>
+<span id="1722">1722</span>
+<span id="1723">1723</span>
+<span id="1724">1724</span>
+<span id="1725">1725</span>
+<span id="1726">1726</span>
+<span id="1727">1727</span>
+<span id="1728">1728</span>
+<span id="1729">1729</span>
+<span id="1730">1730</span>
+<span id="1731">1731</span>
+<span id="1732">1732</span>
+<span id="1733">1733</span>
+<span id="1734">1734</span>
+<span id="1735">1735</span>
+<span id="1736">1736</span>
+<span id="1737">1737</span>
+</pre><pre class="rust"><code><span class="comment">// Copyright © SixtyFPS GmbH &lt;info@slint-ui.com&gt;
+// SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-commercial
+
+// cSpell: ignore unerase
+
+</span><span class="kw">use crate</span>::{api::Value, dynamic_type, eval};
+
+<span class="kw">use </span>core::convert::TryInto;
+<span class="kw">use </span>core::ptr::NonNull;
+<span class="kw">use </span>dynamic_type::{Instance, InstanceBox};
+<span class="kw">use </span>i_slint_compiler::expression_tree::{Expression, NamedReference};
+<span class="kw">use </span>i_slint_compiler::langtype::Type;
+<span class="kw">use </span>i_slint_compiler::object_tree::ElementRc;
+<span class="kw">use </span>i_slint_compiler::<span class="kw-2">*</span>;
+<span class="kw">use </span>i_slint_compiler::{diagnostics::BuildDiagnostics, object_tree::PropertyDeclaration};
+<span class="kw">use </span>i_slint_core::accessibility::AccessibleStringProperty;
+<span class="kw">use </span>i_slint_core::component::{
+    Component, ComponentRef, ComponentRefPin, ComponentVTable, ComponentWeak, IndexRange,
+};
+<span class="kw">use </span>i_slint_core::item_tree::{
+    ItemRc, ItemTreeNode, ItemVisitorRefMut, ItemVisitorVTable, ItemWeak, TraversalOrder,
+    VisitChildrenResult,
+};
+<span class="kw">use </span>i_slint_core::items::{AccessibleRole, Flickable, ItemRef, ItemVTable, PropertyAnimation};
+<span class="kw">use </span>i_slint_core::layout::{BoxLayoutCellData, LayoutInfo, Orientation};
+<span class="kw">use </span>i_slint_core::model::RepeatedComponent;
+<span class="kw">use </span>i_slint_core::model::Repeater;
+<span class="kw">use </span>i_slint_core::properties::InterpolatedPropertyValue;
+<span class="kw">use </span>i_slint_core::rtti::{<span class="self">self</span>, AnimatedBindingKind, FieldOffset, PropertyInfo};
+<span class="kw">use </span>i_slint_core::slice::Slice;
+<span class="kw">use </span>i_slint_core::window::{WindowAdapter, WindowInner};
+<span class="kw">use </span>i_slint_core::{Brush, Color, Property, SharedString, SharedVector};
+<span class="kw">use </span>std::collections::BTreeMap;
+<span class="kw">use </span>std::collections::HashMap;
+<span class="kw">use </span>std::{pin::Pin, rc::Rc};
+
+<span class="kw">pub struct </span>ComponentBox&lt;<span class="lifetime">&#39;id</span>&gt; {
+    instance: InstanceBox&lt;<span class="lifetime">&#39;id</span>&gt;,
+    component_type: Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt;,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;id</span>&gt; ComponentBox&lt;<span class="lifetime">&#39;id</span>&gt; {
+    <span class="doccomment">/// Borrow this component as a `Pin&lt;ComponentRef&gt;`
+    </span><span class="kw">pub fn </span>borrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ComponentRefPin {
+        <span class="self">self</span>.borrow_instance().borrow()
+    }
+
+    <span class="doccomment">/// Safety: the lifetime is not unique
+    </span><span class="kw">pub fn </span>description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt; {
+        <span class="self">self</span>.component_type.clone()
+    }
+
+    <span class="kw">pub fn </span>borrow_instance&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; InstanceRef&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt; {
+        InstanceRef { instance: <span class="self">self</span>.instance.as_pin_ref(), component_type: <span class="kw-2">&amp;</span><span class="self">self</span>.component_type }
+    }
+
+    <span class="kw">pub fn </span>window_adapter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Rc&lt;<span class="kw">dyn </span>WindowAdapter&gt; {
+        <span class="self">self</span>.component_type
+            .window_adapter_offset
+            .apply(<span class="self">self</span>.instance.as_pin_ref().get_ref())
+            .as_ref()
+            .as_ref()
+            .unwrap()
+    }
+}
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ItemWithinComponent {
+    offset: usize,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) rtti: Rc&lt;ItemRTTI&gt;,
+    elem: ElementRc,
+}
+
+<span class="kw">impl </span>ItemWithinComponent {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>item_from_component(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        mem: <span class="kw-2">*const </span>u8,
+    ) -&gt; Pin&lt;vtable::VRef&lt;ItemVTable&gt;&gt; {
+        Pin::new_unchecked(vtable::VRef::from_raw(
+            NonNull::from(<span class="self">self</span>.rtti.vtable),
+            NonNull::new(mem.add(<span class="self">self</span>.offset) <span class="kw">as _</span>).unwrap(),
+        ))
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>item_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="kw-2">*</span><span class="self">self</span>.elem.borrow().item_index.get().unwrap()
+    }
+}
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>PropertiesWithinComponent {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) offset: usize,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) prop: Box&lt;<span class="kw">dyn </span>PropertyInfo&lt;u8, Value&gt;&gt;,
+}
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>RepeaterWithinComponent&lt;<span class="lifetime">&#39;par_id</span>, <span class="lifetime">&#39;sub_id</span>&gt; {
+    <span class="doccomment">/// The component description of the items to repeat
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) component_to_repeat: Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;sub_id</span>&gt;&gt;,
+    <span class="doccomment">/// The model
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) model: Expression,
+    <span class="doccomment">/// Offset of the `Repeater`
+    </span>offset: FieldOffset&lt;Instance&lt;<span class="lifetime">&#39;par_id</span>&gt;, Repeater&lt;ErasedComponentBox&gt;&gt;,
+}
+
+<span class="kw">impl </span>RepeatedComponent <span class="kw">for </span>ErasedComponentBox {
+    <span class="kw">type </span>Data = Value;
+
+    <span class="kw">fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize, data: <span class="self">Self</span>::Data) {
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="kw">let </span>s = <span class="self">self</span>.unerase(guard);
+        s.component_type.set_property(s.borrow(), <span class="string">&quot;index&quot;</span>, index.try_into().unwrap()).unwrap();
+        s.component_type.set_property(s.borrow(), <span class="string">&quot;model_data&quot;</span>, data).unwrap();
+    }
+
+    <span class="kw">fn </span>listview_layout(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;, offset_y: <span class="kw-2">&amp;mut </span>f32, viewport_width: Pin&lt;<span class="kw-2">&amp;</span>Property&lt;f32&gt;&gt;) {
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="kw">let </span>s = <span class="self">self</span>.unerase(guard);
+
+        s.component_type
+            .set_property(s.borrow(), <span class="string">&quot;y&quot;</span>, Value::Number(<span class="kw-2">*</span>offset_y <span class="kw">as </span>f64))
+            .expect(<span class="string">&quot;cannot set y&quot;</span>);
+        <span class="kw">let </span>h: f32 = s
+            .component_type
+            .get_property(s.borrow(), <span class="string">&quot;height&quot;</span>)
+            .expect(<span class="string">&quot;missing height&quot;</span>)
+            .try_into()
+            .expect(<span class="string">&quot;height not the right type&quot;</span>);
+        <span class="kw">let </span>w: f32 = s
+            .component_type
+            .get_property(s.borrow(), <span class="string">&quot;width&quot;</span>)
+            .expect(<span class="string">&quot;missing width&quot;</span>)
+            .try_into()
+            .expect(<span class="string">&quot;width not the right type&quot;</span>);
+        <span class="kw-2">*</span>offset_y += h;
+        <span class="kw">let </span>vp_w = viewport_width.get();
+        <span class="kw">if </span>vp_w &lt; w {
+            viewport_width.set(w);
+        }
+    }
+
+    <span class="kw">fn </span>box_layout_data(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;, o: Orientation) -&gt; BoxLayoutCellData {
+        BoxLayoutCellData { constraint: <span class="self">self</span>.borrow().as_ref().layout_info(o) }
+    }
+}
+
+<span class="kw">impl </span>Component <span class="kw">for </span>ErasedComponentBox {
+    <span class="kw">fn </span>visit_children_item(
+        <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;,
+        index: isize,
+        order: TraversalOrder,
+        visitor: ItemVisitorRefMut,
+    ) -&gt; VisitChildrenResult {
+        <span class="self">self</span>.borrow().as_ref().visit_children_item(index, order, visitor)
+    }
+
+    <span class="kw">fn </span>layout_info(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;, orientation: Orientation) -&gt; i_slint_core::layout::LayoutInfo {
+        <span class="self">self</span>.borrow().as_ref().layout_info(orientation)
+    }
+
+    <span class="kw">fn </span>get_item_tree(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;) -&gt; Slice&lt;ItemTreeNode&gt; {
+        get_item_tree(<span class="self">self</span>.get_ref().borrow())
+    }
+
+    <span class="kw">fn </span>get_item_ref(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;, index: usize) -&gt; Pin&lt;ItemRef&gt; {
+        <span class="comment">// We&#39;re having difficulties transferring the lifetime to a pinned reference
+        // to the other ComponentVTable with the same life time. So skip the vtable
+        // indirection and call our implementation directly.
+        </span><span class="kw">unsafe </span>{ get_item_ref(<span class="self">self</span>.get_ref().borrow(), index) }
+    }
+
+    <span class="kw">fn </span>get_subtree_range(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;, index: usize) -&gt; IndexRange {
+        <span class="self">self</span>.borrow().as_ref().get_subtree_range(index)
+    }
+
+    <span class="kw">fn </span>get_subtree_component(
+        <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;,
+        index: usize,
+        subindex: usize,
+        result: <span class="kw-2">&amp;mut </span>ComponentWeak,
+    ) {
+        <span class="self">self</span>.borrow().as_ref().get_subtree_component(index, subindex, result);
+    }
+
+    <span class="kw">fn </span>parent_node(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;, result: <span class="kw-2">&amp;mut </span>ItemWeak) {
+        <span class="self">self</span>.borrow().as_ref().parent_node(result)
+    }
+
+    <span class="kw">fn </span>subtree_index(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;) -&gt; usize {
+        <span class="self">self</span>.borrow().as_ref().subtree_index()
+    }
+
+    <span class="kw">fn </span>accessible_role(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;, index: usize) -&gt; AccessibleRole {
+        <span class="self">self</span>.borrow().as_ref().accessible_role(index)
+    }
+
+    <span class="kw">fn </span>accessible_string_property(
+        <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;,
+        index: usize,
+        what: AccessibleStringProperty,
+        result: <span class="kw-2">&amp;mut </span>SharedString,
+    ) {
+        <span class="self">self</span>.borrow().as_ref().accessible_string_property(index, what, result)
+    }
+}
+
+<span class="macro">i_slint_core::ComponentVTable_static!</span>(<span class="kw">static </span>COMPONENT_BOX_VT <span class="kw">for </span>ErasedComponentBox);
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;id</span>&gt; Drop <span class="kw">for </span>ErasedComponentBox {
+    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="kw">let </span>unerase = <span class="self">self</span>.unerase(guard);
+        <span class="kw">let </span>instance_ref = unerase.borrow_instance();
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(window_adapter) = eval::window_adapter_ref(instance_ref) {
+            i_slint_core::component::unregister_component(
+                instance_ref.instance,
+                vtable::VRef::new(<span class="self">self</span>),
+                instance_ref.component_type.item_array.as_slice(),
+                window_adapter,
+            );
+        }
+    }
+}
+
+<span class="attribute">#[derive(Default)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ComponentExtraData {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) globals: <span class="kw">crate</span>::global_component::GlobalStorage,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) self_weak:
+        once_cell::unsync::OnceCell&lt;vtable::VWeak&lt;ComponentVTable, ErasedComponentBox&gt;&gt;,
+    <span class="comment">// resource id -&gt; file path
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) embedded_file_resources: HashMap&lt;usize, String&gt;,
+}
+
+<span class="kw">struct </span>ErasedRepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>&gt;(RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;static</span>&gt;);
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;sub_id</span>&gt; From&lt;RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;sub_id</span>&gt;&gt;
+    <span class="kw">for </span>ErasedRepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>&gt;
+{
+    <span class="kw">fn </span>from(from: RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;sub_id</span>&gt;) -&gt; <span class="self">Self </span>{
+        <span class="comment">// Safety: this is safe as we erase the sub_id lifetime.
+        // As long as when we get it back we get an unique lifetime with ErasedRepeaterWithinComponent::unerase
+        </span><span class="self">Self</span>(<span class="kw">unsafe </span>{
+            core::mem::transmute::&lt;
+                RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;sub_id</span>&gt;,
+                RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;static</span>&gt;,
+            &gt;(from)
+        })
+    }
+}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;id</span>&gt; ErasedRepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>&gt; {
+    <span class="kw">pub fn </span>unerase&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;sub_id</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
+        _guard: generativity::Guard&lt;<span class="lifetime">&#39;sub_id</span>&gt;,
+    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;sub_id</span>&gt; {
+        <span class="comment">// Safety: we just go from &#39;static to an unique lifetime
+        </span><span class="kw">unsafe </span>{
+            core::mem::transmute::&lt;
+                <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;static</span>&gt;,
+                <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;sub_id</span>&gt;,
+            &gt;(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
+        }
+    }
+
+    <span class="doccomment">/// Return a repeater with a component with a &#39;static lifetime
+    ///
+    /// Safety: one should ensure that the inner component is not mixed with other inner component
+    </span><span class="kw">unsafe fn </span>get_untagged(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;static</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
+}
+
+<span class="kw">type </span>Callback = i_slint_core::Callback&lt;[Value], Value&gt;;
+
+<span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub struct </span>ErasedComponentDescription(Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;static</span>&gt;&gt;);
+<span class="kw">impl </span>ErasedComponentDescription {
+    <span class="kw">pub fn </span>unerase&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
+        _guard: generativity::Guard&lt;<span class="lifetime">&#39;id</span>&gt;,
+    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt; {
+        <span class="comment">// Safety: we just go from &#39;static to an unique lifetime
+        </span><span class="kw">unsafe </span>{
+            core::mem::transmute::&lt;
+                <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+                <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt;,
+            &gt;(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
+        }
+    }
+}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;id</span>&gt; From&lt;Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt;&gt; <span class="kw">for </span>ErasedComponentDescription {
+    <span class="kw">fn </span>from(from: Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="comment">// Safety: We never access the ComponentDescription with the static lifetime, only after we unerase it
+        </span><span class="self">Self</span>(<span class="kw">unsafe </span>{
+            core::mem::transmute::&lt;Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt;, Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt;(
+                from,
+            )
+        })
+    }
+}
+
+<span class="doccomment">/// ComponentDescription is a representation of a component suitable for interpretation
+///
+/// It contains information about how to create and destroy the Component.
+/// Its first member is the ComponentVTable for this component, since it is a `#[repr(C)]`
+/// structure, it is valid to cast a pointer to the ComponentVTable back to a
+/// ComponentDescription to access the extra field that are needed at runtime
+</span><span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) ct: ComponentVTable,
+    <span class="doccomment">/// INVARIANT: both dynamic_type and item_tree have the same lifetime id. Here it is erased to &#39;static
+    </span>dynamic_type: Rc&lt;dynamic_type::TypeInfo&lt;<span class="lifetime">&#39;id</span>&gt;&gt;,
+    item_tree: Vec&lt;ItemTreeNode&gt;,
+    item_array:
+        Vec&lt;vtable::VOffset&lt;<span class="kw">crate</span>::dynamic_type::Instance&lt;<span class="lifetime">&#39;id</span>&gt;, ItemVTable, vtable::AllowPin&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) items: HashMap&lt;String, ItemWithinComponent&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) custom_properties: HashMap&lt;String, PropertiesWithinComponent&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) custom_callbacks: HashMap&lt;String, FieldOffset&lt;Instance&lt;<span class="lifetime">&#39;id</span>&gt;, Callback&gt;&gt;,
+    repeater: Vec&lt;ErasedRepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>&gt;&gt;,
+    <span class="doccomment">/// Map the Element::id of the repeater to the index in the `repeater` vec
+    </span><span class="kw">pub </span>repeater_names: HashMap&lt;String, usize&gt;,
+    <span class="doccomment">/// Offset to a Option&lt;ComponentPinRef&gt;
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) parent_component_offset:
+        <span class="prelude-ty">Option</span>&lt;FieldOffset&lt;Instance&lt;<span class="lifetime">&#39;id</span>&gt;, <span class="prelude-ty">Option</span>&lt;ComponentRefPin&lt;<span class="lifetime">&#39;id</span>&gt;&gt;&gt;&gt;,
+    <span class="doccomment">/// Offset to the window reference
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) window_adapter_offset: FieldOffset&lt;Instance&lt;<span class="lifetime">&#39;id</span>&gt;, <span class="prelude-ty">Option</span>&lt;Rc&lt;<span class="kw">dyn </span>WindowAdapter&gt;&gt;&gt;,
+    <span class="doccomment">/// Offset of a ComponentExtraData
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) extra_data_offset: FieldOffset&lt;Instance&lt;<span class="lifetime">&#39;id</span>&gt;, ComponentExtraData&gt;,
+    <span class="doccomment">/// Keep the Rc alive
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) original: Rc&lt;object_tree::Component&gt;,
+    <span class="doccomment">/// Maps from an item_id to the original element it came from
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) original_elements: Vec&lt;ElementRc&gt;,
+    <span class="doccomment">/// Copy of original.root_element.property_declarations, without a guarded refcell
+    </span>public_properties: BTreeMap&lt;String, PropertyDeclaration&gt;,
+
+    <span class="doccomment">/// compiled globals
+    </span>compiled_globals: Vec&lt;<span class="kw">crate</span>::global_component::CompiledGlobal&gt;,
+    <span class="doccomment">/// Map of all exported global singletons and their index in the compiled_globals vector. The key
+    /// is the normalized name of the global.
+    </span>exported_globals_by_name: BTreeMap&lt;String, usize&gt;,
+}
+
+<span class="kw">fn </span>internal_properties_to_public&lt;<span class="lifetime">&#39;a</span>&gt;(
+    prop_iter: <span class="kw">impl </span>Iterator&lt;Item = (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PropertyDeclaration)&gt; + <span class="lifetime">&#39;a</span>,
+) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (String, i_slint_compiler::langtype::Type)&gt; + <span class="lifetime">&#39;a </span>{
+    prop_iter.filter(|(<span class="kw">_</span>, v)| v.expose_in_public_api).map(|(s, v)| {
+        <span class="kw">let </span>name = v
+            .node
+            .as_ref()
+            .and_then(|n| {
+                n.as_ref()
+                    .either(|n| n.DeclaredIdentifier(), |n| n.DeclaredIdentifier())
+                    .child_token(parser::SyntaxKind::Identifier)
+            })
+            .map(|n| n.to_string())
+            .unwrap_or_else(|| s.clone());
+        (name, v.property_type.clone())
+    })
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;id</span>&gt; ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt; {
+    <span class="doccomment">/// The name of this Component as written in the .slint file
+    </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.original.id.as_str()
+    }
+
+    <span class="doccomment">/// List of publicly declared properties or callbacks
+    ///
+    /// We try to preserve the dashes and underscore as written in the property declaration
+    </span><span class="kw">pub fn </span>properties(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    ) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (String, i_slint_compiler::langtype::Type)&gt; + <span class="lifetime">&#39;_ </span>{
+        internal_properties_to_public(<span class="self">self</span>.public_properties.iter())
+    }
+
+    <span class="doccomment">/// List names of exported global singletons
+    </span><span class="kw">pub fn </span>global_names(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = String&gt; + <span class="lifetime">&#39;_ </span>{
+        <span class="self">self</span>.compiled_globals
+            .iter()
+            .filter(|g| g.visible_in_public_api())
+            .flat_map(|g| g.names().into_iter())
+    }
+
+    <span class="kw">pub fn </span>global_properties(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        name: <span class="kw-2">&amp;</span>str,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw">impl </span>Iterator&lt;Item = (String, i_slint_compiler::langtype::Type)&gt; + <span class="lifetime">&#39;_</span>&gt; {
+        <span class="self">self</span>.exported_globals_by_name
+            .get(<span class="kw">crate</span>::normalize_identifier(name).as_ref())
+            .and_then(|global_idx| <span class="self">self</span>.compiled_globals.get(<span class="kw-2">*</span>global_idx))
+            .map(|global| internal_properties_to_public(global.public_properties()))
+    }
+
+    <span class="doccomment">/// Instantiate a runtime component from this ComponentDescription
+    </span><span class="kw">pub fn </span>create(
+        <span class="self">self</span>: Rc&lt;<span class="self">Self</span>&gt;,
+        <span class="attribute">#[cfg(target_arch = <span class="string">&quot;wasm32&quot;</span>)] </span>canvas_id: String,
+    ) -&gt; vtable::VRc&lt;ComponentVTable, ErasedComponentBox&gt; {
+        <span class="kw">let </span>window_adapter = i_slint_backend_selector::with_platform(|_b| {
+            <span class="attribute">#[cfg(not(target_arch = <span class="string">&quot;wasm32&quot;</span>))]
+            </span><span class="kw">return </span>_b.create_window_adapter();
+            <span class="attribute">#[cfg(target_arch = <span class="string">&quot;wasm32&quot;</span>)]
+            </span>i_slint_backend_winit::create_gl_window_with_canvas_id(canvas_id)
+        });
+
+        <span class="self">self</span>.create_with_existing_window(<span class="kw-2">&amp;</span>window_adapter)
+    }
+
+    <span class="attribute">#[doc(hidden)]
+    </span><span class="kw">pub fn </span>create_with_existing_window(
+        <span class="self">self</span>: Rc&lt;<span class="self">Self</span>&gt;,
+        window_adapter: <span class="kw-2">&amp;</span>Rc&lt;<span class="kw">dyn </span>WindowAdapter&gt;,
+    ) -&gt; vtable::VRc&lt;ComponentVTable, ErasedComponentBox&gt; {
+        <span class="kw">let </span>component_ref = instantiate(<span class="self">self</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(window_adapter), Default::default());
+        WindowInner::from_pub(component_ref.as_pin_ref().window_adapter().window())
+            .set_component(<span class="kw-2">&amp;</span>vtable::VRc::into_dyn(component_ref.clone()));
+        component_ref.run_setup_code();
+        component_ref
+    }
+
+    <span class="doccomment">/// Set a value to property.
+    ///
+    /// Return an error if the property with this name does not exist in this component,
+    /// or if the value is the wrong type.
+    /// Panics if the component is not an instance corresponding to this ComponentDescription,
+    </span><span class="kw">pub fn </span>set_property(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        component: ComponentRefPin,
+        name: <span class="kw-2">&amp;</span>str,
+        value: Value,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="kw">crate</span>::api::SetPropertyError&gt; {
+        <span class="kw">if </span>!core::ptr::eq((<span class="kw-2">&amp;</span><span class="self">self</span>.ct) <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, component.get_vtable() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) {
+            <span class="macro">panic!</span>(<span class="string">&quot;mismatch instance and vtable&quot;</span>);
+        }
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="kw">let </span>c = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(alias) = <span class="self">self
+            </span>.original
+            .root_element
+            .borrow()
+            .property_declarations
+            .get(name)
+            .and_then(|d| d.is_alias.as_ref())
+        {
+            eval::store_property(c, <span class="kw-2">&amp;</span>alias.element(), alias.name(), value)
+        } <span class="kw">else </span>{
+            eval::store_property(c, <span class="kw-2">&amp;</span><span class="self">self</span>.original.root_element, name, value)
+        }
+    }
+
+    <span class="doccomment">/// Set a binding to a property
+    ///
+    /// Returns an error if the component is not an instance corresponding to this ComponentDescription,
+    /// or if the property with this name does not exist in this component
+    </span><span class="attribute">#[allow(unused)]
+    </span><span class="kw">pub fn </span>set_binding(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        component: ComponentRef,
+        name: <span class="kw-2">&amp;</span>str,
+        binding: Box&lt;<span class="kw">dyn </span>Fn() -&gt; Value&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ()&gt; {
+        <span class="kw">if </span>!core::ptr::eq((<span class="kw-2">&amp;</span><span class="self">self</span>.ct) <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, component.get_vtable() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(());
+        }
+        <span class="kw">let </span>x = <span class="self">self</span>.custom_properties.get(name).ok_or(())<span class="question-mark">?</span>;
+        <span class="kw">unsafe </span>{
+            x.prop
+                .set_binding(
+                    Pin::new_unchecked(<span class="kw-2">&amp;*</span>component.as_ptr().add(x.offset)),
+                    binding,
+                    i_slint_core::rtti::AnimatedBindingKind::NotAnimated,
+                )
+                .unwrap()
+        };
+        <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="doccomment">/// Return the value of a property
+    ///
+    /// Returns an error if the component is not an instance corresponding to this ComponentDescription,
+    /// or if a callback with this name does not exist in this component
+    </span><span class="kw">pub fn </span>get_property(<span class="kw-2">&amp;</span><span class="self">self</span>, component: ComponentRefPin, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Value, ()&gt; {
+        <span class="kw">if </span>!core::ptr::eq((<span class="kw-2">&amp;</span><span class="self">self</span>.ct) <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, component.get_vtable() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(());
+        }
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="comment">// Safety: we just verified that the component has the right vtable
+        </span><span class="kw">let </span>c = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(alias) = <span class="self">self
+            </span>.original
+            .root_element
+            .borrow()
+            .property_declarations
+            .get(name)
+            .and_then(|d| d.is_alias.as_ref())
+        {
+            eval::load_property(c, <span class="kw-2">&amp;</span>alias.element(), alias.name())
+        } <span class="kw">else </span>{
+            eval::load_property(c, <span class="kw-2">&amp;</span><span class="self">self</span>.original.root_element, name)
+        }
+    }
+
+    <span class="doccomment">/// Sets an handler for a callback
+    ///
+    /// Returns an error if the component is not an instance corresponding to this ComponentDescription,
+    /// or if the property with this name does not exist in this component
+    </span><span class="kw">pub fn </span>set_callback_handler(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        component: Pin&lt;ComponentRef&gt;,
+        name: <span class="kw-2">&amp;</span>str,
+        handler: Box&lt;<span class="kw">dyn </span>Fn(<span class="kw-2">&amp;</span>[Value]) -&gt; Value&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ()&gt; {
+        <span class="kw">if </span>!core::ptr::eq((<span class="kw-2">&amp;</span><span class="self">self</span>.ct) <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, component.get_vtable() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(());
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(alias) = <span class="self">self
+            </span>.original
+            .root_element
+            .borrow()
+            .property_declarations
+            .get(name)
+            .and_then(|d| d.is_alias.as_ref())
+        {
+            <span class="macro">generativity::make_guard!</span>(guard);
+            <span class="comment">// Safety: we just verified that the component has the right vtable
+            </span><span class="kw">let </span>c = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+            <span class="macro">generativity::make_guard!</span>(guard);
+            <span class="kw">let </span>element = alias.element();
+            <span class="kw">match </span>eval::enclosing_component_instance_for_element(
+                <span class="kw-2">&amp;</span>element,
+                eval::ComponentInstance::InstanceRef(c),
+                guard,
+            ) {
+                eval::ComponentInstance::InstanceRef(enclosing_component) =&gt; {
+                    <span class="kw">let </span>component_type = enclosing_component.component_type;
+                    <span class="kw">let </span>item_info = <span class="kw-2">&amp;</span>component_type.items[element.borrow().id.as_str()];
+                    <span class="kw">let </span>item =
+                        <span class="kw">unsafe </span>{ item_info.item_from_component(enclosing_component.as_ptr()) };
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(callback) = item_info.rtti.callbacks.get(alias.name()) {
+                        callback.set_handler(item, handler)
+                    } <span class="kw">else if let </span><span class="prelude-val">Some</span>(callback_offset) =
+                        component_type.custom_callbacks.get(alias.name())
+                    {
+                        <span class="kw">let </span>callback = callback_offset.apply(<span class="kw-2">&amp;*</span>enclosing_component.instance);
+                        callback.set_handler(handler)
+                    } <span class="kw">else </span>{
+                        <span class="kw">return </span><span class="prelude-val">Err</span>(());
+                    }
+                }
+                eval::ComponentInstance::GlobalComponent(glob) =&gt; {
+                    <span class="kw">return </span>glob.as_ref().set_callback_handler(alias.name(), handler);
+                }
+            }
+        } <span class="kw">else </span>{
+            <span class="kw">let </span>x = <span class="self">self</span>.custom_callbacks.get(name).ok_or(())<span class="question-mark">?</span>;
+            <span class="kw">let </span>sig = x.apply(<span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>(component.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>dynamic_type::Instance) });
+            sig.set_handler(handler);
+        }
+        <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="doccomment">/// Emits the specified callback
+    ///
+    /// Returns an error if the component is not an instance corresponding to this ComponentDescription,
+    /// or if the callback with this name does not exist in this component
+    </span><span class="kw">pub fn </span>invoke_callback(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        component: ComponentRefPin,
+        name: <span class="kw-2">&amp;</span>str,
+        args: <span class="kw-2">&amp;</span>[Value],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Value, ()&gt; {
+        <span class="kw">if </span>!core::ptr::eq((<span class="kw-2">&amp;</span><span class="self">self</span>.ct) <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, component.get_vtable() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(());
+        }
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="comment">// Safety: we just verified that the component has the right vtable
+        </span><span class="kw">let </span>c = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(alias) = <span class="self">self
+            </span>.original
+            .root_element
+            .borrow()
+            .property_declarations
+            .get(name)
+            .and_then(|d| d.is_alias.as_ref())
+        {
+            eval::invoke_callback(
+                eval::ComponentInstance::InstanceRef(c),
+                <span class="kw-2">&amp;</span>alias.element(),
+                alias.name(),
+                args,
+            )
+            .ok_or(())
+        } <span class="kw">else </span>{
+            eval::invoke_callback(
+                eval::ComponentInstance::InstanceRef(c),
+                <span class="kw-2">&amp;</span><span class="self">self</span>.original.root_element,
+                name,
+                args,
+            )
+            .ok_or(())
+        }
+    }
+
+    <span class="comment">// Return the global with the given name
+    </span><span class="kw">pub fn </span>get_global(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        component: ComponentRefPin,
+        global_name: <span class="kw-2">&amp;</span>str,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Pin&lt;Rc&lt;<span class="kw">dyn </span><span class="kw">crate</span>::global_component::GlobalComponent&gt;&gt;, ()&gt; {
+        <span class="kw">if </span>!core::ptr::eq((<span class="kw-2">&amp;</span><span class="self">self</span>.ct) <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, component.get_vtable() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(());
+        }
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="comment">// Safety: we just verified that the component has the right vtable
+        </span><span class="kw">let </span>c = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+        <span class="kw">let </span>extra_data = c.component_type.extra_data_offset.apply(c.instance.get_ref());
+        extra_data.globals.get(global_name).cloned().ok_or(())
+    }
+}
+
+<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>visit_children_item(
+    component: ComponentRefPin,
+    index: isize,
+    order: TraversalOrder,
+    v: ItemVisitorRefMut,
+) -&gt; VisitChildrenResult {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>instance_ref = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+    <span class="kw">let </span>comp_rc = instance_ref.self_weak().get().unwrap().upgrade().unwrap();
+    i_slint_core::item_tree::visit_item_tree(
+        instance_ref.instance,
+        <span class="kw-2">&amp;</span>vtable::VRc::into_dyn(comp_rc),
+        get_item_tree(component).as_slice(),
+        index,
+        order,
+        v,
+        |<span class="kw">_</span>, order, visitor, index| {
+            <span class="comment">// `ensure_updated` needs a &#39;static lifetime so we must call get_untagged.
+            // Safety: we do not mix the component with other component id in this function
+            </span><span class="kw">let </span>rep_in_comp = <span class="kw">unsafe </span>{ instance_ref.component_type.repeater[index].get_untagged() };
+            ensure_repeater_updated(instance_ref, rep_in_comp);
+            <span class="kw">let </span>repeater = rep_in_comp.offset.apply_pin(instance_ref.instance);
+            repeater.visit(order, visitor)
+        },
+    )
+}
+
+<span class="doccomment">/// Make sure that the repeater is updated
+</span><span class="kw">fn </span>ensure_repeater_updated&lt;<span class="lifetime">&#39;id</span>&gt;(
+    instance_ref: InstanceRef&lt;<span class="lifetime">&#39;_</span>, <span class="lifetime">&#39;id</span>&gt;,
+    rep_in_comp: <span class="kw-2">&amp;</span>RepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>, <span class="lifetime">&#39;_</span>&gt;,
+) {
+    <span class="kw">let </span>repeater = rep_in_comp.offset.apply_pin(instance_ref.instance);
+    <span class="kw">let </span>init = || {
+        <span class="kw">let </span>window_adapter = instance_ref
+            .component_type
+            .window_adapter_offset
+            .apply(instance_ref.as_ref())
+            .as_ref()
+            .unwrap();
+        <span class="kw">let </span>instance = instantiate(
+            rep_in_comp.component_to_repeat.clone(),
+            <span class="prelude-val">Some</span>(instance_ref.borrow()),
+            <span class="prelude-val">Some</span>(window_adapter),
+            Default::default(),
+        );
+        instance.run_setup_code();
+        instance
+    };
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(lv) = <span class="kw-2">&amp;</span>rep_in_comp
+        .component_to_repeat
+        .original
+        .parent_element
+        .upgrade()
+        .unwrap()
+        .borrow()
+        .repeated
+        .as_ref()
+        .unwrap()
+        .is_listview
+    {
+        <span class="kw">let </span>assume_property_f32 =
+            |prop| <span class="kw">unsafe </span>{ Pin::new_unchecked(<span class="kw-2">&amp;*</span>(prop <span class="kw">as </span><span class="kw-2">*const </span>Property&lt;f32&gt;)) };
+        <span class="kw">let </span>get_prop = |nr: <span class="kw-2">&amp;</span>NamedReference| -&gt; f32 {
+            eval::load_property(instance_ref, <span class="kw-2">&amp;</span>nr.element(), nr.name()).unwrap().try_into().unwrap()
+        };
+        repeater.ensure_updated_listview(
+            init,
+            assume_property_f32(get_property_ptr(<span class="kw-2">&amp;</span>lv.viewport_width, instance_ref)),
+            assume_property_f32(get_property_ptr(<span class="kw-2">&amp;</span>lv.viewport_height, instance_ref)),
+            assume_property_f32(get_property_ptr(<span class="kw-2">&amp;</span>lv.viewport_y, instance_ref)),
+            get_prop(<span class="kw-2">&amp;</span>lv.listview_width),
+            assume_property_f32(get_property_ptr(<span class="kw-2">&amp;</span>lv.listview_height, instance_ref)),
+        );
+    } <span class="kw">else </span>{
+        repeater.ensure_updated(init);
+    }
+}
+
+<span class="doccomment">/// Information attached to a builtin item
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ItemRTTI {
+    vtable: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>ItemVTable,
+    type_info: dynamic_type::StaticTypeInfo,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) properties: HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, Box&lt;<span class="kw">dyn </span>eval::ErasedPropertyInfo&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) callbacks: HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, Box&lt;<span class="kw">dyn </span>eval::ErasedCallbackInfo&gt;&gt;,
+}
+
+<span class="kw">fn </span>rtti_for&lt;T: <span class="lifetime">&#39;static </span>+ Default + rtti::BuiltinItem + vtable::HasStaticVTable&lt;ItemVTable&gt;&gt;(
+) -&gt; (<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, Rc&lt;ItemRTTI&gt;) {
+    <span class="kw">let </span>rtti = ItemRTTI {
+        vtable: T::static_vtable(),
+        type_info: dynamic_type::StaticTypeInfo::new::&lt;T&gt;(),
+        properties: T::properties()
+            .into_iter()
+            .map(|(k, v)| (k, Box::new(v) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>eval::ErasedPropertyInfo&gt;))
+            .collect(),
+        callbacks: T::callbacks()
+            .into_iter()
+            .map(|(k, v)| (k, Box::new(v) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>eval::ErasedCallbackInfo&gt;))
+            .collect(),
+    };
+    (T::name(), Rc::new(rtti))
+}
+
+<span class="doccomment">/// Create a ComponentDescription from a source.
+/// The path corresponding to the source need to be passed as well (path is used for diagnostics
+/// and loading relative assets)
+</span><span class="kw">pub async fn </span>load(
+    source: String,
+    path: std::path::PathBuf,
+    <span class="kw-2">mut </span>compiler_config: CompilerConfiguration,
+    guard: generativity::Guard&lt;<span class="lifetime">&#39;_</span>&gt;,
+) -&gt; (<span class="prelude-ty">Result</span>&lt;Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;_</span>&gt;&gt;, ()&gt;, i_slint_compiler::diagnostics::BuildDiagnostics) {
+    <span class="kw">if </span>compiler_config.style.is_none()
+        &amp;&amp; std::env::var(<span class="string">&quot;SLINT_STYLE&quot;</span>).is_err()
+        &amp;&amp; std::env::var(<span class="string">&quot;SIXTYFPS_STYLE&quot;</span>).is_err()
+    {
+        <span class="comment">// Defaults to native if it exists:
+        </span>compiler_config.style = <span class="prelude-val">Some</span>(<span class="kw">if </span>i_slint_backend_selector::HAS_NATIVE_STYLE {
+            <span class="string">&quot;native&quot;</span>.to_owned()
+        } <span class="kw">else </span>{
+            <span class="string">&quot;fluent&quot;</span>.to_owned()
+        });
+    }
+
+    <span class="kw">let </span><span class="kw-2">mut </span>diag = BuildDiagnostics::default();
+    <span class="kw">let </span>syntax_node = parser::parse(source, <span class="prelude-val">Some</span>(path.as_path()), <span class="kw-2">&amp;mut </span>diag);
+    <span class="kw">if </span>diag.has_error() {
+        <span class="kw">return </span>(<span class="prelude-val">Err</span>(()), diag);
+    }
+    <span class="kw">let </span>(doc, <span class="kw-2">mut </span>diag) = compile_syntax_node(syntax_node, diag, compiler_config).<span class="kw">await</span>;
+    <span class="kw">if </span>diag.has_error() {
+        <span class="kw">return </span>(<span class="prelude-val">Err</span>(()), diag);
+    }
+    <span class="kw">if </span><span class="macro">matches!</span>(doc.root_component.root_element.borrow().base_type, Type::Invalid | Type::Void) {
+        diag.push_error_with_span(<span class="string">&quot;No component found&quot;</span>.into(), Default::default());
+        <span class="kw">return </span>(<span class="prelude-val">Err</span>(()), diag);
+    }
+    (<span class="prelude-val">Ok</span>(generate_component(<span class="kw-2">&amp;</span>doc.root_component, guard)), diag)
+}
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>generate_component&lt;<span class="lifetime">&#39;id</span>&gt;(
+    component: <span class="kw-2">&amp;</span>Rc&lt;object_tree::Component&gt;,
+    guard: generativity::Guard&lt;<span class="lifetime">&#39;id</span>&gt;,
+) -&gt; Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt; {
+    <span class="comment">//dbg!(&amp;*component.root_element.borrow());
+    </span><span class="kw">let </span><span class="kw-2">mut </span>rtti = HashMap::new();
+    {
+        <span class="kw">use </span>i_slint_core::items::<span class="kw-2">*</span>;
+        rtti.extend(
+            [
+                rtti_for::&lt;ImageItem&gt;(),
+                rtti_for::&lt;ClippedImage&gt;(),
+                rtti_for::&lt;Text&gt;(),
+                rtti_for::&lt;Rectangle&gt;(),
+                rtti_for::&lt;BorderRectangle&gt;(),
+                rtti_for::&lt;TouchArea&gt;(),
+                rtti_for::&lt;FocusScope&gt;(),
+                rtti_for::&lt;Path&gt;(),
+                rtti_for::&lt;Flickable&gt;(),
+                rtti_for::&lt;WindowItem&gt;(),
+                rtti_for::&lt;TextInput&gt;(),
+                rtti_for::&lt;Clip&gt;(),
+                rtti_for::&lt;BoxShadow&gt;(),
+                rtti_for::&lt;Rotate&gt;(),
+                rtti_for::&lt;Opacity&gt;(),
+                rtti_for::&lt;Layer&gt;(),
+            ]
+            .iter()
+            .cloned(),
+        );
+
+        <span class="kw">trait </span>NativeHelper {
+            <span class="kw">fn </span>push(rtti: <span class="kw-2">&amp;mut </span>HashMap&lt;<span class="kw-2">&amp;</span>str, Rc&lt;ItemRTTI&gt;&gt;);
+        }
+        <span class="kw">impl </span>NativeHelper <span class="kw">for </span>() {
+            <span class="kw">fn </span>push(_rtti: <span class="kw-2">&amp;mut </span>HashMap&lt;<span class="kw-2">&amp;</span>str, Rc&lt;ItemRTTI&gt;&gt;) {}
+        }
+        <span class="kw">impl</span>&lt;
+                T: <span class="lifetime">&#39;static </span>+ Default + rtti::BuiltinItem + vtable::HasStaticVTable&lt;ItemVTable&gt;,
+                Next: NativeHelper,
+            &gt; NativeHelper <span class="kw">for </span>(T, Next)
+        {
+            <span class="kw">fn </span>push(rtti: <span class="kw-2">&amp;mut </span>HashMap&lt;<span class="kw-2">&amp;</span>str, Rc&lt;ItemRTTI&gt;&gt;) {
+                <span class="kw">let </span>info = rtti_for::&lt;T&gt;();
+                rtti.insert(info.<span class="number">0</span>, info.<span class="number">1</span>);
+                Next::push(rtti);
+            }
+        }
+        i_slint_backend_selector::NativeWidgets::push(<span class="kw-2">&amp;mut </span>rtti);
+    }
+
+    <span class="kw">struct </span>TreeBuilder&lt;<span class="lifetime">&#39;id</span>&gt; {
+        tree_array: Vec&lt;ItemTreeNode&gt;,
+        item_array:
+            Vec&lt;vtable::VOffset&lt;<span class="kw">crate</span>::dynamic_type::Instance&lt;<span class="lifetime">&#39;id</span>&gt;, ItemVTable, vtable::AllowPin&gt;&gt;,
+        original_elements: Vec&lt;ElementRc&gt;,
+        items_types: HashMap&lt;String, ItemWithinComponent&gt;,
+        type_builder: dynamic_type::TypeBuilder&lt;<span class="lifetime">&#39;id</span>&gt;,
+        repeater: Vec&lt;ErasedRepeaterWithinComponent&lt;<span class="lifetime">&#39;id</span>&gt;&gt;,
+        repeater_names: HashMap&lt;String, usize&gt;,
+        rtti: Rc&lt;HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, Rc&lt;ItemRTTI&gt;&gt;&gt;,
+    }
+    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;id</span>&gt; generator::ItemTreeBuilder <span class="kw">for </span>TreeBuilder&lt;<span class="lifetime">&#39;id</span>&gt; {
+        <span class="kw">type </span>SubComponentState = ();
+
+        <span class="kw">fn </span>push_repeated_item(
+            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+            item_rc: <span class="kw-2">&amp;</span>ElementRc,
+            repeater_count: u32,
+            parent_index: u32,
+            _component_state: <span class="kw-2">&amp;</span><span class="self">Self</span>::SubComponentState,
+        ) {
+            <span class="self">self</span>.tree_array
+                .push(ItemTreeNode::DynamicTree { index: repeater_count <span class="kw">as </span>usize, parent_index });
+            <span class="self">self</span>.original_elements.push(item_rc.clone());
+            <span class="kw">let </span>item = item_rc.borrow();
+            <span class="kw">let </span>base_component = item.base_type.as_component();
+            <span class="self">self</span>.repeater_names.insert(item.id.clone(), <span class="self">self</span>.repeater.len());
+            <span class="macro">generativity::make_guard!</span>(guard);
+            <span class="self">self</span>.repeater.push(
+                RepeaterWithinComponent {
+                    component_to_repeat: generate_component(base_component, guard),
+                    offset: <span class="self">self</span>.type_builder.add_field_type::&lt;Repeater&lt;ErasedComponentBox&gt;&gt;(),
+                    model: item.repeated.as_ref().unwrap().model.clone(),
+                }
+                .into(),
+            );
+        }
+
+        <span class="kw">fn </span>push_native_item(
+            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+            rc_item: <span class="kw-2">&amp;</span>ElementRc,
+            child_offset: u32,
+            parent_index: u32,
+            _component_state: <span class="kw-2">&amp;</span><span class="self">Self</span>::SubComponentState,
+        ) {
+            <span class="kw">let </span>item = rc_item.borrow();
+            <span class="kw">let </span>rt = <span class="self">self</span>.rtti.get(<span class="kw-2">&amp;*</span>item.base_type.as_native().class_name).unwrap_or_else(|| {
+                <span class="macro">panic!</span>(<span class="string">&quot;Native type not registered: {}&quot;</span>, item.base_type.as_native().class_name)
+            });
+
+            <span class="kw">let </span>offset = <span class="kw">if </span>item.is_flickable_viewport {
+                <span class="kw">let </span>parent = <span class="kw-2">&amp;</span><span class="self">self</span>.items_types
+                    [<span class="kw-2">&amp;</span>object_tree::find_parent_element(rc_item).unwrap().borrow().id];
+                <span class="macro">assert_eq!</span>(
+                    parent.elem.borrow().base_type.as_native().class_name.as_str(),
+                    <span class="string">&quot;Flickable&quot;
+                </span>);
+                parent.offset + Flickable::FIELD_OFFSETS.viewport.get_byte_offset()
+            } <span class="kw">else </span>{
+                <span class="self">self</span>.type_builder.add_field(rt.type_info)
+            };
+            <span class="self">self</span>.tree_array.push(ItemTreeNode::Item {
+                is_accessible: !item.accessibility_props.<span class="number">0</span>.is_empty(),
+                children_index: child_offset,
+                children_count: item.children.len() <span class="kw">as </span>u32,
+                parent_index,
+                item_array_index: <span class="self">self</span>.item_array.len() <span class="kw">as </span>u32,
+            });
+            <span class="self">self</span>.item_array.push(<span class="kw">unsafe </span>{ vtable::VOffset::from_raw(rt.vtable, offset) });
+            <span class="self">self</span>.original_elements.push(rc_item.clone());
+            <span class="macro">debug_assert_eq!</span>(<span class="self">self</span>.original_elements.len(), <span class="self">self</span>.tree_array.len());
+            <span class="self">self</span>.items_types.insert(
+                item.id.clone(),
+                ItemWithinComponent { offset, rtti: rt.clone(), elem: rc_item.clone() },
+            );
+        }
+
+        <span class="kw">fn </span>enter_component(
+            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+            _item: <span class="kw-2">&amp;</span>ElementRc,
+            _sub_component: <span class="kw-2">&amp;</span>Rc&lt;object_tree::Component&gt;,
+            _children_offset: u32,
+            _component_state: <span class="kw-2">&amp;</span><span class="self">Self</span>::SubComponentState,
+        ) -&gt; <span class="self">Self</span>::SubComponentState {
+            <span class="comment">/* nothing to do */
+        </span>}
+
+        <span class="kw">fn </span>enter_component_children(
+            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+            _item: <span class="kw-2">&amp;</span>ElementRc,
+            _repeater_count: u32,
+            _component_state: <span class="kw-2">&amp;</span><span class="self">Self</span>::SubComponentState,
+            _sub_component_state: <span class="kw-2">&amp;</span><span class="self">Self</span>::SubComponentState,
+        ) {
+            <span class="macro">todo!</span>()
+        }
+    }
+
+    <span class="kw">let </span><span class="kw-2">mut </span>builder = TreeBuilder {
+        tree_array: <span class="macro">vec!</span>[],
+        item_array: <span class="macro">vec!</span>[],
+        original_elements: <span class="macro">vec!</span>[],
+        items_types: HashMap::new(),
+        type_builder: dynamic_type::TypeBuilder::new(guard),
+        repeater: <span class="macro">vec!</span>[],
+        repeater_names: HashMap::new(),
+        rtti: Rc::new(rtti),
+    };
+
+    <span class="kw">if </span>!component.is_global() {
+        generator::build_item_tree(component, <span class="kw-2">&amp;</span>(), <span class="kw-2">&amp;mut </span>builder);
+    }
+
+    <span class="kw">let </span><span class="kw-2">mut </span>custom_properties = HashMap::new();
+    <span class="kw">let </span><span class="kw-2">mut </span>custom_callbacks = HashMap::new();
+    <span class="kw">fn </span>property_info&lt;T: PartialEq + Clone + Default + <span class="lifetime">&#39;static</span>&gt;(
+    ) -&gt; (Box&lt;<span class="kw">dyn </span>PropertyInfo&lt;u8, Value&gt;&gt;, dynamic_type::StaticTypeInfo)
+    <span class="kw">where
+        </span>T: std::convert::TryInto&lt;Value&gt;,
+        Value: std::convert::TryInto&lt;T&gt;,
+    {
+        <span class="comment">// Fixme: using u8 in PropertyInfo&lt;&gt; is not sound, we would need to materialize a type for out component
+        </span>(
+            Box::new(<span class="kw">unsafe </span>{
+                vtable::FieldOffset::&lt;u8, Property&lt;T&gt;, <span class="kw">_</span>&gt;::new_from_offset_pinned(<span class="number">0</span>)
+            }),
+            dynamic_type::StaticTypeInfo::new::&lt;Property&lt;T&gt;&gt;(),
+        )
+    }
+    <span class="kw">fn </span>animated_property_info&lt;T: Clone + Default + InterpolatedPropertyValue + <span class="lifetime">&#39;static</span>&gt;(
+    ) -&gt; (Box&lt;<span class="kw">dyn </span>PropertyInfo&lt;u8, Value&gt;&gt;, dynamic_type::StaticTypeInfo)
+    <span class="kw">where
+        </span>T: std::convert::TryInto&lt;Value&gt;,
+        Value: std::convert::TryInto&lt;T&gt;,
+    {
+        <span class="comment">// Fixme: using u8 in PropertyInfo&lt;&gt; is not sound, we would need to materialize a type for out component
+        </span>(
+            Box::new(<span class="kw">unsafe </span>{
+                rtti::MaybeAnimatedPropertyInfoWrapper(
+                    vtable::FieldOffset::&lt;u8, Property&lt;T&gt;, <span class="kw">_</span>&gt;::new_from_offset_pinned(<span class="number">0</span>),
+                )
+            }),
+            dynamic_type::StaticTypeInfo::new::&lt;Property&lt;T&gt;&gt;(),
+        )
+    }
+
+    <span class="kw">for </span>(name, decl) <span class="kw">in </span><span class="kw-2">&amp;</span>component.root_element.borrow().property_declarations {
+        <span class="kw">if </span>decl.is_alias.is_some() {
+            <span class="kw">continue</span>;
+        }
+        <span class="kw">let </span>(prop, type_info) = <span class="kw">match </span><span class="kw-2">&amp;</span>decl.property_type {
+            Type::Float32 =&gt; animated_property_info::&lt;f32&gt;(),
+            Type::Int32 =&gt; animated_property_info::&lt;i32&gt;(),
+            Type::String =&gt; property_info::&lt;SharedString&gt;(),
+            Type::Color =&gt; animated_property_info::&lt;Color&gt;(),
+            Type::Brush =&gt; animated_property_info::&lt;Brush&gt;(),
+            Type::Duration =&gt; animated_property_info::&lt;i64&gt;(),
+            Type::Angle =&gt; animated_property_info::&lt;f32&gt;(),
+            Type::PhysicalLength =&gt; animated_property_info::&lt;f32&gt;(),
+            Type::LogicalLength =&gt; animated_property_info::&lt;f32&gt;(),
+            Type::Image =&gt; property_info::&lt;i_slint_core::graphics::Image&gt;(),
+            Type::Bool =&gt; property_info::&lt;bool&gt;(),
+            Type::Callback { .. } =&gt; {
+                custom_callbacks
+                    .insert(name.clone(), builder.type_builder.add_field_type::&lt;Callback&gt;());
+                <span class="kw">continue</span>;
+            }
+            Type::Struct { name: <span class="prelude-val">Some</span>(name), .. } <span class="kw">if </span>name.ends_with(<span class="string">&quot;::StateInfo&quot;</span>) =&gt; {
+                property_info::&lt;i_slint_core::properties::StateInfo&gt;()
+            }
+            Type::Struct { .. } =&gt; property_info::&lt;Value&gt;(),
+            Type::Array(<span class="kw">_</span>) =&gt; property_info::&lt;Value&gt;(),
+            Type::Percent =&gt; property_info::&lt;f32&gt;(),
+            Type::Enumeration(e) =&gt; {
+                <span class="macro">macro_rules! </span>match_enum_type {
+                    ($( $(<span class="attribute">#[<span class="macro-nonterminal">$enum_doc</span>:meta]</span>)* <span class="kw">enum </span><span class="macro-nonterminal">$Name</span>:ident { $(<span class="macro-nonterminal">$body</span>:tt)* })<span class="kw-2">*</span>) =&gt; {
+                        <span class="kw">match </span>e.name.as_str() {
+                            $(
+                                <span class="macro">stringify!</span>(<span class="macro-nonterminal">$Name</span>) =&gt; property_info::&lt;i_slint_core::items::<span class="macro-nonterminal">$Name</span>&gt;(),
+                            )*
+                            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown enum&quot;</span>),
+                        }
+                    }
+                }
+                <span class="macro">i_slint_common::for_each_enums!</span>(match_enum_type)
+            }
+            Type::LayoutCache =&gt; property_info::&lt;SharedVector&lt;f32&gt;&gt;(),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;bad type {:?}&quot;</span>, <span class="kw-2">&amp;</span>decl.property_type),
+        };
+        custom_properties.insert(
+            name.clone(),
+            PropertiesWithinComponent { offset: builder.type_builder.add_field(type_info), prop },
+        );
+    }
+    <span class="kw">if </span>component.parent_element.upgrade().is_some() {
+        <span class="kw">let </span>(prop, type_info) = property_info::&lt;u32&gt;();
+        custom_properties.insert(
+            <span class="string">&quot;index&quot;</span>.into(),
+            PropertiesWithinComponent { offset: builder.type_builder.add_field(type_info), prop },
+        );
+        <span class="comment">// FIXME: make it a property for the correct type instead of being generic
+        </span><span class="kw">let </span>(prop, type_info) = property_info::&lt;Value&gt;();
+        custom_properties.insert(
+            <span class="string">&quot;model_data&quot;</span>.into(),
+            PropertiesWithinComponent { offset: builder.type_builder.add_field(type_info), prop },
+        );
+    } <span class="kw">else </span>{
+        <span class="kw">let </span>(prop, type_info) = property_info::&lt;f32&gt;();
+        custom_properties.insert(
+            <span class="string">&quot;scale_factor&quot;</span>.into(),
+            PropertiesWithinComponent { offset: builder.type_builder.add_field(type_info), prop },
+        );
+    }
+
+    <span class="kw">let </span>parent_component_offset = <span class="kw">if </span>component.parent_element.upgrade().is_some() {
+        <span class="prelude-val">Some</span>(builder.type_builder.add_field_type::&lt;<span class="prelude-ty">Option</span>&lt;ComponentRefPin&gt;&gt;())
+    } <span class="kw">else </span>{
+        <span class="prelude-val">None
+    </span>};
+
+    <span class="kw">let </span>window_adapter_offset =
+        builder.type_builder.add_field_type::&lt;<span class="prelude-ty">Option</span>&lt;Rc&lt;<span class="kw">dyn </span>WindowAdapter&gt;&gt;&gt;();
+
+    <span class="kw">let </span>extra_data_offset = builder.type_builder.add_field_type::&lt;ComponentExtraData&gt;();
+
+    <span class="kw">let </span>public_properties = component.root_element.borrow().property_declarations.clone();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>exported_globals_by_name: BTreeMap&lt;String, usize&gt; = Default::default();
+
+    <span class="kw">let </span>compiled_globals = component
+        .used_types
+        .borrow()
+        .globals
+        .iter()
+        .enumerate()
+        .map(|(index, component)| {
+            <span class="kw">let </span><span class="kw-2">mut </span>global = <span class="kw">crate</span>::global_component::generate(component);
+
+            <span class="kw">if </span>component.visible_in_public_api() {
+                global.extend_public_properties(
+                    component.root_element.borrow().property_declarations.clone().into_iter(),
+                );
+
+                exported_globals_by_name.extend(
+                    component
+                        .exported_global_names
+                        .borrow()
+                        .iter()
+                        .map(|exported_name| (exported_name.name.clone(), index)),
+                )
+            }
+
+            global
+        })
+        .collect();
+
+    <span class="kw">let </span>t = ComponentVTable {
+        visit_children_item,
+        layout_info,
+        get_item_ref,
+        get_item_tree,
+        get_subtree_range,
+        get_subtree_component,
+        parent_node,
+        subtree_index,
+        accessible_role,
+        accessible_string_property,
+        drop_in_place,
+        dealloc,
+    };
+    <span class="kw">let </span>t = ComponentDescription {
+        ct: t,
+        dynamic_type: builder.type_builder.build(),
+        item_tree: builder.tree_array,
+        item_array: builder.item_array,
+        items: builder.items_types,
+        custom_properties,
+        custom_callbacks,
+        original: component.clone(),
+        original_elements: builder.original_elements,
+        repeater: builder.repeater,
+        repeater_names: builder.repeater_names,
+        parent_component_offset,
+        window_adapter_offset,
+        extra_data_offset,
+        public_properties,
+        compiled_globals,
+        exported_globals_by_name,
+    };
+
+    Rc::new(t)
+}
+
+<span class="kw">pub fn </span>animation_for_property(
+    component: InstanceRef,
+    animation: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;i_slint_compiler::object_tree::PropertyAnimation&gt;,
+) -&gt; AnimatedBindingKind {
+    <span class="kw">match </span>animation {
+        <span class="prelude-val">Some</span>(i_slint_compiler::object_tree::PropertyAnimation::Static(anim_elem)) =&gt; {
+            AnimatedBindingKind::Animation(eval::new_struct_with_bindings(
+                <span class="kw-2">&amp;</span>anim_elem.borrow().bindings,
+                <span class="kw-2">&amp;mut </span>eval::EvalLocalContext::from_component_instance(component),
+            ))
+        }
+        <span class="prelude-val">Some</span>(i_slint_compiler::object_tree::PropertyAnimation::Transition {
+            animations,
+            state_ref,
+        }) =&gt; {
+            <span class="kw">let </span>component_ptr = component.as_ptr();
+            <span class="kw">let </span>vtable = NonNull::from(<span class="kw-2">&amp;</span>component.component_type.ct).cast();
+            <span class="kw">let </span>animations = animations.clone();
+            <span class="kw">let </span>state_ref = state_ref.clone();
+            AnimatedBindingKind::Transition(Box::new(
+                <span class="kw">move </span>|| -&gt; (PropertyAnimation, i_slint_core::animations::Instant) {
+                    <span class="macro">generativity::make_guard!</span>(guard);
+                    <span class="kw">let </span>component = <span class="kw">unsafe </span>{
+                        InstanceRef::from_pin_ref(
+                            Pin::new_unchecked(vtable::VRef::from_raw(
+                                vtable,
+                                NonNull::new_unchecked(component_ptr <span class="kw">as </span><span class="kw-2">*mut </span>u8),
+                            )),
+                            guard,
+                        )
+                    };
+
+                    <span class="kw">let </span><span class="kw-2">mut </span>context = eval::EvalLocalContext::from_component_instance(component);
+                    <span class="kw">let </span>state = eval::eval_expression(<span class="kw-2">&amp;</span>state_ref, <span class="kw-2">&amp;mut </span>context);
+                    <span class="kw">let </span>state_info: i_slint_core::properties::StateInfo = state.try_into().unwrap();
+                    <span class="kw">for </span>a <span class="kw">in </span><span class="kw-2">&amp;</span>animations {
+                        <span class="kw">if </span>(a.is_out &amp;&amp; a.state_id == state_info.previous_state)
+                            || (!a.is_out &amp;&amp; a.state_id == state_info.current_state)
+                        {
+                            <span class="kw">return </span>(
+                                eval::new_struct_with_bindings(
+                                    <span class="kw-2">&amp;</span>a.animation.borrow().bindings,
+                                    <span class="kw-2">&amp;mut </span>context,
+                                ),
+                                state_info.change_time,
+                            );
+                        }
+                    }
+                    Default::default()
+                },
+            ))
+        }
+        <span class="prelude-val">None </span>=&gt; AnimatedBindingKind::NotAnimated,
+    }
+}
+
+<span class="kw">fn </span>make_callback_eval_closure(
+    expr: Expression,
+    self_weak: <span class="kw-2">&amp;</span>vtable::VWeak&lt;ComponentVTable, ErasedComponentBox&gt;,
+) -&gt; <span class="kw">impl </span>Fn(<span class="kw-2">&amp;</span>[Value]) -&gt; Value {
+    <span class="kw">let </span>self_weak = self_weak.clone();
+    <span class="kw">move </span>|args| {
+        <span class="kw">let </span>self_rc = self_weak.upgrade().unwrap();
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="kw">let </span>self_ = self_rc.unerase(guard);
+        <span class="kw">let </span>instance_ref = self_.borrow_instance();
+        <span class="kw">let </span><span class="kw-2">mut </span>local_context =
+            eval::EvalLocalContext::from_function_arguments(instance_ref, args.to_vec());
+        eval::eval_expression(<span class="kw-2">&amp;</span>expr, <span class="kw-2">&amp;mut </span>local_context)
+    }
+}
+
+<span class="kw">fn </span>make_binding_eval_closure(
+    expr: Expression,
+    self_weak: <span class="kw-2">&amp;</span>vtable::VWeak&lt;ComponentVTable, ErasedComponentBox&gt;,
+) -&gt; <span class="kw">impl </span>Fn() -&gt; Value {
+    <span class="kw">let </span>self_weak = self_weak.clone();
+    <span class="kw">move </span>|| {
+        <span class="kw">let </span>self_rc = self_weak.upgrade().unwrap();
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="kw">let </span>self_ = self_rc.unerase(guard);
+        <span class="kw">let </span>instance_ref = self_.borrow_instance();
+        eval::eval_expression(
+            <span class="kw-2">&amp;</span>expr,
+            <span class="kw-2">&amp;mut </span>eval::EvalLocalContext::from_component_instance(instance_ref),
+        )
+    }
+}
+
+<span class="kw">pub fn </span>instantiate(
+    component_type: Rc&lt;ComponentDescription&gt;,
+    parent_ctx: <span class="prelude-ty">Option</span>&lt;ComponentRefPin&gt;,
+    window_adapter: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Rc&lt;<span class="kw">dyn </span>WindowAdapter&gt;&gt;,
+    <span class="kw-2">mut </span>globals: <span class="kw">crate</span>::global_component::GlobalStorage,
+) -&gt; vtable::VRc&lt;ComponentVTable, ErasedComponentBox&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>instance = component_type.dynamic_type.clone().create_instance();
+
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(parent) = parent_ctx {
+        <span class="kw-2">*</span>component_type.parent_component_offset.unwrap().apply_mut(instance.as_mut()) =
+            <span class="prelude-val">Some</span>(parent);
+    } <span class="kw">else </span>{
+        <span class="kw">for </span>g <span class="kw">in </span><span class="kw-2">&amp;</span>component_type.compiled_globals {
+            <span class="kw">crate</span>::global_component::instantiate(g, <span class="kw-2">&amp;mut </span>globals);
+        }
+        <span class="kw">let </span>extra_data = component_type.extra_data_offset.apply_mut(instance.as_mut());
+        extra_data.globals = globals;
+
+        extra_data.embedded_file_resources = component_type
+            .original
+            .embedded_file_resources
+            .borrow()
+            .iter()
+            .map(|(path, er)| (er.id, path.clone()))
+            .collect();
+    }
+    <span class="kw-2">*</span>component_type.window_adapter_offset.apply_mut(instance.as_mut()) = window_adapter.cloned();
+
+    <span class="kw">let </span>component_box = ComponentBox { instance, component_type: component_type.clone() };
+    <span class="kw">let </span>instance_ref = component_box.borrow_instance();
+
+    <span class="kw">if </span>!component_type.original.is_global() {
+        i_slint_core::component::register_component(
+            instance_ref.instance,
+            instance_ref.component_type.item_array.as_slice(),
+            eval::window_adapter_ref(instance_ref).unwrap(),
+        );
+    }
+
+    <span class="kw">let </span>self_rc = vtable::VRc::new(ErasedComponentBox::from(component_box));
+    <span class="kw">let </span>self_weak = vtable::VRc::downgrade(<span class="kw-2">&amp;</span>self_rc);
+
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>comp = self_rc.unerase(guard);
+    <span class="kw">let </span>instance_ref = comp.borrow_instance();
+    instance_ref.self_weak().set(self_weak.clone()).ok();
+    <span class="kw">let </span>component_type = comp.description();
+
+    <span class="comment">// Some properties are generated as Value, but for which the default constructed Value must be initialized
+    </span><span class="kw">for </span>(prop_name, decl) <span class="kw">in </span><span class="kw-2">&amp;</span>component_type.original.root_element.borrow().property_declarations {
+        <span class="kw">if </span>!<span class="macro">matches!</span>(decl.property_type, Type::Struct { .. } | Type::Array(<span class="kw">_</span>))
+            || decl.is_alias.is_some()
+        {
+            <span class="kw">continue</span>;
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(b) = component_type.original.root_element.borrow().bindings.get(prop_name) {
+            <span class="kw">if </span>b.borrow().two_way_bindings.is_empty() {
+                <span class="kw">continue</span>;
+            }
+        }
+        <span class="kw">let </span>p = component_type.custom_properties.get(prop_name).unwrap();
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>item = Pin::new_unchecked(<span class="kw-2">&amp;*</span>instance_ref.as_ptr().add(p.offset));
+            p.prop.set(item, eval::default_value_for_type(<span class="kw-2">&amp;</span>decl.property_type), <span class="prelude-val">None</span>).unwrap();
+        }
+    }
+
+    generator::handle_property_bindings_init(
+        <span class="kw-2">&amp;</span>component_type.original,
+        |elem, prop_name, binding| <span class="kw">unsafe </span>{
+            <span class="kw">let </span>is_root = Rc::ptr_eq(
+                elem,
+                <span class="kw-2">&amp;</span>elem.borrow().enclosing_component.upgrade().unwrap().root_element,
+            );
+            <span class="kw">let </span>elem = elem.borrow();
+            <span class="kw">let </span>is_const = binding.analysis.as_ref().map_or(<span class="bool-val">false</span>, |a| a.is_const);
+
+            <span class="kw">let </span>property_type = elem.lookup_property(prop_name).property_type;
+            <span class="kw">if let </span>Type::Callback { .. } = property_type {
+                <span class="kw">let </span>expr = binding.expression.clone();
+                <span class="kw">let </span>component_type = component_type.clone();
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(callback_offset) =
+                    component_type.custom_callbacks.get(prop_name).filter(|<span class="kw">_</span>| is_root)
+                {
+                    <span class="kw">let </span>callback = callback_offset.apply(instance_ref.as_ref());
+                    callback.set_handler(make_callback_eval_closure(expr, <span class="kw-2">&amp;</span>self_weak));
+                } <span class="kw">else </span>{
+                    <span class="kw">let </span>item_within_component = <span class="kw-2">&amp;</span>component_type.items[<span class="kw-2">&amp;</span>elem.id];
+                    <span class="kw">let </span>item = item_within_component.item_from_component(instance_ref.as_ptr());
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(callback) = item_within_component.rtti.callbacks.get(prop_name) {
+                        callback.set_handler(
+                            item,
+                            Box::new(make_callback_eval_closure(expr, <span class="kw-2">&amp;</span>self_weak)),
+                        );
+                    } <span class="kw">else </span>{
+                        <span class="macro">panic!</span>(<span class="string">&quot;unknown callback {}&quot;</span>, prop_name)
+                    }
+                }
+            } <span class="kw">else if let </span><span class="prelude-val">Some</span>(PropertiesWithinComponent { offset, prop: prop_info, .. }) =
+                component_type.custom_properties.get(prop_name).filter(|<span class="kw">_</span>| is_root)
+            {
+                <span class="kw">let </span>is_state_info = <span class="macro">matches!</span>(property_type, Type::Struct { name: <span class="prelude-val">Some</span>(name), .. } <span class="kw">if </span>name.ends_with(<span class="string">&quot;::StateInfo&quot;</span>));
+                <span class="kw">if </span>is_state_info {
+                    <span class="kw">let </span>prop = Pin::new_unchecked(
+                        <span class="kw-2">&amp;*</span>(instance_ref.as_ptr().add(<span class="kw-2">*</span>offset)
+                            <span class="kw">as </span><span class="kw-2">*const </span>Property&lt;i_slint_core::properties::StateInfo&gt;),
+                    );
+                    <span class="kw">let </span>e = binding.expression.clone();
+                    <span class="kw">let </span>state_binding = make_binding_eval_closure(e, <span class="kw-2">&amp;</span>self_weak);
+                    i_slint_core::properties::set_state_binding(prop, <span class="kw">move </span>|| {
+                        state_binding().try_into().unwrap()
+                    });
+                    <span class="kw">return</span>;
+                }
+
+                <span class="kw">let </span>maybe_animation = animation_for_property(instance_ref, <span class="kw-2">&amp;</span>binding.animation);
+                <span class="kw">let </span>item = Pin::new_unchecked(<span class="kw-2">&amp;*</span>instance_ref.as_ptr().add(<span class="kw-2">*</span>offset));
+
+                <span class="kw">if </span>!<span class="macro">matches!</span>(binding.expression, Expression::Invalid) {
+                    <span class="kw">if </span>is_const {
+                        <span class="kw">let </span>v = eval::eval_expression(
+                            <span class="kw-2">&amp;</span>binding.expression,
+                            <span class="kw-2">&amp;mut </span>eval::EvalLocalContext::from_component_instance(instance_ref),
+                        );
+                        prop_info.set(item, v, <span class="prelude-val">None</span>).unwrap();
+                    } <span class="kw">else </span>{
+                        <span class="kw">let </span>e = binding.expression.clone();
+                        prop_info
+                            .set_binding(
+                                item,
+                                Box::new(make_binding_eval_closure(e, <span class="kw-2">&amp;</span>self_weak)),
+                                maybe_animation,
+                            )
+                            .unwrap();
+                    }
+                }
+                <span class="kw">for </span>nr <span class="kw">in </span><span class="kw-2">&amp;</span>binding.two_way_bindings {
+                    <span class="comment">// Safety: The compiler must have ensured that the properties exist and are of the same type
+                    </span>prop_info.link_two_ways(item, get_property_ptr(nr, instance_ref));
+                }
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>item_within_component = <span class="kw-2">&amp;</span>component_type.items[<span class="kw-2">&amp;</span>elem.id];
+                <span class="kw">let </span>item = item_within_component.item_from_component(instance_ref.as_ptr());
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(prop_rtti) = item_within_component.rtti.properties.get(prop_name) {
+                    <span class="kw">let </span>maybe_animation = animation_for_property(instance_ref, <span class="kw-2">&amp;</span>binding.animation);
+                    <span class="kw">for </span>nr <span class="kw">in </span><span class="kw-2">&amp;</span>binding.two_way_bindings {
+                        <span class="comment">// Safety: The compiler must have ensured that the properties exist and are of the same type
+                        </span>prop_rtti.link_two_ways(item, get_property_ptr(nr, instance_ref));
+                    }
+                    <span class="kw">if </span>!<span class="macro">matches!</span>(binding.expression, Expression::Invalid) {
+                        <span class="kw">if </span>is_const {
+                            prop_rtti
+                                .set(
+                                    item,
+                                    eval::eval_expression(
+                                        <span class="kw-2">&amp;</span>binding.expression,
+                                        <span class="kw-2">&amp;mut </span>eval::EvalLocalContext::from_component_instance(
+                                            instance_ref,
+                                        ),
+                                    ),
+                                    maybe_animation.as_animation(),
+                                )
+                                .unwrap();
+                        } <span class="kw">else </span>{
+                            <span class="kw">let </span>e = binding.expression.clone();
+                            prop_rtti.set_binding(
+                                item,
+                                Box::new(make_binding_eval_closure(e, <span class="kw-2">&amp;</span>self_weak)),
+                                maybe_animation,
+                            );
+                        }
+                    }
+                } <span class="kw">else </span>{
+                    <span class="macro">panic!</span>(<span class="string">&quot;unknown property {}&quot;</span>, prop_name);
+                }
+            }
+        },
+    );
+
+    <span class="kw">for </span>rep_in_comp <span class="kw">in </span><span class="kw-2">&amp;</span>component_type.repeater {
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="kw">let </span>rep_in_comp = rep_in_comp.unerase(guard);
+
+        <span class="kw">let </span>repeater = rep_in_comp.offset.apply_pin(instance_ref.instance);
+        <span class="kw">let </span>expr = rep_in_comp.model.clone();
+        <span class="kw">let </span>model_binding_closure = make_binding_eval_closure(expr, <span class="kw-2">&amp;</span>self_weak);
+        repeater.set_model_binding(<span class="kw">move </span>|| {
+            <span class="kw">let </span>m = model_binding_closure();
+            i_slint_core::model::ModelRc::new(<span class="kw">crate</span>::value_model::ValueModel::new(m))
+        });
+    }
+
+    self_rc
+}
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>get_property_ptr(nr: <span class="kw-2">&amp;</span>NamedReference, instance: InstanceRef) -&gt; <span class="kw-2">*const </span>() {
+    <span class="kw">let </span>element = nr.element();
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>enclosing_component = eval::enclosing_component_instance_for_element(
+        <span class="kw-2">&amp;</span>element,
+        eval::ComponentInstance::InstanceRef(instance),
+        guard,
+    );
+    <span class="kw">match </span>enclosing_component {
+        eval::ComponentInstance::InstanceRef(enclosing_component) =&gt; {
+            <span class="kw">let </span>element = element.borrow();
+            <span class="kw">if </span>element.id == element.enclosing_component.upgrade().unwrap().root_element.borrow().id
+            {
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(x) = enclosing_component.component_type.custom_properties.get(nr.name())
+                {
+                    <span class="kw">return unsafe </span>{ enclosing_component.as_ptr().add(x.offset).cast() };
+                };
+            };
+            <span class="kw">let </span>item_info = enclosing_component
+                .component_type
+                .items
+                .get(element.id.as_str())
+                .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;Unknown element for {}.{}&quot;</span>, element.id, nr.name()));
+            <span class="kw">let </span>prop_info = item_info
+                .rtti
+                .properties
+                .get(nr.name())
+                .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;Property {} not in {}&quot;</span>, nr.name(), element.id));
+            core::mem::drop(element);
+            <span class="kw">let </span>item = <span class="kw">unsafe </span>{ item_info.item_from_component(enclosing_component.as_ptr()) };
+            <span class="kw">unsafe </span>{ item.as_ptr().add(prop_info.offset()).cast() }
+        }
+        eval::ComponentInstance::GlobalComponent(glob) =&gt; glob.as_ref().get_property_ptr(nr.name()),
+    }
+}
+
+<span class="kw">pub struct </span>ErasedComponentBox(ComponentBox&lt;<span class="lifetime">&#39;static</span>&gt;);
+<span class="kw">impl </span>ErasedComponentBox {
+    <span class="kw">pub fn </span>unerase&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
+        _guard: generativity::Guard&lt;<span class="lifetime">&#39;id</span>&gt;,
+    ) -&gt; Pin&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ComponentBox&lt;<span class="lifetime">&#39;id</span>&gt;&gt; {
+        Pin::new(
+            <span class="comment">//Safety: &#39;id is unique because of `_guard`
+            </span><span class="kw">unsafe </span>{ core::mem::transmute::&lt;<span class="kw-2">&amp;</span>ComponentBox&lt;<span class="lifetime">&#39;static</span>&gt;, <span class="kw-2">&amp;</span>ComponentBox&lt;<span class="lifetime">&#39;id</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>) },
+        )
+    }
+
+    <span class="kw">pub fn </span>borrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ComponentRefPin {
+        <span class="comment">// Safety: it is safe to access self.0 here because the &#39;id lifetime does not leak
+        </span><span class="self">self</span>.<span class="number">0</span>.borrow()
+    }
+
+    <span class="kw">pub fn </span>window_adapter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Rc&lt;<span class="kw">dyn </span>WindowAdapter&gt; {
+        <span class="self">self</span>.<span class="number">0</span>.window_adapter()
+    }
+
+    <span class="kw">pub fn </span>run_setup_code(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="macro">generativity::make_guard!</span>(guard);
+        <span class="kw">let </span>compo_box = <span class="self">self</span>.unerase(guard);
+        <span class="kw">let </span>instance_ref = compo_box.borrow_instance();
+        <span class="kw">for </span>extra_init_code <span class="kw">in </span><span class="self">self</span>.<span class="number">0</span>.component_type.original.setup_code.borrow().iter() {
+            eval::eval_expression(
+                extra_init_code,
+                <span class="kw-2">&amp;mut </span>eval::EvalLocalContext::from_component_instance(instance_ref),
+            );
+        }
+    }
+}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;id</span>&gt; From&lt;ComponentBox&lt;<span class="lifetime">&#39;id</span>&gt;&gt; <span class="kw">for </span>ErasedComponentBox {
+    <span class="kw">fn </span>from(inner: ComponentBox&lt;<span class="lifetime">&#39;id</span>&gt;) -&gt; <span class="self">Self </span>{
+        <span class="comment">// Safety: Nothing access the component directly, we only access it through unerased where
+        // the lifetime is unique again
+        </span><span class="kw">unsafe </span>{
+            ErasedComponentBox(core::mem::transmute::&lt;ComponentBox&lt;<span class="lifetime">&#39;id</span>&gt;, ComponentBox&lt;<span class="lifetime">&#39;static</span>&gt;&gt;(
+                inner,
+            ))
+        }
+    }
+}
+
+<span class="kw">pub fn </span>get_repeater_by_name&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt;(
+    instance_ref: InstanceRef&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;_</span>&gt;,
+    name: <span class="kw-2">&amp;</span>str,
+    guard: generativity::Guard&lt;<span class="lifetime">&#39;id</span>&gt;,
+) -&gt; (std::pin::Pin&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Repeater&lt;ErasedComponentBox&gt;&gt;, Rc&lt;ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;&gt;) {
+    <span class="kw">let </span>rep_index = instance_ref.component_type.repeater_names[name];
+    <span class="kw">let </span>rep_in_comp = instance_ref.component_type.repeater[rep_index].unerase(guard);
+    (rep_in_comp.offset.apply_pin(instance_ref.instance), rep_in_comp.component_to_repeat.clone())
+}
+
+<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>layout_info(component: ComponentRefPin, orientation: Orientation) -&gt; LayoutInfo {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="comment">// This is fine since we can only be called with a component that with our vtable which is a ComponentDescription
+    </span><span class="kw">let </span>instance_ref = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+    <span class="kw">let </span>orientation = <span class="kw">crate</span>::eval_layout::from_runtime(orientation);
+
+    <span class="kw">let </span><span class="kw-2">mut </span>result = <span class="kw">crate</span>::eval_layout::get_layout_info(
+        <span class="kw-2">&amp;</span>instance_ref.component_type.original.root_element,
+        instance_ref,
+        eval::window_adapter_ref(instance_ref).unwrap(),
+        orientation,
+    );
+
+    <span class="kw">let </span>constraints = instance_ref.component_type.original.root_constraints.borrow();
+    <span class="kw">if </span>constraints.has_explicit_restrictions() {
+        <span class="kw">crate</span>::eval_layout::fill_layout_info_constraints(
+            <span class="kw-2">&amp;mut </span>result,
+            <span class="kw-2">&amp;</span>constraints,
+            orientation,
+            <span class="kw-2">&amp;</span>|nr: <span class="kw-2">&amp;</span>NamedReference| {
+                eval::load_property(instance_ref, <span class="kw-2">&amp;</span>nr.element(), nr.name())
+                    .unwrap()
+                    .try_into()
+                    .unwrap()
+            },
+        );
+    }
+    result
+}
+
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>get_item_ref(component: ComponentRefPin, index: usize) -&gt; Pin&lt;ItemRef&gt; {
+    <span class="kw">let </span>tree = get_item_tree(component);
+    <span class="kw">match </span><span class="kw-2">&amp;</span>tree[index] {
+        ItemTreeNode::Item { item_array_index, .. } =&gt; {
+            <span class="macro">generativity::make_guard!</span>(guard);
+            <span class="kw">let </span>instance_ref = InstanceRef::from_pin_ref(component, guard);
+            core::mem::transmute::&lt;Pin&lt;ItemRef&gt;, Pin&lt;ItemRef&gt;&gt;(
+                instance_ref.component_type.item_array[<span class="kw-2">*</span>item_array_index <span class="kw">as </span>usize]
+                    .apply_pin(instance_ref.instance),
+            )
+        }
+        ItemTreeNode::DynamicTree { .. } =&gt; <span class="macro">panic!</span>(<span class="string">&quot;get_item_ref called on dynamic tree&quot;</span>),
+    }
+}
+
+<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>get_subtree_range(component: ComponentRefPin, index: usize) -&gt; IndexRange {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>instance_ref = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+    <span class="kw">let </span>rep_in_comp = <span class="kw">unsafe </span>{ instance_ref.component_type.repeater[index].get_untagged() };
+    ensure_repeater_updated(instance_ref, rep_in_comp);
+
+    <span class="kw">let </span>repeater = rep_in_comp.offset.apply(<span class="kw-2">&amp;</span>instance_ref.instance);
+    <span class="kw">let </span>(start, end) = repeater.range();
+    IndexRange { start, end }
+}
+
+<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>get_subtree_component(
+    component: ComponentRefPin,
+    index: usize,
+    subtree_index: usize,
+    result: <span class="kw-2">&amp;mut </span>ComponentWeak,
+) {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>instance_ref = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+    <span class="kw">let </span>rep_in_comp = <span class="kw">unsafe </span>{ instance_ref.component_type.repeater[index].get_untagged() };
+    ensure_repeater_updated(instance_ref, rep_in_comp);
+
+    <span class="kw">let </span>repeater = rep_in_comp.offset.apply(<span class="kw-2">&amp;</span>instance_ref.instance);
+    <span class="kw-2">*</span>result = vtable::VRc::downgrade(<span class="kw-2">&amp;</span>vtable::VRc::into_dyn(
+        repeater.component_at(subtree_index).unwrap(),
+    ))
+}
+
+<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>get_item_tree(component: ComponentRefPin) -&gt; Slice&lt;ItemTreeNode&gt; {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>instance_ref = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+    <span class="kw">let </span>tree = instance_ref.component_type.item_tree.as_slice();
+    <span class="kw">unsafe </span>{ core::mem::transmute::&lt;<span class="kw-2">&amp;</span>[ItemTreeNode], <span class="kw-2">&amp;</span>[ItemTreeNode]&gt;(tree) }.into()
+}
+
+<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>subtree_index(component: ComponentRefPin) -&gt; usize {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>instance_ref = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+    <span class="kw">if let </span><span class="prelude-val">Ok</span>(value) = instance_ref.component_type.get_property(component, <span class="string">&quot;index&quot;</span>) {
+        value.try_into().unwrap()
+    } <span class="kw">else </span>{
+        core::usize::MAX
+    }
+}
+
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>parent_node(component: ComponentRefPin, result: <span class="kw-2">&amp;mut </span>ItemWeak) {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>instance_ref = InstanceRef::from_pin_ref(component, guard);
+    <span class="kw">let </span>parent_item_index = instance_ref
+        .component_type
+        .original
+        .parent_element
+        .upgrade()
+        .and_then(|e| e.borrow().item_index.get().cloned());
+    <span class="kw">if let </span>(<span class="prelude-val">Some</span>(parent_offset), <span class="prelude-val">Some</span>(parent_index)) =
+        (instance_ref.component_type.parent_component_offset, parent_item_index)
+    {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(parent) = parent_offset.apply(instance_ref.as_ref()) {
+            <span class="macro">generativity::make_guard!</span>(new_guard);
+            <span class="kw">let </span>parent_instance = InstanceRef::from_pin_ref(<span class="kw-2">*</span>parent, new_guard);
+            <span class="kw">let </span>parent_rc =
+                parent_instance.self_weak().get().unwrap().clone().into_dyn().upgrade().unwrap();
+            <span class="kw-2">*</span>result = ItemRc::new(parent_rc, parent_index).downgrade();
+        };
+    }
+}
+
+<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>accessible_role(component: ComponentRefPin, item_index: usize) -&gt; AccessibleRole {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>instance_ref = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+    <span class="kw">let </span>nr = instance_ref.component_type.original_elements[item_index]
+        .borrow()
+        .accessibility_props
+        .<span class="number">0
+        </span>.get(<span class="string">&quot;accessible-role&quot;</span>)
+        .cloned();
+    <span class="kw">match </span>nr {
+        <span class="prelude-val">Some</span>(nr) =&gt; <span class="kw">crate</span>::eval::load_property(instance_ref, <span class="kw-2">&amp;</span>nr.element(), nr.name())
+            .unwrap()
+            .try_into()
+            .unwrap(),
+        <span class="prelude-val">None </span>=&gt; AccessibleRole::default(),
+    }
+}
+<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>accessible_string_property(
+    component: ComponentRefPin,
+    item_index: usize,
+    what: AccessibleStringProperty,
+    result: <span class="kw-2">&amp;mut </span>SharedString,
+) {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="kw">let </span>instance_ref = <span class="kw">unsafe </span>{ InstanceRef::from_pin_ref(component, guard) };
+    <span class="kw">let </span>prop_name = <span class="macro">format!</span>(<span class="string">&quot;accessible-{}&quot;</span>, what.to_string());
+    <span class="kw">let </span>nr = instance_ref.component_type.original_elements[item_index]
+        .borrow()
+        .accessibility_props
+        .<span class="number">0
+        </span>.get(<span class="kw-2">&amp;</span>prop_name)
+        .cloned();
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(nr) = nr {
+        <span class="kw">let </span>value = <span class="kw">crate</span>::eval::load_property(instance_ref, <span class="kw-2">&amp;</span>nr.element(), nr.name()).unwrap();
+        <span class="kw">match </span>value {
+            Value::String(s) =&gt; <span class="kw-2">*</span>result = s,
+            Value::Bool(b) =&gt; <span class="kw-2">*</span>result = <span class="kw">if </span>b { <span class="string">&quot;true&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;false&quot; </span>}.into(),
+            Value::Number(x) =&gt; <span class="kw-2">*</span>result = x.to_string().into(),
+            <span class="kw">_ </span>=&gt; <span class="macro">unimplemented!</span>(<span class="string">&quot;invalid type for accessible_string_property&quot;</span>),
+        };
+    }
+}
+
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>drop_in_place(component: vtable::VRefMut&lt;ComponentVTable&gt;) -&gt; vtable::Layout {
+    <span class="kw">let </span>instance_ptr = component.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span>Instance&lt;<span class="lifetime">&#39;static</span>&gt;;
+    <span class="kw">let </span>layout = (<span class="kw-2">*</span>instance_ptr).type_info().layout();
+    dynamic_type::TypeInfo::drop_in_place(instance_ptr);
+    layout.into()
+}
+
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>dealloc(_vtable: <span class="kw-2">&amp;</span>ComponentVTable, ptr: <span class="kw-2">*mut </span>u8, layout: vtable::Layout) {
+    std::alloc::dealloc(ptr, layout.try_into().unwrap());
+}
+
+<span class="attribute">#[derive(Copy, Clone)]
+</span><span class="kw">pub struct </span>InstanceRef&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt; {
+    <span class="kw">pub </span>instance: Pin&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Instance&lt;<span class="lifetime">&#39;id</span>&gt;&gt;,
+    <span class="kw">pub </span>component_type: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt; InstanceRef&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt; {
+    <span class="kw">pub unsafe fn </span>from_pin_ref(
+        component: ComponentRefPin&lt;<span class="lifetime">&#39;a</span>&gt;,
+        _guard: generativity::Guard&lt;<span class="lifetime">&#39;id</span>&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            instance: Pin::new_unchecked(<span class="kw-2">&amp;*</span>(component.as_ref().as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>Instance&lt;<span class="lifetime">&#39;id</span>&gt;)),
+            component_type: <span class="kw-2">&amp;*</span>(Pin::into_inner_unchecked(component).get_vtable()
+                <span class="kw">as </span><span class="kw-2">*const </span>ComponentVTable
+                <span class="kw">as </span><span class="kw-2">*const </span>ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;),
+        }
+    }
+
+    <span class="kw">pub fn </span>as_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*const </span>u8 {
+        (<span class="kw-2">&amp;*</span><span class="self">self</span>.instance.as_ref()) <span class="kw">as </span><span class="kw-2">*const </span>Instance <span class="kw">as </span><span class="kw-2">*const </span>u8
+    }
+
+    <span class="kw">pub fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Instance&lt;<span class="lifetime">&#39;id</span>&gt; {
+        <span class="kw-2">&amp;*</span><span class="self">self</span>.instance
+    }
+
+    <span class="doccomment">/// Borrow this component as a `Pin&lt;ComponentRef&gt;`
+    </span><span class="kw">pub fn </span>borrow(<span class="self">self</span>) -&gt; ComponentRefPin&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">unsafe </span>{
+            Pin::new_unchecked(vtable::VRef::from_raw(
+                NonNull::from(<span class="kw-2">&amp;</span><span class="self">self</span>.component_type.ct).cast(),
+                NonNull::from(<span class="self">self</span>.instance.get_ref()).cast(),
+            ))
+        }
+    }
+
+    <span class="kw">pub fn </span>self_weak(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    ) -&gt; <span class="kw-2">&amp;</span>once_cell::unsync::OnceCell&lt;vtable::VWeak&lt;ComponentVTable, ErasedComponentBox&gt;&gt; {
+        <span class="kw">let </span>extra_data = <span class="self">self</span>.component_type.extra_data_offset.apply(<span class="self">self</span>.as_ref());
+        <span class="kw-2">&amp;</span>extra_data.self_weak
+    }
+
+    <span class="kw">pub fn </span>window_adapter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Rc&lt;<span class="kw">dyn </span>WindowAdapter&gt; {
+        <span class="self">self</span>.component_type.window_adapter_offset.apply(<span class="self">self</span>.as_ref()).as_ref().as_ref().unwrap()
+    }
+
+    <span class="kw">pub fn </span>parent_instance(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;InstanceRef&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt;&gt; {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(parent_offset) = <span class="self">self</span>.component_type.parent_component_offset {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(parent) = parent_offset.apply(<span class="self">self</span>.as_ref()) {
+                <span class="kw">let </span>parent_instance = <span class="kw">unsafe </span>{
+                    <span class="self">Self </span>{
+                        instance: Pin::new_unchecked(
+                            <span class="kw-2">&amp;*</span>(parent.as_ref().as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>Instance&lt;<span class="lifetime">&#39;id</span>&gt;),
+                        ),
+                        component_type: <span class="kw-2">&amp;*</span>(Pin::into_inner_unchecked(<span class="kw-2">*</span>parent).get_vtable()
+                            <span class="kw">as </span><span class="kw-2">*const </span>ComponentVTable
+                            <span class="kw">as </span><span class="kw-2">*const </span>ComponentDescription&lt;<span class="lifetime">&#39;id</span>&gt;),
+                    }
+                };
+                <span class="kw">return </span><span class="prelude-val">Some</span>(parent_instance);
+            };
+        }
+        <span class="prelude-val">None
+    </span>}
+
+    <span class="kw">pub fn </span>toplevel_instance(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; InstanceRef&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;id</span>&gt; {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(parent) = <span class="self">self</span>.parent_instance() {
+            parent.toplevel_instance()
+        } <span class="kw">else </span>{
+            <span class="kw-2">*</span><span class="self">self
+        </span>}
+    }
+}
+
+<span class="doccomment">/// Show the popup at the given location
+</span><span class="kw">pub fn </span>show_popup(
+    popup: <span class="kw-2">&amp;</span>object_tree::PopupWindow,
+    pos: i_slint_core::graphics::Point,
+    parent_comp: ComponentRefPin,
+    parent_window_adapter: <span class="kw-2">&amp;</span>Rc&lt;<span class="kw">dyn </span>WindowAdapter&gt;,
+    parent_item: <span class="kw-2">&amp;</span>ItemRc,
+) {
+    <span class="macro">generativity::make_guard!</span>(guard);
+    <span class="comment">// FIXME: we should compile once and keep the cached compiled component
+    </span><span class="kw">let </span>compiled = generate_component(<span class="kw-2">&amp;</span>popup.component, guard);
+    <span class="kw">let </span>inst =
+        instantiate(compiled, <span class="prelude-val">Some</span>(parent_comp), <span class="prelude-val">Some</span>(parent_window_adapter), Default::default());
+    inst.run_setup_code();
+    WindowInner::from_pub(parent_window_adapter.window()).show_popup(
+        <span class="kw-2">&amp;</span>vtable::VRc::into_dyn(inst),
+        pos,
+        parent_item,
+    );
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="slint_interpreter" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (17cbdfd07 2022-09-13)" ></div></body></html>

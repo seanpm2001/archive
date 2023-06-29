@@ -1,0 +1,1645 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>The .60 language reference &mdash; SixtyFPS C++  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_tweak.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+<!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.2/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+    //import * as sixtyfps from 'https://sixtyfps.io/snapshots/master/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+        await sixtyfps.default();
+        var elements = document.querySelectorAll("code.language-60, .rustdoc pre.language-60, div.highlight-60");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.60` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://sixtyfps.io/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://sixtyfps.io/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("60", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'sixtyfps',
+      aliases: ['60'],
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .60 blocks, leave the others to rustdoc
+      for (dot60Block of document.querySelectorAll(".language-60")) {
+        hljs.highlightElement(dot60Block)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-60.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-60 div.highlight pre, div.highlight-60-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Builtin Elements" href="builtin_elements.html" />
+    <link rel="prev" title="The .60 UI Design Language" href="../language.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> SixtyFPS C++
+          
+
+          
+            
+            <img src="../_static/logo.drawio.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cmake.html">Installing and Building with CMake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cmake.html#building-from-sources">Building from Sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cmake.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cmake.html#cross-compiling">Cross-compiling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cmake.html#binary-packages">Binary Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">First Steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#tutorial">Tutorial</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .60 Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#compiled-60-designs">Compiled <code class="docutils literal notranslate"><span class="pre">.60</span></code> designs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#run-time-interpreted-60-designs">Run-time interpreted <code class="docutils literal notranslate"><span class="pre">.60</span></code> designs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">Type Mapping to C++</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../types.html#structures">Structures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../generated_code.html">Example Generated Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../generated_code.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated_code.html#global-singletons">Global Singletons</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api/library_root.html">C++ API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/library_root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/library_root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/library_root.html#full-api">Full API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/library_root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/namespace_sixtyfps.html">Namespace sixtyfps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/namespace_sixtyfps__interpreter.html">Namespace sixtyfps::interpreter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/namespace_sixtyfps__testing.html">Namespace sixtyfps::testing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/library_root.html#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1Size.html">Struct Size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/structsixtyfps_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1Color.html">Class Color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/classsixtyfps_1_1Window.html">Class Window</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/library_root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/enum_namespacesixtyfps_1_1interpreter_1a85ae006089fa9b6fad66b2c5c73d4f3b.html">Enum DiagnosticLevel</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/library_root.html#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/function_namespacesixtyfps_1a60bd318798158c03db499054d4586aa7.html">Template Function sixtyfps::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/function_namespacesixtyfps_1acfc4b71092d63a5fbd0cbc8471e4da52.html">Template Function sixtyfps::invoke_from_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/function_namespacesixtyfps_1a19e5480ac7f0311efafac58b65b38b20.html">Function sixtyfps::quit_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/function_namespacesixtyfps_1ab1b9b4016714eee96dba1457ce2a3b22.html">Function sixtyfps::run_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/function_sixtyfps__interpreter_8h_1a1fb76b7fe83dc1239891629feca150bd.html">Function sixtyfps::testing::send_keyboard_string_sequence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index (C++)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../language.html">The .60 UI Design Language</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Language Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#files"><code class="docutils literal notranslate"><span class="pre">.60</span></code> files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#container-components">Container Components</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identifiers">Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#properties">Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bindings">Bindings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-way-bindings">Two-way Bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#types">Types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#structs">Structs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#custom-named-structures">Custom named structures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arrays-model">Arrays / Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conversions">Conversions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#relative-lengths">Relative Lengths</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#callback">Callback</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#callback-aliases">Callback aliases</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#expressions">Expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#strings">Strings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#colors">Colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#images">Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arrays-structs">Arrays/Structs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#statements">Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#repetition">Repetition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#conditional-element">Conditional element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#animations">Animations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#states">States</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#transitions">Transitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#global-singletons">Global Singletons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules">Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#focus-handling">Focus Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#builtin-functions">Builtin functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#font-handling">Font Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_elements.html">Builtin Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#common-properties">Common properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#drop-shadows">Drop Shadows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#properties">Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id1">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id2">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#text"><code class="docutils literal notranslate"><span class="pre">Text</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id4">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id5">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#common-path-properties">Common Path Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#toucharea"><code class="docutils literal notranslate"><span class="pre">TouchArea</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id11">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id12">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#focusscope"><code class="docutils literal notranslate"><span class="pre">FocusScope</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id13">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id14">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id15">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#verticallayout-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> / <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#id16">Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#id17">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#gridlayout"><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id18">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#pathlayout"><code class="docutils literal notranslate"><span class="pre">PathLayout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#flickable"><code class="docutils literal notranslate"><span class="pre">Flickable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#textinput"><code class="docutils literal notranslate"><span class="pre">TextInput</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id19">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id20">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id21">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id22">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#popupwindow"><code class="docutils literal notranslate"><span class="pre">PopupWindow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id23">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id24">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_elements.html#builtin-structures">Builtin Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#point"><code class="docutils literal notranslate"><span class="pre">Point</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#fields">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#keyevent"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id25">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#keyboardmodifiers"><code class="docutils literal notranslate"><span class="pre">KeyboardModifiers</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id26">Fields</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_elements.html#builtin-enums">Builtin Enums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#texthorizontalalignment"><code class="docutils literal notranslate"><span class="pre">TextHorizontalAlignment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#values">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#textverticalalignment"><code class="docutils literal notranslate"><span class="pre">TextVerticalAlignment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id27">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#textwrap"><code class="docutils literal notranslate"><span class="pre">TextWrap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id28">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#textoverflow"><code class="docutils literal notranslate"><span class="pre">TextOverflow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id29">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#eventresult"><code class="docutils literal notranslate"><span class="pre">EventResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id30">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="builtin_elements.html#fillrule"><code class="docutils literal notranslate"><span class="pre">FillRule</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="builtin_elements.html#id31">Values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="widgets.html">Widgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#properties">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#checkbox"><code class="docutils literal notranslate"><span class="pre">CheckBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id1">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id2">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#spinbox"><code class="docutils literal notranslate"><span class="pre">SpinBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id4">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id5">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#slider"><code class="docutils literal notranslate"><span class="pre">Slider</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id6">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id7">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id8">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#groupbox"><code class="docutils literal notranslate"><span class="pre">GroupBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id9">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id10">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#lineedit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id11">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id12">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id13">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#textedit"><code class="docutils literal notranslate"><span class="pre">TextEdit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id14">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id15">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id16">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#scrollview"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id17">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id18">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#listview"><code class="docutils literal notranslate"><span class="pre">ListView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id19">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id20">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#standardlistview"><code class="docutils literal notranslate"><span class="pre">StandardListView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id21">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id22">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#combobox"><code class="docutils literal notranslate"><span class="pre">ComboBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id23">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id24">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id25">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#tabwidget"><code class="docutils literal notranslate"><span class="pre">TabWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#properties-of-the-tab-element">Properties of the <code class="docutils literal notranslate"><span class="pre">Tab</span></code> element</a></li>
+<li class="toctree-l4"><a class="reference internal" href="widgets.html#id26">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="widgets.html#horizontalbox-verticalbox-gridbox"><code class="docutils literal notranslate"><span class="pre">HorizontalBox</span></code>, <code class="docutils literal notranslate"><span class="pre">VerticalBox</span></code>, <code class="docutils literal notranslate"><span class="pre">GridBox</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="layouting.html">Positioning and Layout of Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="layouting.html#explicit-placement">Explicit Placement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouting.html#automatic-placement-using-layouts">Automatic Placement using Layouts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouting.html#common-properties-on-layout-elements">Common Properties on Layout Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouting.html#verticallayout-and-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="layouting.html#alignment">Alignment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layouting.html#stretch-algorithm">Stretch algorithm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layouting.html#for"><code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="layouting.html#gridlayout">GridLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouting.html#pathlayout"><code class="docutils literal notranslate"><span class="pre">PathLayout</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SixtyFPS C++</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../language.html">The .60 UI Design Language</a> &raquo;</li>
+        
+      <li>The <code class="docutils literal notranslate"><span class="pre">.60</span></code> language reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-60-language-reference">
+<h1>The <code class="docutils literal notranslate"><span class="pre">.60</span></code> language reference<a class="headerlink" href="#the-60-language-reference" title="Permalink to this headline">¶</a></h1>
+<p>This page is work in progress as the language is not yet set in stones.
+<code class="docutils literal notranslate"><span class="pre">TODO</span></code> indicates things that are not yet implemented.</p>
+<div class="section" id="files">
+<h2><code class="docutils literal notranslate"><span class="pre">.60</span></code> files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<p>The basic idea is that the <code class="docutils literal notranslate"><span class="pre">.60</span></code> files contains one or several components.
+These components contain a tree of elements. Each declared component can be
+given a name and re-used under that name as an element later.</p>
+<p>By default, the SixtyFPS comes with some <a class="reference internal" href="builtin_elements.html"><span class="doc std std-doc">builtin elements</span></a> and <a class="reference internal" href="widgets.html"><span class="doc std std-doc">widgets</span></a>.</p>
+<p>Below is an example of components and elements:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>
+MyButton := Text {
+    color: black;
+    // ...
+}
+
+export MyApp := Window {
+    width: 200px;
+    height: 100px;
+    Rectangle {
+        width: 200px;
+        height: 100px;
+        background: green;
+    }
+    MyButton {
+        text: &quot;hello&quot;;
+    }
+    MyButton {
+        x: 50px;
+        text: &quot;world&quot;;
+    }
+}
+
+</pre></div>
+</div>
+<p>Here, both <code class="docutils literal notranslate"><span class="pre">MyButton</span></code> and <code class="docutils literal notranslate"><span class="pre">MyApp</span></code> are components. <code class="docutils literal notranslate"><span class="pre">Window</span></code> and <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code> are built-in elements
+used by <code class="docutils literal notranslate"><span class="pre">MyApp</span></code>. <code class="docutils literal notranslate"><span class="pre">MyApp</span></code> also re-uses the <code class="docutils literal notranslate"><span class="pre">MyButton</span></code> component.</p>
+<p>You can assign a name to the elements using the <code class="docutils literal notranslate"><span class="pre">:=</span></code>  syntax in front an element:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>MyButton := Text {
+    // ...
+}
+
+MyApp := Window {
+    hello := MyButton {
+        text: &quot;hello&quot;;
+    }
+    world := MyButton {
+        text: &quot;world&quot;;
+        x: 50px;
+    }
+}
+</pre></div>
+</div>
+<p>The outermost element of a component is always accessible under the name <code class="docutils literal notranslate"><span class="pre">root</span></code>.
+The current element can be referred as <code class="docutils literal notranslate"><span class="pre">self</span></code>.
+The parent element can be referred as <code class="docutils literal notranslate"><span class="pre">parent</span></code>.
+These names are reserved and cannot be used as element names.</p>
+<div class="section" id="container-components">
+<h3>Container Components<a class="headerlink" href="#container-components" title="Permalink to this headline">¶</a></h3>
+<p>When creating components, it may sometimes be useful to influence where child elements
+are placed when they are used. For example, imagine a component that draws a label above
+whatever element the user places inside:</p>
+<div class="highlight-60,ignore notranslate"><div class="highlight"><pre><span></span>MyApp := Window {
+
+    BoxWithLabel {
+        Text {
+            // ...
+        }
+    }
+
+    // ...
+}
+</pre></div>
+</div>
+<p>Such a <code class="docutils literal notranslate"><span class="pre">BoxWithLabel</span></code> could be implemented using a layout, but by default child elements like
+the <code class="docutils literal notranslate"><span class="pre">Text</span></code> element become children of the <code class="docutils literal notranslate"><span class="pre">BoxWithLabel</span></code>, when they would have to be somewhere
+else, inside the layout. For this purpose, you can change the default child placement by using
+the <code class="docutils literal notranslate"><span class="pre">&#64;children</span></code> expression inside the element hierarchy of a component:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>BoxWithLabel := GridLayout {
+    Row {
+        Text { text: &quot;label text here&quot;; }
+    }
+    Row {
+        @children
+    }
+}
+
+MyApp := Window {
+    BoxWithLabel {
+        Rectangle { background: blue; }
+        Rectangle { background: yellow; }
+    }
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>C-style comments are supported:</p>
+<ul class="simple">
+<li><p>line comments: <code class="docutils literal notranslate"><span class="pre">//</span></code> means everything to the end of the line is commented.</p></li>
+<li><p>block comments: <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">..</span> <span class="pre">*/</span></code>.  Note that the blocks comments can be nested, so <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">/*</span> <span class="pre">single</span> <span class="pre">*/</span> <span class="pre">comment</span> <span class="pre">*/</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="identifiers">
+<h2>Identifiers<a class="headerlink" href="#identifiers" title="Permalink to this headline">¶</a></h2>
+<p>Identifiers can be composed of letter (<code class="docutils literal notranslate"><span class="pre">a-zA-Z</span></code>), of numbers (<code class="docutils literal notranslate"><span class="pre">0-9</span></code>), or of the underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>) or the dash (<code class="docutils literal notranslate"><span class="pre">-</span></code>).
+They cannot start with a number or a dash (but they can start with underscore)
+The underscores are normalized to dashes. Which means that these two identifiers are the same: <code class="docutils literal notranslate"><span class="pre">foo_bar</span></code> and <code class="docutils literal notranslate"><span class="pre">foo-bar</span></code>.</p>
+</div>
+<div class="section" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<p>The elements can have properties. Built-in elements come with common properties such
+as color or dimensional properties. You can assign values or entire <a class="reference internal" href="#expressions"><span class="std std-doc">expressions</span></a> to them:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Window {
+    // Simple expression: ends with a semi colon
+    width: 42px;
+    // or a code block (no semicolon needed)
+    height: { 42px }
+}
+</pre></div>
+</div>
+<p>You can also declare your own properties. The properties declared at the top level of a
+component are public and can be accessed by the component using it as an element, or using the
+language bindings:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    // declare a property of type int with the name `my-property`
+    property&lt;int&gt; my-property;
+
+    // declare a property with a default value
+    property&lt;int&gt; my-second-property: 42;
+}
+</pre></div>
+</div>
+<div class="section" id="bindings">
+<h3>Bindings<a class="headerlink" href="#bindings" title="Permalink to this headline">¶</a></h3>
+<p>The expression on the right of a binding is automatically re-evaluated when the expression changes.</p>
+<p>In the following example, the text of the button is automatically changed when the button is pressed, because
+changing the <code class="docutils literal notranslate"><span class="pre">counter</span></code>  property automatically changes the text.</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>import { Button } from &quot;sixtyfps_widgets.60&quot;;
+Example := Button {
+    property &lt;int&gt; counter: 3;
+    clicked =&gt; { counter += 3 }
+    text: counter * 2;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="two-way-bindings">
+<h3>Two-way Bindings<a class="headerlink" href="#two-way-bindings" title="Permalink to this headline">¶</a></h3>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">&lt;=&gt;</span></code> syntax, one can create two ways binding between properties. These properties are now linked
+together.
+The right hand side of the <code class="docutils literal notranslate"><span class="pre">&lt;=&gt;</span></code> must be a reference to a property of the same type.
+The type can be omitted in a property declaration to have the type automatically inferred.</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Window {
+    property&lt;brush&gt; rect-color &lt;=&gt; r.background;
+    // it is allowed to omit the type to have it automatically inferred
+    property rect-color2 &lt;=&gt; r.background;
+    r:= Rectangle {
+        width: parent.width;
+        height: parent.height;
+        background: blue;
+    }
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<p>All properties in elements have a type. The following types are supported:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td>Signed integral number.</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>Signed, 32-bit floating point number. Numbers with a <code>%</code> suffix are automatically divided by 100, so for example <code>30%</code> is the same as <code>0.30</code>.</td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td>UTF-8 encoded, reference counted string.</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td>RGB color with an alpha channel, with 8 bit precision for each channel. CSS color names as well as the hexadecimal color encodings are supported, such as <code>#RRGGBBAA</code> or <code>#RGB</code>.</td>
+</tr>
+<tr>
+<td><code>brush</code></td>
+<td>A brush is a special type that can be either initialized from a color or a gradient specification. See the <a href="#colors">Colors Section</a> for more information.</td>
+</tr>
+<tr>
+<td><code>physical-length</code></td>
+<td>This is an amount of physical pixels. To convert from an integer to a length unit, one can simply multiply by <code>1px</code>.  Or to convert from a length to a float, one can divide by <code>1phx</code>.</td>
+</tr>
+<tr>
+<td><code>length</code></td>
+<td>The type used for <code>x</code>, <code>y</code>, <code>width</code> and <code>height</code> coordinates. Corresponds to a literal like <code>1px</code>, <code>1pt</code>, <code>1in</code>, <code>1mm</code>, or <code>1cm</code>. It can be converted to and from length provided the binding is run in a context where there is an access to the device pixel ratio.</td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td>Type for the duration of animations. A suffix like <code>ms</code> (millisecond) or <code>s</code> (second) is used to indicate the precision.</td>
+</tr>
+<tr>
+<td><code>angle</code></td>
+<td>Angle measurement, corresponds to a literal like <code>90deg</code>, <code>1.2rad</code>, <code>0.25turn</code></td>
+</tr>
+<tr>
+<td><code>easing</code></td>
+<td>Property animation allow specifying an easing curve. Valid values are <code>linear</code> (values are interpolated linearly) and the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function#Keywords_for_common_cubic-bezier_easing_functions">four common cubiz-bezier functions known from CSS</a>:  <code>ease</code>, <code>ease_in</code>, <code>ease_in_out</code>, <code>ease_out</code>.</td>
+</tr>
+<tr>
+<td><code>percent</code></td>
+<td>Signed, 32-bit floating point number that is interpreted as percentage. Literal number assigned to properties of this type must have a <code>%</code> suffix.</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>A reference to an image, can be initialized with the <code>@image-url("...")</code> construct</td>
+</tr>
+</tbody>
+</table>
+<p>Please see the language specific API references how these types are mapped to the APIs of the different programming languages.</p>
+<div class="section" id="structs">
+<h3>Structs<a class="headerlink" href="#structs" title="Permalink to this headline">¶</a></h3>
+<p>Anonymous structs type can be declared with curly braces: <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">identifier1:</span> <span class="pre">type2,</span> <span class="pre">identifier1:</span> <span class="pre">type2,</span> <span class="pre">}</span></code>
+The trailing semicolon is optional.
+They can be initialized with a struct literal: <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">identifier1:</span> <span class="pre">expression1,</span> <span class="pre">identifier2:</span> <span class="pre">expression2</span>&#160; <span class="pre">}</span></code></p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Window {
+    property&lt;{name: string, score: int}&gt; player: { name: &quot;Foo&quot;, score: 100 };
+    property&lt;{a: int, }&gt; foo: { a: 3 };
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-named-structures">
+<h3>Custom named structures<a class="headerlink" href="#custom-named-structures" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to define a named struct using the <code class="docutils literal notranslate"><span class="pre">struct</span></code> keyword,</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>export struct Player := {
+    name: string,
+    score: int,
+}
+
+Example := Window {
+    property&lt;Player&gt; player: { name: &quot;Foo&quot;, score: 100 };
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="arrays-model">
+<h3>Arrays / Model<a class="headerlink" href="#arrays-model" title="Permalink to this headline">¶</a></h3>
+<p>The type array is using square brackets for example  <code class="docutils literal notranslate"><span class="pre">[int]</span></code> is an array of <code class="docutils literal notranslate"><span class="pre">int</span></code>. In the runtime, they are
+basically used as models for the <code class="docutils literal notranslate"><span class="pre">for</span></code> expression.</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Window {
+    property&lt;[int]&gt; list-of-int: [1,2,3];
+    property&lt;[{a: int, b: string}]&gt; list-of-structs: [{ a: 1, b: &quot;hello&quot; }, {a: 2, b: &quot;world&quot;}];
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="conversions">
+<h3>Conversions<a class="headerlink" href="#conversions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code> can be converted implicitly to <code class="docutils literal notranslate"><span class="pre">float</span></code> and vice-versa</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code> can be converted implicitly to <code class="docutils literal notranslate"><span class="pre">string</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">physical-length</span></code> and <code class="docutils literal notranslate"><span class="pre">length</span></code> can be converted implicitly to each other only in
+context where the pixel ratio is known.</p></li>
+<li><p>the units type (<code class="docutils literal notranslate"><span class="pre">length</span></code>, <code class="docutils literal notranslate"><span class="pre">physical-length</span></code>, <code class="docutils literal notranslate"><span class="pre">duration</span></code>, …) cannot be converted to numbers (<code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">int</span></code>)
+but they can be divided by themselves to result in a number. Similarly, a number can be multiplied by one of
+these unit. The idea is that one would multiply by <code class="docutils literal notranslate"><span class="pre">1px</span></code> or divide by <code class="docutils literal notranslate"><span class="pre">1px</span></code> to do such conversions</p></li>
+<li><p>The literal <code class="docutils literal notranslate"><span class="pre">0</span></code> can be converted to any of these types that have associated unit.</p></li>
+<li><p>Struct types convert with another struct type if they have the same property names and their types can be converted.
+The source struct can have either missing properties, or extra properties. But not both.</p></li>
+<li><p>Array generally do not convert between each other. But array literal can be converted if the type does convert.</p></li>
+<li><p>String can be converted to float by using the <code class="docutils literal notranslate"><span class="pre">to-float</span></code> function. That function returns 0 if the string is not
+a valid number. you can check with <code class="docutils literal notranslate"><span class="pre">is-float</span></code> if the string contains a valid number</p></li>
+</ul>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Window {
+    // ok: int converts to string
+    property&lt;{a: string, b: int}&gt; prop1: {a: 12, b: 12 };
+    // ok even if a is missing, it will just have the default value
+    property&lt;{a: string, b: int}&gt; prop2: { b: 12 };
+    // ok even if c is too many, it will be discarded
+    property&lt;{a: string, b: int}&gt; prop3: { a: &quot;x&quot;, b: 12, c: 42 };
+    // ERROR: b is missing and c is extra, this does not compile, because it could be a typo.
+    // property&lt;{a: string, b: int}&gt; prop4: { a: &quot;x&quot;, c: 42 };
+
+    property&lt;string&gt; xxx: &quot;42.1&quot;;
+    property&lt;float&gt; xxx1: xxx.to-float(); // 42.1
+    property&lt;bool&gt; xxx2: xxx.is-float(); // true
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="relative-lengths">
+<h3>Relative Lengths<a class="headerlink" href="#relative-lengths" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes it is convenient to express the relationships of length properties in terms of relative percentages.
+For example the following inner blue rectangle has half the size of the outer green one:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    background: green;
+    Rectangle {
+        background: blue;
+        width: parent.width * 50%;
+        height: parent.height * 50%;
+    }
+}
+</pre></div>
+</div>
+<p>This pattern of expressing the <code class="docutils literal notranslate"><span class="pre">width</span></code> or <code class="docutils literal notranslate"><span class="pre">height</span></code> in percent of the parent’s property with the same name is
+common. For convenience, a short-hand syntax exists for this scenario:</p>
+<ul class="simple">
+<li><p>The property is <code class="docutils literal notranslate"><span class="pre">width</span></code> or <code class="docutils literal notranslate"><span class="pre">height</span></code></p></li>
+<li><p>A binding expression evaluates to a percentage.</p></li>
+</ul>
+<p>If these conditions are met, then it is not necessary to specify the parent property, instead you can simply
+use the percentage. The earlier example then looks like this:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    background: green;
+    Rectangle {
+        background: blue;
+        width: 50%;
+        height: 50%;
+    }
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="callback">
+<h2>Callback<a class="headerlink" href="#callback" title="Permalink to this headline">¶</a></h2>
+<p>Components may declare callbacks, that allow it to communicate changes of state to the outside. Callbacks are emitted by “calling” them
+and you can react to callback emissions by declaring a handler using the <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code> arrow syntax. The built-in <code class="docutils literal notranslate"><span class="pre">TouchArea</span></code>
+element comes with a <code class="docutils literal notranslate"><span class="pre">clicked</span></code> callback, that’s emitted when the user touches the rectangular area covered by the element, or clicks into
+it with the mouse. In the example below, the emission of that callback is forwarded to another custom callback (<code class="docutils literal notranslate"><span class="pre">hello</span></code>) by declaring a
+handler and emitting our custom callback:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    // declare a callback
+    callback hello;
+
+    area := TouchArea {
+        // sets a handler with `=&gt;`
+        clicked =&gt; {
+            // emit the callback
+            root.hello()
+        }
+    }
+}
+</pre></div>
+</div>
+<p>It is also possible to add parameters to the callback.</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    // declares a callback
+    callback hello(int, string);
+    hello(aa, bb) =&gt; { /* ... */ }
+}
+</pre></div>
+</div>
+<p>And return value.</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    // declares a callback with a return value
+    callback hello(int, int) -&gt; int;
+    hello(aa, bb) =&gt; { aa + bb }
+}
+</pre></div>
+</div>
+<div class="section" id="callback-aliases">
+<h3>Callback aliases<a class="headerlink" href="#callback-aliases" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to declare callback aliases in a similar way to two-way bindings:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    callback clicked &lt;=&gt; area.clicked;
+    area := TouchArea {}
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="expressions">
+<h2>Expressions<a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h2>
+<p>Expressions are a powerful way to declare relationships and connections in your user interface. They
+are typically used to combine basic arithmetic with access to properties of other elements. When
+these properties change, the expression is automatically re-evaluated and a new value is assigned
+to the property the expression is associated with:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    // declare a property of type int
+    property&lt;int&gt; my-property;
+
+    // This accesses the property
+    width: root.my-property * 20px;
+
+}
+</pre></div>
+</div>
+<p>If something changes <code class="docutils literal notranslate"><span class="pre">my-property</span></code>, the width will be updated automatically.</p>
+<p>Arithmetic in expression works like in most programming language with the operators <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code>:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    property &lt;int&gt; p: 1 * 2 + 3 * 4; // same as (1 * 2) + (3 * 4)
+}
+</pre></div>
+</div>
+<p>You can access properties by addressing the associated element, followed by a <code class="docutils literal notranslate"><span class="pre">.</span></code> and the property name:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    foo := Rectangle {
+        x: 42px;
+    }
+    x: foo.x;
+}
+</pre></div>
+</div>
+<div class="section" id="strings">
+<h3>Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
+<p>Strings can be used with surrounding quotes: <code class="docutils literal notranslate"><span class="pre">&quot;foo&quot;</span></code>.</p>
+<p>Some character can be escaped with slashes (<code class="docutils literal notranslate"><span class="pre">\</span></code>)</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Escape</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\"</code></td>
+<td><code>"</code></td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td><code>\</code></td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>new line</td>
+</tr>
+<tr>
+<td><code>\u{xxx}</code></td>
+<td>where <code>xxx</code> is an hexadecimal number, this expand to the unicode character represented by this number</td>
+</tr>
+<tr>
+<td><code>\{expression}</code></td>
+<td>the expression is evaluated and inserted here</td>
+</tr>
+</tbody>
+</table>
+<p>Anything else after a <code class="docutils literal notranslate"><span class="pre">\</span></code> is an error.</p>
+<p>(TODO: translations: <code class="docutils literal notranslate"><span class="pre">tr!&quot;Hello&quot;</span></code>)</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Text {
+    text: &quot;hello&quot;;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="colors">
+<h3>Colors<a class="headerlink" href="#colors" title="Permalink to this headline">¶</a></h3>
+<p>Color literals follow the syntax of CSS:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    background: blue;
+    property&lt;color&gt; c1: #ffaaff;
+}
+</pre></div>
+</div>
+<p>(TODO: currently color name are only limited to a handful and only supported in color property)</p>
+<p>In addition to plain colors, many elements have properties that are of type <code class="docutils literal notranslate"><span class="pre">brush</span></code> instead of <code class="docutils literal notranslate"><span class="pre">color</span></code>.
+A brush is a type that can be either a color or gradient. The brush is then used to fill an element or
+draw the outline.</p>
+<div class="section" id="methods">
+<h4>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h4>
+<p>All colors have methods that can be called on them:</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">brighter(factor:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">Color</span></code></strong></p>
+<p>Returns a new color that is derived from this color but has its brightness increased by the specified factor.
+For example if the factor is 0.5 (or for example 50%) the returned color is 50% brighter. Negative factors
+decrease the brightness.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">darker(factor:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">Color</span></code></strong></p>
+<p>Returns a new color that is derived from this color but has its brightness decreased by the specified factor.
+For example if the factor is .5 (or for example 50%) the returned color is 50% darker. Negative factors
+increase the brightness.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="gradients">
+<h4>Gradients<a class="headerlink" href="#gradients" title="Permalink to this headline">¶</a></h4>
+<p>Gradients allow creating smooth colorful surfaces. They are specified using an angle and a series of
+color stops. The colors will be linearly interpolated between the stops, aligned to an imaginary line
+that is rotated by the specified angle. This is called a linear gradient and is specified using the
+<code class="docutils literal notranslate"><span class="pre">&#64;linear-gradient</span></code> macro with the following signature:</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">&#64;linear-gradient(angle,</span> <span class="pre">color</span> <span class="pre">percentage,</span> <span class="pre">color</span> <span class="pre">percentage,</span> <span class="pre">...)</span></code></strong></p>
+<p>The first parameter to the macro is an angle (see <a class="reference internal" href="#types"><span class="std std-doc">Types</span></a>). The gradient line’s starting point
+will be rotated by the specified value.</p>
+<p>Following the initial angle is one or multiple color stops, describe as a space separated pair of a
+<code class="docutils literal notranslate"><span class="pre">color</span></code> value and a <code class="docutils literal notranslate"><span class="pre">percentage</span></code>. The color specifies which value the linear color interpolation should
+reach at the specified percentage along the axis of the gradient.</p>
+<p>The following example shows a rectangle that’s filled with a linear gradient that starts with a light blue
+color, interpolates to a very light shade in the center and finishes with an orange tone:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    width: 100px;
+    height: 100px;
+    background: @linear-gradient(90deg, #3f87a6 0%, #ebf8e1 50%, #f69d3c 100%);
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="images">
+<h3>Images<a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">image</span></code> type is a reference to an image. It be initialized with the <code class="docutils literal notranslate"><span class="pre">&#64;image-url(&quot;...&quot;)</span></code> construct.
+The URL within the <code class="docutils literal notranslate"><span class="pre">&#64;image-url</span></code> function need to be known at compile time, and it is looked up
+relative to the file. In addition, it will also be looked in the include path specified to load
+.60 files via import.</p>
+<p>It is possible to access the <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> of an image.</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Text {
+    property &lt;image&gt; some_image: @image-url(&quot;https://sixtyfps.io/resources/logo_scaled.png&quot;);
+    text: &quot;The image is &quot; + some_image.width + &quot;x&quot; + some_image.height;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="arrays-structs">
+<h3>Arrays/Structs<a class="headerlink" href="#arrays-structs" title="Permalink to this headline">¶</a></h3>
+<p>Arrays are currently only supported in <code class="docutils literal notranslate"><span class="pre">for</span></code> expressions. <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code> is an array of integers.
+All the types in the array have to be of the same type.
+It is useful to have arrays of struct. An struct is between curly braces: <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">a:</span> <span class="pre">12,</span> <span class="pre">b:</span> <span class="pre">&quot;hello&quot;}</span></code>.</p>
+</div>
+</div>
+<div class="section" id="statements">
+<h2>Statements<a class="headerlink" href="#statements" title="Permalink to this headline">¶</a></h2>
+<p>Inside callback handlers, more complicated statements are allowed:</p>
+<p>Assignment:</p>
+<div class="highlight-ignore notranslate"><div class="highlight"><pre><span></span>clicked =&gt; { some-property = 42; }
+</pre></div>
+</div>
+<p>Self-assignment with <code class="docutils literal notranslate"><span class="pre">+=</span></code> <code class="docutils literal notranslate"><span class="pre">-=</span></code> <code class="docutils literal notranslate"><span class="pre">*=</span></code> <code class="docutils literal notranslate"><span class="pre">/=</span></code></p>
+<div class="highlight-ignore notranslate"><div class="highlight"><pre><span></span>clicked =&gt; { some-property += 42; }
+</pre></div>
+</div>
+<p>Calling a callback</p>
+<div class="highlight-ignore notranslate"><div class="highlight"><pre><span></span>clicked =&gt; { root.some-callback(); }
+</pre></div>
+</div>
+<p>Conditional expression</p>
+<div class="highlight-ignore notranslate"><div class="highlight"><pre><span></span>clicked =&gt; {
+    if (condition) {
+        foo = 42;
+    } else if (other-condition) {
+        bar = 28;
+    } else {
+        foo = 4;
+    }
+}
+</pre></div>
+</div>
+<p>Empty expression</p>
+<div class="highlight-ignore notranslate"><div class="highlight"><pre><span></span>clicked =&gt; { }
+// or
+clicked =&gt; { ; }
+</pre></div>
+</div>
+</div>
+<div class="section" id="repetition">
+<h2>Repetition<a class="headerlink" href="#repetition" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">for</span></code>-<code class="docutils literal notranslate"><span class="pre">in</span></code> syntax can be used to repeat an element.</p>
+<p>The syntax look like this: <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">name[index]</span> <span class="pre">in</span> <span class="pre">model</span> <span class="pre">:</span> <span class="pre">id</span> <span class="pre">:=</span> <span class="pre">Element</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></p>
+<p>The <em>model</em> can be of the following type:</p>
+<ul class="simple">
+<li><p>an integer, in which case the element will be repeated that amount of time</p></li>
+<li><p>an array type or a model declared natively, in which case the element will be instantiated for each element in the array or model.</p></li>
+</ul>
+<p>The <em>name</em> will be available for lookup within the element and is going to be like a pseudo-property set to the
+value of the model. The <em>index</em> is optional and will be set to the index of this element in the model.
+The <em>id</em> is also optional.</p>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Window {
+    height: 100px;
+    width: 300px;
+    for my-color[index] in [ #e11, #1a2, #23d ]: Rectangle {
+        height: 100px;
+        width: 60px;
+        x: width * index;
+        background: my-color;
+    }
+}
+</pre></div>
+</div>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Window {
+    height: 50px;
+    width: 50px;
+    property &lt;[{foo: string, col: color}]&gt; model: [
+        {foo: &quot;abc&quot;, col: #f00 },
+        {foo: &quot;def&quot;, col: #00f },
+    ];
+    VerticalLayout {
+        for data in root.model: my-repeated-text := Text {
+            color: data.col;
+            text: data.foo;
+        }
+    }
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="conditional-element">
+<h2>Conditional element<a class="headerlink" href="#conditional-element" title="Permalink to this headline">¶</a></h2>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">for</span></code>, the <code class="docutils literal notranslate"><span class="pre">if</span></code> construct can instantiate element only if a given condition is true.
+The syntax is <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">condition</span> <span class="pre">:</span> <span class="pre">id</span> <span class="pre">:=</span> <span class="pre">Element</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Window {
+    height: 50px;
+    width: 50px;
+    if true : foo := Rectangle { background: blue; }
+    if false : Rectangle { background: red; }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="animations">
+<h2>Animations<a class="headerlink" href="#animations" title="Permalink to this headline">¶</a></h2>
+<p>Simple animation that animates a property can be declared with <code class="docutils literal notranslate"><span class="pre">animate</span></code> like this:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    property&lt;bool&gt; pressed;
+    background: pressed ? blue : red;
+    animate background {
+        duration: 100ms;
+    }
+}
+</pre></div>
+</div>
+<p>This will animate the color property for 100ms when it changes.</p>
+<p>Animation can be configured with the following parameter:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">duration</span></code>: the amount of time it takes for the animation to complete</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loop-count</span></code>: FIXME</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">easing</span></code>: can be <code class="docutils literal notranslate"><span class="pre">linear</span></code>, <code class="docutils literal notranslate"><span class="pre">ease</span></code>, <code class="docutils literal notranslate"><span class="pre">ease-in</span></code>, <code class="docutils literal notranslate"><span class="pre">ease-out</span></code>, <code class="docutils literal notranslate"><span class="pre">ease-in-out</span></code>, <code class="docutils literal notranslate"><span class="pre">cubic-bezier(a,</span> <span class="pre">b,</span> <span class="pre">c,</span> <span class="pre">d)</span></code> as in CSS</p></li>
+</ul>
+<p>It is also possible to animate several properties with the same animation:</p>
+<div class="highlight-ignore notranslate"><div class="highlight"><pre><span></span>animate x, y { duration: 100ms; }
+</pre></div>
+</div>
+<p>is the same as</p>
+<div class="highlight-ignore notranslate"><div class="highlight"><pre><span></span>animate x { duration: 100ms; }
+animate y { duration: 100ms; }
+</pre></div>
+</div>
+</div>
+<div class="section" id="states">
+<h2>States<a class="headerlink" href="#states" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">states</span></code> statement allow to declare states like this:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    text := Text { text: &quot;hello&quot;; }
+    property&lt;bool&gt; pressed;
+    property&lt;bool&gt; is-enabled;
+
+    states [
+        disabled when !is-enabled : {
+            color: gray; // same as root.color: gray;
+            text.color: white;
+        }
+        down when pressed : {
+            background: blue;
+        }
+    ]
+}
+</pre></div>
+</div>
+<p>In that example, when the <code class="docutils literal notranslate"><span class="pre">is-enabled</span></code> property is set to false, the <code class="docutils literal notranslate"><span class="pre">disabled</span></code> state will be entered
+This will change the color of the Rectangle and of the Text.</p>
+<div class="section" id="transitions">
+<h3>Transitions<a class="headerlink" href="#transitions" title="Permalink to this headline">¶</a></h3>
+<p>Complex animations can be declared on state transitions:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Example := Rectangle {
+    text := Text { text: &quot;hello&quot;; }
+    property&lt;bool&gt; pressed;
+    property&lt;bool&gt; is-enabled;
+
+    states [
+        disabled when !is-enabled : {
+            color: gray; // same as root.color: gray;
+            text.color: white;
+        }
+        down when pressed : {
+            background: blue;
+        }
+    ]
+
+    transitions [
+        in down : {
+            animate color { duration: 300ms; }
+        }
+        out disabled : {
+            animate * { duration: 800ms; }
+        }
+    ]
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="global-singletons">
+<h2>Global Singletons<a class="headerlink" href="#global-singletons" title="Permalink to this headline">¶</a></h2>
+<p>You can declare global singleton for properties that are available in the entire project.
+The syntax is <code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">Name</span> <span class="pre">:=</span> <span class="pre">{</span> <span class="pre">/*</span> <span class="pre">..</span> <span class="pre">properties</span> <span class="pre">or</span> <span class="pre">callbacks</span> <span class="pre">..</span> <span class="pre">*/</span> <span class="pre">}</span></code>.
+Then can be then used using the <code class="docutils literal notranslate"><span class="pre">Name.property</span></code> syntax.</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>global Palette := {
+    property&lt;color&gt; primary: blue;
+    property&lt;color&gt; secondary: green;
+}
+
+Example := Rectangle {
+    background: Palette.primary;
+    border-color: Palette.secondary;
+    border-width: 2px;
+}
+</pre></div>
+</div>
+<p>It is possible to re-expose a callback or properties from a global using the two way binding syntax.</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>global Logic := {
+    property &lt;int&gt; the-value;
+    callback magic-operation(int) -&gt; int;
+}
+
+SomeComponent := Text {
+    // use the global in any component
+    text: &quot;The magic value is:&quot; + Logic.magic-operation(42);
+}
+
+export MainWindow := Window {
+    // re-expose the global properties such that the native code
+    // can access or modify them
+    property the-value &lt;=&gt; Logic.the-value;
+    callback magic-operation &lt;=&gt; Logic.magic-operation;
+
+    SomeComponent {}
+}
+</pre></div>
+</div>
+<p>A global can be declared in another module file, and imported from many files.</p>
+<p>It is also possible to access the properties and callbacks from globals in native code,
+such as Rust or C++. In order to access them, it is necessary to mark them as exported
+in the file that exports your main application component. In the above example it is
+sufficient to directly export the <code class="docutils literal notranslate"><span class="pre">Logic</span></code> global:</p>
+<div class="highlight-60,ignore notranslate"><div class="highlight"><pre><span></span>export global Logic := {
+    property &lt;int&gt; the-value;
+    callback magic-operation(int) -&gt; int;
+}
+// ...
+</pre></div>
+</div>
+<p>It’s also possible to export globals from other files:</p>
+<div class="highlight-60,ignore notranslate"><div class="highlight"><pre><span></span>import { Logic as MathLogic } from &quot;math.60&quot;;
+export { MathLogic } // known as &quot;MathLogic&quot; when using native APIs to access globals
+</pre></div>
+</div>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<p>Components declared in a .60 file can be shared with components in other .60 files, by means of exporting and importing them.
+By default, everything declared in a .60 file is private, but it can be made accessible from the outside using the export
+keyword:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>ButtonHelper := Rectangle {
+    // ...
+}
+
+Button := Rectangle {
+    // ...
+    ButtonHelper {
+        // ...
+    }
+}
+
+export { Button }
+</pre></div>
+</div>
+<p>In the above example, <code class="docutils literal notranslate"><span class="pre">Button</span></code> is usable from other .60 files, but <code class="docutils literal notranslate"><span class="pre">ButtonHelper</span></code> isn’t.</p>
+<p>It’s also possible to change the name just for the purpose of exporting, without affecting its internal use:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>Button := Rectangle {
+    // ...
+}
+
+export { Button as ColorButton }
+</pre></div>
+</div>
+<p>In the above example, <code class="docutils literal notranslate"><span class="pre">Button</span></code> is not accessible from the outside, but instead it is available under the name <code class="docutils literal notranslate"><span class="pre">ColorButton</span></code>.</p>
+<p>For convenience, a third way of exporting a component is to declare it exported right away:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>export Button := Rectangle {
+    // ...
+}
+</pre></div>
+</div>
+<p>Similarly, components exported from other files can be accessed by importing them:</p>
+<div class="highlight-60,ignore notranslate"><div class="highlight"><pre><span></span>import { Button } from &quot;./button.60&quot;;
+
+App := Rectangle {
+    // ...
+    Button {
+        // ...
+    }
+}
+</pre></div>
+</div>
+<p>In the event that two files export a type under the same name, then you have the option
+of assigning a different name at import time:</p>
+<div class="highlight-60,ignore notranslate"><div class="highlight"><pre><span></span>import { Button } from &quot;./button.60&quot;;
+import { Button as CoolButton } from &quot;../other_theme/button.60&quot;;
+
+App := Rectangle {
+    // ...
+    CoolButton {} // from other_theme/button.60
+    Button {} // from button.60
+}
+</pre></div>
+</div>
+<p>Elements, globals and structs can be exported and imported.</p>
+</div>
+<div class="section" id="focus-handling">
+<h2>Focus Handling<a class="headerlink" href="#focus-handling" title="Permalink to this headline">¶</a></h2>
+<p>Certain elements such as <code class="docutils literal notranslate"><span class="pre">TextInput</span></code> accept not only input from the mouse/finger but
+also key events originating from (virtual) keyboards. In order for an item to receive
+these events, it must have the focus. This is visible through the <code class="docutils literal notranslate"><span class="pre">has-focus</span></code> property.</p>
+<p>You can manually activate the focus on an element by calling <code class="docutils literal notranslate"><span class="pre">focus()</span></code>:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>import { Button } from &quot;sixtyfps_widgets.60&quot;;
+
+App := Window {
+    VerticalLayout {
+        alignment: start;
+        Button {
+            text: &quot;press me&quot;;
+            clicked =&gt; { input.focus(); }
+        }
+        input := TextInput {
+            text: &quot;I am a text input field&quot;;
+        }
+    }
+}
+</pre></div>
+</div>
+<p>If you have wrapped the <code class="docutils literal notranslate"><span class="pre">TextInput</span></code> in a component, then you can forward such a focus activation
+using the <code class="docutils literal notranslate"><span class="pre">forward-focus</span></code> property to refer to the element that should receive it:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>import { Button } from &quot;sixtyfps_widgets.60&quot;;
+
+LabeledInput := GridLayout {
+    forward-focus: input;
+    Row {
+        Text {
+            text: &quot;Input Label:&quot;;
+        }
+        input := TextInput {}
+    }
+}
+
+App := Window {
+    GridLayout {
+        Button {
+            text: &quot;press me&quot;;
+            clicked =&gt; { label.focus(); }
+        }
+        label := LabeledInput {
+        }
+    }
+}
+</pre></div>
+</div>
+<p>If you use the <code class="docutils literal notranslate"><span class="pre">forward-focus</span></code> property on a <code class="docutils literal notranslate"><span class="pre">Window</span></code>, then the specified element will receive
+the focus the very first time the window receives the focus - it becomes the initial focus element.</p>
+</div>
+<div class="section" id="builtin-functions">
+<h2>Builtin functions<a class="headerlink" href="#builtin-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">debug(string)</span> <span class="pre">-&gt;</span> <span class="pre">string</span></code></strong></p></li>
+</ul>
+<p>The debug function take a string as an argument and prints it</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">min</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">max</span></code></strong></p></li>
+</ul>
+<p>Return the arguments with the minimum (or maximum) value. All arguments must be of the same numeric type</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mod(int,</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></strong></p></li>
+</ul>
+<p>Perform a modulo operation.</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">abs(float)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></strong></p></li>
+</ul>
+<p>Return the absolute value.</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">round(float)</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></strong></p></li>
+</ul>
+<p>Return the value rounded to the nearest integer</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ceil(float)</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">floor(float)</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></strong></p></li>
+</ul>
+<p>Return the ceiling or floor</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sin(angle)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">cos(angle)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">tan(angle)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">asin(float)</span> <span class="pre">-&gt;</span> <span class="pre">angle</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">acos(float)</span> <span class="pre">-&gt;</span> <span class="pre">angle</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">atan(float)</span> <span class="pre">-&gt;</span> <span class="pre">angle</span></code></strong></p></li>
+</ul>
+<p>The trigonometry function. Note that the should be typed with <code class="docutils literal notranslate"><span class="pre">deg</span></code> or <code class="docutils literal notranslate"><span class="pre">rad</span></code> unit
+(for example <code class="docutils literal notranslate"><span class="pre">cos(90deg)</span></code> or <code class="docutils literal notranslate"><span class="pre">sin(slider.value</span> <span class="pre">*</span> <span class="pre">1deg)</span></code>).</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sqrt(float)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></strong></p></li>
+</ul>
+<p>Square root</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">rgb(int,</span> <span class="pre">int,</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">color</span></code></strong>,  <strong><code class="docutils literal notranslate"><span class="pre">rgba(int,</span> <span class="pre">int,</span> <span class="pre">int,</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">color</span></code></strong></p></li>
+</ul>
+<p>Return the color as in CSS. Like in CSS, these two functions are actually aliases that can take
+three or four parameters.</p>
+<p>The first 3 parameters can be either number between 0 and 255, or a percentage with a <code class="docutils literal notranslate"><span class="pre">%</span></code> unit.
+The fourth value, if present, is an alpha value between 0 and 1.</p>
+<p>Unlike in CSS, the commas are mandatory.</p>
+</div>
+<div class="section" id="font-handling">
+<h2>Font Handling<a class="headerlink" href="#font-handling" title="Permalink to this headline">¶</a></h2>
+<p>Elements such as <code class="docutils literal notranslate"><span class="pre">Text</span></code> and <code class="docutils literal notranslate"><span class="pre">TextInput</span></code> can render text and allow customizing the appearance of the text through
+different properties. The properties prefixed with <code class="docutils literal notranslate"><span class="pre">font-</span></code>, such as <code class="docutils literal notranslate"><span class="pre">font-family</span></code>, <code class="docutils literal notranslate"><span class="pre">font-size</span></code> and <code class="docutils literal notranslate"><span class="pre">font-weight</span></code>
+affect the choice of font used for rendering to the screen. If any of these properties is not specified, the <code class="docutils literal notranslate"><span class="pre">default-font-</span></code>
+values in the surrounding <code class="docutils literal notranslate"><span class="pre">Window</span></code> element apply, such as <code class="docutils literal notranslate"><span class="pre">default-font-family</span></code>.</p>
+<p>The fonts chosen for rendering are automatically picked up from the system. It is also possible to include custom
+fonts in your design. A custom font must be a TrueType font (<code class="docutils literal notranslate"><span class="pre">.ttf</span></code>) or a TrueType font collection (<code class="docutils literal notranslate"><span class="pre">.ttc</span></code>).
+You can select a custom font with the <code class="docutils literal notranslate"><span class="pre">import</span></code> statement: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">&quot;./my_custom_font.ttf&quot;</span></code> in a .60 file. This
+instructions the SixtyFPS compiler to include the font and makes the font families globally available for use with
+<code class="docutils literal notranslate"><span class="pre">font-family</span></code> properties.</p>
+<p>For example:</p>
+<div class="highlight-60 notranslate"><div class="highlight"><pre><span></span>import &quot;./NotoSans-Regular.ttf&quot;;
+
+Example := Window {
+    default-font-family: &quot;Noto Sans&quot;;
+
+    Text {
+        text: &quot;Hello World&quot;;
+    }
+}
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="builtin_elements.html" class="btn btn-neutral float-right" title="Builtin Elements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../language.html" class="btn btn-neutral float-left" title="The .60 UI Design Language" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, info@sixtyfps.io.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A Model is providing Data for the Repeater or ListView elements of the `.60` language"><meta name="keywords" content="rust, rustlang, rust-lang, Model"><title>Model in sixtyfps - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"><!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.1/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+    //import * as sixtyfps from 'https://sixtyfps.io/snapshots/master/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+        await sixtyfps.default();
+        var elements = document.querySelectorAll("code.language-60, .rustdoc pre.language-60, div.highlight-60");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.60` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://sixtyfps.io/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://sixtyfps.io/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("60", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'sixtyfps',
+      aliases: ['60'],
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .60 blocks, leave the others to rustdoc
+      for (dot60Block of document.querySelectorAll(".language-60")) {
+        hljs.highlightElement(dot60Block)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-60.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-60 div.highlight pre, div.highlight-60-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+<style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../sixtyfps/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;sixtyfps.io&#x2F;resources&#x2F;logo.drawio.svg' alt='logo'></div></a><h2 class="location">Trait Model</h2><div class="sidebar-elems"><div class="block items"><h3 class="sidebar-title"><a href="#associated-types">Associated Types</a></h3><div class="sidebar-links"><a href="#associatedtype.Data">Data</a></div><h3 class="sidebar-title"><a href="#required-methods">Required Methods</a></h3><div class="sidebar-links"><a href="#tymethod.attach_peer">attach_peer</a><a href="#tymethod.row_count">row_count</a><a href="#tymethod.row_data">row_data</a></div><h3 class="sidebar-title"><a href="#provided-methods">Provided Methods</a></h3><div class="sidebar-links"><a href="#method.as_any">as_any</a><a href="#method.iter">iter</a><a href="#method.set_row_data">set_row_data</a></div><h3 class="sidebar-title"><a href="#foreign-impls">Implementations on Foreign Types</a></h3><div class="sidebar-links"><a href="#impl-Model-for-bool">bool</a><a href="#impl-Model-for-usize">usize</a></div><h3 class="sidebar-title"><a href="#implementors">Implementors</a></h3></div><h2 class="location">Other items in<br><a href="index.html">sixtyfps</a></h2><div id="sidebar-vars" data-name="Model" data-ty="trait" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Trait <a href="index.html">sixtyfps</a>::<wbr><a class="trait" href="#">Model</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></span></h1><div class="docblock type-decl"><pre class="rust trait">pub trait Model {
+    type <a href="#associatedtype.Data" class="type">Data</a>;
+    fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>;
+<div class="item-spacer"></div>    fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; Self::<a class="type" href="trait.Model.html#associatedtype.Data" title="type sixtyfps::Model::Data">Data</a>;
+<div class="item-spacer"></div>    fn <a href="#tymethod.attach_peer" class="fnname">attach_peer</a>(&amp;self, peer: <a class="struct" href="struct.ModelPeer.html" title="struct sixtyfps::ModelPeer">ModelPeer</a>);
+
+    fn <a href="#method.set_row_data" class="fnname">set_row_data</a>(&amp;self, _row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, _data: Self::<a class="type" href="trait.Model.html#associatedtype.Data" title="type sixtyfps::Model::Data">Data</a>) { ... }
+<div class="item-spacer"></div>    fn <a href="#method.iter" class="fnname">iter</a>(&amp;self) -&gt; ModelIterator&lt;'_, Self::<a class="type" href="trait.Model.html#associatedtype.Data" title="type sixtyfps::Model::Data">Data</a>&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<div class="notable-traits-tooltiptext"><span class="docblock"><div class="notable">Notable traits for ModelIterator&lt;'a, T&gt;</div><code class="content"><span class="where fmt-newline">impl&lt;'a, T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html" title="trait core::iter::traits::iterator::Iterator">Iterator</a> for ModelIterator&lt;'a, T&gt;</span><span class="where fmt-newline">    type <a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#associatedtype.Item" class="type">Item</a> = T;</span></code></span></div></span></span> { ... }
+<div class="item-spacer"></div>    fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static) { ... }
+}</pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A Model is providing Data for the Repeater or ListView elements of the <code>.60</code> language</p>
+</div></details><h2 id="associated-types" class="small-section-header">Associated Types<a href="#associated-types" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle" open><summary><div id="associatedtype.Data" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">type <a href="#associatedtype.Data" class="type">Data</a></h4></div></summary><div class="docblock"><p>The model data: A model is a set of row and each row has this data</p>
+</div></details></div><h2 id="required-methods" class="small-section-header">Required methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle" open><summary><div id="tymethod.row_count" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h4></div></summary><div class="docblock"><p>The amount of row in the model</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="tymethod.row_data" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; Self::<a class="type" href="trait.Model.html#associatedtype.Data" title="type sixtyfps::Model::Data">Data</a></h4></div></summary><div class="docblock"><p>Returns the data for a particular row. This function should be called with <code>row &lt; row_count()</code>.</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="tymethod.attach_peer" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#tymethod.attach_peer" class="fnname">attach_peer</a>(&amp;self, peer: <a class="struct" href="struct.ModelPeer.html" title="struct sixtyfps::ModelPeer">ModelPeer</a>)</h4></div></summary><div class="docblock"><p>Should forward to the internal <a href="struct.ModelNotify.html#method.attach" title="ModelNotify::attach"><code>ModelNotify::attach</code></a></p>
+</div></details></div><h2 id="provided-methods" class="small-section-header">Provided methods<a href="#provided-methods" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle" open><summary><div id="method.set_row_data" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#method.set_row_data" class="fnname">set_row_data</a>(&amp;self, _row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, _data: Self::<a class="type" href="trait.Model.html#associatedtype.Data" title="type sixtyfps::Model::Data">Data</a>)</h4></div></summary><div class="docblock"><p>Sets the data for a particular row. This function should be called with <code>row &lt; row_count()</code>.
+If the model cannot support data changes, then it is ok to do nothing (default implementation).
+If the model can update the data, it should also call row_changed on its internal <code>ModelNotify</code>.</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="method.iter" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#method.iter" class="fnname">iter</a>(&amp;self) -&gt; ModelIterator&lt;'_, Self::<a class="type" href="trait.Model.html#associatedtype.Data" title="type sixtyfps::Model::Data">Data</a>&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<div class="notable-traits-tooltiptext"><span class="docblock"><div class="notable">Notable traits for ModelIterator&lt;'a, T&gt;</div><code class="content"><span class="where fmt-newline">impl&lt;'a, T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html" title="trait core::iter::traits::iterator::Iterator">Iterator</a> for ModelIterator&lt;'a, T&gt;</span><span class="where fmt-newline">    type <a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#associatedtype.Item" class="type">Item</a> = T;</span></code></span></div></span></span></h4></div></summary><div class="docblock"><p>Returns an iterator visiting all elements of the model.</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="method.as_any" class="method has-srclink"><div class="rightside"></div><h4 class="code-header">fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static)</h4></div></summary><div class="docblock"><p>Return something that can be downcast’ed (typically self)</p>
+<p>This is useful to get back to the actual model from a ModelHandle stored
+in a component.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">vec_model</span> <span class="op">=</span> <span class="ident">Rc::new</span>(<span class="ident">VecModel::from</span>(<span class="macro">vec!</span>[<span class="number">1i32</span>, <span class="number">2</span>, <span class="number">3</span>]));
+<span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">ModelHandle::from</span>(<span class="ident">vec_model</span> <span class="kw">as</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Model</span><span class="op">&lt;</span><span class="ident">Data</span> <span class="op">=</span> <span class="ident">i32</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+<span class="comment">// later:</span>
+<span class="ident">handle</span>.<span class="ident">as_any</span>().<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">VecModel</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">push</span>(<span class="number">4</span>);
+<span class="macro">assert_eq!</span>(<span class="ident">handle</span>.<span class="ident">row_data</span>(<span class="number">3</span>), <span class="number">4</span>);</pre></div>
+<p>Note: the default implementation returns nothing interesting. this method should be
+implemented by model implementation to return something useful. For example:</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="kw">fn</span> <span class="ident">as_any</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">core::any::Any</span> { <span class="self">self</span> }</pre></div>
+</div></details></div><h2 id="foreign-impls" class="small-section-header">Implementations on Foreign Types<a href="#foreign-impls" class="anchor"></a></h2><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-Model-for-usize" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Model-for-usize" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="trait.Model.html" title="trait sixtyfps::Model">Model</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h3></div></summary><div class="impl-items"><div id="associatedtype.Data-1" class="type trait-impl has-srclink"><a href="#associatedtype.Data-1" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Data" class="type">Data</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></h4></div><div id="method.row_count" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.row_count" class="anchor"></a><h4 class="code-header">pub fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h4></div><div id="method.row_data" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.row_data" class="anchor"></a><h4 class="code-header">pub fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; &lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> as <a class="trait" href="trait.Model.html" title="trait sixtyfps::Model">Model</a>&gt;::<a class="type" href="trait.Model.html#associatedtype.Data" title="type sixtyfps::Model::Data">Data</a></h4></div><div id="method.attach_peer" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.attach_peer" class="anchor"></a><h4 class="code-header">pub fn <a href="#tymethod.attach_peer" class="fnname">attach_peer</a>(&amp;self, _peer: <a class="struct" href="struct.ModelPeer.html" title="struct sixtyfps::ModelPeer">ModelPeer</a>)</h4></div><div id="method.as_any-1" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.as_any-1" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static)</h4></div></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><div id="impl-Model-for-bool" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Model-for-bool" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="trait.Model.html" title="trait sixtyfps::Model">Model</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></h3></div></summary><div class="impl-items"><div id="associatedtype.Data-2" class="type trait-impl has-srclink"><a href="#associatedtype.Data-2" class="anchor"></a><h4 class="code-header">type <a href="#associatedtype.Data" class="type">Data</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a></h4></div><div id="method.row_count-1" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.row_count-1" class="anchor"></a><h4 class="code-header">pub fn <a href="#tymethod.row_count" class="fnname">row_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h4></div><div id="method.row_data-1" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.row_data-1" class="anchor"></a><h4 class="code-header">pub fn <a href="#tymethod.row_data" class="fnname">row_data</a>(&amp;self, _row: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; &lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> as <a class="trait" href="trait.Model.html" title="trait sixtyfps::Model">Model</a>&gt;::<a class="type" href="trait.Model.html#associatedtype.Data" title="type sixtyfps::Model::Data">Data</a></h4></div><div id="method.attach_peer-1" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.attach_peer-1" class="anchor"></a><h4 class="code-header">pub fn <a href="#tymethod.attach_peer" class="fnname">attach_peer</a>(&amp;self, _peer: <a class="struct" href="struct.ModelPeer.html" title="struct sixtyfps::ModelPeer">ModelPeer</a>)</h4></div><div id="method.as_any-2" class="method trait-impl has-srclink"><div class="rightside"></div><a href="#method.as_any-2" class="anchor"></a><h4 class="code-header">pub fn <a href="#method.as_any" class="fnname">as_any</a>(&amp;self) -&gt; &amp;(dyn <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + 'static)</h4></div></div></details><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor"></a></h2><div class="item-list" id="implementors-list"><div id="impl-Model" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Model" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; <a class="trait" href="trait.Model.html" title="trait sixtyfps::Model">Model</a> for <a class="struct" href="struct.ModelHandle.html" title="struct sixtyfps::ModelHandle">ModelHandle</a>&lt;T&gt;</h3></div><div id="impl-Model-1" class="impl has-srclink"><div class="rightside"></div><a href="#impl-Model-1" class="anchor"></a><h3 class="code-header in-band">impl&lt;T&gt; <a class="trait" href="trait.Model.html" title="trait sixtyfps::Model">Model</a> for <a class="struct" href="struct.VecModel.html" title="struct sixtyfps::VecModel">VecModel</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,&nbsp;</span></h3></div></div><script type="text/javascript" src="../implementors/sixtyfps_corelib/model/trait.Model.js" async></script></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="sixtyfps" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+    <script src="../main.js"></script>
+</body></html>

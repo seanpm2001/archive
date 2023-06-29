@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Class ComponentCompiler &mdash; SixtyFPS C++  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_tweak.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+<!--
+    This file is used to add preview of the `.60` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as sixtyfps from 'https://sixtyfps.io/releases/0.1.2/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+    //import * as sixtyfps from 'https://sixtyfps.io/snapshots/master/wasm-interpreter/sixtyfps_wasm_interpreter.js';
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await sixtyfps.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            component.run(canvas_id)
+        }
+    }
+
+    async function run() {
+        await sixtyfps.default();
+        var elements = document.querySelectorAll("code.language-60, .rustdoc pre.language-60, div.highlight-60");
+        for (var i = 0; i < elements.length; ++i) {
+            let source = elements[i].innerText;
+            let div = document.createElement("div");
+            div.style = "float: right; padding:0; margin:0;";
+            elements[i].prepend(div);
+            setTimeout(function () { render_or_error(source, div); }, 1);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url.pathname);
+        }
+    }
+    fix_markdown_links()
+
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.60` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header sixtyfps-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://sixtyfps.io/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://sixtyfps.io/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  hljs.registerLanguage("60", function (hljs) {
+    const KEYWORDS = {
+      keyword:
+        'struct export import signal property animate for in if states transitions parent root self',
+      literal:
+        'true false',
+      built_in:
+        'Rectangle Image Text TouchArea Flickable Clip TextInput Window GridLayout Row HorizontalLayout VerticalLayout Path MoveTo LineTo ArcTo CubicTo QuadraticTo Close FocusScope Clip PopupWindow',
+      type:
+        'bool string int float length logical_length duration resource',
+    };
+
+    return {
+      name: 'sixtyfps',
+      aliases: ['60'],
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .60 blocks, leave the others to rustdoc
+      for (dot60Block of document.querySelectorAll(".language-60")) {
+        hljs.highlightElement(dot60Block)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-60.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks does not use <code> tags, so highlight.js'
+      // default selector "pre code" does not match. Let's do it by hand:
+      for (block of document.querySelectorAll("div.highlight-60 div.highlight pre, div.highlight-60-no-preview div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class ComponentDefinition" href="classsixtyfps_1_1interpreter_1_1ComponentDefinition.html" />
+    <link rel="prev" title="Template Class ComponentWeakHandle" href="classsixtyfps_1_1ComponentWeakHandle.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> SixtyFPS C++
+          
+
+          
+            
+            <img src="../_static/logo.drawio.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cmake.html">Installing and Building with CMake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cmake.html#building-from-sources">Building from Sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cmake.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cmake.html#cross-compiling">Cross-compiling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cmake.html#binary-packages">Binary Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">First Steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#tutorial">Tutorial</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .60 Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#compiled-60-designs">Compiled <code class="docutils literal notranslate"><span class="pre">.60</span></code> designs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#run-time-interpreted-60-designs">Run-time interpreted <code class="docutils literal notranslate"><span class="pre">.60</span></code> designs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">Type Mapping to C++</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../types.html#structures">Structures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../generated_code.html">Example Generated Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../generated_code.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated_code.html#global-singletons">Global Singletons</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="library_root.html">C++ API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="library_root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library_root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="library_root.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="library_root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespace_sixtyfps.html">Namespace sixtyfps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_sixtyfps__interpreter.html">Namespace sixtyfps::interpreter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_sixtyfps__testing.html">Namespace sixtyfps::testing</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="library_root.html#classes-and-structs">Classes and Structs</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1Size.html">Struct Size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structsixtyfps_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1Color.html">Class Color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Class ComponentCompiler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classsixtyfps_1_1Window.html">Class Window</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library_root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="enum_namespacesixtyfps_1_1interpreter_1a85ae006089fa9b6fad66b2c5c73d4f3b.html">Enum DiagnosticLevel</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library_root.html#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="function_namespacesixtyfps_1a60bd318798158c03db499054d4586aa7.html">Template Function sixtyfps::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_namespacesixtyfps_1acfc4b71092d63a5fbd0cbc8471e4da52.html">Template Function sixtyfps::invoke_from_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_namespacesixtyfps_1a19e5480ac7f0311efafac58b65b38b20.html">Function sixtyfps::quit_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_namespacesixtyfps_1ab1b9b4016714eee96dba1457ce2a3b22.html">Function sixtyfps::run_event_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_sixtyfps__interpreter_8h_1a1fb76b7fe83dc1239891629feca150bd.html">Function sixtyfps::testing::send_keyboard_string_sequence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">The .60 UI Design Language</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/langref.html">Language Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#files"><code class="docutils literal notranslate"><span class="pre">.60</span></code> files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#container-components">Container Components</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#identifiers">Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#properties">Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#bindings">Bindings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#two-way-bindings">Two-way Bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#types">Types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#structs">Structs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#custom-named-structures">Custom named structures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#arrays-model">Arrays / Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#conversions">Conversions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#relative-lengths">Relative Lengths</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#callback">Callback</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#callback-aliases">Callback aliases</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#expressions">Expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#strings">Strings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#colors">Colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#images">Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#arrays-structs">Arrays/Structs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#statements">Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#repetition">Repetition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#conditional-element">Conditional element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#animations">Animations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#states">States</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/langref.html#transitions">Transitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#global-singletons">Global Singletons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#modules">Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#focus-handling">Focus Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#builtin-functions">Builtin functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/langref.html#font-handling">Font Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/builtin_elements.html">Builtin Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#common-properties">Common properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#drop-shadows">Drop Shadows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#properties">Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id1">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id2">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#text"><code class="docutils literal notranslate"><span class="pre">Text</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id4">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id5">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#common-path-properties">Common Path Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#toucharea"><code class="docutils literal notranslate"><span class="pre">TouchArea</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id11">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id12">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#focusscope"><code class="docutils literal notranslate"><span class="pre">FocusScope</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id13">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id14">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id15">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#verticallayout-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> / <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#id16">Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#id17">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#gridlayout"><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id18">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#pathlayout"><code class="docutils literal notranslate"><span class="pre">PathLayout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#flickable"><code class="docutils literal notranslate"><span class="pre">Flickable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#textinput"><code class="docutils literal notranslate"><span class="pre">TextInput</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id19">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id20">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id21">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id22">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#popupwindow"><code class="docutils literal notranslate"><span class="pre">PopupWindow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id23">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id24">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/builtin_elements.html#builtin-structures">Builtin Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#point"><code class="docutils literal notranslate"><span class="pre">Point</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#fields">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#keyevent"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id25">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#keyboardmodifiers"><code class="docutils literal notranslate"><span class="pre">KeyboardModifiers</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id26">Fields</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/builtin_elements.html#builtin-enums">Builtin Enums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#texthorizontalalignment"><code class="docutils literal notranslate"><span class="pre">TextHorizontalAlignment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#values">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#textverticalalignment"><code class="docutils literal notranslate"><span class="pre">TextVerticalAlignment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id27">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#textwrap"><code class="docutils literal notranslate"><span class="pre">TextWrap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id28">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#textoverflow"><code class="docutils literal notranslate"><span class="pre">TextOverflow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id29">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#eventresult"><code class="docutils literal notranslate"><span class="pre">EventResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id30">Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/builtin_elements.html#fillrule"><code class="docutils literal notranslate"><span class="pre">FillRule</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/builtin_elements.html#id31">Values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/widgets.html">Widgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#properties">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#callbacks">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#checkbox"><code class="docutils literal notranslate"><span class="pre">CheckBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id1">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id2">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#spinbox"><code class="docutils literal notranslate"><span class="pre">SpinBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id4">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id5">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#slider"><code class="docutils literal notranslate"><span class="pre">Slider</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id6">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id7">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id8">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#groupbox"><code class="docutils literal notranslate"><span class="pre">GroupBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id9">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id10">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#lineedit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id11">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id12">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id13">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#textedit"><code class="docutils literal notranslate"><span class="pre">TextEdit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id14">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id15">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id16">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#scrollview"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id17">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id18">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#listview"><code class="docutils literal notranslate"><span class="pre">ListView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id19">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id20">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#standardlistview"><code class="docutils literal notranslate"><span class="pre">StandardListView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id21">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id22">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#combobox"><code class="docutils literal notranslate"><span class="pre">ComboBox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id23">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id24">Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id25">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#tabwidget"><code class="docutils literal notranslate"><span class="pre">TabWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#properties-of-the-tab-element">Properties of the <code class="docutils literal notranslate"><span class="pre">Tab</span></code> element</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/widgets.html#id26">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/widgets.html#horizontalbox-verticalbox-gridbox"><code class="docutils literal notranslate"><span class="pre">HorizontalBox</span></code>, <code class="docutils literal notranslate"><span class="pre">VerticalBox</span></code>, <code class="docutils literal notranslate"><span class="pre">GridBox</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../markdown/layouting.html">Positioning and Layout of Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#explicit-placement">Explicit Placement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#automatic-placement-using-layouts">Automatic Placement using Layouts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#common-properties-on-layout-elements">Common Properties on Layout Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#verticallayout-and-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/layouting.html#alignment">Alignment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/layouting.html#stretch-algorithm">Stretch algorithm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../markdown/layouting.html#for"><code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#gridlayout">GridLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markdown/layouting.html#pathlayout"><code class="docutils literal notranslate"><span class="pre">PathLayout</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SixtyFPS C++</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="library_root.html">C++ API Reference</a> &raquo;</li>
+        
+      <li>Class ComponentCompiler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="class-componentcompiler">
+<span id="exhale-class-classsixtyfps-1-1interpreter-1-1componentcompiler"></span><h1>Class ComponentCompiler<a class="headerlink" href="#class-componentcompiler" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_runner_work_sixtyfps_sixtyfps_api_sixtyfps-cpp_include_sixtyfps_interpreter.h.html#file-home-runner-work-sixtyfps-sixtyfps-api-sixtyfps-cpp-include-sixtyfps-interpreter-h"><span class="std std-ref">File sixtyfps_interpreter.h</span></a></p></li>
+</ul>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N8sixtyfps11interpreter17ComponentCompilerE">
+<span id="_CPPv3N8sixtyfps11interpreter17ComponentCompilerE"></span><span id="_CPPv2N8sixtyfps11interpreter17ComponentCompilerE"></span><span id="sixtyfps::interpreter::ComponentCompiler"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">sixtyfps</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">interpreter</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">ComponentCompiler</span></span></span><a class="headerlink" href="#_CPPv4N8sixtyfps11interpreter17ComponentCompilerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler"><span class="std std-ref">ComponentCompiler</span></a> is the entry point to the SixtyFPS interpreter that can be used to load .60 files or compile them on-the-fly from a string (using <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler_1aa4a47b85814b31caeebea39ebb235658"><span class="std std-ref">build_from_source()</span></a>) or from a path (using <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler_1aa4a47b85814b31caeebea39ebb235658"><span class="std std-ref">build_from_source()</span></a>) </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8sixtyfps11interpreter17ComponentCompiler17ComponentCompilerEv">
+<span id="_CPPv3N8sixtyfps11interpreter17ComponentCompiler17ComponentCompilerEv"></span><span id="_CPPv2N8sixtyfps11interpreter17ComponentCompiler17ComponentCompilerEv"></span><span id="sixtyfps::interpreter::ComponentCompiler::ComponentCompiler"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1a0adbfd135adefcda45e16bc56a224c34"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ComponentCompiler</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8sixtyfps11interpreter17ComponentCompiler17ComponentCompilerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler"><span class="std std-ref">ComponentCompiler</span></a> instance. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8sixtyfps11interpreter17ComponentCompilerD0Ev">
+<span id="_CPPv3N8sixtyfps11interpreter17ComponentCompilerD0Ev"></span><span id="_CPPv2N8sixtyfps11interpreter17ComponentCompilerD0Ev"></span><span id="sixtyfps::interpreter::ComponentCompiler::~ComponentCompiler"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1ab52415788fce7a202bb49e7fdbff61ad"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~ComponentCompiler</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8sixtyfps11interpreter17ComponentCompilerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Destroys this <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler"><span class="std std-ref">ComponentCompiler</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8sixtyfps11interpreter17ComponentCompiler17set_include_pathsERKN8sixtyfps12SharedVectorIN8sixtyfps12SharedStringEEE">
+<span id="_CPPv3N8sixtyfps11interpreter17ComponentCompiler17set_include_pathsERKN8sixtyfps12SharedVectorIN8sixtyfps12SharedStringEEE"></span><span id="_CPPv2N8sixtyfps11interpreter17ComponentCompiler17set_include_pathsERKN8sixtyfps12SharedVectorIN8sixtyfps12SharedStringEEE"></span><span id="sixtyfps::interpreter::ComponentCompiler::set_include_paths__sixtyfps::SharedVector:sixtyfps::SharedString:CR"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1a88454504f576dc42113b1794ba0349e0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_include_paths</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">sixtyfps</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structsixtyfps_1_1SharedVector.html#_CPPv4I0EN8sixtyfps12SharedVectorE" title="sixtyfps::SharedVector"><span class="n"><span class="pre">SharedVector</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">sixtyfps</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringE" title="sixtyfps::SharedString"><span class="n"><span class="pre">SharedString</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">paths</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8sixtyfps11interpreter17ComponentCompiler17set_include_pathsERKN8sixtyfps12SharedVectorIN8sixtyfps12SharedStringEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the include paths used for looking up <code class="docutils literal notranslate"><span class="pre">.60</span></code> imports to the specified vector of paths. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8sixtyfps11interpreter17ComponentCompiler9set_styleENSt11string_viewE">
+<span id="_CPPv3N8sixtyfps11interpreter17ComponentCompiler9set_styleENSt11string_viewE"></span><span id="_CPPv2N8sixtyfps11interpreter17ComponentCompiler9set_styleENSt11string_viewE"></span><span id="sixtyfps::interpreter::ComponentCompiler::set_style__std::string_view"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1a795b4c79a5eeab8aec32dff57d8d9f02"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_style</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">style</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8sixtyfps11interpreter17ComponentCompiler9set_styleENSt11string_viewE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the style to be used for widgets. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8sixtyfps11interpreter17ComponentCompiler5styleEv">
+<span id="_CPPv3NK8sixtyfps11interpreter17ComponentCompiler5styleEv"></span><span id="_CPPv2NK8sixtyfps11interpreter17ComponentCompiler5styleEv"></span><span id="sixtyfps::interpreter::ComponentCompiler::styleC"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1af6ea89fca1324610b4469ce48f51cb39"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sixtyfps</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringE" title="sixtyfps::SharedString"><span class="n"><span class="pre">SharedString</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">style</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8sixtyfps11interpreter17ComponentCompiler5styleEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the widget style the compiler is currently using when compiling .60 files. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8sixtyfps11interpreter17ComponentCompiler13include_pathsEv">
+<span id="_CPPv3NK8sixtyfps11interpreter17ComponentCompiler13include_pathsEv"></span><span id="_CPPv2NK8sixtyfps11interpreter17ComponentCompiler13include_pathsEv"></span><span id="sixtyfps::interpreter::ComponentCompiler::include_pathsC"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1a09fee15544a8bb6bd5f4d9cf46e81528"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sixtyfps</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structsixtyfps_1_1SharedVector.html#_CPPv4I0EN8sixtyfps12SharedVectorE" title="sixtyfps::SharedVector"><span class="n"><span class="pre">SharedVector</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">sixtyfps</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structsixtyfps_1_1SharedString.html#_CPPv4N8sixtyfps12SharedStringE" title="sixtyfps::SharedString"><span class="n"><span class="pre">SharedString</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">include_paths</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8sixtyfps11interpreter17ComponentCompiler13include_pathsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the include paths the component compiler is currently configured with. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8sixtyfps11interpreter17ComponentCompiler11diagnosticsEv">
+<span id="_CPPv3NK8sixtyfps11interpreter17ComponentCompiler11diagnosticsEv"></span><span id="_CPPv2NK8sixtyfps11interpreter17ComponentCompiler11diagnosticsEv"></span><span id="sixtyfps::interpreter::ComponentCompiler::diagnosticsC"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1a242d2b5eb7a23ce7e31c0c2aa7a42f3a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sixtyfps</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structsixtyfps_1_1SharedVector.html#_CPPv4I0EN8sixtyfps12SharedVectorE" title="sixtyfps::SharedVector"><span class="n"><span class="pre">SharedVector</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="structsixtyfps_1_1interpreter_1_1Diagnostic.html#_CPPv4N8sixtyfps11interpreter10DiagnosticE" title="sixtyfps::interpreter::Diagnostic"><span class="n"><span class="pre">Diagnostic</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">diagnostics</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8sixtyfps11interpreter17ComponentCompiler11diagnosticsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the diagnostics that were produced in the last call to <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler_1a58a364b2b06e56ae7e84e7267d3506a1"><span class="std std-ref">build_from_path()</span></a> or <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler_1aa4a47b85814b31caeebea39ebb235658"><span class="std std-ref">build_from_source()</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8sixtyfps11interpreter17ComponentCompiler17build_from_sourceENSt11string_viewENSt11string_viewE">
+<span id="_CPPv3N8sixtyfps11interpreter17ComponentCompiler17build_from_sourceENSt11string_viewENSt11string_viewE"></span><span id="_CPPv2N8sixtyfps11interpreter17ComponentCompiler17build_from_sourceENSt11string_viewENSt11string_viewE"></span><span id="sixtyfps::interpreter::ComponentCompiler::build_from_source__std::string_view.std::string_view"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1aa4a47b85814b31caeebea39ebb235658"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N8sixtyfps11interpreter19ComponentDefinitionE" title="sixtyfps::interpreter::ComponentDefinition"><span class="n"><span class="pre">ComponentDefinition</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build_from_source</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">source_code</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8sixtyfps11interpreter17ComponentCompiler17build_from_sourceENSt11string_viewENSt11string_viewE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Compile a .60 file into a <a class="reference internal" href="classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#classsixtyfps_1_1interpreter_1_1ComponentDefinition"><span class="std std-ref">ComponentDefinition</span></a></p>
+<p>Returns the compiled <code class="docutils literal notranslate"><a class="reference internal" href="classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#classsixtyfps_1_1interpreter_1_1ComponentDefinition"><span class="std std-ref"><span class="pre">ComponentDefinition</span></span></a></code> if there were no errors.</p>
+<p>Any diagnostics produced during the compilation, such as warnings or errors, are collected in this <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler"><span class="std std-ref">ComponentCompiler</span></a> and can be retrieved after the call using the <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler_1a242d2b5eb7a23ce7e31c0c2aa7a42f3a"><span class="std std-ref">diagnostics()</span></a> function.</p>
+<p>Diagnostics from previous calls are cleared when calling this function. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8sixtyfps11interpreter17ComponentCompiler15build_from_pathENSt11string_viewE">
+<span id="_CPPv3N8sixtyfps11interpreter17ComponentCompiler15build_from_pathENSt11string_viewE"></span><span id="_CPPv2N8sixtyfps11interpreter17ComponentCompiler15build_from_pathENSt11string_viewE"></span><span id="sixtyfps::interpreter::ComponentCompiler::build_from_path__std::string_view"></span><span class="target" id="classsixtyfps_1_1interpreter_1_1ComponentCompiler_1a58a364b2b06e56ae7e84e7267d3506a1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N8sixtyfps11interpreter19ComponentDefinitionE" title="sixtyfps::interpreter::ComponentDefinition"><span class="n"><span class="pre">ComponentDefinition</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build_from_path</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8sixtyfps11interpreter17ComponentCompiler15build_from_pathENSt11string_viewE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Compile some .60 code into a <a class="reference internal" href="classsixtyfps_1_1interpreter_1_1ComponentDefinition.html#classsixtyfps_1_1interpreter_1_1ComponentDefinition"><span class="std std-ref">ComponentDefinition</span></a></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">path</span></code> argument will be used for diagnostics and to compute relative paths while importing.</p>
+<p>Any diagnostics produced during the compilation, such as warnings or errors, are collected in this <a class="reference internal" href="#classsixtyfps_1_1interpreter_1_1ComponentCompiler"><span class="std std-ref">ComponentCompiler</span></a> and can be retrieved after the call using the Self::diagnostics() function.</p>
+<p>Diagnostics from previous calls are cleared when calling this function. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="classsixtyfps_1_1interpreter_1_1ComponentDefinition.html" class="btn btn-neutral float-right" title="Class ComponentDefinition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="classsixtyfps_1_1ComponentWeakHandle.html" class="btn btn-neutral float-left" title="Template Class ComponentWeakHandle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, info@sixtyfps.io.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
