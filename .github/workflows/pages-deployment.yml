@@ -2,8 +2,7 @@
 
 name: Deploy to Production
 
-on: 
-  workflow_dispatch:
+on: [push]
 jobs:
   deploy:
     runs-on: ubuntu-latest
