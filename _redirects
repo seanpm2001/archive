@@ -1,1 +1,3 @@
 /releases/:version/docs/slint/ /releases/:version/docs/rust/slint/
+/releases/1.0.2/docs/nodejs/* /releases/1.0.2/docs/node/:splat
+/releases/latest/* /releases/1.2.2/:splat

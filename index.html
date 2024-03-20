@@ -8,15 +8,16 @@
         <meta name="author" content="SixtyFPS GmbH" />
 
         <!--====== Favicon Icon ======-->
-        <link rel="shortcut icon" href="/assets/img/favicon.ico">
-        <link rel="icon" type="image/x-icon" href="/assets/img/favicon.svg">
+        <link rel="shortcut icon" href="https://slint.dev/assets/img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="https://slint.dev/assets/img/favicon.svg">
 
         <!-- ===== All CSS files ===== -->
-        <link rel="stylesheet" href="https://slint.dev/assets/css/style.css?v=1.3.2" />
+        <link rel="stylesheet" href="https://slint.dev/assets/css/style.css?v=1.11.51" />
 
         <!-- ===== Header from individual pages ===== -->
         
-        <title>Docs (Archive)</title>
+        <title>Slint Developer Documentation (Archive)</title>
+        <meta name="description" content="The developer documentation page of Slint (Archive)." />
     
     </head>
 
@@ -42,18 +43,26 @@
 
                         <ul>
                             <li id="use-cases"><a href="https://slint.dev/use-cases.html">Use Cases</a></li>
-                            <li id="docs"><a href="https://slint.dev/docs.html">Docs</a></li>
                             <li id="pricing"><a href="https://slint.dev/pricing.html">Pricing</a></li>
-                            <li id="community"><a href="https://slint.dev/community.html">Community</a></li>
                             <li id="blog"><a href="https://slint.dev/blog">Blog</a></li>
-                            <!-- <li class="search"><a href="https://slint.dev/search-results.html">Search</a></li> -->
+                            <li id="docs"><a href="https://slint.dev/docs.html">Docs</a></li>
+                            <li class="navi-item-has-children" id="resources"><a href="#">Resources</a>
+                                <ul>
+                                    <li id="demos"><a href="https://slint.dev/demos.html">Demos</a></li>
+                                    <li id="partners"><a href="https://slint.dev/partners.html">Partners</a></li>
+                                    <li id="community"><a href="https://slint.dev/community.html">Community</a></li>
+                                    <li id="success"><a href="https://slint.dev/success">Success Stories</a></li>
+                                    <li id="supported-boards"><a href="https://slint.dev/supported-boards.html">Supported Boards</a></li>
+                                  </ul>
+                            </li>
+                            <!-- <li class="search"><a href="/search-results.html">Search</a></li> -->
                             <li class="theme theme-light"><a href="#">Theme</a></li>
                             <li class="btn"><a href="https://slint.dev/get-started.html">Get Started</a></li>
                         </ul>
 
                     </nav>
 
-                    <!-- <a href="https://slint.dev/search-results.html" class="search-mobile">Search</a> -->
+                    <!-- <a href="/search-results.html" class="search-mobile">Search</a> -->
 
                     <button class="hamburger" aria-label="menu" aria-expanded="false" aria-controls="nav">
                         <span></span>
@@ -110,37 +119,89 @@
                     }
                 }
 
-                function updateButtonHrefs() {
+                function updateButtonHrefs(actualVersion) {
                     const buttons = document.querySelectorAll('a.doc');
-                    const sel = document.getElementById('version');
                     buttons.forEach(button => {
-                        let prevVersion = button.href.match("/releases\/([^/]*)\/docs/")[1];
-                        button.href = button.href.replace(prevVersion, sel.value);
+                        const prevVersion = button.href.match("/([^/]*/[^/]*)/docs/")[1];
+                        button.href = button.href.replace(prevVersion, actualVersion);
                     });
                 }
 
                 async function fetchReadFile(url) {
-                    const sel = document.getElementById('version');
+                    const optionMenu = document.querySelector(".select-menu"),
+                        sel = optionMenu.querySelector(".options"),
+                        sBtn_text = optionMenu.querySelector(".sBtn-text");
+
+                    let actualVersionValue = null;
+                    let actualVersionText = null;
+
                     for await (const version of makeTextFileLineIterator(url)) {
-                        const opt = document.createElement("option");
-                        opt.value = version;
-                        opt.text = version;
-                        sel.add(opt)
+                        const opt = document.createElement("li");
+                        opt.classList.add("option");
+                        opt.innerHTML = version;
+                        opt.setAttribute("value", "releases/" + version);
+                        opt.addEventListener("click", () => {
+                            sBtn_text.innerText = version;
+                            optionMenu.classList.remove("active");
+                            updateButtonHrefs("releases/" + version);
+                        });
+                        sel.appendChild(opt);
+                        if (!actualVersionValue) {
+                            actualVersionValue = "releases/" + version;
+                            actualVersionText = version;
+                        }
                     }
-                    if (!sel.length) {
+
+                    if (!actualVersionValue) {
                         // add some known version
-                        const opt = document.createElement("option");
-                        opt.value = "0.3.5";
-                        opt.text = "0.3.5";
-                        sel.add(opt)
+                        actualVersionValue = "releases/latest";
+                        actualVersionText = "latest";
+                        const opt = document.createElement("li");
+                        opt.classList.add("option");
+                        opt.innerHTML = actualVersionText;
+                        opt.setAttribute("value", actualVersionValue);
+                        opt.addEventListener("click", () => {
+                            sBtn_text.innerText = actualVersionText;
+                            optionMenu.classList.remove("active");
+                            updateButtonHrefs(actualVersionValue);
+                        });
+                        sel.appendChild(opt);
                     }
-                    updateButtonHrefs();
+
+                    const version = document.location.pathname.match(/releases\/([0-9]*.[0-9]*.[0-9]*)|snapshots\/(master)|releases\/(latest)/);
+                    if (version) {
+                        actualVersionValue = version[0];
+                        actualVersionText = version[1];
+                        if (actualVersionValue == "snapshots\/master") {
+                            actualVersionText = "development snapshot";
+                        }
+                    }
+                    sBtn_text.innerText = actualVersionText;
+                    updateButtonHrefs(actualVersionValue);
                 }
 
                 window.addEventListener('load', () => {
+                    // Select menu
+                    const optionMenu = document.querySelector(".select-menu"),
+                        selectBtn = optionMenu.querySelector(".select-btn"),
+                        sel = optionMenu.querySelector(".options"),
+                        sBtn_text = optionMenu.querySelector(".sBtn-text");
+
+                    selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
+
+                    const opt = document.createElement("li");
+                    opt.classList.add("option");
+                    opt.innerHTML = "development snapshot";
+                    opt.setAttribute("value", "snapshots/master");
+                    opt.addEventListener("click", () => {
+                        sBtn_text.innerText = "development snapshot";
+                        optionMenu.classList.remove("active");
+                        updateButtonHrefs("snapshots/master");
+                    });
+                    sel.appendChild(opt);
+                    // / Select menu
+
                     fetchReadFile("/releases/versions.txt");
-                    const sel = document.getElementById('version');
-                    sel.addEventListener('change', updateButtonHrefs);
                 }, false);
 
             </script>
@@ -149,11 +210,105 @@
                 <h1>Documentation</h1>
             </section>
 
+            <!-- Custom drop down select menu-->
+            <style>
+                .select-menu {
+                    border: 1px solid var(--color_light_purple);
+                    border-radius: 2px;
+                    box-sizing: border-box;
+                    font-family: 'Archivo';
+                    font-size: 1rem;
+                    color: #000;
+                    line-height: 1.56;
+                    margin-bottom: 1.7em;
+                    width: 100%;
+                    position: relative;
+                }
+
+                .select-menu .select-btn {
+                    display: flex;
+                    background: #fff;
+                    padding: 12px 16px;
+                    align-items: center;
+                    cursor: pointer;
+                    justify-content: space-between;
+                }
+
+                .select-btn i {
+                    font-size: 25px;
+                    transition: 0.3s;
+                }
+
+                .select-menu.active {
+                    outline: 2px solid var(--color_light_purple);
+                }
+
+                .select-menu.active .select-btn i {
+                    transform: rotate(-180deg);
+                }
+
+                .select-menu .options {
+                    position: relative;
+                    padding: 20px;
+                    margin-top: 10px;
+                    border-radius: 8px;
+                    background: #fff;
+                    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+                    display: none;
+                    border: 1px solid var(--color_light_purple);
+                    max-height: 200px;
+                    overflow-y: auto;
+                }
+
+                .select-menu.active .options {
+                    display: block;
+                    position: absolute;
+                    z-index: 2;
+                    right: 0px;
+                    left: 0px;
+                }
+
+                .options .option {
+                    display: flex;
+                    cursor: pointer;
+                    padding: 12px 16px;
+                    border-radius: 8px;
+                    align-items: center;
+                    background: #fff;
+                }
+
+                .options .option:hover {
+                    background: #F2F2F2;
+                }
+
+                .sx {
+                    font-weight: 400;
+                    font-style: normal;
+                    font-variant: normal;
+                    line-height: 1;
+                    text-rendering: auto;
+                    display: inline-block;
+                    text-transform: none;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                }
+
+                .sx-chevron-down:before {
+                    content: url('/assets/img/down-arrow-dark.svg');
+                }
+            </style>
+
             <section class="select-filters">
                 <div class="select-wrap">
                     <label for="version">Version</label>
-                    <select id="version">
-                    </select>
+                    <div class="select-menu">
+                        <div class="select-btn">
+                            <span class="sBtn-text">Select your option</span>
+                            <i class="sx sx-chevron-down"></i>
+                        </div>
+                        <ul class="options" id="version">
+                        </ul>
+                    </div>
                 </div>
             </section>
 
@@ -161,16 +316,16 @@
                 <div class="col-wrap">
                     <div class="col-1">
                         <h2>Browse</h2>
-                        <p>Whether you’re developing the UI or the backend, Slint's documentation will guide you.</p>
+                        <p>Whether you’re developing the UI or the backend, our documentation will guide you.</p>
                     </div>
                 </div>
                 <div class="col-wrap">
                     <div class="col-2">
                         <div class="price-box">
                             <h5>DSL</h5>
-                            <h4>Slint Language</h4>
+                            <h4>Slint</h4>
                             <p><img src="https://slint.dev/assets/img/slint-favicon.svg"></p>
-                            <p><a href="/releases/0.3.5/docs/slint/index.html" class="btn doc">Language Documentation</a></p>
+                            <p><a href="https://slint.dev/releases/latest/docs/slint/index.html" class="btn doc">Language</a></p>
                         </div><!-- .price-box -->
                     </div><!-- .col-2 -->
                     <div class="col-2">
@@ -179,30 +334,34 @@
                                 <h5>APIs</h5>
                                 <h4>Using Rust</h4>
                                 <p><img src="https://slint.dev/assets/img/rust-logo.svg"></p>
-                                <p><a href="/releases/0.3.5/docs/rust/slint" class="btn doc">API Documentation</a></p>
-                                <p><a href="/releases/0.3.5/docs/tutorial/rust" class="btn doc">Tutorial</a></p>
-                                <p><a href="https://youtu.be/WBcv4V-whHk" class="btn">Tutorial Video</a></p>
-                                <p><a href="https://github.com/slint-ui/slint-rust-template" class="btn">Project Template</a></p>
+                                <p><a href="https://slint.dev/releases/latest/docs/rust/slint" class="btn doc">API</a></p>
+                                <p><a href="https://slint.dev/releases/latest/docs/tutorial/rust" class="btn doc">Tutorial</a></p>
+                                <p><a href="https://youtu.be/WBcv4V-whHk" class="btn" target="_blank">Video Tutorial</a></p>
+                                <p><a href="https://github.com/slint-ui/slint-rust-template" class="btn" target="_blank">Project Template</a></p>
                             </div><!-- .price-box -->
                             <div class="price-box">
                                 <h5>APIs</h5>
                                 <h4>Using C++</h4>
                                 <p><img src="https://slint.dev/assets/img/cpp_logo.svg"></p>
-                                <p><a href="/releases/0.3.5/docs/cpp" class="btn doc">API Documentation</a></p>
-                                <p><a href="/releases/0.3.5/docs/tutorial/cpp" class="btn doc">Tutorial</a></p>
-                                <p><a href="https://github.com/slint-ui/slint-cpp-template" class="btn">Project Template</a></p>
+                                <p><a href="https://slint.dev/releases/latest/docs/cpp" class="btn doc">API</a></p>
+                                <p><a href="https://slint.dev/releases/latest/docs/tutorial/cpp" class="btn doc">Tutorial</a></p>
+                                <p><a href="https://github.com/slint-ui/slint-cpp-template" class="btn" target="_blank">Project Template</a></p>
                             </div><!-- .price-box -->
                             <div class="price-box">
                                 <h5>APIs</h5>
                                 <h4>Using NodeJS (beta)</h4>
                                 <p><img src="https://slint.dev/assets/img/nodejs_logo.svg"></p>
-                                <p><a href="/releases/0.3.5/docs/node" class="btn doc">API Documentation</a></p>
-                                <p><a href="/releases/0.3.5/docs/tutorial/node" class="btn doc">Tutorial</a></p>
-                                <p><a href="https://github.com/slint-ui/slint-nodejs-template" class="btn">Project Template</a></p>
+                                <p><a href="https://slint.dev/releases/latest/docs/node" class="btn doc">API</a></p>
+                                <p><a href="https://slint.dev/releases/latest/docs/tutorial/node" class="btn doc">Tutorial</a></p>
+                                <p><a href="https://github.com/slint-ui/slint-nodejs-template" class="btn" target="_blank">Project Template</a></p>
                             </div><!-- .price-box -->
                         </div><!-- .col-wrap -->
                     </div><!-- .col-2 -->
                 </div><!-- .col-wrap -->
+            </section>
+
+            <section class="one-column" style="padding: 50px 0 2em;">
+                <p class="cta"><a href="https://slint.dev/contact.html" class="btn blue btn-center">Contact Us</a></p>
             </section>
 
         </main>
@@ -214,11 +373,11 @@
                     <div class="col-6">
                         <p><a href="https://slint.dev/index.html"><img src="https://slint.dev/assets/img/slint-logo.svg" alt="Slint" width="141" height="47" class="footer-logo"></a></p>
                         <p class="some-links">
-                            <a href="https://twitter.com/slint_ui"><img src="https://slint.dev/assets/img/icon-twitter.svg" alt="Twitter" width="40" height="40"></a>
-                            <a href="https://www.linkedin.com/company/slint-ui/"><img src="https://slint.dev/assets/img/icon-linkedin.svg" alt="Linkedin" width="40" height="40"></a>
-                            <a rel="me" href="https://fosstodon.org/@slint"><img src="https://slint.dev/assets/img/icon-mastodon.svg" alt="Mastodon" width="40" height="40"></a>
-                            <!-- <a href="https://github.com/slint-ui/slint/discussions"><img src="https://slint.dev/assets/img/icon-github.svg" alt="Github Discussions" width="40" height="40"></a> -->
-                            <!-- <a href="https://chat.slint.dev/"><img src="https://slint.dev/assets/img/icon-some.svg" alt="" width="40" height="40"></a> -->
+                            <a href="https://twitter.com/slint_ui" target="_blank"><img src="https://slint.dev/assets/img/icon-twitter.svg" alt="Twitter" width="40" height="40"></a>
+                            <a href="https://www.linkedin.com/company/slint-ui/" target="_blank"><img src="https://slint.dev/assets/img/icon-linkedin.svg" alt="Linkedin" width="40" height="40"></a>
+                            <a rel="me" href="https://fosstodon.org/@slint" target="_blank"><img src="https://slint.dev/assets/img/icon-mastodon.svg" alt="Mastodon" width="40" height="40"></a>
+                            <!-- <a href="https://github.com/slint-ui/slint/discussions" target="_blank"><img src="/assets/img/icon-github.svg" alt="Github Discussions" width="40" height="40"></a> -->
+                            <!-- <a href="https://chat.slint.dev/" target="_blank"><img src="/assets/img/icon-some.svg" alt="" width="40" height="40"></a> -->
                         </p>
                         <p><img src="https://slint.dev/assets/img/annual-ross-index.svg" data-darkimg="https://slint.dev/assets/img/annual-ross-index-light.svg" data-lightimg="https://slint.dev/assets/img/annual-ross-index.svg" alt="Annual Ross index" width="260" height="52" class="annual-ross"></p>
                     </div><!-- .col-6 -->
@@ -226,30 +385,30 @@
                         <dl>
                             <dt style="color: var(--light, var(--color_dark_gray)) var(--dark, var(--color_light_gray_2));">About</dt>
                             <dd><a href="https://slint.dev/about-us.html">Us</a></dd>
-                            <dd><a href="https://slint.dev/investors.html">Investors</a></dd>
                             <dd><a href="https://slint.dev/events.html">Events</a></dd>
                             <dd><a href="https://slint.dev/careers.html">Careers</a></dd>
+                            <dd><a href="https://slint.dev/investors.html">Investors</a></dd>
                             <dd><a href="https://slint.dev/imprint.html">Imprint &amp; Privacy</a></dd>
                         </dl>
                     </div><!-- .col-6 -->
                     <div class="col-6">
                         <dl>
                             <dt style="color: var(--light, var(--color_dark_gray)) var(--dark, var(--color_light_gray_2));">Explore</dt>
-                            <dd><a href="https://slint.dev/docs.html">Documentation</a></dd>
+                            <dd><a href="https://slint.dev/use-cases.html#embedded-applications">Embedded</a></dd>
+                            <dd><a href="https://slint.dev/use-cases.html#desktop-applications">Desktop</a></dd>
                             <dd><a href="https://slint.dev/demos.html">Demos</a></dd>
-                            <dd><a href="https://slint.dev/videos.html">Videos</a></dd>
-                            <dd><a href="https://slint.dev/service-partners.html">Service Partners</a></dd>
-                            <dd><a href="https://slint.dev/silicon-partners.html">Silicon Partners</a></dd>
+                            <dd><a href="https://slint.dev/partners.html">Partners</a></dd>
+                            <dd><a href="https://slint.dev/brand-guidelines.html">Brand Guidelines</a></dd>
                         </dl>
                     </div><!-- .col-6 -->
                     <div class="col-6">
                         <dl>
-                            <dt style="color: var(--light, var(--color_dark_gray)) var(--dark, var(--color_light_gray_2));">Resources</dt>
-                            <dd><a href="https://slint.dev/pricing.html">Pricing</a></dd>
-                            <dd><a href="https://slint.dev/community.html">Community</a></dd>
-                            <dd><a href="https://slint.dev/blog">Blog</a></dd>
-                            <dd><a href="https://slint.dev/thisweek">Weekly</a></dd>
-                            <dd><a href="https://slint.dev/supported-boards.html">Supported Boards</a></dd>
+                            <dt style="color: var(--light, var(--color_dark_gray)) var(--dark, var(--color_light_gray_2));">Markets</dt>
+                            <dd><a href="https://slint.dev/use-cases.html#automotive-applications">Automotive</a></dd>
+                            <dd><a href="https://slint.dev/use-cases.html#consumer-applications">Consumer</a></dd>
+                            <dd><a href="https://slint.dev/use-cases.html#industrial-applications">Industrial</a></dd>
+                            <dd><a href="https://slint.dev/use-cases.html#medical-applications">Medical</a></dd>
+                            <dd><a href="https://slint.dev/success">Success Stories</a></dd>
                         </dl>
                     </div><!-- .col-6 -->
                     <div class="col-6">
@@ -259,17 +418,17 @@
                             <dd><a href="https://slint.dev/alternative-to-lvgl.html">LVGL</a></dd>
                             <dd><a href="https://slint.dev/alternative-to-flutter.html">Flutter</a></dd>
                             <dd><a href="https://slint.dev/alternative-to-electron.html">Electron</a></dd>
-                            <dd><a href="https://slint.dev/declarative-rust-gui.html">Other Rust GUI Toolkits</a></dd>
+                            <dd><a href="https://slint.dev/declarative-rust-gui.html">Rust GUI Toolkits</a></dd>
                         </dl>
                     </div><!-- .col-6 -->
                     <div class="col-6">
                         <dl>
                             <dt style="color: var(--light, var(--color_dark_gray)) var(--dark, var(--color_light_gray_2));">Contact us</dt>
-                            <dd><a href="mailto:sales@slint.dev?subject=Contact from Website">Email</a></dd>
+                            <dd><a href="https://slint.dev/meeting.html?event=online">Schedule Meeting</a></dd>
+                            <dd><a href="mailto:info@slint.dev?subject=Contact%20from%20Website">Email</a></dd>
                             <dd><a href="https://chat.slint.dev">Chat</a></dd>
-                            <dd><a href="https://github.com/slint-ui/slint">GitHub</a></dd>
-                            <dd hidden><a href="#">Schedule meeting</a></dd>
-                            <dd hidden><a href="#">Github discussion</a></dd>
+                            <dd><a href="https://slint.dev/pricing.html#support">Support</a></dd>
+                            <dd><a href="https://github.com/slint-ui/slint/" target="_blank">GitHub</a></dd>
                             <dd hidden><a href="#">Twitter</a></dd>
                             <dd hidden><a href="#">Mastodon</a></dd>
                             <dd hidden><a href="#">Linkedin</a></dd>
@@ -286,7 +445,7 @@
         </div><!-- .wrap -->
 
         <!-- ====== All Javascript Files ====== -->
-        <script src="https://slint.dev/assets/js/script.js?ver=1.2.5"></script>
+        <script src="https://slint.dev/assets/js/script.js?ver=1.2.16"></script>
     </body>
 
 </html>
