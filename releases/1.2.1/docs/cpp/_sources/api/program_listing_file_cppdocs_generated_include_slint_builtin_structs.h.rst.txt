@@ -1,0 +1,21 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_builtin_structs.h:
+
+Program Listing for File slint_builtin_structs.h
+================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_builtin_structs.h>` (``cppdocs/generated_include/slint_builtin_structs.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   // This file is auto-generated from xtask/src/../../api/cpp/cbindgen.rs
+   namespace slint {
+   struct StandardListViewItem {
+       SharedString text;
+       friend bool operator==(const StandardListViewItem&, const StandardListViewItem&) = default;
+       friend bool operator!=(const StandardListViewItem&, const StandardListViewItem&) = default;
+   };
+   }

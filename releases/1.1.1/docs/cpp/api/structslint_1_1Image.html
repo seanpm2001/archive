@@ -1,0 +1,660 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Struct Struct" href="structslint_1_1interpreter_1_1Struct.html" /><link rel="prev" title="Namespace slint::interpreter" href="namespace_slint__interpreter.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Struct Image - Slint C++ API documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_tweak.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Slint C++ API  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint.dev/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint C++ API  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cmake.html">Installing Or Building With CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">First Steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">Type Mapping to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated_code.html">Example Generated Code</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="library_root.html">C++ API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of C++ API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Struct Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1LogicalPosition.html">Struct LogicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1LogicalSize.html">Struct LogicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1PhysicalPosition.html">Struct PhysicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1PhysicalSize.html">Struct PhysicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Point.html">Template Struct Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Rgb8Pixel.html">Struct Rgb8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Rgba8Pixel.html">Struct Rgba8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedPixelBuffer.html">Template Struct SharedPixelBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1StandardListViewItem.html">Struct StandardListViewItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1FilterModel.html">Template Class FilterModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1MapModel.html">Template Class MapModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1SortModel.html">Template Class SortModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Window.html">Class Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html">Enum RenderingState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html">Enum TimerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a6b7f049a8c7176edc87c4cffddfc1bbd.html">Define SLINT_VERSION_STRING</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/debugging_techniques.html">Debugging Techniques</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="struct-image">
+<span id="exhale-struct-structslint-1-1image"></span><h1>Struct Image<a class="headerlink" href="#struct-image" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_runner_work_slint_slint_api_cpp_include_slint_image.h.html#file-home-runner-work-slint-slint-api-cpp-include-slint-image-h"><span class="std std-ref">File slint_image.h</span></a></p></li>
+</ul>
+<section id="struct-documentation">
+<h2>Struct Documentation<a class="headerlink" href="#struct-documentation" title="Permalink to this heading">#</a></h2>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint5ImageE">
+<span id="_CPPv3N5slint5ImageE"></span><span id="_CPPv2N5slint5ImageE"></span><span id="slint::Image"></span><span class="target" id="structslint_1_1Image"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Image</span></span></span><a class="headerlink" href="#_CPPv4N5slint5ImageE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>An image type that can be displayed by the <a class="reference internal" href="#structslint_1_1Image"><span class="std std-ref">Image</span></a> element</p>
+<p>You can construct <a class="reference internal" href="#structslint_1_1Image"><span class="std std-ref">Image</span></a> objects from a path to an image file on disk, using <a class="reference internal" href="#structslint_1_1Image_1ab2d46531a2b8bc03d67309dbafde6d73"><span class="std std-ref">Image::load_from_path()</span></a>.</p>
+<p>Another typical use-case is to render the image content with C++ code. For this it’s most efficient to create a new <a class="reference internal" href="structslint_1_1SharedPixelBuffer.html#structslint_1_1SharedPixelBuffer"><span class="std std-ref">SharedPixelBuffer</span></a> with the known dimensions and pass the pixel pointer returned by begin() to your rendering function. Afterwards you can create an <a class="reference internal" href="#structslint_1_1Image"><span class="std std-ref">Image</span></a> using the constructor taking a <a class="reference internal" href="structslint_1_1SharedPixelBuffer.html#structslint_1_1SharedPixelBuffer"><span class="std std-ref">SharedPixelBuffer</span></a>.</p>
+<p>The following example creates a 320x200 RGB pixel buffer and calls a function to draw a shape into it: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">slint</span><span class="o">::</span><span class="n">SharedPixelBuffer</span><span class="o">::&lt;</span><span class="n">slint</span><span class="o">::</span><span class="n">Rgb8Pixel</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pixel_buffer</span><span class="p">(</span><span class="mi">320</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">);</span>
+<span class="n">low_level_render</span><span class="p">(</span><span class="n">pixel_buffer</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="n">pixel_buffer</span><span class="p">.</span><span class="n">height</span><span class="p">(),</span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">pixel_buffer</span><span class="p">.</span><span class="n">begin</span><span class="p">()));</span>
+<span class="n">slint</span><span class="o">::</span><span class="n">Image</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="n">pixel_buffer</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+<p>Another use-case is to import existing image data into Slint, by creating a new <a class="reference internal" href="#structslint_1_1Image"><span class="std std-ref">Image</span></a> through copying of the buffer:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">slint</span><span class="o">::</span><span class="n">Image</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="n">slint</span><span class="o">::</span><span class="n">SharedPixelBuffer</span><span class="o">&lt;</span><span class="n">slint</span><span class="o">::</span><span class="n">Rgb8Pixel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">the_width</span><span class="p">,</span><span class="w"> </span><span class="n">the_height</span><span class="p">,</span>
+<span class="w">    </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">slint</span><span class="o">::</span><span class="n">Rgb8Pixel</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">the_data</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>This only works if the static_cast is valid and the underlying data has the same memory layout as <a class="reference internal" href="structslint_1_1Rgb8Pixel.html#structslint_1_1Rgb8Pixel"><span class="std std-ref">slint::Rgb8Pixel</span></a> or <a class="reference internal" href="structslint_1_1Rgba8Pixel.html#structslint_1_1Rgba8Pixel"><span class="std std-ref">slint::Rgba8Pixel</span></a>. Otherwise, you will have to do a pixel conversion as you copy the pixels:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">slint</span><span class="o">::</span><span class="n">SharedPixelBuffer</span><span class="o">::&lt;</span><span class="n">slint</span><span class="o">::</span><span class="n">Rgb8Pixel</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pixel_buffer</span><span class="p">(</span><span class="n">the_width</span><span class="p">,</span><span class="w"> </span><span class="n">the_height</span><span class="p">);</span>
+<span class="n">slint</span><span class="o">::</span><span class="n">Rgb8Pixel</span><span class="w"> </span><span class="o">*</span><span class="n">raw_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pixel_buffer</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">the_width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">the_height</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">raw_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">bgr_data</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">bgr_data</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">bgr_data</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint5Image5ImageEv">
+<span id="_CPPv3N5slint5Image5ImageEv"></span><span id="_CPPv2N5slint5Image5ImageEv"></span><span id="slint::Image::Image"></span><span class="target" id="structslint_1_1Image_1a6a9d4a4cd1c543bac3211d5dbc876fdb"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Image</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint5Image5ImageEv" title="Permalink to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint5Image5ImageE17SharedPixelBufferI9Rgb8PixelE">
+<span id="_CPPv3N5slint5Image5ImageE17SharedPixelBufferI9Rgb8PixelE"></span><span id="_CPPv2N5slint5Image5ImageE17SharedPixelBufferI9Rgb8PixelE"></span><span id="slint::Image::Image__SharedPixelBuffer:Rgb8Pixel:"></span><span class="target" id="structslint_1_1Image_1aa1a302434440cfc9ba52f73997409d1f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Image</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structslint_1_1SharedPixelBuffer.html#_CPPv4I0EN5slint17SharedPixelBufferE" title="slint::SharedPixelBuffer"><span class="n"><span class="pre">SharedPixelBuffer</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="structslint_1_1Rgb8Pixel.html#_CPPv4N5slint9Rgb8PixelE" title="slint::Rgb8Pixel"><span class="n"><span class="pre">Rgb8Pixel</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">buffer</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint5Image5ImageE17SharedPixelBufferI9Rgb8PixelE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Construct an image from a <a class="reference internal" href="structslint_1_1SharedPixelBuffer.html#structslint_1_1SharedPixelBuffer"><span class="std std-ref">SharedPixelBuffer</span></a> of RGB pixels. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint5Image5ImageE17SharedPixelBufferI10Rgba8PixelE">
+<span id="_CPPv3N5slint5Image5ImageE17SharedPixelBufferI10Rgba8PixelE"></span><span id="_CPPv2N5slint5Image5ImageE17SharedPixelBufferI10Rgba8PixelE"></span><span id="slint::Image::Image__SharedPixelBuffer:Rgba8Pixel:"></span><span class="target" id="structslint_1_1Image_1a279b862f502cb1011ef8a60c42e73054"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Image</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structslint_1_1SharedPixelBuffer.html#_CPPv4I0EN5slint17SharedPixelBufferE" title="slint::SharedPixelBuffer"><span class="n"><span class="pre">SharedPixelBuffer</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="structslint_1_1Rgba8Pixel.html#_CPPv4N5slint10Rgba8PixelE" title="slint::Rgba8Pixel"><span class="n"><span class="pre">Rgba8Pixel</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">buffer</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint5Image5ImageE17SharedPixelBufferI10Rgba8PixelE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Construct an image from a <a class="reference internal" href="structslint_1_1SharedPixelBuffer.html#structslint_1_1SharedPixelBuffer"><span class="std std-ref">SharedPixelBuffer</span></a> of RGBA pixels. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint5Image4sizeEv">
+<span id="_CPPv3NK5slint5Image4sizeEv"></span><span id="_CPPv2NK5slint5Image4sizeEv"></span><span id="slint::Image::sizeC"></span><span class="target" id="structslint_1_1Image_1ab545dfc7f5444b6c8348ad64b57bf2fe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="structslint_1_1Size.html#_CPPv4I0EN5slint4SizeE" title="slint::Size"><span class="n"><span class="pre">Size</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint5Image4sizeEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the size of the <a class="reference internal" href="#structslint_1_1Image"><span class="std std-ref">Image</span></a> in pixels. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint5Image4pathEv">
+<span id="_CPPv3NK5slint5Image4pathEv"></span><span id="_CPPv2NK5slint5Image4pathEv"></span><span id="slint::Image::pathC"></span><span class="target" id="structslint_1_1Image_1ab22c93c103cf62bd47d58d80358052b5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">slint</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringE" title="slint::SharedString"><span class="n"><span class="pre">SharedString</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">path</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint5Image4pathEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the path of the image on disk, if it was constructed via <a class="reference internal" href="#structslint_1_1Image_1ab2d46531a2b8bc03d67309dbafde6d73"><span class="std std-ref">Image::load_from_path()</span></a>. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint5Image14load_from_pathERK12SharedString">
+<span id="_CPPv3N5slint5Image14load_from_pathERK12SharedString"></span><span id="_CPPv2N5slint5Image14load_from_pathERK12SharedString"></span><span id="slint::Image::load_from_path__SharedStringCR"></span><span class="target" id="structslint_1_1Image_1ab2d46531a2b8bc03d67309dbafde6d73"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint5ImageE" title="slint::Image"><span class="n"><span class="pre">Image</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">load_from_path</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringE" title="slint::SharedString"><span class="n"><span class="pre">SharedString</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file_path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint5Image14load_from_pathERK12SharedString" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Load an image from an image file. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint5Image39create_from_borrowed_gl_2d_rgba_textureE8uint32_t4SizeI8uint32_tE">
+<span id="_CPPv3N5slint5Image39create_from_borrowed_gl_2d_rgba_textureE8uint32_t4SizeI8uint32_tE"></span><span id="_CPPv2N5slint5Image39create_from_borrowed_gl_2d_rgba_textureE8uint32_t4SizeI8uint32_tE"></span><span id="slint::Image::create_from_borrowed_gl_2d_rgba_texture__uint32_t.Size:uint32_t:"></span><span class="target" id="structslint_1_1Image_1af480665946dcca8b5f39339d8973261d"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint5ImageE" title="slint::Image"><span class="n"><span class="pre">Image</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create_from_borrowed_gl_2d_rgba_texture</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">texture_id</span></span>, <a class="reference internal" href="structslint_1_1Size.html#_CPPv4I0EN5slint4SizeE" title="slint::Size"><span class="n"><span class="pre">Size</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint5Image39create_from_borrowed_gl_2d_rgba_textureE8uint32_t4SizeI8uint32_tE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#structslint_1_1Image"><span class="std std-ref">Image</span></a> from an existing OpenGL texture. The texture remains borrowed by Slint for the duration of being used for rendering, such as when assigned as source property to an <code class="docutils literal notranslate"><a class="reference internal" href="#structslint_1_1Image"><span class="std std-ref"><span class="pre">Image</span></span></a></code> element. It’s the application’s responsibility to delete the texture when it is not used anymore.</p>
+<p>The texture must be bindable against the <code class="docutils literal notranslate"><span class="pre">GL_TEXTURE_2D</span></code> target, have <code class="docutils literal notranslate"><span class="pre">GL_RGBA</span></code> as format for the pixel data.</p>
+<p>When Slint renders the texture, it assumes that the origin of the texture is at the top-left. This is different from the default OpenGL coordinate system.</p>
+<p>Safety:</p>
+<p>This function is unsafe because invalid texture ids may lead to undefind behavior in OpenGL drivers. A valid texture id is one that was created by the same OpenGL context that is current during any of the invocations of the callback set on [<code class="docutils literal notranslate"><a class="reference internal" href="classslint_1_1Window.html#classslint_1_1Window_1ae80161c545b19f321533cb9081d0dea9"><span class="std std-ref"><span class="pre">Window::set_rendering_notifier()</span></span></a></code>]. OpenGL contexts between instances of [<code class="docutils literal notranslate"><a class="reference internal" href="classslint_1_1Window.html#classslint_1_1Window"><span class="std std-ref"><span class="pre">slint::Window</span></span></a></code>] are not sharing resources. Consequently [<code class="docutils literal notranslate"><a class="reference internal" href="#structslint_1_1Image"><span class="std std-ref"><span class="pre">slint::Image</span></span></a></code>] objects created from borrowed OpenGL textures cannot be shared between different windows. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint5ImageeqERK5ImageRK5Image">
+<span id="_CPPv3N5slint5ImageeqERK5ImageRK5Image"></span><span id="_CPPv2N5slint5ImageeqERK5ImageRK5Image"></span><span id="slint::Image::eq-operator__ImageCR.ImageCR"></span><span class="target" id="structslint_1_1Image_1aebd5900ebb3601e17e356ef43c0a805e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">==</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint5ImageE" title="slint::Image"><span class="n"><span class="pre">Image</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint5ImageE" title="slint::Image"><span class="n"><span class="pre">Image</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint5ImageeqERK5ImageRK5Image" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns true if <em>a</em> refers to the same image as <em>b</em>; false otherwise. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint5ImageneERK5ImageRK5Image">
+<span id="_CPPv3N5slint5ImageneERK5ImageRK5Image"></span><span id="_CPPv2N5slint5ImageneERK5ImageRK5Image"></span><span id="slint::Image::neq-operator__ImageCR.ImageCR"></span><span class="target" id="structslint_1_1Image_1af4c52af81e5cf24dda89209c9e800bd9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">!=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint5ImageE" title="slint::Image"><span class="n"><span class="pre">Image</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint5ImageE" title="slint::Image"><span class="n"><span class="pre">Image</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint5ImageneERK5ImageRK5Image" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns false if <em>a</em> refers to the same image as <em>b</em>; true otherwise. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="structslint_1_1interpreter_1_1Struct.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Struct Struct</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="namespace_slint__interpreter.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Namespace slint::interpreter</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Struct Image</a><ul>
+<li><a class="reference internal" href="#struct-documentation">Struct Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div>
+<script src="../_static/jquery.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.1.1/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.1.1/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // Safari blocks quite heavily when creating many WebGL contexts, slowing down loading of the docs
+        // significantly. For now, don't do automatic previews:
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            return false;
+        }
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

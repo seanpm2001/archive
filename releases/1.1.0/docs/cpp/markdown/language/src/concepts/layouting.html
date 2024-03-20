@@ -1,0 +1,921 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
+
+    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+        <title>Positioning and Layout of Elements - Slint C++ API documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/theme_tweak.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">Slint C++ API  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint.dev/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint C++ API  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cmake.html">Installing Or Building With CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">First Steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../types.html">Type Mapping to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_code.html">Example Generated Code</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/library_root.html">C++ API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1LogicalPosition.html">Struct LogicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1LogicalSize.html">Struct LogicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1PhysicalPosition.html">Struct PhysicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1PhysicalSize.html">Struct PhysicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Point.html">Template Struct Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Rgb8Pixel.html">Struct Rgb8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Rgba8Pixel.html">Struct Rgba8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1SharedPixelBuffer.html">Template Struct SharedPixelBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1StandardListViewItem.html">Struct StandardListViewItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1FilterModel.html">Template Class FilterModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1MapModel.html">Template Class MapModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1SortModel.html">Template Class SortModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1Window.html">Class Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html">Enum DiagnosticLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html">Enum ValueType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html">Enum RenderingState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html">Enum TimerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging_techniques.html">Debugging Techniques</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="positioning-and-layout-of-elements">
+<h1>Positioning and Layout of Elements<a class="headerlink" href="#positioning-and-layout-of-elements" title="Permalink to this headline">#</a></h1>
+<p>All visual elements are shown in a window. The <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties store
+the elements coordinates relative to their parent element. Slint determines the
+absolute position of an element by adding the parent’s position to
+the element’s position. If the parent has a parent element itself, then that one
+is added as well. This calculation continues until the top-level element
+is reached.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> properties store the size of visual elements.</p>
+<p>You can create an entire graphical user interface by placing the elements in
+two ways:</p>
+<ul class="simple">
+<li><p>Explicitly - by setting the <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, and <code class="docutils literal notranslate"><span class="pre">height</span></code> properties.</p></li>
+<li><p>Automatically - by using layout elements.</p></li>
+</ul>
+<p>Explicit placement is great for static scenes with few elements. Layouts are
+suitable for complex user interfaces and help create scalable user interfaces.
+Layout elements express geometric relationships between elements.</p>
+<section id="explicit-placement">
+<h2>Explicit Placement<a class="headerlink" href="#explicit-placement" title="Permalink to this headline">#</a></h2>
+<p>The following example places two rectangles into a window, a blue one and
+a green one. The green rectangle is a child of the blue:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>// Explicit positioning
+export component Example inherits Window {
+    width: 200px;
+    height: 200px;
+    Rectangle {
+        x: 100px;
+        y: 70px;
+        width: parent.width - self.x;
+        height: parent.height - self.y;
+        background: blue;
+        Rectangle {
+            x: 10px;
+            y: 5px;
+            width: 50px;
+            height: 30px;
+            background: green;
+        }
+    }
+}
+</pre></div>
+</div>
+<p>The positions of both rectangles and the size of the inner green one are fixed.
+The outer blue rectangle has a size that’s automatically calculated using binding
+expressions for the <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> properties. The calculation results in the
+bottom left corner aligning with the corner of the window - it updates whenever
+the <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> of the window changes.</p>
+<p>When specifying explicit values for any of the geometric properties, Slint requires
+you to attach a unit to the number. You can choose between two different units:</p>
+<ul class="simple">
+<li><p>Logical pixels, using the <code class="docutils literal notranslate"><span class="pre">px</span></code> unit suffix. This is the recommended unit.</p></li>
+<li><p>Physical pixels, using the <code class="docutils literal notranslate"><span class="pre">phx</span></code> unit suffix</p></li>
+</ul>
+<p>Logical pixels scale automatically with the device pixel ratio that your system is
+configured with. For example, on a modern High-DPI display the device pixel ratio can be 2,
+so every logical pixel occupies 2 physical pixels. On an older screen the user
+interface scales without any adaptations.</p>
+<p>Additionally, the <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> properties can also be specified as a <code class="docutils literal notranslate"><span class="pre">%</span></code> percentage
+unit, which applies relative to the parent element. For example a <code class="docutils literal notranslate"><span class="pre">width:</span> <span class="pre">50%</span></code> means half
+of the parent’s <code class="docutils literal notranslate"><span class="pre">width</span></code>.</p>
+<p>The default values for <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties are such that elements are centered within their
+parent.</p>
+<p>The default values for <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> depend on the type of element. Some elements are sized
+automatically based on their content, such as <code class="docutils literal notranslate"><span class="pre">Image</span></code>, <code class="docutils literal notranslate"><span class="pre">Text</span></code>, and most widgets. The following elements
+don’t have content and default to fill their parent element when they do not have children:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TouchArea</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FocusScope</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Flickable</span></code></p></li>
+</ul>
+<p>Layouts are also defaulting to fill the parent, regardless of their own preferred size.</p>
+<p>Other elements (including custom ones without base) default to using their preferred size.</p>
+<section id="preferred-size">
+<h3>Preferred size<a class="headerlink" href="#preferred-size" title="Permalink to this headline">#</a></h3>
+<p>The preferred size of elements can be specified with the <code class="docutils literal notranslate"><span class="pre">preferred-width</span></code> and <code class="docutils literal notranslate"><span class="pre">preferred-height</span></code> properties.</p>
+<p>When not explicitly set, the preferred size depends on the children, and is the preferred size of the
+child that has the bigger preferred size, whose <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> property are not set.
+The preferred size is therefore computed from the child to the parent, just like other constraints (maximum and minimum size), unless explicitly overwritten.</p>
+<p>A special case is to set the preferred size to be the size of the parent using <code class="docutils literal notranslate"><span class="pre">100%</span></code> as value.
+For example,this component will use the size of the parent by default:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>component MyComponent {
+    preferred-width: 100%;
+    preferred-height: 100%;
+    // ...
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="automatic-placement-using-layouts">
+<h2>Automatic Placement Using Layouts<a class="headerlink" href="#automatic-placement-using-layouts" title="Permalink to this headline">#</a></h2>
+<p>Slint comes with different layout elements that automatically calculate the position and size of their children:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> / <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code>: The children are placed along the vertical or horizontal axis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code>: The children are placed in a grid of columns and rows.</p></li>
+</ul>
+<p>You can also nest layouts to create complex user interfaces.</p>
+<p>You can tune the automatic placement using different constraints, to accommodate the design of your user
+interface. Each element has a minimum, a maximum size, and a preferred size. Set these explicitly using the
+following properties:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">min-width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min-height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max-width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max-height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">preferred-width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">preferred-height</span></code></p></li>
+</ul>
+<p>Any element with a specified <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> has a fixed size in a layout.</p>
+<p>When there is extra space in a layout, elements can stretch along the layout axis. You can control this stretch
+factor between the element and its siblings with these properties:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">horizontal-stretch</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertical-stretch</span></code></p></li>
+</ul>
+<p>A value of <code class="docutils literal notranslate"><span class="pre">0</span></code> means that the element won’t stretch at all. All elements stretch
+equally if they all have a stretch factor of <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<p>The default value of these constraint properties may depends on the content of the element.
+If the element’s <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code> isn’t set, these constraints are also automatically
+applied to the parent element.</p>
+</section>
+<section id="common-properties-on-layout-elements">
+<h2>Common Properties on Layout Elements<a class="headerlink" href="#common-properties-on-layout-elements" title="Permalink to this headline">#</a></h2>
+<p>All layout elements have the following properties in common:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">spacing</span></code>: This controls the spacing between the children.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">padding</span></code>: This specifies the padding within the layout, the space between the elements and the border of the
+layout.</p></li>
+</ul>
+<p>For more fine grained control, the <code class="docutils literal notranslate"><span class="pre">padding</span></code> property can be split into properties for each side of the layout:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">padding-left</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">padding-right</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">padding-top</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">padding-bottom</span></code></p></li>
+</ul>
+</section>
+<section id="verticallayout-and-horizontallayout">
+<h2><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code><a class="headerlink" href="#verticallayout-and-horizontallayout" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code> elements place their children in a
+column or a row. By default, they stretch or shrink to take the whole space. You
+can adjust the element’s alignment as needed.</p>
+<p>The following example places the blue and yellow rectangle in a row and evenly stretched
+across the 200 logical pixels of <code class="docutils literal notranslate"><span class="pre">width</span></code>:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>// Stretch by default
+export component Example inherits Window {
+    width: 200px;
+    height: 200px;
+    HorizontalLayout {
+        Rectangle { background: blue; min-width: 20px; }
+        Rectangle { background: yellow; min-width: 30px; }
+    }
+}
+</pre></div>
+</div>
+<p>The example below, on the other hand, specifies that the rectangles shall align
+to the start of the layout (the visual left). That results in no stretching but instead
+the rectangles retain their specified minimum width:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>// Unless an alignment is specified
+export component Example inherits Window {
+    width: 200px;
+    height: 200px;
+    HorizontalLayout {
+        alignment: start;
+        Rectangle { background: blue; min-width: 20px; }
+        Rectangle { background: yellow; min-width: 30px; }
+    }
+}
+</pre></div>
+</div>
+<p>The example below nests two layouts for a more complex scene:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 200px;
+    height: 200px;
+    HorizontalLayout {
+        // Side panel
+        Rectangle { background: green; width: 10px; }
+
+        VerticalLayout {
+            padding: 0px;
+            //toolbar
+            Rectangle { background: blue; height: 7px; }
+
+            Rectangle {
+                border-color: red; border-width: 2px;
+                HorizontalLayout {
+                    Rectangle { border-color: blue; border-width: 2px; }
+                    Rectangle { border-color: green; border-width: 2px; }
+                }
+            }
+            Rectangle {
+                border-color: orange; border-width: 2px;
+                HorizontalLayout {
+                    Rectangle { border-color: black; border-width: 2px; }
+                    Rectangle { border-color: pink; border-width: 2px; }
+                }
+            }
+        }
+    }
+}
+</pre></div>
+</div>
+<section id="alignment">
+<h3>Alignment<a class="headerlink" href="#alignment" title="Permalink to this headline">#</a></h3>
+<p>Each element is sized according to their <code class="docutils literal notranslate"><span class="pre">width</span></code> or <code class="docutils literal notranslate"><span class="pre">height</span></code> if specified, otherwise it’s
+set to the minimum size which is set with the min-width or min-height property, or
+the minimum size of an inner layout, whatever is bigger.</p>
+<p>The elements are placed according to the alignment. The size of elements
+is bigger than the minimum size only if the <code class="docutils literal notranslate"><span class="pre">alignment</span></code> property of the layout is <code class="docutils literal notranslate"><span class="pre">LayoutAlignment.stretch</span></code> (the default)</p>
+<p>This example show the different alignment possibilities</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 300px;
+    height: 200px;
+    VerticalLayout {
+        HorizontalLayout {
+            alignment: stretch;
+            Text { text: &quot;stretch (default)&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: start;
+            Text { text: &quot;start&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: end;
+            Text { text: &quot;end&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: start;
+            Text { text: &quot;start&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: center;
+            Text { text: &quot;center&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: space-between;
+            Text { text: &quot;space-between&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+        HorizontalLayout {
+            alignment: space-around;
+            Text { text: &quot;space-around&quot;; }
+            Rectangle { background: blue; min-width: 20px; }
+            Rectangle { background: yellow; min-width: 30px; }
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="stretch-algorithm">
+<h3>Stretch algorithm<a class="headerlink" href="#stretch-algorithm" title="Permalink to this headline">#</a></h3>
+<p>When the <code class="docutils literal notranslate"><span class="pre">alignment</span></code> is set to stretch (the default), the elements are sized to their minimum size,
+then the extra space is shared amongst element proportional to their stretch factor set with the
+<code class="docutils literal notranslate"><span class="pre">horizontal-stretch</span></code> and <code class="docutils literal notranslate"><span class="pre">vertical-stretch</span></code> properties. The stretched size won’t exceed the maximum size.
+The stretch factor is a floating point number. The elements that have a default content size usually defaults to 0
+while elements that default to the size of their parents defaults to 1.
+An element of a stretch factor of 0 will keep its minimum size, unless all the other elements also have a stretch
+factor of 0 or reached their maximum size.</p>
+<p>Examples:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 300px;
+    height: 200px;
+    VerticalLayout {
+        // Same stretch factor (1 by default): the size is divided equally
+        HorizontalLayout {
+            Rectangle { background: blue; }
+            Rectangle { background: yellow;}
+            Rectangle { background: green;}
+        }
+        // Elements with a bigger min-width are given a bigger size before they expand
+        HorizontalLayout {
+            Rectangle { background: cyan; min-width: 100px;}
+            Rectangle { background: magenta; min-width: 50px;}
+            Rectangle { background: gold;}
+        }
+        // Stretch factor twice as big:  grows twice as much
+        HorizontalLayout {
+            Rectangle { background: navy; horizontal-stretch: 2;}
+            Rectangle { background: gray; }
+        }
+        // All elements not having a maximum width have a stretch factor of 0 so they grow
+        HorizontalLayout {
+            Rectangle { background: red; max-width: 20px; }
+            Rectangle { background: orange; horizontal-stretch: 0; }
+            Rectangle { background: pink; horizontal-stretch: 0; }
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="for">
+<h3><code class="docutils literal notranslate"><span class="pre">for</span></code><a class="headerlink" href="#for" title="Permalink to this headline">#</a></h3>
+<p>The VerticalLayout and Horizontal layout may also contain <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">if</span></code> expressions:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 200px;
+    height: 50px;
+    HorizontalLayout {
+        Rectangle { background: green; }
+        for t in [ &quot;Hello&quot;, &quot;World&quot;, &quot;!&quot; ] : Text {
+            text: t;
+        }
+        Rectangle { background: blue; }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="gridlayout">
+<h2>GridLayout<a class="headerlink" href="#gridlayout" title="Permalink to this headline">#</a></h2>
+<p>The GridLayout lays the element in a grid.
+Each element gains the properties <code class="docutils literal notranslate"><span class="pre">row</span></code>, <code class="docutils literal notranslate"><span class="pre">col</span></code>, <code class="docutils literal notranslate"><span class="pre">rowspan</span></code>, and <code class="docutils literal notranslate"><span class="pre">colspan</span></code>.
+One can either use a <code class="docutils literal notranslate"><span class="pre">Row</span></code> sub-element, or set the <code class="docutils literal notranslate"><span class="pre">row</span></code> property explicitly.
+These properties must be statically known at compile time, so it’s impossible
+to use arithmetic or depend on properties. As of now, the use of <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">if</span></code>
+isn’t allowed in a grid layout.</p>
+<p>This example use the <code class="docutils literal notranslate"><span class="pre">Row</span></code> element</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Foo inherits Window {
+    width: 200px;
+    height: 200px;
+    GridLayout {
+        spacing: 5px;
+        Row {
+            Rectangle { background: red; }
+            Rectangle { background: blue; }
+        }
+        Row {
+            Rectangle { background: yellow; }
+            Rectangle { background: green; }
+        }
+    }
+}
+</pre></div>
+</div>
+<p>This example use the <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">row</span></code> property</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Foo inherits Window {
+    width: 200px;
+    height: 150px;
+    GridLayout {
+        spacing: 0px;
+        Rectangle { background: red; }
+        Rectangle { background: blue; }
+        Rectangle { background: yellow; row: 1; }
+        Rectangle { background: green; }
+        Rectangle { background: black; col: 2; row: 0; }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Positioning and Layout of Elements</a><ul>
+<li><a class="reference internal" href="#explicit-placement">Explicit Placement</a><ul>
+<li><a class="reference internal" href="#preferred-size">Preferred size</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#automatic-placement-using-layouts">Automatic Placement Using Layouts</a></li>
+<li><a class="reference internal" href="#common-properties-on-layout-elements">Common Properties on Layout Elements</a></li>
+<li><a class="reference internal" href="#verticallayout-and-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a><ul>
+<li><a class="reference internal" href="#alignment">Alignment</a></li>
+<li><a class="reference internal" href="#stretch-algorithm">Stretch algorithm</a></li>
+<li><a class="reference internal" href="#for"><code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gridlayout">GridLayout</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div>
+<script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/scripts/furo.js"></script>
+    <script src="../../../../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../../../../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.1.0/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.1.0/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // Safari blocks quite heavily when creating many WebGL contexts, slowing down loading of the docs
+        // significantly. For now, don't do automatic previews:
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            return false;
+        }
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

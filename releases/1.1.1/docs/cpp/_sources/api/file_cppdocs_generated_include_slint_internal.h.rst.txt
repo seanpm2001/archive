@@ -1,0 +1,83 @@
+
+.. _file_cppdocs_generated_include_slint_internal.h:
+
+File slint_internal.h
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir_cppdocs_generated_include>` (``cppdocs/generated_include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+Definition (``cppdocs/generated_include/slint_internal.h``)
+-----------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_cppdocs_generated_include_slint_internal.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cstdarg``
+
+- ``cstdint``
+
+- ``cstdlib``
+
+- ``new``
+
+- ``ostream``
+
+- ``slint_brush.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_brush.h`)
+
+- ``slint_callbacks.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_callbacks.h`)
+
+- ``slint_color.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_color.h`)
+
+- ``slint_config.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_config.h`)
+
+- ``slint_enums_internal.h`` (:ref:`file_cppdocs_generated_include_slint_enums_internal.h`)
+
+- ``slint_generated_public.h`` (:ref:`file_cppdocs_generated_include_slint_generated_public.h`)
+
+- ``slint_image.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_image.h`)
+
+- ``slint_pathdata.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_pathdata.h`)
+
+- ``slint_point.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_point.h`)
+
+- ``slint_properties.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_properties.h`)
+
+- ``slint_sharedvector.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_sharedvector.h`)
+
+- ``slint_string.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_string.h`)
+
+- ``vtable.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint.h`
+
+- :ref:`file_cppdocs_generated_include_slint_backend_internal.h`
+
+- :ref:`file_cppdocs_generated_include_slint_qt_internal.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint`
+

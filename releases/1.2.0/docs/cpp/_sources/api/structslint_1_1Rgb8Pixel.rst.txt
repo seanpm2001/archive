@@ -1,0 +1,16 @@
+.. _exhale_struct_structslint_1_1Rgb8Pixel:
+
+Struct Rgb8Pixel
+================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_generated_public.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::Rgb8Pixel
+   :members:
+   :protected-members:
+   :undoc-members:

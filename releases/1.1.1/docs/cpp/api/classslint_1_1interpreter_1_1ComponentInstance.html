@@ -1,0 +1,716 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Class Value" href="classslint_1_1interpreter_1_1Value.html" /><link rel="prev" title="Class ComponentDefinition" href="classslint_1_1interpreter_1_1ComponentDefinition.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Class ComponentInstance - Slint C++ API documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_tweak.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Slint C++ API  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint.dev/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint C++ API  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cmake.html">Installing Or Building With CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">First Steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">Type Mapping to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated_code.html">Example Generated Code</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="library_root.html">C++ API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of C++ API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1LogicalPosition.html">Struct LogicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1LogicalSize.html">Struct LogicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1PhysicalPosition.html">Struct PhysicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1PhysicalSize.html">Struct PhysicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Point.html">Template Struct Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Rgb8Pixel.html">Struct Rgb8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Rgba8Pixel.html">Struct Rgba8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedPixelBuffer.html">Template Struct SharedPixelBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1StandardListViewItem.html">Struct StandardListViewItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1FilterModel.html">Template Class FilterModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Class ComponentInstance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1MapModel.html">Template Class MapModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1SortModel.html">Template Class SortModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Window.html">Class Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html">Enum RenderingState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html">Enum TimerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a6b7f049a8c7176edc87c4cffddfc1bbd.html">Define SLINT_VERSION_STRING</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/debugging_techniques.html">Debugging Techniques</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="class-componentinstance">
+<span id="exhale-class-classslint-1-1interpreter-1-1componentinstance"></span><h1>Class ComponentInstance<a class="headerlink" href="#class-componentinstance" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_runner_work_slint_slint_api_cpp_include_slint_interpreter.h.html#file-home-runner-work-slint-slint-api-cpp-include-slint-interpreter-h"><span class="std std-ref">File slint_interpreter.h</span></a></p></li>
+</ul>
+<section id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this heading">#</a></h2>
+<section id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">private</span> <span class="pre">vtable::Dyn</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this heading">#</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter17ComponentInstanceE">
+<span id="_CPPv3N5slint11interpreter17ComponentInstanceE"></span><span id="_CPPv2N5slint11interpreter17ComponentInstanceE"></span><span id="slint::interpreter::ComponentInstance"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ComponentInstance</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">private</span></span><span class="w"> </span><span class="n"><span class="pre">vtable</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Dyn</span></span><a class="headerlink" href="#_CPPv4N5slint11interpreter17ComponentInstanceE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classslint_1_1interpreter_1_1ComponentInstance"><span class="std std-ref">ComponentInstance</span></a> represents a running instance of a component.</p>
+<p>You can create an instance with the <a class="reference internal" href="classslint_1_1interpreter_1_1ComponentDefinition.html#classslint_1_1interpreter_1_1ComponentDefinition_1a08220e5f1efd95058359e218f601b64f"><span class="std std-ref">ComponentDefinition::create()</span></a> function.</p>
+<p>Properties and callback can be accessed using the associated functions.</p>
+<p>An instance can be put on screen with the <a class="reference internal" href="#classslint_1_1interpreter_1_1ComponentInstance_1a6a5645ef58ca38a8700b68f179630659"><span class="std std-ref">ComponentInstance::show()</span></a> or the <a class="reference internal" href="#classslint_1_1interpreter_1_1ComponentInstance_1a329d9df49dcabe971b172958ed8c4fa6"><span class="std std-ref">ComponentInstance::run()</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance4showEv">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance4showEv"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance4showEv"></span><span id="slint::interpreter::ComponentInstance::showC"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1a6a5645ef58ca38a8700b68f179630659"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">show</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance4showEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Marks the window of this component to be shown on the screen. This registers the window with the windowing system. In order to react to events from the windowing system, such as draw requests or mouse/touch input, it is still necessary to spin the event loop, using <a class="reference internal" href="function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html#namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16"><span class="std std-ref">slint::run_event_loop()</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance4hideEv">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance4hideEv"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance4hideEv"></span><span id="slint::interpreter::ComponentInstance::hideC"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1aa92b4fc99be0f098719e871f6eec2834"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">hide</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance4hideEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Marks the window of this component to be hidden on the screen. This de-registers the window from the windowing system and it will not receive any further events. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter17ComponentInstance6windowEv">
+<span id="_CPPv3N5slint11interpreter17ComponentInstance6windowEv"></span><span id="_CPPv2N5slint11interpreter17ComponentInstance6windowEv"></span><span id="slint::interpreter::ComponentInstance::window"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1aec39e3377748f3ea1f926acd8bce034e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">slint</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classslint_1_1Window.html#_CPPv4N5slint6WindowE" title="slint::Window"><span class="n"><span class="pre">Window</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">window</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter17ComponentInstance6windowEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the <a class="reference internal" href="classslint_1_1Window.html#classslint_1_1Window"><span class="std std-ref">Window</span></a> associated with this component. The window API can be used to control different aspects of the integration into the windowing system, such as the position on the screen. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance3runEv">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance3runEv"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance3runEv"></span><span id="slint::interpreter::ComponentInstance::runC"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1a329d9df49dcabe971b172958ed8c4fa6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">run</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance3runEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>This is a convenience function that first calls <a class="reference internal" href="#classslint_1_1interpreter_1_1ComponentInstance_1a6a5645ef58ca38a8700b68f179630659"><span class="std std-ref">show()</span></a>, followed by <a class="reference internal" href="function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html#namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16"><span class="std std-ref">slint::run_event_loop()</span></a> and <a class="reference internal" href="#classslint_1_1interpreter_1_1ComponentInstance_1aa92b4fc99be0f098719e871f6eec2834"><span class="std std-ref">hide()</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance7qwidgetEv">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance7qwidgetEv"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance7qwidgetEv"></span><span id="slint::interpreter::ComponentInstance::qwidgetC"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1a789963aef028740bbad37dc1faf65c78"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">QWidget</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">qwidget</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance7qwidgetEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Return a QWidget for this instance. This function is only available if the qt graphical backend was compiled in, and it may return nullptr if the Qt backend is not used at runtime. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance12set_propertyENSt11string_viewERK5Value">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance12set_propertyENSt11string_viewERK5Value"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance12set_propertyENSt11string_viewERK5Value"></span><span id="slint::interpreter::ComponentInstance::set_property__std::string_view.ValueCRC"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1ab1b55da19852e821a1600fb7c946a3c8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_property</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance12set_propertyENSt11string_viewERK5Value" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Set the value for a public property of this component</p>
+<p>For example, if the component has a <code class="docutils literal notranslate"><span class="pre">property</span> <span class="pre">&lt;string&gt;</span> <span class="pre">hello;</span></code>, we can set this property <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instance</span><span class="o">-&gt;</span><span class="n">set_property</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">slint</span><span class="p">::</span><span class="n">SharedString</span><span class="p">(</span><span class="s2">&quot;world&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+</p>
+<p>Returns true if the property was correctly set. Returns false if the property could not be set because it either do not exist (was not declared in .slint) or if the value is not of the proper type for the property’s type. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance12get_propertyENSt11string_viewE">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance12get_propertyENSt11string_viewE"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance12get_propertyENSt11string_viewE"></span><span id="slint::interpreter::ComponentInstance::get_property__std::string_viewC"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1ae6c4afd1663e28c60e2feaf24aa5dd5a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_property</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance12get_propertyENSt11string_viewE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the value behind a property declared in .slint. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance6invokeENSt11string_viewENSt4spanIK5ValueEE">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance6invokeENSt11string_viewENSt4spanIK5ValueEE"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance6invokeENSt11string_viewENSt4spanIK5ValueEE"></span><span id="slint::interpreter::ComponentInstance::invoke__std::string_view.std::span:ValueC:C"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1af1063ca1496b0e38bc3de3571664b482"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">invoke</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">span</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">args</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance6invokeENSt11string_viewENSt4spanIK5ValueEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Invoke the specified callback or function declared in .slint with the given arguments</p>
+<p>Example: imagine the .slint file contains the given callback declaration: <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">callback</span> <span class="n">foo</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span><span class="p">;</span>
+</pre></div>
+</div>
+ Then one can call it with this function <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">slint</span><span class="p">::</span><span class="n">Value</span> <span class="n">args</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span> <span class="n">SharedString</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">),</span> <span class="mf">42.</span> <span class="p">};</span>
+<span class="n">instance</span><span class="o">-&gt;</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="n">args</span><span class="p">,</span> <span class="mi">2</span> <span class="p">});</span>
+</pre></div>
+</div>
+</p>
+<p>Returns an null optional if the callback don’t exist or if the argument don’t match Otherwise return the returned value from the callback, which may be an empty <a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> if the callback did not return a value. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1a93a110b414baa93a4d1b31965760b920"></span><span class="sig-name descname"><span class="pre">template&lt;std::invocable&lt;std::span&lt;const</span> <span class="pre">Value&gt;&gt;</span> <span class="pre">F&gt;</span> <span class="pre">inline</span>&#160; <span class="pre">requires</span> <span class="pre">(std::is_convertible_v&lt;</span> <span class="pre">std::invoke_result_t&lt;</span> <span class="pre">F,</span> <span class="pre">std::span&lt;</span> <span class="pre">const</span> <span class="pre">Value</span> <span class="pre">&gt;&gt;,</span> <span class="pre">Value</span> <span class="pre">&gt;)</span> <span class="pre">auto</span> <span class="pre">set_callback(std</span></span></dt>
+<dd><p>Set a handler for the callback with the given name.</p>
+<p>A callback with that name must be defined in the document otherwise the function returns false.</p>
+<p>The <em>callback</em> parameter is a functor which takes as argument a slice of <a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> and must return a <a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a>.</p>
+<p>Example: imagine the .slint file contains the given callback declaration: <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">callback</span> <span class="n">foo</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span><span class="p">;</span>
+</pre></div>
+</div>
+ Then one can set the callback handler with this function <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instance</span><span class="o">-&gt;</span><span class="n">set_callback</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">auto</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;foo(&quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to_number</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</p>
+<p>Note: Since the <a class="reference internal" href="#classslint_1_1interpreter_1_1ComponentInstance"><span class="std std-ref">ComponentInstance</span></a> holds the handler, the handler itself should not capture a strong reference to the instance. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance19set_global_propertyENSt11string_viewENSt11string_viewERK5Value">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance19set_global_propertyENSt11string_viewENSt11string_viewERK5Value"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance19set_global_propertyENSt11string_viewENSt11string_viewERK5Value"></span><span id="slint::interpreter::ComponentInstance::set_global_property__std::string_view.std::string_view.ValueCRC"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1a30e800d05389c352652b3abaf3a60ecd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_global_property</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">global</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">prop_name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance19set_global_propertyENSt11string_viewENSt11string_viewERK5Value" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Set the value for a property within an exported global singleton.</p>
+<p>For example, if the main file has an exported global <code class="docutils literal notranslate"><span class="pre">TheGlobal</span></code> with a <code class="docutils literal notranslate"><span class="pre">property</span> <span class="pre">&lt;int&gt;</span> <span class="pre">hello</span></code>, we can set this property <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instance</span><span class="o">-&gt;</span><span class="n">set_global_property</span><span class="p">(</span><span class="s2">&quot;TheGlobal&quot;</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+<p>Returns true if the property was correctly set. Returns false if the property could not be set because it either does not exist (was not declared in .slint) or if the value is not of the correct type for the property’s type.</p>
+<p><strong>Note:</strong> Only globals that are exported or re-exported from the main .slint file will be accessible </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance19get_global_propertyENSt11string_viewENSt11string_viewE">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance19get_global_propertyENSt11string_viewENSt11string_viewE"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance19get_global_propertyENSt11string_viewENSt11string_viewE"></span><span id="slint::interpreter::ComponentInstance::get_global_property__std::string_view.std::string_viewC"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1a7eda5c6134833b62d2fa3d323f6725b8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_global_property</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">global</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">prop_name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance19get_global_propertyENSt11string_viewENSt11string_viewE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the value behind a property in an exported global singleton. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I_NSt9invocableINSt4spanIK5ValueEEEEENK5slint11interpreter17ComponentInstance19set_global_callbackEbNSt11string_viewENSt11string_viewE1F">
+<span id="_CPPv3I_NSt9invocableINSt4spanIK5ValueEEEEENK5slint11interpreter17ComponentInstance19set_global_callbackENSt11string_viewENSt11string_viewE1F"></span><span id="_CPPv2I_NSt9invocableINSt4spanIK5ValueEEEEENK5slint11interpreter17ComponentInstance19set_global_callbackENSt11string_viewENSt11string_viewE1F"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">invocable</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">span</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">F</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1a1129ef082ee836bd816b14858ec11a93"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_global_callback</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">global</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">name</span></span>, <a class="reference internal" href="#_CPPv4I_NSt9invocableINSt4spanIK5ValueEEEEENK5slint11interpreter17ComponentInstance19set_global_callbackEbNSt11string_viewENSt11string_viewE1F" title="slint::interpreter::ComponentInstance::set_global_callback::F"><span class="n"><span class="pre">F</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">callback</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4I_NSt9invocableINSt4spanIK5ValueEEEEENK5slint11interpreter17ComponentInstance19set_global_callbackEbNSt11string_viewENSt11string_viewE1F" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Like <code class="docutils literal notranslate"><span class="pre">set_callback()</span></code> but on a callback in the specified exported global singleton.</p>
+<p>Example: imagine the .slint file contains the given global: <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">slint</span><span class="p">,</span><span class="n">no</span><span class="o">-</span><span class="n">preview</span><span class="p">}</span>
+  <span class="n">export</span> <span class="k">global</span> <span class="n">Logic</span> <span class="p">{</span>
+       <span class="n">pure</span> <span class="n">callback</span> <span class="n">to_uppercase</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span><span class="p">;</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+ Then you can set the callback handler <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">instance</span><span class="o">-&gt;</span><span class="n">set_global_callback</span><span class="p">(</span><span class="s">&quot;Logic&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;to_uppercase&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[](</span><span class="k">auto</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">arg1</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">to_string</span><span class="p">());</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">arg1</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">arg1</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">arg1</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">toupper</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SharedString</span><span class="p">(</span><span class="n">arg1</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</p>
+<p><strong>Note:</strong> Only globals that are exported or re-exported from the main .slint file will be accessible </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter17ComponentInstance13invoke_globalENSt11string_viewENSt11string_viewENSt4spanIK5ValueEE">
+<span id="_CPPv3NK5slint11interpreter17ComponentInstance13invoke_globalENSt11string_viewENSt11string_viewENSt4spanIK5ValueEE"></span><span id="_CPPv2NK5slint11interpreter17ComponentInstance13invoke_globalENSt11string_viewENSt11string_viewENSt4spanIK5ValueEE"></span><span id="slint::interpreter::ComponentInstance::invoke_global__std::string_view.std::string_view.std::span:ValueC:C"></span><span class="target" id="classslint_1_1interpreter_1_1ComponentInstance_1aa683b5be108f31499cbe7d20fc637a6f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">invoke_global</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">global</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string_view</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">callable_name</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">span</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">args</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter17ComponentInstance13invoke_globalENSt11string_viewENSt11string_viewENSt4spanIK5ValueEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Invoke the specified callback or function declared in an exported global singleton. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="classslint_1_1interpreter_1_1Value.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Class Value</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="classslint_1_1interpreter_1_1ComponentDefinition.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Class ComponentDefinition</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Class ComponentInstance</a><ul>
+<li><a class="reference internal" href="#inheritance-relationships">Inheritance Relationships</a><ul>
+<li><a class="reference internal" href="#base-type">Base Type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div>
+<script src="../_static/jquery.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.1.1/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.1.1/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // Safari blocks quite heavily when creating many WebGL contexts, slowing down loading of the docs
+        // significantly. For now, don't do automatic previews:
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            return false;
+        }
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

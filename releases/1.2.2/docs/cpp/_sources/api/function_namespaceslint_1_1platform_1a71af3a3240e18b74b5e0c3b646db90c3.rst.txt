@@ -1,0 +1,13 @@
+.. _exhale_function_namespaceslint_1_1platform_1a71af3a3240e18b74b5e0c3b646db90c3:
+
+Function slint::platform::update_timers_and_animations
+======================================================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: slint::platform::update_timers_and_animations()

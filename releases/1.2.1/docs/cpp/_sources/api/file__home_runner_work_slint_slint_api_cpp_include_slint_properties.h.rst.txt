@@ -1,0 +1,53 @@
+
+.. _file__home_runner_work_slint_slint_api_cpp_include_slint_properties.h:
+
+File slint_properties.h
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_runner_work_slint_slint_api_cpp_include>` (``/home/runner/work/slint/slint/api/cpp/include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+Definition (``/home/runner/work/slint/slint/api/cpp/include/slint_properties.h``)
+---------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_properties.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``memory``
+
+- ``slint_builtin_structs_internal.h`` (:ref:`file_cppdocs_generated_include_slint_builtin_structs_internal.h`)
+
+- ``slint_properties_internal.h`` (:ref:`file_cppdocs_generated_include_slint_properties_internal.h`)
+
+- ``string_view``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_color.h`
+
+- :ref:`file_cppdocs_generated_include_slint_internal.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint`
+

@@ -1,0 +1,13 @@
+.. _exhale_variable_namespaceslint_1_1platform_1_1key__codes_1af56ac133d6d5242fb4f547d5546cb42f:
+
+Variable slint::platform::key_codes::ShiftR
+===========================================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_enums.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: slint::platform::key_codes::ShiftR

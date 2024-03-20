@@ -1,0 +1,13 @@
+.. _exhale_variable_namespaceslint_1_1platform_1_1key__codes_1aa329a177650db85052f4a4ce45abf32d:
+
+Variable slint::platform::key_codes::PageDown
+=============================================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_enums.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: slint::platform::key_codes::PageDown

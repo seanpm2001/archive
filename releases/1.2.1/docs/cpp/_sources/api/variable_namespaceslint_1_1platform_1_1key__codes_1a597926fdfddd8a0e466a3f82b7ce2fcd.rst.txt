@@ -1,0 +1,13 @@
+.. _exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a597926fdfddd8a0e466a3f82b7ce2fcd:
+
+Variable slint::platform::key_codes::F23
+========================================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_enums.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: slint::platform::key_codes::F23

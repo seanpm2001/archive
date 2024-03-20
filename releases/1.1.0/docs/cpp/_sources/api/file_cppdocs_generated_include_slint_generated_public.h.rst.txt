@@ -1,0 +1,95 @@
+
+.. _file_cppdocs_generated_include_slint_generated_public.h:
+
+File slint_generated_public.h
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir_cppdocs_generated_include>` (``cppdocs/generated_include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+Definition (``cppdocs/generated_include/slint_generated_public.h``)
+-------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_cppdocs_generated_include_slint_generated_public.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cstdarg``
+
+- ``cstdint``
+
+- ``cstdlib``
+
+- ``new``
+
+- ``ostream``
+
+- ``slint_string.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_string.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_image.h`
+
+- :ref:`file_cppdocs_generated_include_slint_internal.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structslint_1_1Rgb8Pixel`
+
+- :ref:`exhale_struct_structslint_1_1Rgba8Pixel`
+
+- :ref:`exhale_struct_structslint_1_1StandardListViewItem`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833`
+
+- :ref:`exhale_enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1`
+
+- :ref:`exhale_enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a`
+
+- :ref:`exhale_enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233`
+
+- :ref:`exhale_enum_namespaceslint_1a90456661c07d02d73ab90733c8755282`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853`
+
+- :ref:`exhale_define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9`
+
+- :ref:`exhale_define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d`
+

@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This trait represents the adaptation layer between the `Window` API and then windowing specific window representation, such as a Win32 `HWND` handle or a `wayland_surface_t`."><title>WindowAdapter in slint::platform - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="slint" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (58e967a9c 2023-09-03)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.2.0/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.2.0/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../slint/index.html"><img src="https://slint.dev/logo/slint-logo-square-light.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../../slint/index.html"><img src="https://slint.dev/logo/slint-logo-square-light.svg" alt="logo"></a><h2 class="location"><a href="#">WindowAdapter</a></h2><div class="sidebar-elems"><section><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.renderer">renderer</a></li><li><a href="#tymethod.size">size</a></li><li><a href="#tymethod.window">window</a></li></ul><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.position">position</a></li><li><a href="#method.request_redraw">request_redraw</a></li><li><a href="#method.set_position">set_position</a></li><li><a href="#method.set_size">set_size</a></li><li><a href="#method.set_visible">set_visible</a></li><li><a href="#method.update_window_properties">update_window_properties</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><h2><a href="index.html">In slint::platform</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Trait <a href="../index.html">slint</a>::<wbr><a href="index.html">platform</a>::<wbr><a class="trait" href="#">WindowAdapter</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub trait WindowAdapter {
+    // Required methods
+    fn <a href="#tymethod.window" class="fn">window</a>(&amp;self) -&gt; &amp;<a class="struct" href="../struct.Window.html" title="struct slint::Window">Window</a>;
+<span class="item-spacer"></span>    fn <a href="#tymethod.size" class="fn">size</a>(&amp;self) -&gt; <a class="struct" href="../struct.PhysicalSize.html" title="struct slint::PhysicalSize">PhysicalSize</a>;
+<span class="item-spacer"></span>    fn <a href="#tymethod.renderer" class="fn">renderer</a>(&amp;self) -&gt; &amp;dyn <a class="trait" href="trait.Renderer.html" title="trait slint::platform::Renderer">Renderer</a>;
+
+    // Provided methods
+    fn <a href="#method.set_visible" class="fn">set_visible</a>(&amp;self, _visible: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../enum.PlatformError.html" title="enum slint::PlatformError">PlatformError</a>&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.position" class="fn">position</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../struct.PhysicalPosition.html" title="struct slint::PhysicalPosition">PhysicalPosition</a>&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.set_position" class="fn">set_position</a>(&amp;self, _position: <a class="enum" href="../enum.WindowPosition.html" title="enum slint::WindowPosition">WindowPosition</a>) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.set_size" class="fn">set_size</a>(&amp;self, _size: <a class="enum" href="../enum.WindowSize.html" title="enum slint::WindowSize">WindowSize</a>) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.request_redraw" class="fn">request_redraw</a>(&amp;self) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.update_window_properties" class="fn">update_window_properties</a>(&amp;self, _properties: <a class="struct" href="struct.WindowProperties.html" title="struct slint::platform::WindowProperties">WindowProperties</a>&lt;'_&gt;) { ... }
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This trait represents the adaptation layer between the <a href="../struct.Window.html" title="struct slint::Window"><code>Window</code></a> API and then
+windowing specific window representation, such as a Win32 <code>HWND</code> handle or a <code>wayland_surface_t</code>.</p>
+<p>Implement this trait to establish the link between the two, and pass messages in both
+directions:</p>
+<ul>
+<li>
+<p>When receiving messages from the windowing system about state changes, such as the window being resized,
+the user requested the window to be closed, input being received, etc. you need to create a
+<a href="enum.WindowEvent.html"><code>crate::platform::WindowEvent</code></a> and send it to Slint via <a href="../struct.Window.html#method.dispatch_event"><code>create::Window::dispatch_event()</code></a>.</p>
+</li>
+<li>
+<p>Slint sends requests to change visibility, position, size, etc. via functions such as <a href="trait.WindowAdapter.html#method.set_visible" title="method i_slint_core::window::WindowAdapter::set_visible::set_visible"><code>Self::set_visible</code></a>,
+<a href="trait.WindowAdapter.html#method.set_size" title="method i_slint_core::window::WindowAdapter::set_size::set_size"><code>Self::set_size</code></a>, <a href="trait.WindowAdapter.html#method.set_position" title="method i_slint_core::window::WindowAdapter::set_position::set_position"><code>Self::set_position</code></a>, or <a href="trait.WindowAdapter.html#method.update_window_properties" title="method i_slint_core::window::WindowAdapter::update_window_properties::update_window_properties"><code>Self::update_window_properties()</code></a>. Re-implement these functions
+and delegate the requests to the windowing system.</p>
+</li>
+</ul>
+<p>If the implementation of this bi-directional message passing protocol is incomplete, the user may
+experience unexpected behavior, or the intention of the developer calling functions on the <a href="struct.Window.html"><code>crate::Window</code></a>
+API may not be fullfilled.</p>
+<p>Your implementation must hold a renderer, such as <a href="software_renderer/struct.SoftwareRenderer.html" title="struct slint::platform::software_renderer::SoftwareRenderer"><code>crate::software_renderer::SoftwareRenderer</code></a>.
+In the <a href="trait.WindowAdapter.html#tymethod.renderer" title="method i_slint_core::window::WindowAdapter::renderer::renderer"><code>Self::renderer()</code></a> function, you must return a reference to it.</p>
+<p>It is also required to hold a <a href="struct.Window.html"><code>crate::Window</code></a> and return a reference to it in your
+implementation of <a href="trait.WindowAdapter.html#tymethod.window" title="method i_slint_core::window::WindowAdapter::window::window"><code>Self::window()</code></a>.</p>
+<p>See also <a href="software_renderer/struct.MinimalSoftwareWindow.html" title="struct slint::platform::software_renderer::MinimalSoftwareWindow"><code>MinimalSoftwareWindow</code></a>
+for a minimal implementation of this trait using the software renderer</p>
+</div></details><h2 id="required-methods" class="small-section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="tymethod.window" class="method"><h4 class="code-header">fn <a href="#tymethod.window" class="fn">window</a>(&amp;self) -&gt; &amp;<a class="struct" href="../struct.Window.html" title="struct slint::Window">Window</a></h4></section></summary><div class="docblock"><p>Returns the window API.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.size" class="method"><h4 class="code-header">fn <a href="#tymethod.size" class="fn">size</a>(&amp;self) -&gt; <a class="struct" href="../struct.PhysicalSize.html" title="struct slint::PhysicalSize">PhysicalSize</a></h4></section></summary><div class="docblock"><p>Return the size of the Window on the screen</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.renderer" class="method"><h4 class="code-header">fn <a href="#tymethod.renderer" class="fn">renderer</a>(&amp;self) -&gt; &amp;dyn <a class="trait" href="trait.Renderer.html" title="trait slint::platform::Renderer">Renderer</a></h4></section></summary><div class="docblock"><p>Return the renderer.</p>
+<p>The <code>Renderer</code> trait is an internal trait that you are not expected to implement.
+In your implementation you should return a reference to an instance of one of the renderers provided by Slint.</p>
+<p>Currently, the only public struct that implement renderer is <a href="software_renderer/struct.SoftwareRenderer.html" title="struct slint::platform::software_renderer::SoftwareRenderer"><code>SoftwareRenderer</code></a>.</p>
+</div></details></div><h2 id="provided-methods" class="small-section-header">Provided Methods<a href="#provided-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="method.set_visible" class="method"><h4 class="code-header">fn <a href="#method.set_visible" class="fn">set_visible</a>(&amp;self, _visible: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../enum.PlatformError.html" title="enum slint::PlatformError">PlatformError</a>&gt;</h4></section></summary><div class="docblock"><p>Show the window if the argument is true, hide otherwise.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.position" class="method"><h4 class="code-header">fn <a href="#method.position" class="fn">position</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../struct.PhysicalPosition.html" title="struct slint::PhysicalPosition">PhysicalPosition</a>&gt;</h4></section></summary><div class="docblock"><p>Returns the position of the window on the screen, in physical screen coordinates and including
+a window frame (if present).</p>
+<p>The default implementation returns <code>None</code></p>
+<p>Called from <a href="../struct.Window.html#method.position" title="method slint::Window::position"><code>Window::position()</code></a></p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.set_position" class="method"><h4 class="code-header">fn <a href="#method.set_position" class="fn">set_position</a>(&amp;self, _position: <a class="enum" href="../enum.WindowPosition.html" title="enum slint::WindowPosition">WindowPosition</a>)</h4></section></summary><div class="docblock"><p>Sets the position of the window on the screen, in physical screen coordinates and including
+a window frame (if present).</p>
+<p>The default implementation does nothing</p>
+<p>Called from <a href="../struct.Window.html#method.set_position" title="method slint::Window::set_position"><code>Window::set_position()</code></a></p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.set_size" class="method"><h4 class="code-header">fn <a href="#method.set_size" class="fn">set_size</a>(&amp;self, _size: <a class="enum" href="../enum.WindowSize.html" title="enum slint::WindowSize">WindowSize</a>)</h4></section></summary><div class="docblock"><p>Request a new size for the window to the specified size on the screen, in physical or logical pixels
+and excluding a window frame (if present).</p>
+<p>This is called from <a href="../struct.Window.html#method.set_size" title="method slint::Window::set_size"><code>Window::set_size()</code></a></p>
+<p>The default implementation does nothing</p>
+<p>This function should sent the size to the Windowing system. If the window size actually changes, you
+should dispatch a <a href="enum.WindowEvent.html#variant.Resized" title="variant slint::platform::WindowEvent::Resized"><code>WindowEvent::Resized</code></a> using
+<a href="../struct.Window.html#method.dispatch_event" title="method slint::Window::dispatch_event"><code>Window::dispatch_event()</code></a> to propagate the new size to the slint view</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.request_redraw" class="method"><h4 class="code-header">fn <a href="#method.request_redraw" class="fn">request_redraw</a>(&amp;self)</h4></section></summary><div class="docblock"><p>Issues a request to the windowing system to re-render the contents of the window.</p>
+<p>This request is typically asynchronous.
+It is called when a property that was used during window rendering is marked as dirty.</p>
+<p>An implementation should repaint the window in a subsequent iteration of the event loop,
+throttled to the screen refresh rate if possible.
+It is important not to query any Slint properties to avoid introducing a dependency loop in the properties,
+including the use of the render function, which itself queries properties.</p>
+<p>See also <a href="../struct.Window.html#method.request_redraw" title="method slint::Window::request_redraw"><code>Window::request_redraw()</code></a></p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.update_window_properties" class="method"><h4 class="code-header">fn <a href="#method.update_window_properties" class="fn">update_window_properties</a>(&amp;self, _properties: <a class="struct" href="struct.WindowProperties.html" title="struct slint::platform::WindowProperties">WindowProperties</a>&lt;'_&gt;)</h4></section></summary><div class="docblock"><p>Re-implement this function to update the properties such as window title or layout constraints.</p>
+<p>This function is called before <code>set_visible(true)</code>, and will be called again when the properties
+that were queried on the last call are changed. If you do not query any properties, it may not
+be called again.</p>
+</div></details></div><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"><section id="impl-WindowAdapter-for-MinimalSoftwareWindow" class="impl"><a href="#impl-WindowAdapter-for-MinimalSoftwareWindow" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.WindowAdapter.html" title="trait slint::platform::WindowAdapter">WindowAdapter</a> for <a class="struct" href="software_renderer/struct.MinimalSoftwareWindow.html" title="struct slint::platform::software_renderer::MinimalSoftwareWindow">MinimalSoftwareWindow</a></h3></section></div><script src="../../implementors/i_slint_core/window/trait.WindowAdapter.js" data-ignore-extern-crates="i_slint_core" async></script></section></div></main></body></html>

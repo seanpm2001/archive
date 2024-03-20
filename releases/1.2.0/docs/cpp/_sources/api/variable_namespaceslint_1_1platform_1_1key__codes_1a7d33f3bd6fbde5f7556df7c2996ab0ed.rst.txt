@@ -1,0 +1,13 @@
+.. _exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a7d33f3bd6fbde5f7556df7c2996ab0ed:
+
+Variable slint::platform::key_codes::F6
+=======================================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_enums.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: slint::platform::key_codes::F6

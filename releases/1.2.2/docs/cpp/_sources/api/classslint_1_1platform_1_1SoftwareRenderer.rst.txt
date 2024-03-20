@@ -1,0 +1,35 @@
+.. _exhale_class_classslint_1_1platform_1_1SoftwareRenderer:
+
+Class SoftwareRenderer
+======================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_struct_structslint_1_1platform_1_1SoftwareRenderer_1_1PhysicalRegion`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public slint::platform::AbstractRenderer`` (:ref:`exhale_class_classslint_1_1platform_1_1AbstractRenderer`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::platform::SoftwareRenderer
+   :members:
+   :protected-members:
+   :undoc-members:

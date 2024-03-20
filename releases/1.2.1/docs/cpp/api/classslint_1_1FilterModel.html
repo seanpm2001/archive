@@ -1,0 +1,721 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Class ComponentCompiler" href="classslint_1_1interpreter_1_1ComponentCompiler.html" /><link rel="prev" title="Template Class ComponentWeakHandle" href="classslint_1_1ComponentWeakHandle.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
+        <title>Template Class FilterModel - Slint 1.2.1 C++ API documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_tweak.css?v=ca455ff5" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css?v=a885cde7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Slint 1.2.1 C++ API  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint.dev/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint 1.2.1 C++ API  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cmake.html">Installing Or Building With CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">First Steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">Type Mapping to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated_code.html">Example Generated Code</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="library_root.html">C++ API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of C++ API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint__platform.html">Namespace slint::platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint__platform__key_codes.html">Namespace slint::platform::key_codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1LogicalPosition.html">Struct LogicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1LogicalSize.html">Struct LogicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1PhysicalPosition.html">Struct PhysicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1PhysicalSize.html">Struct PhysicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1platform_1_1Rgb565Pixel.html">Struct Rgb565Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1platform_1_1SoftwareRenderer_1_1PhysicalRegion.html">Struct SoftwareRenderer::PhysicalRegion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1platform_1_1WindowAdapter_1_1WindowProperties.html">Struct WindowAdapter::WindowProperties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1platform_1_1WindowAdapter_1_1WindowProperties_1_1LayoutConstraints.html">Struct WindowProperties::LayoutConstraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Point.html">Template Struct Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Rgb8Pixel.html">Struct Rgb8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Rgba8Pixel.html">Struct Rgba8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedPixelBuffer.html">Template Struct SharedPixelBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1StandardListViewItem.html">Struct StandardListViewItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Template Class FilterModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1MapModel.html">Template Class MapModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1platform_1_1AbstractRenderer.html">Class AbstractRenderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1platform_1_1NativeWindowHandle.html">Class NativeWindowHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1platform_1_1Platform.html">Class Platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1platform_1_1Platform_1_1Task.html">Class Platform::Task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1platform_1_1SkiaRenderer.html">Class SkiaRenderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1platform_1_1SoftwareRenderer.html">Class SoftwareRenderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1platform_1_1WindowAdapter.html">Class WindowAdapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ReverseModel.html">Template Class ReverseModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1SortModel.html">Template Class SortModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Window.html">Class Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1abb2b0aa4769a501e7cdeaccae964a64c.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a90c0ddbfdc375daafbcf91361293538b.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1_1interpreter_1ad2ba3b4dd1434535294d334a9daf502d.html">Enum DiagnosticLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html">Enum ValueType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a88e5489a21965b1a271bf90ee12f1c6e.html">Enum PointerEventButton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1aa9bda1bcc95bc66d8afd7b1a4aa8c4af.html">Enum RenderingState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a435dcad112c13fd7fefb2de66e83d1b1.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1aa1f5f67eecbb35c0bc1015d33361429b.html">Enum TimerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1_1platform_1a66e865fa8aaea9bb401549294186273a.html">Function slint::platform::duration_until_next_timer_update</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1_1platform_1a78d943b2302a68af7e187ea4154d4a64.html">Function slint::platform::set_platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1_1platform_1a71af3a3240e18b74b5e0c3b646db90c3.html">Function slint::platform::update_timers_and_animations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a569d5973c36441dd8fb3c88a61c48b7d.html">Variable slint::platform::key_codes::Alt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a4c83e50d2ba5a7d2f9399053f84e064f.html">Variable slint::platform::key_codes::AltGr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a73b54ab296bc68ad7fd177222471679f.html">Variable slint::platform::key_codes::Backspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1ac32910f77f4588aa03446574e7e6b48b.html">Variable slint::platform::key_codes::Backtab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a0456177e3225079f495df1a40eb25de6.html">Variable slint::platform::key_codes::CapsLock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1aae06cbdc02fdffe6a787214d25e0ed19.html">Variable slint::platform::key_codes::Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1ab78ea33dc3464497974100b841eeec4c.html">Variable slint::platform::key_codes::ControlR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1af674468525494d802b017d421f0432e7.html">Variable slint::platform::key_codes::Delete</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a472bf83dfe8bd88399ff9e0a6c36d950.html">Variable slint::platform::key_codes::DownArrow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1ae75e3231824370890cc26cda0fe07a75.html">Variable slint::platform::key_codes::End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1ad3a76f93967bed6e0bf1055d2fb5f97b.html">Variable slint::platform::key_codes::Escape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a037e34a7a75bd9b8fc07b0f5039302df.html">Variable slint::platform::key_codes::F1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a8c063c4c238f189edd899b96c42f509b.html">Variable slint::platform::key_codes::F10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1aa46f7e2b5c3f817227683cf5c2d8b92a.html">Variable slint::platform::key_codes::F11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a293f7e38adb43a8f5434e8e900678652.html">Variable slint::platform::key_codes::F12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a6b813cb686d89e8e8d3891259b7115d9.html">Variable slint::platform::key_codes::F13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a72a98f7ac7b1893a25fb20f78dd42675.html">Variable slint::platform::key_codes::F14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a6e73cc7ade6d8452c8c2047ec00964bb.html">Variable slint::platform::key_codes::F15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1ab59f14f7e68c980b6db14852df2c5262.html">Variable slint::platform::key_codes::F16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1addf9890750954a90f025235fdd82e9b4.html">Variable slint::platform::key_codes::F17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a9cd8a0d139cafb40c54c9613d8a23bb3.html">Variable slint::platform::key_codes::F18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a5e01d967f144985e037cd53181559909.html">Variable slint::platform::key_codes::F19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a8d46c4e5ef87c72b2c3fd3a0d34c0bef.html">Variable slint::platform::key_codes::F2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a8551fc7e5309b803a5324347445c6d0e.html">Variable slint::platform::key_codes::F20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1add3be02945fa6ebc94a99e2fc2d7ba20.html">Variable slint::platform::key_codes::F21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1aff5729be964f23fc970f5f80217f5bec.html">Variable slint::platform::key_codes::F22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a597926fdfddd8a0e466a3f82b7ce2fcd.html">Variable slint::platform::key_codes::F23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a00330cf08e78888ec33cb4aad7695f2c.html">Variable slint::platform::key_codes::F24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1aa68b696b0425e397cb24edae6528a68c.html">Variable slint::platform::key_codes::F3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a20afa8a531fee6e8d2503f3670d29b76.html">Variable slint::platform::key_codes::F4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a799426f66be94c7aeab5798ece7ff2bf.html">Variable slint::platform::key_codes::F5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a7d33f3bd6fbde5f7556df7c2996ab0ed.html">Variable slint::platform::key_codes::F6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1abf6255bec49fffb7c7228476877932b7.html">Variable slint::platform::key_codes::F7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a986ca27ff73d68aaa7bacb4d5c509fba.html">Variable slint::platform::key_codes::F8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a851d09118169ae64d44c1ce04cc3d39d.html">Variable slint::platform::key_codes::F9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1acab5a3836aa794489b91f3cc06a1e4ad.html">Variable slint::platform::key_codes::Home</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a427463ae65210afe9d5a966d00a8b4f6.html">Variable slint::platform::key_codes::Insert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a13c2d54873316cd42061a8b65db36361.html">Variable slint::platform::key_codes::LeftArrow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a1375031be6c0b8c45d9df956037df69d.html">Variable slint::platform::key_codes::Menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a7f6e9766b89ac25f49671e6a606109ba.html">Variable slint::platform::key_codes::Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a16fb91042adacd1de93bcf8a108cca8b.html">Variable slint::platform::key_codes::MetaR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1aa329a177650db85052f4a4ce45abf32d.html">Variable slint::platform::key_codes::PageDown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1ade29cc46911c0d95f1a0601870117c8a.html">Variable slint::platform::key_codes::PageUp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a1907927aae2e873492ea4d266d6e9009.html">Variable slint::platform::key_codes::Pause</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1aba893f8091b3e8be97636d2144047818.html">Variable slint::platform::key_codes::Return</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1ad2e7bbf67cfcea73f242d193bb541e42.html">Variable slint::platform::key_codes::RightArrow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a65876fa90448017ac586c13a47ce604b.html">Variable slint::platform::key_codes::ScrollLock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1af883c4301b011c64a67d98c7369d674e.html">Variable slint::platform::key_codes::Shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1af56ac133d6d5242fb4f547d5546cb42f.html">Variable slint::platform::key_codes::ShiftR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a5a2a920d1055575213a0959dc16a3661.html">Variable slint::platform::key_codes::Stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1ad3ba1170ea89d2feaebadff11cf01871.html">Variable slint::platform::key_codes::SysReq</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1adf1a443c827c42391ffbb0cbbf1da3f8.html">Variable slint::platform::key_codes::Tab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_namespaceslint_1_1platform_1_1key__codes_1a8bd8df35acb6a08504e955d18b85b4fe.html">Variable slint::platform::key_codes::UpArrow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a45557b46bf1159e97c4ace494d67a53f.html">Define SLINT_FEATURE_INTERPRETER</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a84ab6227b0f7c83d1d55702c8c406ee0.html">Define SLINT_FEATURE_RENDERER_SKIA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aac4320248b71bd21ac65d833974b5cb5.html">Define SLINT_FEATURE_RENDERER_SOFTWARE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a6b7f049a8c7176edc87c4cffddfc1bbd.html">Define SLINT_VERSION_STRING</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="template-class-filtermodel">
+<span id="exhale-class-classslint-1-1filtermodel"></span><h1>Template Class FilterModel<a class="headerlink" href="#template-class-filtermodel" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_runner_work_slint_slint_api_cpp_include_slint.h.html#file-home-runner-work-slint-slint-api-cpp-include-slint-h"><span class="std std-ref">File slint.h</span></a></p></li>
+</ul>
+<section id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this heading">#</a></h2>
+<section id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">slint::Model&lt;</span> <span class="pre">ModelData</span> <span class="pre">&gt;</span></code> (<a class="reference internal" href="classslint_1_1Model.html#exhale-class-classslint-1-1model"><span class="std std-ref">Template Class Model</span></a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this heading">#</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN5slint11FilterModelE">
+<span id="_CPPv3I0EN5slint11FilterModelE"></span><span id="_CPPv2I0EN5slint11FilterModelE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModelData</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classslint_1_1FilterModel"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FilterModel</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">slint</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classslint_1_1Model.html#_CPPv4I0EN5slint5ModelE" title="slint::Model"><span class="n"><span class="pre">Model</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN5slint11FilterModelE" title="slint::FilterModel::ModelData"><span class="n"><span class="pre">ModelData</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4I0EN5slint11FilterModelE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classslint_1_1FilterModel"><span class="std std-ref">FilterModel</span></a> acts as an adapter model for a given source model by applying a filter function. The filter function is called for each row on the source model and if the filter accepts the row (i.e. returns true), the row is also visible in the <a class="reference internal" href="#classslint_1_1FilterModel"><span class="std std-ref">FilterModel</span></a>. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11FilterModel11FilterModelENSt10shared_ptrI5ModelI9ModelDataEEENSt8functionIFbRK9ModelDataEEE">
+<span id="_CPPv3N5slint11FilterModel11FilterModelENSt10shared_ptrI5ModelI9ModelDataEEENSt8functionIFbRK9ModelDataEEE"></span><span id="_CPPv2N5slint11FilterModel11FilterModelENSt10shared_ptrI5ModelI9ModelDataEEENSt8functionIFbRK9ModelDataEEE"></span><span class="target" id="classslint_1_1FilterModel_1a9e132f67e20610fa96b37608472e7d50"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FilterModel</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classslint_1_1Model.html#_CPPv4I0EN5slint5ModelE" title="slint::Model"><span class="n"><span class="pre">Model</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN5slint11FilterModelE" title="slint::FilterModel::ModelData"><span class="n"><span class="pre">ModelData</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">source_model</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN5slint11FilterModelE" title="slint::FilterModel::ModelData"><span class="n"><span class="pre">ModelData</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">filter_fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11FilterModel11FilterModelENSt10shared_ptrI5ModelI9ModelDataEEENSt8functionIFbRK9ModelDataEEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1FilterModel"><span class="std std-ref">FilterModel</span></a> that provides a limited view on the <em>source_model</em> by applying <em>filter_fn</em> on each row. If the provided function returns true, the row is exposed by the <a class="reference internal" href="#classslint_1_1FilterModel"><span class="std std-ref">FilterModel</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11FilterModel9row_countEv">
+<span id="_CPPv3NK5slint11FilterModel9row_countEv"></span><span id="_CPPv2NK5slint11FilterModel9row_countEv"></span><span id="slint::FilterModel::row_countC"></span><span class="target" id="classslint_1_1FilterModel_1aa7d4dab02dea481ff4156a39dceb0c76"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">row_count</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5slint11FilterModel9row_countEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>The amount of row in the model. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11FilterModel8row_dataE6size_t">
+<span id="_CPPv3NK5slint11FilterModel8row_dataE6size_t"></span><span id="_CPPv2NK5slint11FilterModel8row_dataE6size_t"></span><span id="slint::FilterModel::row_data__sC"></span><span class="target" id="classslint_1_1FilterModel_1ae0d22fb803e14b2a76b80f783e2d51fa"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN5slint11FilterModelE" title="slint::FilterModel::ModelData"><span class="n"><span class="pre">ModelData</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">row_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5slint11FilterModel8row_dataE6size_t" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the data for a particular row. This function should be called with <code class="docutils literal notranslate"><span class="pre">row</span> <span class="pre">&lt;</span> <a class="reference internal" href="#classslint_1_1FilterModel_1aa7d4dab02dea481ff4156a39dceb0c76"><span class="std std-ref"><span class="pre">row_count()</span></span></a></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11FilterModel12set_row_dataE6size_tRK9ModelData">
+<span id="_CPPv3N5slint11FilterModel12set_row_dataE6size_tRK9ModelData"></span><span id="_CPPv2N5slint11FilterModel12set_row_dataE6size_tRK9ModelData"></span><span id="slint::FilterModel::set_row_data__s.ModelDataCR"></span><span class="target" id="classslint_1_1FilterModel_1ab8fc6386066defe8f25729bbca2951c0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_row_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN5slint11FilterModelE" title="slint::FilterModel::ModelData"><span class="n"><span class="pre">ModelData</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5slint11FilterModel12set_row_dataE6size_tRK9ModelData" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Sets the data for a particular row.</p>
+<p>This function should only be called with <code class="docutils literal notranslate"><span class="pre">row</span> <span class="pre">&lt;</span> <a class="reference internal" href="#classslint_1_1FilterModel_1aa7d4dab02dea481ff4156a39dceb0c76"><span class="std std-ref"><span class="pre">row_count()</span></span></a></code>.</p>
+<p>If the model cannot support data changes, then it is ok to do nothing. The default implementation will print a warning to stderr.</p>
+<p>If the model can update the data, it should also call <code class="docutils literal notranslate"><span class="pre">row_changed</span></code></p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11FilterModel5resetEv">
+<span id="_CPPv3N5slint11FilterModel5resetEv"></span><span id="_CPPv2N5slint11FilterModel5resetEv"></span><span id="slint::FilterModel::reset"></span><span class="target" id="classslint_1_1FilterModel_1a8622f24f23aef3bc29fedbf2b5dfe6d7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11FilterModel5resetEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Re-applies the model’s filter function on each row of the source model. Use this if state external to the filter function has changed. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11FilterModel14unfiltered_rowEi">
+<span id="_CPPv3NK5slint11FilterModel14unfiltered_rowEi"></span><span id="_CPPv2NK5slint11FilterModel14unfiltered_rowEi"></span><span id="slint::FilterModel::unfiltered_row__iC"></span><span class="target" id="classslint_1_1FilterModel_1ac5d46fac90f73a085d12d519327a380d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">unfiltered_row</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">filtered_row</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11FilterModel14unfiltered_rowEi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Given the <em>filtered_row</em> index, this function returns the corresponding row index in the source model. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11FilterModel12source_modelEv">
+<span id="_CPPv3NK5slint11FilterModel12source_modelEv"></span><span id="_CPPv2NK5slint11FilterModel12source_modelEv"></span><span id="slint::FilterModel::source_modelC"></span><span class="target" id="classslint_1_1FilterModel_1a2fe87464f481f257cfa5e4da79cf21f5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classslint_1_1Model.html#_CPPv4I0EN5slint5ModelE" title="slint::Model"><span class="n"><span class="pre">Model</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN5slint11FilterModelE" title="slint::FilterModel::ModelData"><span class="n"><span class="pre">ModelData</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">source_model</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11FilterModel12source_modelEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the source model of this filter model. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl>
+<dt class="sig sig-object cpp">
+<em class="property"><span class="pre">friend</span> <span class="pre">struct</span></em> <span class="pre">private_api::FilterModelInner&lt;</span> <span class="pre">ModelData</span> <span class="pre">&gt;</span></dt>
+</dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="classslint_1_1interpreter_1_1ComponentCompiler.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Class ComponentCompiler</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="classslint_1_1ComponentWeakHandle.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Template Class ComponentWeakHandle</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Template Class FilterModel</a><ul>
+<li><a class="reference internal" href="#inheritance-relationships">Inheritance Relationships</a><ul>
+<li><a class="reference internal" href="#base-type">Base Type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div>
+<script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b3ba4146"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js?v=73120307"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js?v=660e4f45"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.2.1/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.2.1/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        // Style the preview such that a flexbox lays out the source code box
+        // (which should take up any spare space), followed by the preview canvas.
+        // The latter may wrap into a new row on mobile. The edit/play buttons are
+        // placed last by flexbox order attribute.
+        let div = document.createElement("div");
+        let sourceCodeBox = element.firstElementChild;
+        element.style = "display: flex; flex-wrap: wrap;";
+        sourceCodeBox.style = "flex-grow: 2";
+        element.append(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        // Ensure the link section is always last and on a row of its own in the flexbox.
+        link_section.style = "order: 100; flex-basis: 100%;";
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1358 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Get Started" href="../recipes/recipes.html" /><link rel="prev" title="Builtin Structures" href="structs.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Widgets - Slint Language documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../../_static/theme_tweak.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Slint Language  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint.dev/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint Language  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/file.html">The <code class="docutils literal notranslate"><span class="pre">.slint</span></code> File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/layouting.html">Positioning and Layout of Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/container.html">Container Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/focus.html">Focus Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/fonts.html">Font Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/purity.html">Purity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/translations.html">Translations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/comments.html">Comments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/identifiers.html">Identifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/types.html">Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/properties.html">Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/expressions.html">Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/callbacks.html">Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/statements.html">Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/repetitions.html">Repetition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/conditions.html">Conditional Element</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/animations.html">Animations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/states.html">States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/globals.html">Global Singletons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/legacy_syntax.html">Legacy Syntax</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Builtins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Builtin Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elements.html">Builtin Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">Builtin Enumerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Builtin Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="globals.html">Builtin Global Singletons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaces.html">Builtin Namespaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structs.html">Builtin Structures</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Widgets</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Recipes &amp; Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../recipes/recipes.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recipes/recipes.html#animations">Animations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recipes/recipes.html#states">States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recipes/recipes.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recipes/recipes.html#global-callbacks">Global Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recipes/recipes.html#custom-widgets">Custom Widgets</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="widgets">
+<h1>Widgets<a class="headerlink" href="#widgets" title="Permalink to this heading">#</a></h1>
+<p>Slint provides a series of built-in widgets that can be imported from <code class="docutils literal notranslate"><span class="pre">&quot;std-widgets.slint&quot;</span></code>.</p>
+<p>The widget appearance depends on the selected style. The following styles are available:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fluent</span></code>: The <strong>Fluent</strong> style implements the <a class="reference external" href="https://www.microsoft.com/design/fluent/">Fluent Design System</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">material</span></code>: The <strong>Material</strong> style implements the <a class="reference external" href="https://m3.material.io">Material Design</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">native</span></code>: The <strong>Native</strong> style resembles the appearance of the controls that are native to the platform they
+are used on. This specifically includes support for the look and feel of controls on macOS and Windows. This
+style is only available if you have Qt installed on your system.</p></li>
+</ul>
+<p>See <a class="reference internal" href="#selecting-a-widget-style">Selecting a Widget Style</a> for details how to select the style. If no style is selected, <code class="docutils literal notranslate"><span class="pre">native</span></code> is the default. If <code class="docutils literal notranslate"><span class="pre">native</span></code> isn’t available, <code class="docutils literal notranslate"><span class="pre">fluent</span></code> is the default.</p>
+<p>All widgets support all <a class="reference internal" href="elements.html#common-properties"><span class="std std-ref">properties common to builtin elements</span></a>.</p>
+<section id="aboutslint">
+<h2><code class="docutils literal notranslate"><span class="pre">AboutSlint</span></code><a class="headerlink" href="#aboutslint" title="Permalink to this heading">#</a></h2>
+<p>This element displays a “Made with Slint” badge.</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { AboutSlint } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    height: 175px;
+    AboutSlint {
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="button">
+<h2><code class="docutils literal notranslate"><span class="pre">Button</span></code><a class="headerlink" href="#button" title="Permalink to this heading">#</a></h2>
+<p>A simple button. Common types of buttons can also be created with <a class="reference internal" href="#standardbutton"><code class="docutils literal notranslate"><span class="pre">StandardButton</span></code></a>.</p>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">checkable</span></code></strong> (<em>in</em> <em>bool</em>): Shows whether the button can be checked or not. This enables the <code class="docutils literal notranslate"><span class="pre">checked</span></code> property to possibly become true.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">checked</span></code></strong> (<em>inout</em> <em>bool</em>): Shows whether the button is checked or not. Needs <code class="docutils literal notranslate"><span class="pre">checkable</span></code> to be true to work.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, the button cannot be pressed</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the button has keyboard focus.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">icon</span></code></strong> (<em>in</em> <em>image</em>): The image to show in the button. Note that not all styles support drawing icons.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pressed</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the button is pressed.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong> (<em>in</em> <em>string</em>): The text written in the button.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">primary</span></code></strong> (<em>in</em> <em>bool</em>): If set to true the button is displayed with the primary accent color (default: false).</p></li>
+</ul>
+</section>
+<section id="callbacks">
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">clicked()</span></code></strong></p></li>
+</ul>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { Button, VerticalBox } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    VerticalBox {
+        Button {
+            text: &quot;Click Me&quot;;
+            clicked =&gt; { self.text = &quot;Clicked&quot;; }
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="checkbox">
+<h2><code class="docutils literal notranslate"><span class="pre">CheckBox</span></code><a class="headerlink" href="#checkbox" title="Permalink to this heading">#</a></h2>
+<p>Use a <code class="docutils literal notranslate"><span class="pre">CheckBox</span></code> to let the user select or deselect values, for example in a list with multiple options. Consider using a <code class="docutils literal notranslate"><span class="pre">Switch</span></code> element instead if the action resembles more something that’s turned on or off.</p>
+<section id="id1">
+<h3>Properties<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">checked</span></code></strong>: (<em>inout</em> <em>bool</em>): Whether the checkbox is checked or not (default: false).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, the checkbox can’t be pressed (default: true)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the checkbox has keyboard focus (default: false).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong> (<em>in</em> <em>string</em>): The text written next to the checkbox.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Callbacks<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">toggled()</span></code></strong>: The checkbox value changed</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Example<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { CheckBox } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 25px;
+    CheckBox {
+        width: parent.width;
+        height: parent.height;
+        text: &quot;Hello World&quot;;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="combobox">
+<h2><code class="docutils literal notranslate"><span class="pre">ComboBox</span></code><a class="headerlink" href="#combobox" title="Permalink to this heading">#</a></h2>
+<p>A button that, when clicked, opens a popup to select a value.</p>
+<section id="id4">
+<h3>Properties<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">current-index</span></code></strong>: (<em>in-out</em> <em>int</em>): The index of the selected value (-1 if no value is selected)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">current-value</span></code></strong>: (<em>in-out</em> <em>string</em>): The currently selected text</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, the combobox can’t be interacted with</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the combobox has keyboard focus.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model</span></code></strong> (<em>in</em> <em>[string]</em>): The list of possible values</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Callbacks<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">selected(</span></code><em><code class="docutils literal notranslate"><span class="pre">string</span></code></em><code class="docutils literal notranslate"><span class="pre">)</span></code></strong>: A value was selected from the combo box. The argument is the currently selected value.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Example<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { ComboBox } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 130px;
+    ComboBox {
+        y: 0px;
+        width: self.preferred-width;
+        height: self.preferred-height;
+        model: [&quot;first&quot;, &quot;second&quot;, &quot;third&quot;];
+        current-value: &quot;first&quot;;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="gridbox">
+<h2><code class="docutils literal notranslate"><span class="pre">GridBox</span></code><a class="headerlink" href="#gridbox" title="Permalink to this heading">#</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">GridBox</span></code> is a <a class="reference internal" href="elements.html#gridlayout"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code></span></a> where the spacing and padding values
+depend on the style instead of defaulting to 0.</p>
+</section>
+<section id="groupbox">
+<h2><code class="docutils literal notranslate"><span class="pre">GroupBox</span></code><a class="headerlink" href="#groupbox" title="Permalink to this heading">#</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">GroupBox</span></code> is a container that groups its children together under a common title.</p>
+<section id="id7">
+<h3>Properties<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, the groupbox can’t be interacted with</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">title</span></code></strong> (<em>in</em> <em>string</em>): A text written as the title of the group box.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Example<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { GroupBox , VerticalBox, CheckBox } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 100px;
+    GroupBox {
+        title: &quot;Groceries&quot;;
+        VerticalLayout {
+            CheckBox { text: &quot;Bread&quot;; checked: true ;}
+            CheckBox { text: &quot;Fruits&quot;; }
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="horizontalbox">
+<h2><code class="docutils literal notranslate"><span class="pre">HorizontalBox</span></code><a class="headerlink" href="#horizontalbox" title="Permalink to this heading">#</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">HorizontalBox</span></code> is a <a class="reference internal" href="elements.html#verticallayout-and-horizontallayout"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></span></a> where the spacing and padding values
+depend on the style instead of defaulting to 0.</p>
+</section>
+<section id="lineedit">
+<h2><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code><a class="headerlink" href="#lineedit" title="Permalink to this heading">#</a></h2>
+<p>A widget used to enter a single line of text. See <a class="reference internal" href="#textedit"><code class="docutils literal notranslate"><span class="pre">TextEdit</span></code></a> for
+a widget able to handle several lines of text.</p>
+<section id="id9">
+<h3>Properties<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, nothing can be entered selecting text is still enabled as well as editing text programmatically (default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">font-size</span></code></strong> (<em>in</em> <em>length</em>): the size of the font of the input text</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the line edit currently has the focus</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">horizontal-alignment</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#texthorizontalalignment"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">TextHorizontalAlignment</span></code></span></a></em>): The horizontal alignment of the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">input-type</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#inputtype"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">InputType</span></code></span></a></em>): The way to allow special input viewing properties such as password fields (default value: <code class="docutils literal notranslate"><span class="pre">text</span></code>).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">placeholder-text</span></code></strong>: (<em>in</em> <em>string</em>): A placeholder text being shown when there is no text in the edit field</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">read-only</span></code></strong> (<em>in</em> <em>bool</em>): When set to true, text editing via keyboard and mouse is disabled but</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong> (<em>in-out</em> <em>string</em>): The text being edited</p></li>
+</ul>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">focus()</span></code></strong> Call this function to focus the LineEdit and make it receive future keyboard events.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">select-all()</span></code></strong> Selects all text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">copy()</span></code></strong> Copies the selected text to the clipboard.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">cut()</span></code></strong> Copies the selected text to the clipboard and removes it from the editable area.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">paste()</span></code></strong> Pastes the text content of the clipboard at the cursor position.</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>Callbacks<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accepted(</span></code><em><code class="docutils literal notranslate"><span class="pre">string</span></code></em><code class="docutils literal notranslate"><span class="pre">)</span></code></strong>: Enter was pressed</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">edited(</span></code><em><code class="docutils literal notranslate"><span class="pre">string</span></code></em><code class="docutils literal notranslate"><span class="pre">)</span></code></strong>: Emitted when the text has changed because the user modified it</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Example<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { LineEdit } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 25px;
+    LineEdit {
+        font-size: 14px;
+        width: parent.width;
+        height: parent.height;
+        placeholder-text: &quot;Enter text here&quot;;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="listview">
+<h2><code class="docutils literal notranslate"><span class="pre">ListView</span></code><a class="headerlink" href="#listview" title="Permalink to this heading">#</a></h2>
+<p>A ListView is like a Scrollview but it should have a <code class="docutils literal notranslate"><span class="pre">for</span></code> element, and the content are
+automatically laid out in a list.
+Elements are only instantiated if they are visible</p>
+<section id="id12">
+<h3>Properties<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+<p>Same as <a class="reference internal" href="#scrollview"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></a></p>
+</section>
+<section id="id13">
+<h3>Example<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { ListView } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 150px;
+    height: 150px;
+    ListView {
+        width: 150px;
+        height: 150px;
+        for data in [
+            { text: &quot;Blue&quot;, color: #0000ff, bg: #eeeeee},
+            { text: &quot;Red&quot;, color: #ff0000, bg: #eeeeee},
+            { text: &quot;Green&quot;, color: #00ff00, bg: #eeeeee},
+            { text: &quot;Yellow&quot;, color: #ffff00, bg: #222222 },
+            { text: &quot;Black&quot;, color: #000000, bg: #eeeeee },
+            { text: &quot;White&quot;, color: #ffffff, bg: #222222 },
+            { text: &quot;Magenta&quot;, color: #ff00ff, bg: #eeeeee },
+            { text: &quot;Cyan&quot;, color: #00ffff, bg: #222222 },
+        ] : Rectangle {
+            height: 30px;
+            background: data.bg;
+            width: parent.width;
+            Text {
+                x: 0;
+                text: data.text;
+                color: data.color;
+            }
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="progressindicator">
+<h2><code class="docutils literal notranslate"><span class="pre">ProgressIndicator</span></code><a class="headerlink" href="#progressindicator" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ProgressIndicator</span></code> informs the user about the status of an on-going operation, such as loading data from the network.</p>
+<section id="id14">
+<h3>Properties<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">indeterminate</span></code></strong>: (<em>in</em> <em>bool</em>): Set to true if the progress of the operation cannot be determined by value (default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">progress</span></code></strong> (<em>in</em> <em>float</em>): Percentage of completion, as value between 0 and 1. Values less than 0 or greater than 1 are capped.</p></li>
+</ul>
+</section>
+<section id="id15">
+<h3>Example<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { ProgressIndicator } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 25px;
+    ProgressIndicator {
+        width: parent.width;
+        height: parent.height;
+        progress: 50%;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="scrollview">
+<h2><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code><a class="headerlink" href="#scrollview" title="Permalink to this heading">#</a></h2>
+<p>A Scrollview contains a viewport that is bigger than the view and can be
+scrolled. It has scrollbar to interact with. The viewport-width and
+viewport-height are calculated automatically to create a scollable view
+except for when using a for loop to populate the elements. In that case
+the viewport-width and viewport-height aren’t calculated automatically
+and must be set manually for scrolling to work. The ability to
+automatically calculate the viewport-width and viewport-height when
+using for loops may be added in the future and is tracked in issue #407.</p>
+<section id="id16">
+<h3>Properties<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong> (<em>in</em> <em>bool</em>): Used to render the frame as disabled or enabled, but doesn’t change behavior of the widget.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong> (<em>in-out</em> <em>bool</em>): Used to render the frame as focused or unfocused, but doesn’t change the behavior of the widget.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">viewport-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">viewport-height</span></code></strong> (<em>in-out</em> <em>length</em>): The <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">length</span></code> properties of the viewport</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">viewport-x</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">viewport-y</span></code></strong> (<em>in-out</em> <em>length</em>): The <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties of the viewport. Usually these are negative</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">visible-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">visible-height</span></code></strong> (<em>out</em> <em>length</em>): The size of the visible area of the ScrollView (not including the scrollbar)</p></li>
+</ul>
+</section>
+<section id="id17">
+<h3>Example<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { ScrollView } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 200px;
+    ScrollView {
+        width: 200px;
+        height: 200px;
+        viewport-width: 300px;
+        viewport-height: 300px;
+        Rectangle { width: 30px; height: 30px; x: 275px; y: 50px; background: blue; }
+        Rectangle { width: 30px; height: 30px; x: 175px; y: 130px; background: red; }
+        Rectangle { width: 30px; height: 30px; x: 25px; y: 210px; background: yellow; }
+        Rectangle { width: 30px; height: 30px; x: 98px; y: 55px; background: orange; }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="slider">
+<h2><code class="docutils literal notranslate"><span class="pre">Slider</span></code><a class="headerlink" href="#slider" title="Permalink to this heading">#</a></h2>
+<section id="id18">
+<h3>Properties<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. You can’t interact with the slider if enabled is false.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the slider currently has the focus</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">value</span></code></strong> (<em>in-out</em> <em>float</em>): The value.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">minimum</span></code></strong> (<em>in</em> <em>float</em>): The minimum value (default: 0)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">maximum</span></code></strong> (<em>in</em> <em>float</em>): The maximum value (default: 100)</p></li>
+</ul>
+</section>
+<section id="id19">
+<h3>Callbacks<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">changed(float)</span></code></strong>: The value was changed</p></li>
+</ul>
+</section>
+<section id="id20">
+<h3>Example<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { Slider } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 25px;
+    Slider {
+        width: parent.width;
+        height: parent.height;
+        value: 42;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="spinbox">
+<h2><code class="docutils literal notranslate"><span class="pre">SpinBox</span></code><a class="headerlink" href="#spinbox" title="Permalink to this heading">#</a></h2>
+<section id="id21">
+<h3>Properties<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. You can’t interact with the spinbox if enabled is false.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the spinbox currently has the focus</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">value</span></code></strong> (<em>in-out</em> <em>int</em>): The value.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">minimum</span></code></strong> (<em>in</em> <em>int</em>): The minimum value (default: 0).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">maximum</span></code></strong> (<em>in</em> <em>int</em>): The maximum value (default: 100).</p></li>
+</ul>
+</section>
+<section id="id22">
+<h3>Example<a class="headerlink" href="#id22" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { SpinBox } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 25px;
+    SpinBox {
+        width: parent.width;
+        height: parent.height;
+        value: 42;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="standardbutton">
+<h2><code class="docutils literal notranslate"><span class="pre">StandardButton</span></code><a class="headerlink" href="#standardbutton" title="Permalink to this heading">#</a></h2>
+<p>The StandardButton looks like a button, but instead of customizing with <code class="docutils literal notranslate"><span class="pre">text</span></code> and <code class="docutils literal notranslate"><span class="pre">icon</span></code>,
+it can used one of the pre-defined <code class="docutils literal notranslate"><span class="pre">kind</span></code> and the text and icon will depend on the style.</p>
+<section id="id23">
+<h3>Properties<a class="headerlink" href="#id23" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, the button can’t be pressed</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the button currently has the focus</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">kind</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#standardbuttonkind"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">StandardButtonKind</span></code></span></a></em>): The kind of button, one of <code class="docutils literal notranslate"><span class="pre">ok</span></code> <code class="docutils literal notranslate"><span class="pre">cancel</span></code>, <code class="docutils literal notranslate"><span class="pre">apply</span></code>, <code class="docutils literal notranslate"><span class="pre">close</span></code>, <code class="docutils literal notranslate"><span class="pre">reset</span></code>, <code class="docutils literal notranslate"><span class="pre">help</span></code>, <code class="docutils literal notranslate"><span class="pre">yes</span></code>, <code class="docutils literal notranslate"><span class="pre">no,</span></code> <code class="docutils literal notranslate"><span class="pre">abort</span></code>, <code class="docutils literal notranslate"><span class="pre">retry</span></code> or <code class="docutils literal notranslate"><span class="pre">ignore</span></code></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pressed</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the button is pressed.</p></li>
+</ul>
+</section>
+<section id="id24">
+<h3>Callbacks<a class="headerlink" href="#id24" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">clicked()</span></code></strong></p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Example<a class="headerlink" href="#id25" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { StandardButton, VerticalBox } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+  VerticalBox {
+    StandardButton { kind: ok; }
+    StandardButton { kind: apply; }
+    StandardButton { kind: cancel; }
+  }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="standardlistview">
+<h2><code class="docutils literal notranslate"><span class="pre">StandardListView</span></code><a class="headerlink" href="#standardlistview" title="Permalink to this heading">#</a></h2>
+<p>Like ListView, but with a default delegate, and a <code class="docutils literal notranslate"><span class="pre">model</span></code> property which is a model of type
+<a class="reference internal" href="structs.html#standardlistviewitem"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">StandardListViewItem</span></code></span></a>.</p>
+<section id="id26">
+<h3>Properties<a class="headerlink" href="#id26" title="Permalink to this heading">#</a></h3>
+<p>Same as <a class="reference internal" href="#listview"><code class="docutils literal notranslate"><span class="pre">ListView</span></code></a>, and in addition:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">current-item</span></code></strong> (<em>in-out</em> <em>int</em>): The index of the currently active item. -1 mean none is selected, which is the default</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model</span></code></strong> (<em>in</em> <em><a class="reference internal" href="structs.html#standardlistviewitem"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">StandardListViewItem</span></code></span></a></em>): The model</p></li>
+</ul>
+</section>
+<section id="id27">
+<h3>Functions<a class="headerlink" href="#id27" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">set-current-item(_index:</span> <span class="pre">int_)</span></code></strong>: Sets the current item and brings it into view</p></li>
+</ul>
+</section>
+<section id="id28">
+<h3>Example<a class="headerlink" href="#id28" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { StandardListView } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 150px;
+    height: 150px;
+    StandardListView {
+        width: 150px;
+        height: 150px;
+        model: [ { text: &quot;Blue&quot;}, { text: &quot;Red&quot; }, { text: &quot;Green&quot; },
+            { text: &quot;Yellow&quot; }, { text: &quot;Black&quot;}, { text: &quot;White&quot;},
+            { text: &quot;Magenta&quot; }, { text: &quot;Cyan&quot; },
+        ];
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="standardtableview">
+<h2><code class="docutils literal notranslate"><span class="pre">StandardTableView</span></code><a class="headerlink" href="#standardtableview" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">StandardTableView</span></code> represents a table of data with columns and rows. Cells
+are organised in a model where each row is a model of
+[<a class="reference internal" href="structs.html#standardlistviewitem"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">StandardListViewItem</span></code></span></a>].</p>
+<section id="id29">
+<h3>Properties<a class="headerlink" href="#id29" title="Permalink to this heading">#</a></h3>
+<p>Same as <a class="reference internal" href="#listview"><code class="docutils literal notranslate"><span class="pre">ListView</span></code></a>, and in addition:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">current-sort-column</span></code></strong> (<em>out</em> <em>int</em>): Indicates the sorted column. -1 mean no column is sorted.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">columns</span></code></strong> (<em>in-out</em> <em>[<a class="reference internal" href="structs.html#tablecolumn"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">TableColumn</span></code></span></a>]</em>): Defines the model of the table columns.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">rows</span></code></strong> (<em>[[<a class="reference internal" href="structs.html#standardlistviewitem"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">StandardListViewItem</span></code></span></a>]]</em>): Defines the model of table rows.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">current-row</span></code></strong> (<em>in-out</em> <em>int</em>): The index of the currently active row. -1 mean none is selected, which is the default.</p></li>
+</ul>
+</section>
+<section id="id30">
+<h3>Callbacks<a class="headerlink" href="#id30" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sort-ascending(</span></code><em><code class="docutils literal notranslate"><span class="pre">int</span></code></em><code class="docutils literal notranslate"><span class="pre">)</span></code></strong>: Emitted if the model should be sorted by the given column in ascending order.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sort-descending(</span></code><em><code class="docutils literal notranslate"><span class="pre">int</span></code></em><code class="docutils literal notranslate"><span class="pre">)</span></code></strong>: Emitted if the model should be sorted by the given column in descending order.</p></li>
+</ul>
+</section>
+<section id="id31">
+<h3>Functions<a class="headerlink" href="#id31" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>**<code class="docutils literal notranslate"><span class="pre">set-current-row(index:</span> <span class="pre">int)</span></code>: Sets the current row and brings it into view</p></li>
+</ul>
+</section>
+<section id="id32">
+<h3>Example<a class="headerlink" href="#id32" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { StandardTableView } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 230px;
+    height: 200px;
+    StandardTableView {
+        width: 230px;
+        height: 200px;
+        columns: [
+            { title: &quot;Header 1&quot; },
+            { title: &quot;Header 2&quot; },
+        ];
+        rows: [
+            [
+                { text: &quot;Item 1&quot; }, { text: &quot;Item 2&quot; },
+            ],
+            [
+                { text: &quot;Item 1&quot; }, { text: &quot;Item 2&quot; },
+            ],
+            [
+                { text: &quot;Item 1&quot; }, { text: &quot;Item 2&quot; },
+            ]
+        ];
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="switch">
+<h2><code class="docutils literal notranslate"><span class="pre">Switch</span></code><a class="headerlink" href="#switch" title="Permalink to this heading">#</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">Switch</span></code> is a representation of a physical switch that allows users to turn things on or off. Consider using a <code class="docutils literal notranslate"><span class="pre">CheckBox</span></code> instead if you want the user to select or deselect values, for example in a list with multiple options.</p>
+<section id="id33">
+<h3>Properties<a class="headerlink" href="#id33" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">checked</span></code></strong>: (<em>inout</em> <em>bool</em>): Whether the switch is checked or not (default: false).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, the switch can’t be pressed (default: true).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>out</em> <em>bool</em>): Set to true when the switch has keyboard focue (default: false).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong> (<em>in</em> <em>string</em>): The text written next to the switch.</p></li>
+</ul>
+</section>
+<section id="id34">
+<h3>Callbacks<a class="headerlink" href="#id34" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">toggled()</span></code></strong>: The switch value changed</p></li>
+</ul>
+</section>
+<section id="id35">
+<h3>Example<a class="headerlink" href="#id35" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { Switch } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 25px;
+    Switch {
+        width: parent.width;
+        height: parent.height;
+        text: &quot;Hello World&quot;;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="tabwidget">
+<h2><code class="docutils literal notranslate"><span class="pre">TabWidget</span></code><a class="headerlink" href="#tabwidget" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">TabWidget</span></code> is a container for a set of tabs. It can only have <code class="docutils literal notranslate"><span class="pre">Tab</span></code> elements as children and only one tab will be visible at
+a time.</p>
+<section id="id36">
+<h3>Properties<a class="headerlink" href="#id36" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">content-min-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">content-min-height</span></code></strong> (<em>out</em> <em>length</em>): The minimum width and height of the contents</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">content-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">content-height</span></code></strong> (<em>out</em> <em>length</em>): The width and height of the contents</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">content-x</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">content-y</span></code></strong> (<em>out</em> <em>length</em>): The x and y position of the contents</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">current-focused</span></code></strong> (<em>in</em> <em>int</em>): The index of the tab that has focus. This tab may or may not be visible.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">current-index</span></code></strong> (<em>in</em> <em>int</em>): The index of the currently visible tab</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">tabbar-preferred-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">tabbar-preferred-height</span></code></strong> (<em>in</em> <em>length</em>): The preferred width and height of the tab bar</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">tabbar-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">tabbar-height</span></code></strong> (<em>out</em> <em>length</em>): The width and height of the tab bar</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">tabbar-x</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">tabbar-y</span></code></strong> (<em>out</em> <em>length</em>): The x and y position of the tab bar</p></li>
+</ul>
+</section>
+<section id="properties-of-the-tab-element">
+<h3>Properties of the <code class="docutils literal notranslate"><span class="pre">Tab</span></code> element<a class="headerlink" href="#properties-of-the-tab-element" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">current-focused</span></code></strong> (<em>out</em> <em>int</em>): The index of this tab that has focus at this time or -1 if none is focused</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, the tab can’t be activated</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">icon</span></code></strong> (<em>in</em> <em>image</em>): The image on the tab</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">num-tabs</span></code></strong> (<em>out</em> <em>int</em>): The number of tabs in the current <code class="docutils literal notranslate"><span class="pre">TabBar</span></code></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">tab-index</span></code></strong> (<em>out</em> <em>int</em>): The index of this tab</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">title</span></code></strong> (<em>in</em> <em>string</em>): The text written on the tab</p></li>
+</ul>
+</section>
+<section id="id37">
+<h3>Example<a class="headerlink" href="#id37" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { TabWidget } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 200px;
+    TabWidget {
+        Tab {
+            title: &quot;First&quot;;
+            Rectangle { background: orange; }
+        }
+        Tab {
+            title: &quot;Second&quot;;
+            Rectangle { background: pink; }
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="textedit">
+<h2><code class="docutils literal notranslate"><span class="pre">TextEdit</span></code><a class="headerlink" href="#textedit" title="Permalink to this heading">#</a></h2>
+<p>Similar to <a class="reference internal" href="#lineedit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a>`, but can be used to enter several lines of text</p>
+<p><em>Note:</em> The current implementation only implement very few basic shortcut. More
+shortcut will be implemented in a future version: <a class="reference external" href="https://github.com/slint-ui/slint/issues/474">https://github.com/slint-ui/slint/issues/474</a></p>
+<section id="id38">
+<h3>Properties<a class="headerlink" href="#id38" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">font-size</span></code></strong> (<em>in</em> <em>length</em>): the size of the font of the input text</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong> (<em>in-out</em> <em>string</em>): The text being edited</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong>: (<em>in_out</em> <em>bool</em>): Set to true when the widget currently has the focus</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong>: (<em>in</em> <em>bool</em>): Defaults to true. When false, nothing can be entered</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">read-only</span></code></strong> (<em>in</em> <em>bool</em>): When set to true, text editing via keyboard and mouse is disabled but selecting text is still enabled as well as editing text programmatically (default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wrap</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#textwrap"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">TextWrap</span></code></span></a></em>): The way the text wraps (default: word-wrap).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">horizontal-alignment</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#texthorizontalalignment"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">TextHorizontalAlignment</span></code></span></a></em>): The horizontal alignment of the text.</p></li>
+</ul>
+</section>
+<section id="id39">
+<h3>Functions<a class="headerlink" href="#id39" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">focus()</span></code></strong> Call this function to focus the TextEdit and make it receive future keyboard events.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">select-all()</span></code></strong> Selects all text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">copy()</span></code></strong> Copies the selected text to the clipboard.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">cut()</span></code></strong> Copies the selected text to the clipboard and removes it from the editable area.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">paste()</span></code></strong> Pastes the text content of the clipboard at the cursor position.</p></li>
+</ul>
+</section>
+<section id="id40">
+<h3>Callbacks<a class="headerlink" href="#id40" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">edited(</span></code><em><code class="docutils literal notranslate"><span class="pre">string</span></code></em><code class="docutils literal notranslate"><span class="pre">)</span></code></strong>: Emitted when the text has changed because the user modified it</p></li>
+</ul>
+</section>
+<section id="id41">
+<h3>Example<a class="headerlink" href="#id41" title="Permalink to this heading">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { TextEdit } from &quot;std-widgets.slint&quot;;
+export component Example inherits Window {
+    width: 200px;
+    height: 200px;
+    TextEdit {
+        font-size: 14px;
+        width: parent.width;
+        height: parent.height;
+        text: &quot;Lorem ipsum dolor sit amet,\n consectetur adipisici elit&quot;;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="verticalbox">
+<h2><code class="docutils literal notranslate"><span class="pre">VerticalBox</span></code><a class="headerlink" href="#verticalbox" title="Permalink to this heading">#</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">VerticalBox</span></code> is a <a class="reference internal" href="elements.html#verticallayout-and-horizontallayout"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code></span></a> where the spacing and padding values
+depend on the style instead of defaulting to 0.</p>
+</section>
+<section id="selecting-a-widget-style">
+<h2>Selecting a Widget Style<a class="headerlink" href="#selecting-a-widget-style" title="Permalink to this heading">#</a></h2>
+<p>The widget style is selected at compile time of your project. The details depend on which programming
+language you’re using Slint with.</p>
+<details data-snippet-language="rust">
+<summary>Selecting a Widget Style when using Slint with Rust:</summary>
+<p>Before you start your compilation, you can select the style by setting the <code class="docutils literal notranslate"><span class="pre">SLINT_STYLE</span></code> variable
+to one of the style names, such as <code class="docutils literal notranslate"><span class="pre">fluent</span></code> for example.</p>
+<section id="selecting-the-widget-style-when-using-the-slint-build-crate">
+<h3>Selecting the Widget Style When Using the <code class="docutils literal notranslate"><span class="pre">slint_build</span></code> Crate<a class="headerlink" href="#selecting-the-widget-style-when-using-the-slint-build-crate" title="Permalink to this heading">#</a></h3>
+<p>Select the style with the <a class="reference external" href="https://docs.rs/slint-build/newest/slint_build/fn.compile_with_config.html"><code class="docutils literal notranslate"><span class="pre">slint_build::compile_with_config()</span></code></a> function in the compiler configuration argument.</p>
+</section>
+<section id="selecting-the-widget-style-when-using-the-slint-interpreter-crate">
+<h3>Selecting the Widget Style When Using the <code class="docutils literal notranslate"><span class="pre">slint_interpreter</span></code> Crate<a class="headerlink" href="#selecting-the-widget-style-when-using-the-slint-interpreter-crate" title="Permalink to this heading">#</a></h3>
+<p>Select the style with the <a class="reference external" href="https://docs.rs/slint-interpreter/newest/slint_interpreter/struct.ComponentCompiler.html#method.set_style"><code class="docutils literal notranslate"><span class="pre">slint_interpreter::ComponentCompiler::set_style()</span></code></a> function.</p>
+</details>
+<details data-snippet-language="cpp">
+<summary>Selecting a Widget Style when using Slint with C++:</summary>
+<p>Select the style by defining a <code class="docutils literal notranslate"><span class="pre">SLINT_STYLE</span></code> CMake cache variable to hold the style name as a string. This can be done for example on the command line:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-DSLINT_STYLE<span class="o">=</span><span class="s2">&quot;material&quot;</span><span class="w"> </span>/path/to/source
+</pre></div>
+</div>
+</details>
+</section>
+<section id="selecting-the-widget-style-when-previewing-designs-with-slint-viewer">
+<h3>Selecting the Widget Style When Previewing Designs With <code class="docutils literal notranslate"><span class="pre">slint-viewer</span></code><a class="headerlink" href="#selecting-the-widget-style-when-previewing-designs-with-slint-viewer" title="Permalink to this heading">#</a></h3>
+<p>Select the style either by setting the <code class="docutils literal notranslate"><span class="pre">SLINT_STYLE</span></code> environment variable, or passing the style name with the <code class="docutils literal notranslate"><span class="pre">--style</span></code> argument:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>slint-viewer<span class="w"> </span>--style<span class="w"> </span>material<span class="w"> </span>/path/to/design.slint
+</pre></div>
+</div>
+</section>
+<section id="selecting-the-widget-style-when-previewing-designs-with-the-slint-visual-studio-code-extension">
+<h3>Selecting the Widget Style When Previewing Designs With The Slint Visual Studio Code Extension<a class="headerlink" href="#selecting-the-widget-style-when-previewing-designs-with-the-slint-visual-studio-code-extension" title="Permalink to this heading">#</a></h3>
+<p>Select the style by first opening the Visual Studio Code settings editor:</p>
+<ul class="simple">
+<li><p>On Windows/Linux - File &gt; Preferences &gt; Settings</p></li>
+<li><p>On macOS - Code &gt; Preferences &gt; Settings</p></li>
+</ul>
+<p>Then enter the style name under Extensions &gt; Slint &gt; Preview:Style</p>
+</section>
+<section id="selecting-the-widget-style-when-previewing-designs-with-the-generic-lsp-process">
+<h3>Selecting the Widget Style When Previewing Designs With The Generic LSP Process<a class="headerlink" href="#selecting-the-widget-style-when-previewing-designs-with-the-generic-lsp-process" title="Permalink to this heading">#</a></h3>
+<p>Select the style by setting the <code class="docutils literal notranslate"><span class="pre">SLINT_STYLE</span></code> environment variable before launching the process.
+Alternatively, if your IDE integration allows passing command line parameters, you can specify the style via <code class="docutils literal notranslate"><span class="pre">--style</span></code>.</p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../recipes/recipes.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Get Started</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="structs.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Builtin Structures</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://slint.dev" aria-label="Slint">
+                <img src="https://slint.dev/logo/slint-logo-small-light.svg">
+            </a>
+              <a class="muted-link " href="https://github.com/slint-ui/slint" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Widgets</a><ul>
+<li><a class="reference internal" href="#aboutslint"><code class="docutils literal notranslate"><span class="pre">AboutSlint</span></code></a></li>
+<li><a class="reference internal" href="#button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul>
+<li><a class="reference internal" href="#properties">Properties</a></li>
+<li><a class="reference internal" href="#callbacks">Callbacks</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#checkbox"><code class="docutils literal notranslate"><span class="pre">CheckBox</span></code></a><ul>
+<li><a class="reference internal" href="#id1">Properties</a></li>
+<li><a class="reference internal" href="#id2">Callbacks</a></li>
+<li><a class="reference internal" href="#id3">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#combobox"><code class="docutils literal notranslate"><span class="pre">ComboBox</span></code></a><ul>
+<li><a class="reference internal" href="#id4">Properties</a></li>
+<li><a class="reference internal" href="#id5">Callbacks</a></li>
+<li><a class="reference internal" href="#id6">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gridbox"><code class="docutils literal notranslate"><span class="pre">GridBox</span></code></a></li>
+<li><a class="reference internal" href="#groupbox"><code class="docutils literal notranslate"><span class="pre">GroupBox</span></code></a><ul>
+<li><a class="reference internal" href="#id7">Properties</a></li>
+<li><a class="reference internal" href="#id8">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#horizontalbox"><code class="docutils literal notranslate"><span class="pre">HorizontalBox</span></code></a></li>
+<li><a class="reference internal" href="#lineedit"><code class="docutils literal notranslate"><span class="pre">LineEdit</span></code></a><ul>
+<li><a class="reference internal" href="#id9">Properties</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#id10">Callbacks</a></li>
+<li><a class="reference internal" href="#id11">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#listview"><code class="docutils literal notranslate"><span class="pre">ListView</span></code></a><ul>
+<li><a class="reference internal" href="#id12">Properties</a></li>
+<li><a class="reference internal" href="#id13">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#progressindicator"><code class="docutils literal notranslate"><span class="pre">ProgressIndicator</span></code></a><ul>
+<li><a class="reference internal" href="#id14">Properties</a></li>
+<li><a class="reference internal" href="#id15">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scrollview"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></a><ul>
+<li><a class="reference internal" href="#id16">Properties</a></li>
+<li><a class="reference internal" href="#id17">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#slider"><code class="docutils literal notranslate"><span class="pre">Slider</span></code></a><ul>
+<li><a class="reference internal" href="#id18">Properties</a></li>
+<li><a class="reference internal" href="#id19">Callbacks</a></li>
+<li><a class="reference internal" href="#id20">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spinbox"><code class="docutils literal notranslate"><span class="pre">SpinBox</span></code></a><ul>
+<li><a class="reference internal" href="#id21">Properties</a></li>
+<li><a class="reference internal" href="#id22">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#standardbutton"><code class="docutils literal notranslate"><span class="pre">StandardButton</span></code></a><ul>
+<li><a class="reference internal" href="#id23">Properties</a></li>
+<li><a class="reference internal" href="#id24">Callbacks</a></li>
+<li><a class="reference internal" href="#id25">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#standardlistview"><code class="docutils literal notranslate"><span class="pre">StandardListView</span></code></a><ul>
+<li><a class="reference internal" href="#id26">Properties</a></li>
+<li><a class="reference internal" href="#id27">Functions</a></li>
+<li><a class="reference internal" href="#id28">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#standardtableview"><code class="docutils literal notranslate"><span class="pre">StandardTableView</span></code></a><ul>
+<li><a class="reference internal" href="#id29">Properties</a></li>
+<li><a class="reference internal" href="#id30">Callbacks</a></li>
+<li><a class="reference internal" href="#id31">Functions</a></li>
+<li><a class="reference internal" href="#id32">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#switch"><code class="docutils literal notranslate"><span class="pre">Switch</span></code></a><ul>
+<li><a class="reference internal" href="#id33">Properties</a></li>
+<li><a class="reference internal" href="#id34">Callbacks</a></li>
+<li><a class="reference internal" href="#id35">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tabwidget"><code class="docutils literal notranslate"><span class="pre">TabWidget</span></code></a><ul>
+<li><a class="reference internal" href="#id36">Properties</a></li>
+<li><a class="reference internal" href="#properties-of-the-tab-element">Properties of the <code class="docutils literal notranslate"><span class="pre">Tab</span></code> element</a></li>
+<li><a class="reference internal" href="#id37">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#textedit"><code class="docutils literal notranslate"><span class="pre">TextEdit</span></code></a><ul>
+<li><a class="reference internal" href="#id38">Properties</a></li>
+<li><a class="reference internal" href="#id39">Functions</a></li>
+<li><a class="reference internal" href="#id40">Callbacks</a></li>
+<li><a class="reference internal" href="#id41">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#verticalbox"><code class="docutils literal notranslate"><span class="pre">VerticalBox</span></code></a></li>
+<li><a class="reference internal" href="#selecting-a-widget-style">Selecting a Widget Style</a><ul>
+<li><a class="reference internal" href="#selecting-the-widget-style-when-using-the-slint-build-crate">Selecting the Widget Style When Using the <code class="docutils literal notranslate"><span class="pre">slint_build</span></code> Crate</a></li>
+<li><a class="reference internal" href="#selecting-the-widget-style-when-using-the-slint-interpreter-crate">Selecting the Widget Style When Using the <code class="docutils literal notranslate"><span class="pre">slint_interpreter</span></code> Crate</a></li>
+<li><a class="reference internal" href="#selecting-the-widget-style-when-previewing-designs-with-slint-viewer">Selecting the Widget Style When Previewing Designs With <code class="docutils literal notranslate"><span class="pre">slint-viewer</span></code></a></li>
+<li><a class="reference internal" href="#selecting-the-widget-style-when-previewing-designs-with-the-slint-visual-studio-code-extension">Selecting the Widget Style When Previewing Designs With The Slint Visual Studio Code Extension</a></li>
+<li><a class="reference internal" href="#selecting-the-widget-style-when-previewing-designs-with-the-generic-lsp-process">Selecting the Widget Style When Previewing Designs With The Generic LSP Process</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div> <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.1.0/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.1.0/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // Safari blocks quite heavily when creating many WebGL contexts, slowing down loading of the docs
+        // significantly. For now, don't do automatic previews:
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            return false;
+        }
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

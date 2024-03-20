@@ -1,0 +1,100 @@
+
+.. _file_cppdocs_generated_include_slint_generated_public.h:
+
+File slint_generated_public.h
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir_cppdocs_generated_include>` (``cppdocs/generated_include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+Definition (``cppdocs/generated_include/slint_generated_public.h``)
+-------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_cppdocs_generated_include_slint_generated_public.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cstdarg``
+
+- ``cstdint``
+
+- ``cstdlib``
+
+- ``new``
+
+- ``ostream``
+
+- ``slint_string.h`` (:ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_string.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_image.h`
+
+- :ref:`file_cppdocs_generated_include_slint_internal.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structslint_1_1Rgb8Pixel`
+
+- :ref:`exhale_struct_structslint_1_1Rgba8Pixel`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespaceslint_1abb2b0aa4769a501e7cdeaccae964a64c`
+
+- :ref:`exhale_enum_namespaceslint_1a90c0ddbfdc375daafbcf91361293538b`
+
+- :ref:`exhale_enum_namespaceslint_1aa9bda1bcc95bc66d8afd7b1a4aa8c4af`
+
+- :ref:`exhale_enum_namespaceslint_1a435dcad112c13fd7fefb2de66e83d1b1`
+
+- :ref:`exhale_enum_namespaceslint_1aa1f5f67eecbb35c0bc1015d33361429b`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_slint__generated__public_8h_1a45557b46bf1159e97c4ace494d67a53f`
+
+- :ref:`exhale_define_slint__generated__public_8h_1a84ab6227b0f7c83d1d55702c8c406ee0`
+
+- :ref:`exhale_define_slint__generated__public_8h_1aac4320248b71bd21ac65d833974b5cb5`
+
+- :ref:`exhale_define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853`
+
+- :ref:`exhale_define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9`
+
+- :ref:`exhale_define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d`
+
+- :ref:`exhale_define_slint__generated__public_8h_1a6b7f049a8c7176edc87c4cffddfc1bbd`
+

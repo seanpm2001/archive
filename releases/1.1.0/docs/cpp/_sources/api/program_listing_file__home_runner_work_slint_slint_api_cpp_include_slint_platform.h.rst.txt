@@ -1,0 +1,287 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_platform.h:
+
+Program Listing for File slint_platform.h
+=========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint_platform.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint_platform.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint.dev>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-Royalty-free-1.0 OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   
+   #ifndef SLINT_FEATURE_EXPERIMENTAL
+   #    warning "slint_platform.h API only available when SLINT_FEATURE_EXPERIMENTAL is activated"
+   #else
+   
+   #    include "slint.h"
+   #    include <utility>
+   
+   struct xcb_connection_t;
+   struct wl_surface;
+   struct wl_display;
+   
+   namespace slint {
+   
+   namespace experimental {
+   
+   namespace platform {
+   
+   class AbstractRenderer
+   {
+   private:
+       virtual cbindgen_private::RendererPtr renderer_handle() const = 0;
+       friend class WindowAdapter;
+   };
+   
+   class WindowAdapter
+   {
+       // This is a pointer to the rust window that own us.
+       // Note that we do not have ownership (there is no reference increase for this)
+       // because it would otherwise be a reference loop
+       cbindgen_private::WindowAdapterRcOpaque self {};
+       // Whether this WindowAdapter was already given to the slint runtime
+       bool was_initialized = false;
+   
+   private:
+       friend class Platform;
+   
+       cbindgen_private::WindowAdapterRcOpaque initialize()
+       {
+           cbindgen_private::slint_window_adapter_new(
+                   this, [](void *wa) { delete reinterpret_cast<const WindowAdapter *>(wa); },
+                   [](void *wa) {
+                       return reinterpret_cast<WindowAdapter *>(wa)->renderer().renderer_handle();
+                   },
+                   [](void *wa) { reinterpret_cast<const WindowAdapter *>(wa)->show(); },
+                   [](void *wa) { reinterpret_cast<const WindowAdapter *>(wa)->hide(); },
+                   [](void *wa) { reinterpret_cast<const WindowAdapter *>(wa)->request_redraw(); },
+                   [](void *wa) -> cbindgen_private::IntSize {
+                       return reinterpret_cast<const WindowAdapter *>(wa)->physical_size();
+                   },
+                   &self);
+           was_initialized = true;
+           return self;
+       }
+   
+   public:
+       explicit WindowAdapter() { }
+       virtual ~WindowAdapter() = default;
+   
+       virtual void show() const { }
+       virtual void hide() const { }
+   
+       virtual void request_redraw() const { }
+   
+       virtual slint::PhysicalSize physical_size() const = 0;
+   
+       virtual AbstractRenderer &renderer() = 0;
+   
+       const Window &window() const
+       {
+           if (!was_initialized)
+               std::abort();
+           // This works because cbindgen_private::WindowAdapterRcOpaque and Window have the same
+           // layout
+           return *reinterpret_cast<const Window *>(&self);
+       }
+   
+       Window &window()
+       {
+           if (!was_initialized)
+               std::abort();
+           // This works because cbindgen_private::WindowAdapterRcOpaque and Window have the same
+           // layout
+           return *reinterpret_cast<Window *>(&self);
+       }
+   
+       // Note: in rust, this is on the Window. FIXME: use a public event type
+       void dispatch_pointer_event(const cbindgen_private::MouseEvent &event)
+       {
+           private_api::assert_main_thread();
+           if (was_initialized) {
+               cbindgen_private::slint_windowrc_dispatch_pointer_event(&self, event);
+           }
+       }
+   
+       // Note: in rust, this is an event on the Window
+       void dispatch_resize_event(slint::LogicalSize s)
+       {
+           private_api::assert_main_thread();
+           if (was_initialized) {
+               cbindgen_private::slint_windowrc_dispatch_resize_event(&self, s.width, s.height);
+           }
+       }
+   
+       void dispatch_scale_factor_change_event(float factor)
+       {
+           private_api::assert_main_thread();
+           if (was_initialized) {
+               cbindgen_private::slint_windowrc_dispatch_scale_factor_change_event(&self, factor);
+           }
+       }
+   
+       bool has_active_animations() const
+       {
+           return cbindgen_private::slint_windowrc_has_active_animations(&self);
+       }
+   };
+   
+   class Platform
+   {
+   public:
+       virtual ~Platform() = default;
+       Platform(const Platform &) = delete;
+       Platform &operator=(const Platform &) = delete;
+       Platform() = default;
+   
+       virtual std::unique_ptr<WindowAdapter> create_window_adapter() const = 0;
+   
+       static void register_platform(std::unique_ptr<Platform> platform)
+       {
+           cbindgen_private::slint_platform_register(
+                   platform.release(), [](void *p) { delete reinterpret_cast<const Platform *>(p); },
+                   [](void *p, cbindgen_private::WindowAdapterRcOpaque *out) {
+                       auto w = reinterpret_cast<const Platform *>(p)->create_window_adapter();
+                       *out = w->initialize();
+                       (void)w.release();
+                   });
+       }
+   };
+   
+   class SoftwareRenderer : public AbstractRenderer
+   {
+       mutable cbindgen_private::SoftwareRendererOpaque inner;
+   
+       cbindgen_private::RendererPtr renderer_handle() const override
+       {
+           return cbindgen_private::slint_software_renderer_handle(inner);
+       }
+   
+   public:
+       virtual ~SoftwareRenderer() { cbindgen_private::slint_software_renderer_drop(inner); };
+       SoftwareRenderer(const SoftwareRenderer &) = delete;
+       SoftwareRenderer &operator=(const SoftwareRenderer &) = delete;
+       SoftwareRenderer(int max_buffer_age)
+       {
+           inner = cbindgen_private::slint_software_renderer_new(max_buffer_age);
+       }
+   
+       void render(const Window &window, std::span<slint::Rgb8Pixel> buffer,
+                   std::size_t pixel_stride) const
+       {
+           cbindgen_private::slint_software_renderer_render_rgb8(
+                   inner, &window.window_handle().inner, buffer.data(), buffer.size(), pixel_stride);
+       }
+   };
+   
+   class NativeWindowHandle
+   {
+       cbindgen_private::CppRawHandleOpaque inner;
+       friend class SkiaRenderer;
+   
+       NativeWindowHandle(cbindgen_private::CppRawHandleOpaque inner) : inner(inner) { }
+   
+   public:
+       NativeWindowHandle() = delete;
+       NativeWindowHandle(const NativeWindowHandle &) = delete;
+       NativeWindowHandle &operator=(const NativeWindowHandle &) = delete;
+       NativeWindowHandle(NativeWindowHandle &&other) { inner = std::exchange(other.inner, nullptr); }
+       NativeWindowHandle &operator=(NativeWindowHandle &&other)
+       {
+           if (this == &other) {
+               return *this;
+           }
+           if (inner) {
+               cbindgen_private::slint_raw_window_handle_drop(inner);
+           }
+           inner = std::exchange(other.inner, nullptr);
+           return *this;
+       }
+   
+   #    if !defined(__APPLE__) && !defined(_WIN32) && !defined(_WIN64)
+       static NativeWindowHandle from_x11(uint32_t /*xcb_window_t*/ window,
+                                          uint32_t /*xcb_visualid_t*/ visual_id,
+                                          xcb_connection_t *connection, int screen)
+       {
+   
+           return { cbindgen_private::slint_new_raw_window_handle_x11(window, visual_id, connection,
+                                                                      screen) };
+       }
+   
+       static NativeWindowHandle from_wayland(wl_surface *surface, wl_display *display)
+       {
+   
+           return { cbindgen_private::slint_new_raw_window_handle_wayland(surface, display) };
+       }
+   
+   #    elif defined(__APPLE__) && !defined(_WIN32) && !defined(_WIN64)
+   
+       static NativeWindowHandle from_appkit(void *nsview, void *nswindow)
+       {
+   
+           return { cbindgen_private::slint_new_raw_window_handle_appkit(nsview, nswindow) };
+       }
+   
+   #    elif !defined(__APPLE__) && (defined(_WIN32) || !defined(_WIN64))
+   
+       static NativeWindowHandle from_win32(void *hwnd, void *hinstance)
+       {
+           return { cbindgen_private::slint_new_raw_window_handle_win32(hwnd, hinstance) };
+       }
+   #    endif
+       ~NativeWindowHandle()
+       {
+           if (inner) {
+               cbindgen_private::slint_raw_window_handle_drop(inner);
+           }
+       }
+   };
+   
+   class SkiaRenderer : public AbstractRenderer
+   {
+       mutable cbindgen_private::SkiaRendererOpaque inner;
+   
+       cbindgen_private::RendererPtr renderer_handle() const override
+       {
+           return cbindgen_private::slint_skia_renderer_handle(inner);
+       }
+   
+   public:
+       virtual ~SkiaRenderer() { cbindgen_private::slint_skia_renderer_drop(inner); }
+       SkiaRenderer(const SkiaRenderer &) = delete;
+       SkiaRenderer &operator=(const SkiaRenderer &) = delete;
+       SkiaRenderer(const NativeWindowHandle &window_handle, PhysicalSize initial_size)
+       {
+           inner = cbindgen_private::slint_skia_renderer_new(window_handle.inner, initial_size);
+       }
+   
+       void render(const Window &window) const
+       {
+           cbindgen_private::slint_skia_renderer_render(inner, &window.window_handle().inner);
+       }
+   
+       void resize(PhysicalSize size) const
+       {
+           cbindgen_private::slint_skia_renderer_resize(inner, size);
+       }
+   
+       void hide() const { cbindgen_private::slint_skia_renderer_hide(inner); }
+   
+       void show() const { cbindgen_private::slint_skia_renderer_show(inner); }
+   };
+   
+   inline void update_timers_and_animations()
+   {
+       cbindgen_private::slint_platform_update_timers_and_animations();
+   }
+   
+   }
+   }
+   }
+   #endif

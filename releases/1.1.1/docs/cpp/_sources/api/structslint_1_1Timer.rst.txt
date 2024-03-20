@@ -1,0 +1,16 @@
+.. _exhale_struct_structslint_1_1Timer:
+
+Struct Timer
+============
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::Timer
+   :members:
+   :protected-members:
+   :undoc-members:

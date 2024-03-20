@@ -1,0 +1,51 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_string_internal.h:
+
+Program Listing for File slint_string_internal.h
+================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_string_internal.h>` (``cppdocs/generated_include/slint_string_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.24.5 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   namespace slint { struct SharedString; }
+   
+   namespace slint {
+   namespace cbindgen_private {
+   
+   template<typename T>
+   struct Slice {
+       T *ptr;
+       uintptr_t len;
+       const T &operator[](int i) const { return ptr[i]; }
+   };
+   
+   extern "C" {
+   
+   const char *slint_shared_string_bytes(const SharedString *ss);
+   
+   void slint_shared_string_drop(const SharedString *ss);
+   
+   void slint_shared_string_clone(SharedString *out, const SharedString *ss);
+   
+   void slint_shared_string_from_bytes(SharedString *out, const char *bytes, uintptr_t len);
+   
+   void slint_shared_string_from_number(SharedString *out, double n);
+   
+   void slint_shared_string_append(SharedString *self_, const char *bytes, uintptr_t len);
+   
+   } // extern "C"
+   
+   } // namespace cbindgen_private
+   } // namespace slint

@@ -1,0 +1,24 @@
+{
+  "name": "slint-wasm-interpreter",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "description": "Slint wasm glue",
+  "version": "1.0.1",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/slint-ui/slint"
+  },
+  "files": [
+    "slint_wasm_interpreter_bg.wasm",
+    "slint_wasm_interpreter.js",
+    "slint_wasm_interpreter.d.ts"
+  ],
+  "module": "slint_wasm_interpreter.js",
+  "homepage": "https://slint-ui.com",
+  "types": "slint_wasm_interpreter.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

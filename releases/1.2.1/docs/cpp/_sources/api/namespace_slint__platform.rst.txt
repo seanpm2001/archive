@@ -1,0 +1,75 @@
+
+.. _namespace_slint__platform:
+
+Namespace slint::platform
+=========================
+
+
+Detailed Description
+--------------------
+
+Use the types in this namespace when implementing a custom Slint platform.
+
+Slint comes with built-in support for different windowing systems, called backends. A backend is a module that implements the :ref:`exhale_class_classslint_1_1platform_1_1Platform` interface in this namespace, interacts with a windowing system, and uses one of Slint's renderers to display a scene to the windowing system. A typical Slint application uses one of the built-in backends. Implement your own :ref:`exhale_class_classslint_1_1platform_1_1Platform` if you're using Slint in an environment without a windowing system, such as with microcontrollers, or you're embedding a Slint UI as plugin in other applications.
+
+Examples of custom platform implementation can be found in the Slint repository:
+
+- https://github.com/slint-ui/slint/tree/master/examples/cpp/platform_native
+
+- https://github.com/slint-ui/slint/tree/master/examples/cpp/platform_qt
+
+- https://github.com/slint-ui/slint/blob/master/api/cpp/esp-idf/slint/src/slint-esp.cpp
+
+
+
+The entry point to re-implement a platform is the :ref:`exhale_class_classslint_1_1platform_1_1Platform` class. Derive from :ref:`exhale_class_classslint_1_1platform_1_1Platform`, and call :ref:`exhale_function_namespaceslint_1_1platform_1a78d943b2302a68af7e187ea4154d4a64` to set it as the Slint platform.
+
+Another important class to subclass is the :ref:`exhale_class_classslint_1_1platform_1_1WindowAdapter`. 
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint__platform__key_codes`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structslint_1_1platform_1_1Rgb565Pixel`
+
+- :ref:`exhale_struct_structslint_1_1platform_1_1SoftwareRenderer_1_1PhysicalRegion`
+
+- :ref:`exhale_struct_structslint_1_1platform_1_1WindowAdapter_1_1WindowProperties`
+
+- :ref:`exhale_struct_structslint_1_1platform_1_1WindowAdapter_1_1WindowProperties_1_1LayoutConstraints`
+
+- :ref:`exhale_class_classslint_1_1platform_1_1AbstractRenderer`
+
+- :ref:`exhale_class_classslint_1_1platform_1_1NativeWindowHandle`
+
+- :ref:`exhale_class_classslint_1_1platform_1_1Platform`
+
+- :ref:`exhale_class_classslint_1_1platform_1_1Platform_1_1Task`
+
+- :ref:`exhale_class_classslint_1_1platform_1_1SkiaRenderer`
+
+- :ref:`exhale_class_classslint_1_1platform_1_1SoftwareRenderer`
+
+- :ref:`exhale_class_classslint_1_1platform_1_1WindowAdapter`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespaceslint_1_1platform_1a66e865fa8aaea9bb401549294186273a`
+
+- :ref:`exhale_function_namespaceslint_1_1platform_1a78d943b2302a68af7e187ea4154d4a64`
+
+- :ref:`exhale_function_namespaceslint_1_1platform_1a71af3a3240e18b74b5e0c3b646db90c3`

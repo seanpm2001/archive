@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["cargo_features","generated_code","mcu","type_mappings"]};

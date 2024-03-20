@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Feature flags and backend selection."><title>slint::docs::cargo_features - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-085727c29c2fa99e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="slint" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (65ea825f4 2023-09-18)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/main-f6ec288034ea164c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.2.1/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.2.1/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        // Style the preview such that a flexbox lays out the source code box
+        // (which should take up any spare space), followed by the preview canvas.
+        // The latter may wrap into a new row on mobile. The edit/play buttons are
+        // placed last by flexbox order attribute.
+        let div = document.createElement("div");
+        let sourceCodeBox = element.firstElementChild;
+        element.style = "display: flex; flex-wrap: wrap;";
+        sourceCodeBox.style = "flex-grow: 2";
+        element.append(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        // Ensure the link section is always last and on a row of its own in the flexbox.
+        link_section.style = "order: 100; flex-basis: 100%;";
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../../slint/index.html"><img src="https://slint.dev/logo/slint-logo-square-light.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../../../slint/index.html"><img src="https://slint.dev/logo/slint-logo-square-light.svg" alt="logo"></a><h2 class="location"><a href="#">Module cargo_features</a></h2><div class="sidebar-elems"></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../../index.html">slint</a>::<wbr><a href="../index.html">docs</a>::<wbr><a class="mod" href="#">cargo_features</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../src/slint/docs.rs.html#147">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="feature-flags-and-backend-selection"><a href="#feature-flags-and-backend-selection">Feature flags and backend selection.</a></h2>
+<p>Use the following feature flags in your Cargo.toml to enable additional features.</p>
+<ul>
+<li>
+<p><strong><code>compat-1-2</code></strong> <em>(enabled by default)</em> —  Mandatory feature:
+This feature is required to keep the compatibility with Slint 1.2
+Newer patch version may put current functionality behind a new feature
+that would be enabled by default only if this feature was added.
+<a href="https://slint.dev/blog/rust-adding-default-cargo-feature.html">More info in this blog post</a></p>
+</li>
+<li>
+<p><strong><code>std</code></strong> <em>(enabled by default)</em> —  Enable use of the Rust standard library.</p>
+</li>
+<li>
+<p><strong><code>gettext</code></strong> —  Enable the translations using <a href="https://www.gnu.org/software/gettext/gettext">gettext</a></p>
+<p>the <code>@tr(...)</code> code from .slint files will be transformed into call to <code>dgettext</code>
+with the crate name as domain name</p>
+<p>translations must be enabled with the <a href="../../macro.init_translations.html" title="macro slint::init_translations"><code>init_translations!</code></a> macro</p>
+</li>
+<li>
+<p><strong><code>libm</code></strong> —  This feature enables floating point arithmetic emulation using the <a href="https://crates.io/crates/libm">libm</a> crate. Use this
+in MCU environments where the processor does not support floating point arithmetic.</p>
+</li>
+<li>
+<p><strong><code>log</code></strong> —  If enabled, calls of <code>debug()</code> in <code>.slint</code> files use to the <a href="https://docs.rs/log/0.4.18/log/macro.debug.html" title="macro log::debug"><code>log::debug!()</code></a> macro
+of the <a href="https://crates.io/crates/log">log</a> crate instead of just <code>println!()</code>.</p>
+</li>
+<li>
+<p><strong><code>serde</code></strong> —  Implement the <code>serde::Serialize</code> and <code>serde::Deserialize</code> for some of the base types
+such as <code>SharedString</code> and <code>SharedVector</code>.</p>
+</li>
+<li>
+<p><strong><code>software-renderer-systemfonts</code></strong> —  This feature enables the software renderer to pick up fonts from the operating system for text rendering.</p>
+</li>
+<li>
+<p><strong><code>unsafe-single-threaded</code></strong> —  Slint uses internally some <code>thread_local</code> state.</p>
+<p>When the <code>std</code> feature is enabled, Slint can use <a href="https://doc.rust-lang.org/nightly/std/macro.thread_local.html" title="macro std::thread_local"><code>std::thread_local!</code></a>, but when in a <code>#![no_std]</code>
+environment, we need a replacement. Using this feature, Slint will just use static variable
+disregarding Rust’s Send and Sync safety</p>
+<p><strong>Safety</strong> : You must ensure that there is only one single thread that call into the Slint API</p>
+</li>
+<li>
+<p><strong><code>accessibility</code></strong> <em>(enabled by default)</em> —  Enable integration with operating system provided accessibility APIs</p>
+<p>Enabling this feature will try to expose the tree of UI elements to OS provided accessibility
+APIs to support screen readers and other assistive technologies.</p>
+</li>
+</ul>
+<h4 id="backends"><a href="#backends">Backends</a></h4>
+<p>Slint needs a backend that will act as liaison between Slint and the OS.
+By default, Slint will use the Qt backend, if Qt is installed, otherwise, it
+will use <a href="https://crates.io/crates/winit">Winit</a> with <a href="https://crates.io/crates/femtovg">Femtovg</a>.
+Both backends are compiled in. If you want to not compile one of these you need
+to disable the default feature and re-enable one backend. It is also possible
+to use Slint without backend if you provide the platform abstraction yourself
+with <a href="../../platform/fn.set_platform.html" title="fn slint::platform::set_platform"><code>platform::set_platform()</code></a>.</p>
+<p>If you enable the Winit backend, you need to also include a renderer.
+<code>renderer-femtovg</code> is the only stable renderer, the other ones are experimental</p>
+<p>It is also possible to select the backend and renderer at runtime when several
+are enabled, using the <code>SLINT_BACKEND</code>  environment variable.</p>
+<ul>
+<li><code>SLINT_BACKEND=Qt</code> selects the Qt backend</li>
+<li><code>SLINT_BACKEND=winit</code> selects the winit backend</li>
+<li><code>SLINT_BACKEND=winit-femtovg</code> selects the winit backend with the femtovg renderer</li>
+<li><code>SLINT_BACKEND=winit-skia</code> selects the winit backend with the skia renderer</li>
+<li><code>SLINT_BACKEND=winit-software</code> selects the winit backend with the software renderer</li>
+</ul>
+<p>If the selected backend is not available, the default will be used.</p>
+<p>Here are the cargo features controlling the backend:</p>
+<ul>
+<li>
+<p><strong><code>backend-qt</code></strong> <em>(enabled by default)</em> —  The Qt backend feature uses Qt for the windowing system integration and rendering.
+This backend also provides the <code>native</code> style.
+It requires Qt 5.15 or later to be installed. If Qt is not installed, the
+backend will not be operational</p>
+</li>
+<li>
+<p><strong><code>backend-winit</code></strong> <em>(enabled by default)</em> —  The <a href="https://crates.io/crates/log">winit</a> crate is used for the event loop and windowing system integration.
+It supports Windows, macOS, web browsers, X11 and Wayland. X11 and wayland are only available when
+compiling for Linux or other Unix-like operating systems. With this feature, both X11 and Wayland are supported.
+For a smaller build, omit this feature and select one of the other specific <code>backend-winit-XX</code> features.</p>
+</li>
+<li>
+<p><strong><code>backend-winit-x11</code></strong> —  Simliar to <code>backend-winit</code> this enables the winit based event loop but only
+with support for the X Window System on Unix.</p>
+</li>
+<li>
+<p><strong><code>backend-winit-wayland</code></strong> —  Simliar to <code>backend-winit</code> this enables the winit based event loop but only
+with support for the Wayland window system on Unix.</p>
+</li>
+<li>
+<p><strong><code>renderer-femtovg</code></strong> <em>(enabled by default)</em> —  Render using the <a href="https://crates.io/crates/femtovg">femtovg</a> crate.</p>
+</li>
+<li>
+<p><strong><code>renderer-skia</code></strong> —  Render using <a href="https://skia.org/">Skia</a>.</p>
+</li>
+<li>
+<p><strong><code>renderer-skia-opengl</code></strong> —  Same as <code>renderer-skia</code>, but Skia will always use OpenGL.</p>
+</li>
+<li>
+<p><strong><code>renderer-skia-vulkan</code></strong> —  Same as <code>renderer-skia</code>, but Skia will always use Vulkan.</p>
+</li>
+<li>
+<p><strong><code>renderer-software</code></strong> <em>(enabled by default)</em> —  Render using the software renderer.</p>
+</li>
+<li>
+<p><strong><code>backend-linuxkms</code></strong> —  KMS with Vulkan or EGL and libinput on Linux are used to render the application in full screen mode, without any
+windowing system. (Experimental)</p>
+</li>
+</ul>
+<p>More information about the backend and renderers is available in the
+<a href="https://slint.dev/releases/1.2.1/docs/slint/src/advanced/backends_and_renderers.html">Slint Documentation</a></p>
+</div></details></section></div></main></body></html>

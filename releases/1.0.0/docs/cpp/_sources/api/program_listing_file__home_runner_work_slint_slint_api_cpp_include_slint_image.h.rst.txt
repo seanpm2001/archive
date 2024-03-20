@@ -1,0 +1,139 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_image.h:
+
+Program Listing for File slint_image.h
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint_image.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint_image.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint-ui.com>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   #include <string_view>
+   #include "slint_generated_public.h"
+   #include "slint_size.h"
+   #include "slint_image_internal.h"
+   #include "slint_string.h"
+   #include "slint_sharedvector.h"
+   
+   namespace slint {
+   
+   template<typename Pixel>
+   struct SharedPixelBuffer
+   {
+       SharedPixelBuffer() = default;
+   
+       SharedPixelBuffer(uint32_t width, uint32_t height)
+           : m_width(width), m_height(height), m_data(width * height)
+       {
+       }
+   
+       SharedPixelBuffer(uint32_t width, uint32_t height, const Pixel *data)
+           : m_width(width), m_height(height), m_data(data, data + (width * height))
+       {
+       }
+   
+       uint32_t width() const { return m_width; }
+       uint32_t height() const { return m_height; }
+   
+       const Pixel *begin() const { return m_data.begin(); }
+       const Pixel *end() const { return m_data.end(); }
+       Pixel *begin() { return m_data.begin(); }
+       Pixel *end() { return m_data.end(); }
+       const Pixel *cbegin() const { return m_data.begin(); }
+       const Pixel *cend() const { return m_data.end(); }
+   
+       bool operator==(const SharedPixelBuffer &other) const = default;
+   
+   private:
+       friend struct Image;
+       uint32_t m_width;
+       uint32_t m_height;
+       SharedVector<Pixel> m_data;
+   };
+   
+   struct Image
+   {
+   public:
+       Image() : data(Data::ImageInner_None()) { }
+   
+       static Image load_from_path(const SharedString &file_path)
+       {
+           Image img;
+           cbindgen_private::types::slint_image_load_from_path(&file_path, &img.data);
+           return img;
+       }
+   
+       Image(SharedPixelBuffer<Rgb8Pixel> buffer)
+           : data(Data::ImageInner_EmbeddedImage(
+                   cbindgen_private::types::ImageCacheKey::Invalid(),
+                   cbindgen_private::types::SharedImageBuffer::RGB8(
+                           cbindgen_private::types::SharedPixelBuffer<Rgb8Pixel> {
+                                   .width = buffer.width(),
+                                   .height = buffer.height(),
+                                   .data = buffer.m_data })))
+       {
+       }
+   
+       Image(SharedPixelBuffer<Rgba8Pixel> buffer)
+           : data(Data::ImageInner_EmbeddedImage(
+                   cbindgen_private::types::ImageCacheKey::Invalid(),
+                   cbindgen_private::types::SharedImageBuffer::RGBA8(
+                           cbindgen_private::types::SharedPixelBuffer<Rgba8Pixel> {
+                                   .width = buffer.width(),
+                                   .height = buffer.height(),
+                                   .data = buffer.m_data })))
+       {
+       }
+   
+       Size<unsigned int> size() const { return cbindgen_private::types::slint_image_size(&data); }
+   
+       std::optional<slint::SharedString> path() const
+       {
+           if (auto *str = cbindgen_private::types::slint_image_path(&data)) {
+               return *str;
+           } else {
+               return {};
+           }
+       }
+   
+       friend bool operator==(const Image &a, const Image &b) { return a.data == b.data; }
+       friend bool operator!=(const Image &a, const Image &b) { return a.data != b.data; }
+   
+       explicit Image(cbindgen_private::types::Image inner) : data(inner) { }
+   
+   private:
+       using Tag = cbindgen_private::types::ImageInner::Tag;
+       using Data = cbindgen_private::types::Image;
+       Data data;
+   };
+   
+   namespace private_api {
+   inline Image load_image_from_embedded_data(std::span<const uint8_t> data,
+                                              std::string_view extension)
+   {
+       cbindgen_private::types::Image img(cbindgen_private::types::Image::ImageInner_None());
+       cbindgen_private::types::slint_image_load_from_embedded_data(
+               slint::cbindgen_private::Slice<uint8_t> { const_cast<uint8_t *>(data.data()),
+                                                         data.size() },
+               slint::cbindgen_private::Slice<uint8_t> {
+                       const_cast<uint8_t *>(reinterpret_cast<const uint8_t *>(extension.data())),
+                       extension.size() },
+               &img);
+       return Image(img);
+   }
+   
+   inline Image image_from_embedded_textures(const cbindgen_private::types::StaticTextures *textures)
+   {
+       cbindgen_private::types::Image img(cbindgen_private::types::Image::ImageInner_None());
+       cbindgen_private::types::slint_image_from_embedded_textures(textures, &img);
+       return Image(img);
+   }
+   }
+   
+   }

@@ -1,0 +1,918 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_internal.h:
+
+Program Listing for File slint_internal.h
+=========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_internal.h>` (``cppdocs/generated_include/slint_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.24.3 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   #include "slint_config.h"
+   #include "vtable.h"
+   #include "slint_string.h"
+   #include "slint_sharedvector.h"
+   #include "slint_properties.h"
+   #include "slint_callbacks.h"
+   #include "slint_color.h"
+   #include "slint_image.h"
+   #include "slint_pathdata.h"
+   #include "slint_brush.h"
+   #include "slint_generated_public.h"
+   #include "slint_enums_internal.h"
+   #include "slint_point.h"
+   
+   namespace slint {
+       namespace private_api { class WindowAdapterRc; }
+       namespace cbindgen_private {
+           using slint::private_api::WindowAdapterRc;
+           using namespace vtable;
+           struct KeyEvent; struct PointerEvent;
+           using private_api::Property;
+           using private_api::PathData;
+           using private_api::Point;
+           struct Rect;
+           using LogicalRect = Rect;
+           using LogicalPoint = Point2D<float>;
+           using LogicalLength = float;
+       }
+   }
+   
+   namespace slint {
+   namespace cbindgen_private {
+   
+   enum class AccessibleStringProperty {
+       Checkable,
+       Checked,
+       DelegateFocus,
+       Description,
+       Label,
+       Value,
+       ValueMaximum,
+       ValueMinimum,
+       ValueStep,
+   };
+   
+   enum class FocusEvent {
+       FocusIn,
+       FocusOut,
+       WindowReceivedFocus,
+       WindowLostFocus,
+   };
+   
+   enum class FocusEventResult {
+       FocusAccepted,
+       FocusIgnored,
+   };
+   
+   enum class InputEventResult {
+       EventAccepted,
+       EventIgnored,
+       GrabMouse,
+   };
+   
+   enum class KeyEventResult {
+       EventAccepted,
+       EventIgnored,
+   };
+   
+   enum class KeyEventType {
+       KeyPressed,
+       KeyReleased,
+       UpdateComposition,
+       CommitComposition,
+   };
+   
+   enum class Orientation : uint8_t {
+       Horizontal,
+       Vertical,
+   };
+   
+   enum class RenderingResult {
+       ContinueRenderingChildren,
+       ContinueRenderingWithoutChildren,
+   };
+   
+   enum class TraversalOrder : uint8_t {
+       BackToFront,
+       FrontToBack,
+   };
+   
+   struct FlickableData;
+   
+   struct ItemRendererRef;
+   
+   using VisitChildrenResult = uint64_t;
+   constexpr static const VisitChildrenResult VisitChildrenResult_CONTINUE = UINT64_MAX;
+   
+   struct LayoutInfo {
+       float max;
+       float max_percent;
+       float min;
+       float min_percent;
+       float preferred;
+       float stretch;
+       inline LayoutInfo merge(const LayoutInfo &other) const;
+       friend inline LayoutInfo operator+(const LayoutInfo &a, const LayoutInfo &b) { return a.merge(b); }
+       friend bool operator==(const LayoutInfo&, const LayoutInfo&) = default;
+   };
+   
+   struct MouseEvent {
+       enum class Tag {
+           Pressed,
+           Released,
+           Moved,
+           Wheel,
+           Exit,
+       };
+   
+       struct Pressed_Body {
+           LogicalPoint position;
+           PointerEventButton button;
+           uint8_t click_count;
+       };
+   
+       struct Released_Body {
+           LogicalPoint position;
+           PointerEventButton button;
+           uint8_t click_count;
+       };
+   
+       struct Moved_Body {
+           LogicalPoint position;
+       };
+   
+       struct Wheel_Body {
+           LogicalPoint position;
+           float delta_x;
+           float delta_y;
+       };
+   
+       Tag tag;
+       union {
+           Pressed_Body pressed;
+           Released_Body released;
+           Moved_Body moved;
+           Wheel_Body wheel;
+       };
+   };
+   
+   struct InputEventFilterResult {
+       enum class Tag {
+           ForwardEvent,
+           ForwardAndIgnore,
+           ForwardAndInterceptGrab,
+           Intercept,
+           InterceptAndDispatch,
+           DelayForwarding,
+       };
+   
+       struct InterceptAndDispatch_Body {
+           MouseEvent _0;
+       };
+   
+       struct DelayForwarding_Body {
+           uint64_t _0;
+       };
+   
+       Tag tag;
+       union {
+           InterceptAndDispatch_Body intercept_and_dispatch;
+           DelayForwarding_Body delay_forwarding;
+       };
+   };
+   
+   struct ItemRc {
+       VRc<ComponentVTable> component;
+       uintptr_t index;
+   };
+   
+   struct KeyboardModifiers {
+       bool alt;
+       bool control;
+       bool meta;
+       bool shift;
+   };
+   
+   struct KeyEvent {
+       KeyboardModifiers modifiers;
+       SharedString text;
+       KeyEventType event_type;
+       uintptr_t preedit_selection_start;
+       uintptr_t preedit_selection_end;
+   };
+   
+   struct ItemVTable {
+       void (*init)(Pin<VRef<ItemVTable>>, const WindowAdapterRc *window_adapter);
+       LogicalRect (*geometry)(Pin<VRef<ItemVTable>>);
+       uintptr_t cached_rendering_data_offset;
+       LayoutInfo (*layout_info)(Pin<VRef<ItemVTable>>, Orientation orientation, const WindowAdapterRc *window_adapter);
+       InputEventFilterResult (*input_event_filter_before_children)(Pin<VRef<ItemVTable>>, MouseEvent, const WindowAdapterRc *window_adapter, const ItemRc *self_rc);
+       InputEventResult (*input_event)(Pin<VRef<ItemVTable>>, MouseEvent, const WindowAdapterRc *window_adapter, const ItemRc *self_rc);
+       FocusEventResult (*focus_event)(Pin<VRef<ItemVTable>>, const FocusEvent*, const WindowAdapterRc *window_adapter, const ItemRc *self_rc);
+       KeyEventResult (*key_event)(Pin<VRef<ItemVTable>>, const KeyEvent*, const WindowAdapterRc *window_adapter, const ItemRc *self_rc);
+       RenderingResult (*render)(Pin<VRef<ItemVTable>>, ItemRendererRef *backend, const ItemRc *self_rc);
+   };
+   
+   struct ItemVisitorVTable {
+       VisitChildrenResult (*visit_item)(VRefMut<ItemVisitorVTable>, const VRc<ComponentVTable, Dyn> *component, uintptr_t index, Pin<VRef<ItemVTable>> item);
+       void (*drop)(VRefMut<ItemVisitorVTable>);
+   };
+   
+   struct IndexRange {
+       uintptr_t start;
+       uintptr_t end;
+   };
+   
+   union ItemTreeNode {
+       enum class Tag : uint8_t {
+           Item,
+           DynamicTree,
+       };
+   
+       struct Item_Body {
+           Tag tag;
+           bool is_accessible;
+           uint32_t children_count;
+           uint32_t children_index;
+           uint32_t parent_index;
+           uint32_t item_array_index;
+       };
+   
+       struct DynamicTree_Body {
+           Tag tag;
+           uintptr_t index;
+           uint32_t parent_index;
+       };
+   
+       struct {
+           Tag tag;
+       };
+       Item_Body item;
+       DynamicTree_Body dynamic_tree;
+       constexpr ItemTreeNode(Item_Body x) : item {x} {}
+       constexpr ItemTreeNode(DynamicTree_Body x) : dynamic_tree{x} {}
+   };
+   
+   using ComponentWeak = VWeak<ComponentVTable, Dyn>;
+   
+   struct ItemWeak {
+       ComponentWeak component;
+       uintptr_t index;
+   };
+   
+   struct ComponentVTable {
+       VisitChildrenResult (*visit_children_item)(Pin<VRef<ComponentVTable>>, intptr_t index, TraversalOrder order, VRefMut<ItemVisitorVTable> visitor);
+       Pin<VRef<ItemVTable>> (*get_item_ref)(Pin<VRef<ComponentVTable>>, uintptr_t index);
+       IndexRange (*get_subtree_range)(Pin<VRef<ComponentVTable>>, uintptr_t index);
+       void (*get_subtree_component)(Pin<VRef<ComponentVTable>>, uintptr_t index, uintptr_t subindex, VWeak<ComponentVTable, Dyn> *result);
+       Slice<ItemTreeNode> (*get_item_tree)(Pin<VRef<ComponentVTable>>);
+       void (*parent_node)(Pin<VRef<ComponentVTable>>, ItemWeak *result);
+       uintptr_t (*subtree_index)(Pin<VRef<ComponentVTable>>);
+       LayoutInfo (*layout_info)(Pin<VRef<ComponentVTable>>, Orientation);
+       AccessibleRole (*accessible_role)(Pin<VRef<ComponentVTable>>, uintptr_t item_index);
+       void (*accessible_string_property)(Pin<VRef<ComponentVTable>>, uintptr_t item_index, AccessibleStringProperty what, SharedString *result);
+       Layout (*drop_in_place)(VRefMut<ComponentVTable>);
+       void (*dealloc)(const ComponentVTable*, uint8_t *ptr, Layout layout);
+   };
+   
+   using ComponentRef = VRef<ComponentVTable>;
+   
+   using ComponentRefPin = Pin<ComponentRef>;
+   
+   struct WindowAdapterRcOpaque {
+       const void *_0;
+       const void *_1;
+   };
+   
+   using ComponentRc = VRc<ComponentVTable, Dyn>;
+   
+   struct FlickableDataBox {
+   struct FlickableData;
+       FlickableData *_0;
+   };
+   
+   struct Padding {
+       float begin;
+       float end;
+   };
+   
+   struct GridLayoutCellData {
+       uint16_t col_or_row;
+       uint16_t span;
+       LayoutInfo constraint;
+   };
+   
+   struct GridLayoutData {
+       float size;
+       float spacing;
+       Padding padding;
+       Slice<GridLayoutCellData> cells;
+   };
+   
+   struct BoxLayoutCellData {
+       LayoutInfo constraint;
+   };
+   
+   struct BoxLayoutData {
+       float size;
+       float spacing;
+       Padding padding;
+       LayoutAlignment alignment;
+       Slice<BoxLayoutCellData> cells;
+   };
+   
+   struct EasingCurve {
+       enum class Tag : uint32_t {
+           Linear,
+           CubicBezier,
+       };
+   
+       struct CubicBezier_Body {
+           float _0[4];
+       };
+   
+       Tag tag;
+       union {
+           CubicBezier_Body cubic_bezier;
+       };
+       constexpr EasingCurve() : tag(Tag::Linear), cubic_bezier{{0,0,1,1}} {}
+       constexpr explicit EasingCurve(EasingCurve::Tag tag, float a, float b, float c, float d) : tag(tag), cubic_bezier{{a,b,c,d}} {}
+   };
+   
+   struct PropertyAnimation {
+       int32_t delay;
+       int32_t duration;
+       float iteration_count;
+       EasingCurve easing;
+   };
+   
+   using IntSize = Size2D<uint32_t>;
+   
+   using Size = Size2D<float>;
+   
+   struct KeyInputEvent {
+       SharedString text;
+       KeyEventType event_type;
+       uintptr_t preedit_selection_start;
+       uintptr_t preedit_selection_end;
+   };
+   
+   struct PointerEvent {
+       PointerEventButton button;
+       PointerEventKind kind;
+   };
+   
+   struct Rect {
+       float x;
+       float y;
+       float width;
+       float height;
+   };
+   
+   struct CachedRenderingData {
+       uintptr_t cache_index;
+       uintptr_t cache_generation;
+       constexpr CachedRenderingData() : cache_index{}, cache_generation{} {}
+   };
+   
+   struct Empty {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct Rectangle {
+       Property<Brush> background;
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct BorderRectangle {
+       Property<Brush> background;
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<LogicalLength> border_width;
+       Property<LogicalLength> border_radius;
+       Property<Brush> border_color;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct ImageItem {
+       Property<Image> source;
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<ImageFit> image_fit;
+       Property<ImageRendering> image_rendering;
+       Property<Brush> colorize;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct ClippedImage {
+       Property<Image> source;
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<ImageFit> image_fit;
+       Property<ImageRendering> image_rendering;
+       Property<Brush> colorize;
+       Property<int32_t> source_clip_x;
+       Property<int32_t> source_clip_y;
+       Property<int32_t> source_clip_width;
+       Property<int32_t> source_clip_height;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct TouchArea {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<bool> enabled;
+       Property<bool> pressed;
+       Property<bool> has_hover;
+       Property<LogicalLength> pressed_x;
+       Property<LogicalLength> pressed_y;
+       Property<LogicalLength> mouse_x;
+       Property<LogicalLength> mouse_y;
+       Property<MouseCursor> mouse_cursor;
+       private_api::CallbackHelper<void> clicked;
+       private_api::CallbackHelper<void> moved;
+       private_api::CallbackHelper<PointerEvent> pointer_event;
+       CachedRenderingData cached_rendering_data;
+       bool grabbed;
+   };
+   
+   struct FocusScope {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<bool> enabled;
+       Property<bool> has_focus;
+       private_api::CallbackHelper<KeyEvent, EventResult> key_pressed;
+       private_api::CallbackHelper<KeyEvent, EventResult> key_released;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct Flickable {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Empty viewport;
+       Property<bool> interactive;
+       FlickableDataBox data;
+       CachedRenderingData cached_rendering_data;
+       inline Flickable(); inline ~Flickable();
+   };
+   
+   struct Text {
+       Property<SharedString> text;
+       Property<SharedString> font_family;
+       Property<LogicalLength> font_size;
+       Property<int32_t> font_weight;
+       Property<Brush> color;
+       Property<TextHorizontalAlignment> horizontal_alignment;
+       Property<TextVerticalAlignment> vertical_alignment;
+       Property<TextWrap> wrap;
+       Property<TextOverflow> overflow;
+       Property<LogicalLength> letter_spacing;
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct Path {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<PathData> elements;
+       Property<Brush> fill;
+       Property<FillRule> fill_rule;
+       Property<Brush> stroke;
+       Property<LogicalLength> stroke_width;
+       Property<float> viewbox_x;
+       Property<float> viewbox_y;
+       Property<float> viewbox_width;
+       Property<float> viewbox_height;
+       Property<bool> clip;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct WindowItem {
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<Brush> background;
+       Property<SharedString> title;
+       Property<bool> no_frame;
+       Property<Image> icon;
+       Property<SharedString> default_font_family;
+       Property<LogicalLength> default_font_size;
+       Property<int32_t> default_font_weight;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct TextInput {
+       Property<SharedString> text;
+       Property<SharedString> font_family;
+       Property<LogicalLength> font_size;
+       Property<int32_t> font_weight;
+       Property<Brush> color;
+       Property<Color> selection_foreground_color;
+       Property<Color> selection_background_color;
+       Property<TextHorizontalAlignment> horizontal_alignment;
+       Property<TextVerticalAlignment> vertical_alignment;
+       Property<TextWrap> wrap;
+       Property<InputType> input_type;
+       Property<LogicalLength> letter_spacing;
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<int32_t> cursor_position_byte_offset;
+       Property<int32_t> anchor_position_byte_offset;
+       Property<LogicalLength> text_cursor_width;
+       Property<bool> cursor_visible;
+       Property<bool> has_focus;
+       Property<bool> enabled;
+       private_api::CallbackHelper<void> accepted;
+       private_api::CallbackHelper<Point> cursor_position_changed;
+       private_api::CallbackHelper<void> edited;
+       Property<bool> single_line;
+       Property<bool> read_only;
+       Property<SharedString> preedit_text;
+       Property<int32_t> preedit_selection_start;
+       Property<int32_t> preedit_selection_end;
+       CachedRenderingData cached_rendering_data;
+       float preferred_x_pos;
+       uint8_t pressed;
+   };
+   
+   struct Clip {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<LogicalLength> border_radius;
+       Property<LogicalLength> border_width;
+       CachedRenderingData cached_rendering_data;
+       Property<bool> clip;
+   };
+   
+   struct BoxShadow {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<LogicalLength> border_radius;
+       Property<LogicalLength> offset_x;
+       Property<LogicalLength> offset_y;
+       Property<Color> color;
+       Property<LogicalLength> blur;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct Rotate {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<float> rotation_angle;
+       Property<LogicalLength> rotation_origin_x;
+       Property<LogicalLength> rotation_origin_y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct Opacity {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<float> opacity;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct Layer {
+       Property<LogicalLength> x;
+       Property<LogicalLength> y;
+       Property<LogicalLength> width;
+       Property<LogicalLength> height;
+       Property<bool> cache_rendering_hint;
+       CachedRenderingData cached_rendering_data;
+   };
+   
+   struct TableColumn {
+       SharedString title;
+       float min_width;
+       float horizontal_stretch;
+       SortOrder sort_order;
+       float width;
+   friend bool operator==(const TableColumn&, const TableColumn&) = default;
+   };
+   
+   extern "C" {
+   
+   void slint_callback_init(CallbackOpaque *out);
+   
+   void slint_callback_call(const CallbackOpaque *sig, const void *arg, void *ret);
+   
+   void slint_callback_set_handler(const CallbackOpaque *sig,
+                                   void (*binding)(void *user_data, const void *arg, void *ret),
+                                   void *user_data,
+                                   void (*drop_user_data)(void*));
+   
+   void slint_callback_drop(CallbackOpaque *handle);
+   
+   void slint_register_component(ComponentRefPin component,
+                                 Slice<VOffset<uint8_t, ItemVTable, AllowPin>> item_array,
+                                 const WindowAdapterRcOpaque *window_handle);
+   
+   void slint_unregister_component(ComponentRefPin component,
+                                   Slice<VOffset<uint8_t, ItemVTable, AllowPin>> item_array,
+                                   const WindowAdapterRcOpaque *window_handle);
+   
+   VisitChildrenResult slint_visit_item_tree(const ComponentRc *component,
+                                             Slice<ItemTreeNode> item_tree,
+                                             intptr_t index,
+                                             TraversalOrder order,
+                                             VRefMut<ItemVisitorVTable> visitor,
+                                             VisitChildrenResult (*visit_dynamic)(const uint8_t *base, TraversalOrder order, VRefMut<ItemVisitorVTable> visitor, uintptr_t dyn_index));
+   
+   void slint_flickable_data_init(FlickableDataBox *data);
+   
+   void slint_flickable_data_free(FlickableDataBox *data);
+   
+   void slint_solve_grid_layout(const GridLayoutData *data, SharedVector<float> *result);
+   
+   LayoutInfo slint_grid_layout_info(Slice<GridLayoutCellData> cells,
+                                     float spacing,
+                                     const Padding *padding);
+   
+   void slint_solve_box_layout(const BoxLayoutData *data,
+                               Slice<uint32_t> repeater_indexes,
+                               SharedVector<float> *result);
+   
+   LayoutInfo slint_box_layout_info(Slice<BoxLayoutCellData> cells,
+                                    float spacing,
+                                    const Padding *padding,
+                                    LayoutAlignment alignment);
+   
+   LayoutInfo slint_box_layout_info_ortho(Slice<BoxLayoutCellData> cells, const Padding *padding);
+   
+   void slint_reorder_dialog_button_layout(GridLayoutCellData *cells, Slice<DialogButtonRole> roles);
+   
+   void slint_property_init(PropertyHandleOpaque *out);
+   
+   void slint_property_update(const PropertyHandleOpaque *handle, void *val);
+   
+   void slint_property_set_changed(const PropertyHandleOpaque *handle, const void *value);
+   
+   void slint_property_set_binding(const PropertyHandleOpaque *handle,
+                                   void (*binding)(void *user_data, void *pointer_to_value),
+                                   void *user_data,
+                                   void (*drop_user_data)(void*),
+                                   bool (*intercept_set)(void *user_data, const void *pointer_to_Value),
+                                   bool (*intercept_set_binding)(void *user_data, void *new_binding));
+   
+   void slint_property_set_binding_internal(const PropertyHandleOpaque *handle, void *binding);
+   
+   bool slint_property_is_dirty(const PropertyHandleOpaque *handle);
+   
+   void slint_property_mark_dirty(const PropertyHandleOpaque *handle);
+   
+   void slint_property_drop(PropertyHandleOpaque *handle);
+   
+   void slint_property_set_animated_value_int(const PropertyHandleOpaque *handle,
+                                              int32_t from,
+                                              int32_t to,
+                                              const PropertyAnimation *animation_data);
+   
+   void slint_property_set_animated_value_float(const PropertyHandleOpaque *handle,
+                                                float from,
+                                                float to,
+                                                const PropertyAnimation *animation_data);
+   
+   void slint_property_set_animated_value_color(const PropertyHandleOpaque *handle,
+                                                Color from,
+                                                Color to,
+                                                const PropertyAnimation *animation_data);
+   
+   void slint_property_set_animated_binding_int(const PropertyHandleOpaque *handle,
+                                                void (*binding)(void*, int32_t*),
+                                                void *user_data,
+                                                void (*drop_user_data)(void*),
+                                                const PropertyAnimation *animation_data,
+                                                PropertyAnimation (*transition_data)(void *user_data, uint64_t *start_instant));
+   
+   void slint_property_set_animated_binding_float(const PropertyHandleOpaque *handle,
+                                                  void (*binding)(void*, float*),
+                                                  void *user_data,
+                                                  void (*drop_user_data)(void*),
+                                                  const PropertyAnimation *animation_data,
+                                                  PropertyAnimation (*transition_data)(void *user_data, uint64_t *start_instant));
+   
+   void slint_property_set_animated_binding_color(const PropertyHandleOpaque *handle,
+                                                  void (*binding)(void*, Color*),
+                                                  void *user_data,
+                                                  void (*drop_user_data)(void*),
+                                                  const PropertyAnimation *animation_data,
+                                                  PropertyAnimation (*transition_data)(void *user_data, uint64_t *start_instant));
+   
+   void slint_property_set_animated_binding_brush(const PropertyHandleOpaque *handle,
+                                                  void (*binding)(void*, Brush*),
+                                                  void *user_data,
+                                                  void (*drop_user_data)(void*),
+                                                  const PropertyAnimation *animation_data,
+                                                  PropertyAnimation (*transition_data)(void *user_data, uint64_t *start_instant));
+   
+   void slint_property_set_state_binding(const PropertyHandleOpaque *handle,
+                                         int32_t (*binding)(void*),
+                                         void *user_data,
+                                         void (*drop_user_data)(void*));
+   
+   void slint_property_tracker_init(PropertyTrackerOpaque *out);
+   
+   void slint_property_tracker_evaluate(const PropertyTrackerOpaque *handle,
+                                        void (*callback)(void *user_data),
+                                        void *user_data);
+   
+   void slint_property_tracker_evaluate_as_dependency_root(const PropertyTrackerOpaque *handle,
+                                                           void (*callback)(void *user_data),
+                                                           void *user_data);
+   
+   bool slint_property_tracker_is_dirty(const PropertyTrackerOpaque *handle);
+   
+   void slint_property_tracker_drop(PropertyTrackerOpaque *handle);
+   
+   uint64_t slint_animation_tick();
+   
+   uint8_t *slint_shared_vector_allocate(uintptr_t size,
+                                         uintptr_t align);
+   
+   void slint_shared_vector_free(uint8_t *ptr,
+                                 uintptr_t size,
+                                 uintptr_t align);
+   
+   const uint8_t *slint_shared_vector_empty();
+   
+   const char *slint_shared_string_bytes(const SharedString *ss);
+   
+   void slint_shared_string_drop(const SharedString *ss);
+   
+   void slint_shared_string_clone(SharedString *out, const SharedString *ss);
+   
+   void slint_shared_string_from_bytes(SharedString *out, const char *bytes, uintptr_t len);
+   
+   void slint_shared_string_from_number(SharedString *out, double n);
+   
+   void slint_shared_string_append(SharedString *self_, const char *bytes, uintptr_t len);
+   
+   void slint_mock_elapsed_time(uint64_t time_in_ms);
+   
+   void slint_send_mouse_click(const ComponentRc *component,
+                               float x,
+                               float y,
+                               const WindowAdapterRc *window_adapter);
+   
+   void slint_send_keyboard_char(const SharedString *string,
+                                 bool pressed,
+                                 const WindowAdapterRc *window_adapter);
+   
+   void send_keyboard_string_sequence(const SharedString *sequence,
+                                      const WindowAdapterRc *window_adapter);
+   
+   int64_t slint_timer_start(int64_t id,
+                             TimerMode mode,
+                             uint64_t duration,
+                             void (*callback)(void*),
+                             void *user_data,
+                             void (*drop_user_data)(void*));
+   
+   void slint_timer_singleshot(uint64_t delay,
+                               void (*callback)(void*),
+                               void *user_data,
+                               void (*drop_user_data)(void*));
+   
+   void slint_timer_destroy(int64_t id);
+   
+   void slint_timer_stop(int64_t id);
+   
+   void slint_timer_restart(int64_t id);
+   
+   bool slint_timer_running(int64_t id);
+   
+   void slint_windowrc_drop(WindowAdapterRcOpaque *handle);
+   
+   void slint_windowrc_clone(const WindowAdapterRcOpaque *source, WindowAdapterRcOpaque *target);
+   
+   void slint_windowrc_show(const WindowAdapterRcOpaque *handle);
+   
+   void slint_windowrc_hide(const WindowAdapterRcOpaque *handle);
+   
+   bool slint_windowrc_is_visible(const WindowAdapterRcOpaque *handle);
+   
+   float slint_windowrc_get_scale_factor(const WindowAdapterRcOpaque *handle);
+   
+   void slint_windowrc_set_scale_factor(const WindowAdapterRcOpaque *handle, float value);
+   
+   void slint_windowrc_set_focus_item(const WindowAdapterRcOpaque *handle, const ItemRc *focus_item);
+   
+   void slint_windowrc_set_component(const WindowAdapterRcOpaque *handle,
+                                     const ComponentRc *component);
+   
+   void slint_windowrc_show_popup(const WindowAdapterRcOpaque *handle,
+                                  const ComponentRc *popup,
+                                  Point position,
+                                  const ItemRc *parent_item);
+   
+   bool slint_windowrc_set_rendering_notifier(const WindowAdapterRcOpaque *handle,
+                                              void (*callback)(RenderingState rendering_state, GraphicsAPI graphics_api, void *user_data),
+                                              void (*drop_user_data)(void *user_data),
+                                              void *user_data,
+                                              SetRenderingNotifierError *error);
+   
+   void slint_windowrc_on_close_requested(const WindowAdapterRcOpaque *handle,
+                                          CloseRequestResponse (*callback)(void *user_data),
+                                          void (*drop_user_data)(void *user_data),
+                                          void *user_data);
+   
+   void slint_windowrc_request_redraw(const WindowAdapterRcOpaque *handle);
+   
+   void slint_windowrc_position(const WindowAdapterRcOpaque *handle, Point2D<int32_t> *pos);
+   
+   void slint_windowrc_set_physical_position(const WindowAdapterRcOpaque *handle,
+                                             const Point2D<int32_t> *pos);
+   
+   void slint_windowrc_set_logical_position(const WindowAdapterRcOpaque *handle,
+                                            const Point2D<float> *pos);
+   
+   IntSize slint_windowrc_size(const WindowAdapterRcOpaque *handle);
+   
+   void slint_windowrc_set_physical_size(const WindowAdapterRcOpaque *handle, const IntSize *size);
+   
+   void slint_windowrc_set_logical_size(const WindowAdapterRcOpaque *handle, const Size *size);
+   
+   bool slint_windowrc_dark_color_scheme(const WindowAdapterRcOpaque *handle);
+   
+   void slint_windowrc_dispatch_key_event(const WindowAdapterRcOpaque *handle, KeyInputEvent event);
+   
+   void slint_windowrc_dispatch_pointer_event(const WindowAdapterRcOpaque *handle, MouseEvent event);
+   
+   } // extern "C"
+   
+   } // namespace cbindgen_private
+   } // namespace slint
+   
+   
+   namespace slint::private_api {
+   #define SLINT_DECL_ITEM(ItemName) \
+       extern const cbindgen_private::ItemVTable ItemName##VTable; \
+       extern SLINT_DLL_IMPORT const cbindgen_private::ItemVTable* slint_get_##ItemName##VTable();
+   
+   extern "C" {
+   SLINT_DECL_ITEM(Empty);
+   SLINT_DECL_ITEM(Rectangle);
+   SLINT_DECL_ITEM(BorderRectangle);
+   SLINT_DECL_ITEM(ImageItem);
+   SLINT_DECL_ITEM(ClippedImage);
+   SLINT_DECL_ITEM(TouchArea);
+   SLINT_DECL_ITEM(FocusScope);
+   SLINT_DECL_ITEM(Flickable);
+   SLINT_DECL_ITEM(Text);
+   SLINT_DECL_ITEM(Path);
+   SLINT_DECL_ITEM(WindowItem);
+   SLINT_DECL_ITEM(TextInput);
+   SLINT_DECL_ITEM(Clip);
+   SLINT_DECL_ITEM(BoxShadow);
+   SLINT_DECL_ITEM(Rotate);
+   SLINT_DECL_ITEM(Opacity);
+   SLINT_DECL_ITEM(Layer);
+   }
+   
+   #undef SLINT_DECL_ITEM
+   }

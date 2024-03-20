@@ -1,0 +1,746 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Template Class MapModel" href="classslint_1_1MapModel.html" /><link rel="prev" title="Class ComponentInstance" href="classslint_1_1interpreter_1_1ComponentInstance.html" />
+
+    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+        <title>Class Value - Slint C++ API documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_tweak.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Slint C++ API  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint.dev/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint C++ API  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cmake.html">Installing Or Building With CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">First Steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">Type Mapping to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated_code.html">Example Generated Code</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="library_root.html">C++ API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1LogicalPosition.html">Struct LogicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1LogicalSize.html">Struct LogicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1PhysicalPosition.html">Struct PhysicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1PhysicalSize.html">Struct PhysicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Point.html">Template Struct Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Rgb8Pixel.html">Struct Rgb8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Rgba8Pixel.html">Struct Rgba8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedPixelBuffer.html">Template Struct SharedPixelBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1StandardListViewItem.html">Struct StandardListViewItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1FilterModel.html">Template Class FilterModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Class Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1MapModel.html">Template Class MapModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1SortModel.html">Template Class SortModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classslint_1_1Window.html">Class Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html">Enum DiagnosticLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html">Enum ValueType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html">Enum RenderingState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html">Enum TimerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/debugging_techniques.html">Debugging Techniques</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="class-value">
+<span id="exhale-class-classslint-1-1interpreter-1-1value"></span><h1>Class Value<a class="headerlink" href="#class-value" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_runner_work_slint_slint_api_cpp_include_slint_interpreter.h.html#file-home-runner-work-slint-slint-api-cpp-include-slint-interpreter-h"><span class="std std-ref">File slint_interpreter.h</span></a></p></li>
+</ul>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">#</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5ValueE">
+<span id="_CPPv3N5slint11interpreter5ValueE"></span><span id="_CPPv2N5slint11interpreter5ValueE"></span><span id="slint::interpreter::Value"></span><span class="target" id="classslint_1_1interpreter_1_1Value"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><a class="headerlink" href="#_CPPv4N5slint11interpreter5ValueE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>This is a dynamically typed value used in the Slint interpreter. It can hold a value of different types, and you should use the different overloaded constructors and the to_xxx() functions to access the value within.</p>
+<p>It is also possible to query the type the value holds by calling the <a class="reference internal" href="#classslint_1_1interpreter_1_1Value_1a4b0d3c593d1fb30522f471ed7e1a62b5"><span class="std std-ref">Value::type()</span></a> function.</p>
+<p>Note that models are only represented in one direction: You can create a slint::Model&lt;Value&gt; in C++, store it in a std::shared_ptr and construct <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> from it. Then you can set it on a property in your .slint code that was declared to be either an array (<code class="docutils literal notranslate"><span class="pre">property</span> <span class="pre">&lt;[sometype]&gt;</span> <span class="pre">foo;</span></code>) or an object literal (<code class="docutils literal notranslate"><span class="pre">property</span> <span class="pre">&lt;{foo:</span> <span class="pre">string,</span> <span class="pre">bar:</span> <span class="pre">int}&gt;</span> <span class="pre">my_prop;</span></code>). Such properties are dynamic and accept models implemented in C++.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Value</span> <span class="n">v</span><span class="p">(</span><span class="mf">42.0</span><span class="p">);</span> <span class="o">//</span> <span class="n">Creates</span> <span class="n">a</span> <span class="n">value</span> <span class="n">that</span> <span class="n">holds</span> <span class="n">a</span> <span class="n">double</span> <span class="k">with</span> <span class="n">the</span> <span class="n">value</span> <span class="mf">42.</span>
+
+<span class="n">Value</span> <span class="n">some_value</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
+<span class="o">//</span> <span class="n">Check</span> <span class="k">if</span> <span class="n">the</span> <span class="n">value</span> <span class="n">has</span> <span class="n">a</span> <span class="n">string</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">std</span><span class="p">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">slint</span><span class="p">::</span><span class="n">SharedString</span><span class="o">&gt;</span> <span class="n">string_value</span> <span class="o">=</span> <span class="n">some_value</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+    <span class="n">do_something</span><span class="p">(</span><span class="o">*</span><span class="n">string_value</span><span class="p">);</span>  <span class="o">//</span> <span class="n">Extract</span> <span class="n">the</span> <span class="n">string</span> <span class="n">by</span> <span class="n">de</span><span class="o">-</span><span class="n">referencing</span>
+</pre></div>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value4TypeE">
+<span id="_CPPv3N5slint11interpreter5Value4TypeE"></span><span id="_CPPv2N5slint11interpreter5Value4TypeE"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a90b0cb7800b20bfe44db4664c2129bc3"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Type</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueTypeE" title="slint::interpreter::ValueType"><span class="n"><span class="pre">ValueType</span></span></a><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value4TypeE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>A convenience alias for the value type enum. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueEv">
+<span id="_CPPv3N5slint11interpreter5Value5ValueEv"></span><span id="_CPPv2N5slint11interpreter5Value5ValueEv"></span><span id="slint::interpreter::Value::Value"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1ad5211ba2d61cb9b0d77d56985a2ce7c9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new value of type Value::Type::Void. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueERK5Value">
+<span id="_CPPv3N5slint11interpreter5Value5ValueERK5Value"></span><span id="_CPPv2N5slint11interpreter5Value5ValueERK5Value"></span><span id="slint::interpreter::Value::Value__ValueCR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1ac4e45bc7e01822a34ab9e9e3c8461ff3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint11interpreter5Value5ValueERK5Value" title="slint::interpreter::Value::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">other</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueERK5Value" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new value by copying <em>other</em>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueERR5Value">
+<span id="_CPPv3N5slint11interpreter5Value5ValueERR5Value"></span><span id="_CPPv2N5slint11interpreter5Value5ValueERR5Value"></span><span id="slint::interpreter::Value::Value__ValueRR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a04c145d675aa0d528af4fbcbc2b4d031"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5slint11interpreter5Value5ValueERR5Value" title="slint::interpreter::Value::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">other</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueERR5Value" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new value by moving <em>other</em> to this. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5ValueaSERK5Value">
+<span id="_CPPv3N5slint11interpreter5ValueaSERK5Value"></span><span id="_CPPv2N5slint11interpreter5ValueaSERK5Value"></span><span id="slint::interpreter::Value::assign-operator__ValueCR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a876ef5311cb6504095c66ea080a419ec"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">other</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5ValueaSERK5Value" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Assigns the value <em>other</em> to this. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5ValueaSERR5Value">
+<span id="_CPPv3N5slint11interpreter5ValueaSERR5Value"></span><span id="_CPPv2N5slint11interpreter5ValueaSERR5Value"></span><span id="slint::interpreter::Value::assign-operator__ValueRR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a9efe961b91de0c752cd1792874949742"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">other</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5ValueaSERR5Value" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Moves the value <em>other</em> to this. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5ValueD0Ev">
+<span id="_CPPv3N5slint11interpreter5ValueD0Ev"></span><span id="_CPPv2N5slint11interpreter5ValueD0Ev"></span><span id="slint::interpreter::Value::~Value"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1aef440eb64765c32521134b6565f345e4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~Value</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5ValueD0Ev" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Destroys the value. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter5Value9to_numberEv">
+<span id="_CPPv3NK5slint11interpreter5Value9to_numberEv"></span><span id="_CPPv2NK5slint11interpreter5Value9to_numberEv"></span><span id="slint::interpreter::Value::to_numberC"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a100c9f4dffdef309536a24714a06c718"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_number</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter5Value9to_numberEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns a std::optional that contains a double if the type of this <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> is Type::Double, otherwise an empty optional is returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter5Value9to_stringEv">
+<span id="_CPPv3NK5slint11interpreter5Value9to_stringEv"></span><span id="_CPPv2NK5slint11interpreter5Value9to_stringEv"></span><span id="slint::interpreter::Value::to_stringC"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1ac822f530ea069e63127473ccaaeda08a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">slint</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringE" title="slint::SharedString"><span class="n"><span class="pre">SharedString</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_string</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter5Value9to_stringEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns a std::optional that contains a string if the type of this <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> is Type::String, otherwise an empty optional is returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter5Value7to_boolEv">
+<span id="_CPPv3NK5slint11interpreter5Value7to_boolEv"></span><span id="_CPPv2NK5slint11interpreter5Value7to_boolEv"></span><span id="slint::interpreter::Value::to_boolC"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1ab3d04c97da6f98fe70c199d53cfb9c1f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_bool</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter5Value7to_boolEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns a std::optional that contains a bool if the type of this <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> is Type::Bool, otherwise an empty optional is returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter5Value8to_arrayEv">
+<span id="_CPPv3NK5slint11interpreter5Value8to_arrayEv"></span><span id="_CPPv2NK5slint11interpreter5Value8to_arrayEv"></span><span id="slint::interpreter::Value::to_arrayC"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a3e34b124dc95d524814b1a71cc46ed00"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">slint</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="structslint_1_1SharedVector.html#_CPPv4I0EN5slint12SharedVectorE" title="slint::SharedVector"><span class="n"><span class="pre">SharedVector</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_array</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter5Value8to_arrayEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns a std::optional that contains a vector of values if the type of this <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> is <a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0aa559b87068921eec05086ce5485e9784"><span class="std std-ref">Type::Model</span></a>, otherwise an empty optional is returned.</p>
+<p>The vector will be constructed by serializing all the elements of the model. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter5Value8to_brushEv">
+<span id="_CPPv3NK5slint11interpreter5Value8to_brushEv"></span><span id="_CPPv2NK5slint11interpreter5Value8to_brushEv"></span><span id="slint::interpreter::Value::to_brushC"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a1ef16d3d0527e8cf7b47893e581130d2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">slint</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classslint_1_1Brush.html#_CPPv4N5slint5BrushE" title="slint::Brush"><span class="n"><span class="pre">Brush</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_brush</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter5Value8to_brushEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns a std::optional that contains a brush if the type of this <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> is <a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0aa25744428546172386b93dd44900a81a"><span class="std std-ref">Type::Brush</span></a>, otherwise an empty optional is returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter5Value9to_structEv">
+<span id="_CPPv3NK5slint11interpreter5Value9to_structEv"></span><span id="_CPPv2NK5slint11interpreter5Value9to_structEv"></span><span id="slint::interpreter::Value::to_structC"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a57cee0c67ad99ea2c5d5e8a9185a2a82"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6StructE" title="slint::interpreter::Struct"><span class="n"><span class="pre">Struct</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_struct</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter5Value9to_structEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns a std::optional that contains a <a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html#structslint_1_1interpreter_1_1Struct"><span class="std std-ref">Struct</span></a> if the type of this <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> is <a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0a886ef5dbd655a6c97726d7091c6b173e"><span class="std std-ref">Type::Struct</span></a>, otherwise an empty optional is returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter5Value8to_imageEv">
+<span id="_CPPv3NK5slint11interpreter5Value8to_imageEv"></span><span id="_CPPv2NK5slint11interpreter5Value8to_imageEv"></span><span id="slint::interpreter::Value::to_imageC"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a6862eb2d2bbbb03d142c0e9970d04c17"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="structslint_1_1Image.html#_CPPv4N5slint5ImageE" title="slint::Image"><span class="n"><span class="pre">Image</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_image</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter5Value8to_imageEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns a std::optional that contains an <a class="reference internal" href="structslint_1_1Image.html#structslint_1_1Image"><span class="std std-ref">Image</span></a> if the type of this <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> is <a class="reference internal" href="enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0abe53a0541a6d36f6ecb879fa2c584b08"><span class="std std-ref">Type::Image</span></a>, otherwise an empty optional is returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueEd">
+<span id="_CPPv3N5slint11interpreter5Value5ValueEd"></span><span id="_CPPv2N5slint11interpreter5Value5ValueEd"></span><span id="slint::interpreter::Value::Value__double"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a94723271567d62433232f50770926a68"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueEd" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the double <em>value</em>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueEi">
+<span id="_CPPv3N5slint11interpreter5Value5ValueEi"></span><span id="_CPPv2N5slint11interpreter5Value5ValueEi"></span><span id="slint::interpreter::Value::Value__i"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a73fca0f86e440c482481aa694cb6d170"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueEi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the int <em>value</em>. Internally this is stored as a double and <a class="reference internal" href="#classslint_1_1interpreter_1_1Value_1a4b0d3c593d1fb30522f471ed7e1a62b5"><span class="std std-ref">Value::type()</span></a> will return Value::Type::Number. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueERK12SharedString">
+<span id="_CPPv3N5slint11interpreter5Value5ValueERK12SharedString"></span><span id="_CPPv2N5slint11interpreter5Value5ValueERK12SharedString"></span><span id="slint::interpreter::Value::Value__SharedStringCR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a90a9a02adb78039c242d7092200c4f69"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringE" title="slint::SharedString"><span class="n"><span class="pre">SharedString</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueERK12SharedString" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the string <em>str</em>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueEb">
+<span id="_CPPv3N5slint11interpreter5Value5ValueEb"></span><span id="_CPPv2N5slint11interpreter5Value5ValueEb"></span><span id="slint::interpreter::Value::Value__b"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a6f367ee957e8b1111621e54a0dfc5c8c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueEb" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the boolean <em>b</em>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueERK12SharedVectorI5ValueE">
+<span id="_CPPv3N5slint11interpreter5Value5ValueERK12SharedVectorI5ValueE"></span><span id="_CPPv2N5slint11interpreter5Value5ValueERK12SharedVectorI5ValueE"></span><span id="slint::interpreter::Value::Value__SharedVector:Value:CR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1ac83e25847f5c5af57eac2a726bbb5f4c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="structslint_1_1SharedVector.html#_CPPv4I0EN5slint12SharedVectorE" title="slint::SharedVector"><span class="n"><span class="pre">SharedVector</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5slint11interpreter5Value5ValueERK12SharedVectorI5ValueE" title="slint::interpreter::Value::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">v</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueERK12SharedVectorI5ValueE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the value vector <em>v</em> as a model. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueERKNSt10shared_ptrIN5slint5ModelI5ValueEEEE">
+<span id="_CPPv3N5slint11interpreter5Value5ValueERKNSt10shared_ptrIN5slint5ModelI5ValueEEEE"></span><span id="_CPPv2N5slint11interpreter5Value5ValueERKNSt10shared_ptrIN5slint5ModelI5ValueEEEE"></span><span id="slint::interpreter::Value::Value__std::shared_ptr:slint::Model:Value::CR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1adc5ad7a4689b814c6a10398e88aa45c0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">slint</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classslint_1_1Model.html#_CPPv4I0EN5slint5ModelE" title="slint::Model"><span class="n"><span class="pre">Model</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5slint11interpreter5Value5ValueERKNSt10shared_ptrIN5slint5ModelI5ValueEEEE" title="slint::interpreter::Value::Value"><span class="n"><span class="pre">Value</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">m</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueERKNSt10shared_ptrIN5slint5ModelI5ValueEEEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the value model <em>m</em>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueERKN5slint5BrushE">
+<span id="_CPPv3N5slint11interpreter5Value5ValueERKN5slint5BrushE"></span><span id="_CPPv2N5slint11interpreter5Value5ValueERKN5slint5BrushE"></span><span id="slint::interpreter::Value::Value__slint::BrushCR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1ad36b12d0cf7f7a91b44e6c20ca39ed17"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">slint</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classslint_1_1Brush.html#_CPPv4N5slint5BrushE" title="slint::Brush"><span class="n"><span class="pre">Brush</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">brush</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueERKN5slint5BrushE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the brush <em>b</em>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueERK6Struct">
+<span id="_CPPv3N5slint11interpreter5Value5ValueERK6Struct"></span><span id="_CPPv2N5slint11interpreter5Value5ValueERK6Struct"></span><span id="slint::interpreter::Value::Value__StructCR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1ab8252dfaf15cd11b6b2b248694815ab0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6StructE" title="slint::interpreter::Struct"><span class="n"><span class="pre">Struct</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">struc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueERK6Struct" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the <a class="reference internal" href="structslint_1_1interpreter_1_1Struct.html#structslint_1_1interpreter_1_1Struct"><span class="std std-ref">Struct</span></a> <em>struc</em>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5Value5ValueERK5Image">
+<span id="_CPPv3N5slint11interpreter5Value5ValueERK5Image"></span><span id="_CPPv2N5slint11interpreter5Value5ValueERK5Image"></span><span id="slint::interpreter::Value::Value__ImageCR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a770b83c74c217044dd336e58079e7f97"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Value</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="structslint_1_1Image.html#_CPPv4N5slint5ImageE" title="slint::Image"><span class="n"><span class="pre">Image</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">img</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5Value5ValueERK5Image" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Constructs a new <a class="reference internal" href="#classslint_1_1interpreter_1_1Value"><span class="std std-ref">Value</span></a> that holds the <a class="reference internal" href="structslint_1_1Image.html#structslint_1_1Image"><span class="std std-ref">Image</span></a> <em>img</em>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5slint11interpreter5Value4typeEv">
+<span id="_CPPv3NK5slint11interpreter5Value4typeEv"></span><span id="_CPPv2NK5slint11interpreter5Value4typeEv"></span><span id="slint::interpreter::Value::typeC"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a4b0d3c593d1fb30522f471ed7e1a62b5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint11interpreter5Value4TypeE" title="slint::interpreter::Value::Type"><span class="n"><span class="pre">Type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5slint11interpreter5Value4typeEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the type the variant holds. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5slint11interpreter5ValueeqERK5ValueRK5Value">
+<span id="_CPPv3N5slint11interpreter5ValueeqERK5ValueRK5Value"></span><span id="_CPPv2N5slint11interpreter5ValueeqERK5ValueRK5Value"></span><span id="slint::interpreter::Value::eq-operator__ValueCR.ValueCR"></span><span class="target" id="classslint_1_1interpreter_1_1Value_1a96c39b444cb8a4e72f870d84f725c91b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">==</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5slint11interpreter5ValueE" title="slint::interpreter::Value"><span class="n"><span class="pre">Value</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5slint11interpreter5ValueeqERK5ValueRK5Value" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns true if <em>and</em> <strong>hold</strong> values of the same type and the underlying vales are equal. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="classslint_1_1MapModel.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Template Class MapModel</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="classslint_1_1interpreter_1_1ComponentInstance.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Class ComponentInstance</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Class Value</a><ul>
+<li><a class="reference internal" href="#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div>
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.1.0/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.1.0/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // Safari blocks quite heavily when creating many WebGL contexts, slowing down loading of the docs
+        // significantly. For now, don't do automatic previews:
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            return false;
+        }
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

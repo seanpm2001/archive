@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<!-- Copyright © SixtyFPS GmbH <info@slint.dev> -->
+<!-- SPDX-License-Identifier: MIT -->
+
+<html>
+<!--
+    This is a static html file used to display the wasm build.
+    In order to generate the build
+     - uncomment the #wasm# lines in Cargo.toml
+     - Run in this directory:
+         SLINT_STYLE=fluent wasm-pack build --release --out-dir pkg/fluent --target web
+         SLINT_STYLE=material wasm-pack build --release --out-dir pkg/material --target web
+         SLINT_STYLE=cupertino wasm-pack build --release --out-dir pkg/cupertino --target web
+  -->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Slint Widget Gallery Demo (Web Assembly version)</title>
+  <link rel="stylesheet" href="https://slint.dev/css/demos-v1.css">
+</head>
+
+<body>
+  <h1>Slint Gallery</h1>
+  <p>This is the <a href="https://slint.dev">Slint</a> UI Widget Gallery Demo compiled to WebAssembly. It
+    demonstrates
+    different re-usable graphical
+    elements.</p>
+
+  <div id="spinner" style="position: relative;">
+    <div class="spinner">Loading...</div>
+  </div>
+  <p>Select style
+    <select id="style-selection">
+      <option value="fluent">Fluent</option>
+      <option value="material">Material</option>
+      <option value="cupertino">Cupertino</option>
+    </select>
+  </p>
+  <div id="canvas-parent" width="640" height="480"></div>
+  <p class="links">
+    <a href="https://github.com/slint-ui/slint/blob/master/examples/gallery/gallery.slint">
+      View Source Code on GitHub</a> -
+    <a href="https://slint.dev/editor?load_demo=examples/gallery/gallery.slint">
+      Open in SlintPad
+    </a>
+  </p>
+  <script type="module">
+    function initGallery(gallery) {
+      document.getElementById("spinner").hidden = false;
+
+      let canvas = document.getElementById("canvas");
+
+      // remove old canvas and unload window
+      if (canvas != undefined) {
+        canvas.remove();
+      }
+
+      import(gallery).then(module => {
+        let canvas = document.createElement("canvas");
+        canvas.id = "canvas";
+
+        document.getElementById("canvas-parent").appendChild(canvas);
+        module.default().finally(() => {
+          document.getElementById("canvas").hidden = false;
+          document.getElementById("spinner").hidden = true;
+        });
+      })
+    }
+
+    var styleSelection = document.getElementById("style-selection");
+
+    function loadGallery() {
+      var selectedStyle = ".\/pkg\/" + styleSelection[styleSelection.selectedIndex].value + "\/gallery.js";
+      initGallery(selectedStyle);
+    }
+
+    styleSelection.onchange = loadGallery;
+
+    window.addEventListener('load', () => {
+      let url = document.location.href;
+      if (url.indexOf('?') > -1) {
+        let params = url.split('?')[1].split('&'),
+          data = {}, tmp, val;
+        for (let i = 0, l = params.length; i < l; i++) {
+          tmp = params[i].split('=');
+          data[tmp[0]] = tmp[1];
+        }
+        val = data.style.split(',');
+        for (let i = 0, l = val.length; i < l; i++) {
+          document.getElementById('style-selection').value = val[i];
+          break;
+        }
+      }
+      loadGallery();
+    }, false);
+  </script>
+</body>
+
+</html>

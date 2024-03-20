@@ -1,0 +1,46 @@
+
+.. _file_cppdocs_generated_include_slint_builtin_structs.h:
+
+File slint_builtin_structs.h
+============================
+
+|exhale_lsh| :ref:`Parent directory <dir_cppdocs_generated_include>` (``cppdocs/generated_include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+Definition (``cppdocs/generated_include/slint_builtin_structs.h``)
+------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_cppdocs_generated_include_slint_builtin_structs.h.rst
+
+
+
+
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_cppdocs_generated_include_slint_builtin_structs_internal.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structslint_1_1StandardListViewItem`
+

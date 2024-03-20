@@ -1,0 +1,115 @@
+
+.. _namespace_slint:
+
+Namespace slint
+===============
+
+
+Detailed Description
+--------------------
+
+The :code:`slint` namespace is the primary entry point into the Slint C++ API.
+All available types are in this namespace.
+
+See the :doc:`Overview <../overview>` documentation for the C++ integration how
+to load :code:`.slint` designs.
+ 
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint__interpreter`
+
+- :ref:`namespace_slint__platform`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structslint_1_1Image`
+
+- :ref:`exhale_struct_structslint_1_1LogicalPosition`
+
+- :ref:`exhale_struct_structslint_1_1LogicalSize`
+
+- :ref:`exhale_struct_structslint_1_1PhysicalPosition`
+
+- :ref:`exhale_struct_structslint_1_1PhysicalSize`
+
+- :ref:`exhale_struct_structslint_1_1Point`
+
+- :ref:`exhale_struct_structslint_1_1Rgb8Pixel`
+
+- :ref:`exhale_struct_structslint_1_1Rgba8Pixel`
+
+- :ref:`exhale_struct_structslint_1_1RgbaColor`
+
+- :ref:`exhale_struct_structslint_1_1SharedPixelBuffer`
+
+- :ref:`exhale_struct_structslint_1_1SharedString`
+
+- :ref:`exhale_struct_structslint_1_1SharedVector`
+
+- :ref:`exhale_struct_structslint_1_1Size`
+
+- :ref:`exhale_struct_structslint_1_1StandardListViewItem`
+
+- :ref:`exhale_struct_structslint_1_1Timer`
+
+- :ref:`exhale_class_classslint_1_1Brush`
+
+- :ref:`exhale_class_classslint_1_1Color`
+
+- :ref:`exhale_class_classslint_1_1ComponentHandle`
+
+- :ref:`exhale_class_classslint_1_1ComponentWeakHandle`
+
+- :ref:`exhale_class_classslint_1_1FilterModel`
+
+- :ref:`exhale_class_classslint_1_1MapModel`
+
+- :ref:`exhale_class_classslint_1_1Model`
+
+- :ref:`exhale_class_classslint_1_1ReverseModel`
+
+- :ref:`exhale_class_classslint_1_1SortModel`
+
+- :ref:`exhale_class_classslint_1_1VectorModel`
+
+- :ref:`exhale_class_classslint_1_1Window`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespaceslint_1abb2b0aa4769a501e7cdeaccae964a64c`
+
+- :ref:`exhale_enum_namespaceslint_1a90c0ddbfdc375daafbcf91361293538b`
+
+- :ref:`exhale_enum_namespaceslint_1a88e5489a21965b1a271bf90ee12f1c6e`
+
+- :ref:`exhale_enum_namespaceslint_1aa9bda1bcc95bc66d8afd7b1a4aa8c4af`
+
+- :ref:`exhale_enum_namespaceslint_1a435dcad112c13fd7fefb2de66e83d1b1`
+
+- :ref:`exhale_enum_namespaceslint_1aa1f5f67eecbb35c0bc1015d33361429b`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c`
+
+- :ref:`exhale_function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430`
+
+- :ref:`exhale_function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0`
+
+- :ref:`exhale_function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16`

@@ -1,0 +1,23 @@
+.. _exhale_struct_structslint_1_1interpreter_1_1Struct_1_1iterator:
+
+Struct Struct::iterator
+=======================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_interpreter.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_struct_structslint_1_1interpreter_1_1Struct`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::interpreter::Struct::iterator
+   :project: Slint
+   :members:
+   :protected-members:
+   :undoc-members:

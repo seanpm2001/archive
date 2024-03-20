@@ -1,0 +1,25 @@
+.. _exhale_class_classslint_1_1platform_1_1SkiaRenderer:
+
+Class SkiaRenderer
+==================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public slint::platform::AbstractRenderer`` (:ref:`exhale_class_classslint_1_1platform_1_1AbstractRenderer`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::platform::SkiaRenderer
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,26 @@
+.. _exhale_struct_structslint_1_1LogicalPosition:
+
+Struct LogicalPosition
+======================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_point.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public slint::Point< float >`` (:ref:`exhale_struct_structslint_1_1Point`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::LogicalPosition
+   :project: Slint
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,26 @@
+.. _exhale_class_classslint_1_1platform_1_1Platform:
+
+Class Platform
+==============
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_class_classslint_1_1platform_1_1Platform_1_1Task`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::platform::Platform
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,18 @@
+{
+  "name": "printerdemo_old",
+  "collaborators": [
+    "Slint Developers <info@slint.dev>"
+  ],
+  "version": "1.2.2",
+  "license": "MIT",
+  "files": [
+    "printerdemo_old_bg.wasm",
+    "printerdemo_old.js",
+    "printerdemo_old.d.ts"
+  ],
+  "module": "printerdemo_old.js",
+  "types": "printerdemo_old.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

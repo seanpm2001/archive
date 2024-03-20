@@ -1,0 +1,18 @@
+{
+  "name": "plotter",
+  "collaborators": [
+    "Slint Developers <info@slint.dev>"
+  ],
+  "version": "1.2.1",
+  "license": "MIT",
+  "files": [
+    "plotter_bg.wasm",
+    "plotter.js",
+    "plotter.d.ts"
+  ],
+  "module": "plotter.js",
+  "types": "plotter.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

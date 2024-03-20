@@ -1,0 +1,18 @@
+{
+  "name": "memory",
+  "collaborators": [
+    "Slint Developers <info@slint.dev>"
+  ],
+  "version": "1.2.1",
+  "license": "MIT",
+  "files": [
+    "memory_bg.wasm",
+    "memory.js",
+    "memory.d.ts"
+  ],
+  "module": "memory.js",
+  "types": "memory.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

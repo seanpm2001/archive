@@ -1,0 +1,192 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_brush.h:
+
+Program Listing for File slint_brush.h
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint_brush.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint_brush.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint-ui.com>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   #include <string_view>
+   #include "slint_color.h"
+   #include "slint_brush_internal.h"
+   #include "slint_string.h"
+   
+   namespace slint {
+   
+   namespace private_api {
+   
+   using cbindgen_private::types::GradientStop;
+   
+   class LinearGradientBrush
+   {
+   public:
+       LinearGradientBrush() = default;
+       LinearGradientBrush(float angle, const GradientStop *firstStop, int stopCount)
+           : inner(make_linear_gradient(angle, firstStop, stopCount))
+       {
+       }
+   
+       float angle() const
+       {
+           // The gradient's first stop is a fake stop to store the angle
+           return inner[0].position;
+       }
+   
+       int stopCount() const { return int(inner.size()) - 1; }
+   
+       const GradientStop *stopsBegin() const { return inner.begin() + 1; }
+       const GradientStop *stopsEnd() const { return inner.end(); }
+   
+   private:
+       cbindgen_private::types::LinearGradientBrush inner;
+   
+       friend class slint::Brush;
+   
+       static SharedVector<private_api::GradientStop>
+       make_linear_gradient(float angle, const GradientStop *firstStop, int stopCount)
+       {
+           SharedVector<private_api::GradientStop> gradient;
+           gradient.push_back({ Color::from_argb_encoded(0).inner, angle });
+           for (int i = 0; i < stopCount; ++i, ++firstStop)
+               gradient.push_back(*firstStop);
+           return gradient;
+       }
+   };
+   
+   class RadialGradientBrush
+   {
+   public:
+       RadialGradientBrush() = default;
+       RadialGradientBrush(const GradientStop *firstStop, int stopCount)
+           : inner(make_circle_gradient(firstStop, stopCount))
+       {
+       }
+   
+       int stopCount() const { return int(inner.size()); }
+   
+       const GradientStop *stopsBegin() const { return inner.begin(); }
+       const GradientStop *stopsEnd() const { return inner.end(); }
+   
+   private:
+       cbindgen_private::types::RadialGradientBrush inner;
+   
+       friend class slint::Brush;
+   
+       static SharedVector<private_api::GradientStop>
+       make_circle_gradient(const GradientStop *firstStop, int stopCount)
+       {
+           SharedVector<private_api::GradientStop> gradient;
+           for (int i = 0; i < stopCount; ++i, ++firstStop)
+               gradient.push_back(*firstStop);
+           return gradient;
+       }
+   };
+   
+   }
+   
+   class Brush
+   {
+   public:
+       Brush() : Brush(Color {}) { }
+       Brush(const Color &color) : data(Inner::SolidColor(color.inner)) { }
+       Brush(const private_api::LinearGradientBrush &gradient)
+           : data(Inner::LinearGradient(gradient.inner))
+       {
+       }
+   
+       Brush(const private_api::RadialGradientBrush &gradient)
+           : data(Inner::RadialGradient(gradient.inner))
+       {
+       }
+   
+       inline Color color() const;
+   
+       inline Brush brighter(float factor) const;
+       inline Brush darker(float factor) const;
+   
+       friend bool operator==(const Brush &a, const Brush &b) { return a.data == b.data; }
+       friend bool operator!=(const Brush &a, const Brush &b) { return a.data != b.data; }
+   
+   private:
+       using Tag = cbindgen_private::types::Brush::Tag;
+       using Inner = cbindgen_private::types::Brush;
+       Inner data;
+   };
+   
+   Color Brush::color() const
+   {
+       Color result;
+       switch (data.tag) {
+       case Tag::SolidColor:
+           result.inner = data.solid_color._0;
+           break;
+       case Tag::LinearGradient:
+           if (data.linear_gradient._0.size() > 1) {
+               result.inner = data.linear_gradient._0[1].color;
+           }
+           break;
+       case Tag::RadialGradient:
+           if (data.radial_gradient._0.size() > 0) {
+               result.inner = data.radial_gradient._0[0].color;
+           }
+           break;
+       }
+       return result;
+   }
+   
+   inline Brush Brush::brighter(float factor) const
+   {
+       Brush result = *this;
+       switch (data.tag) {
+       case Tag::SolidColor:
+           cbindgen_private::types::slint_color_brighter(&data.solid_color._0, factor,
+                                                         &result.data.solid_color._0);
+           break;
+       case Tag::LinearGradient:
+           for (std::size_t i = 1; i < data.linear_gradient._0.size(); ++i) {
+               cbindgen_private::types::slint_color_brighter(&data.linear_gradient._0[i].color, factor,
+                                                             &result.data.linear_gradient._0[i].color);
+           }
+           break;
+       case Tag::RadialGradient:
+           for (std::size_t i = 0; i < data.linear_gradient._0.size(); ++i) {
+               cbindgen_private::types::slint_color_brighter(&data.radial_gradient._0[i].color, factor,
+                                                             &result.data.radial_gradient._0[i].color);
+           }
+           break;
+       }
+       return result;
+   }
+   
+   inline Brush Brush::darker(float factor) const
+   {
+       Brush result = *this;
+       switch (data.tag) {
+       case Tag::SolidColor:
+           cbindgen_private::types::slint_color_darker(&data.solid_color._0, factor,
+                                                       &result.data.solid_color._0);
+           break;
+       case Tag::LinearGradient:
+           for (std::size_t i = 1; i < data.linear_gradient._0.size(); ++i) {
+               cbindgen_private::types::slint_color_darker(&data.linear_gradient._0[i].color, factor,
+                                                           &result.data.linear_gradient._0[i].color);
+           }
+           break;
+       case Tag::RadialGradient:
+           for (std::size_t i = 0; i < data.linear_gradient._0.size(); ++i) {
+               cbindgen_private::types::slint_color_darker(&data.radial_gradient._0[i].color, factor,
+                                                           &result.data.radial_gradient._0[i].color);
+           }
+           break;
+       }
+       return result;
+   }
+   }

@@ -1,0 +1,13 @@
+.. _exhale_define_slint__generated__public_8h_1a84ab6227b0f7c83d1d55702c8c406ee0:
+
+Define SLINT_FEATURE_RENDERER_SKIA
+==================================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_generated_public.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SLINT_FEATURE_RENDERER_SKIA

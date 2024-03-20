@@ -1,0 +1,25 @@
+.. _exhale_struct_structslint_1_1PhysicalSize:
+
+Struct PhysicalSize
+===================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_size.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public slint::Size< uint32_t >`` (:ref:`exhale_struct_structslint_1_1Size`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::PhysicalSize
+   :members:
+   :protected-members:
+   :undoc-members:

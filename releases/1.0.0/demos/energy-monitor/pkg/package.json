@@ -1,0 +1,18 @@
+{
+  "name": "energy-monitor",
+  "collaborators": [
+    "Slint Developers <info@slint-ui.com>"
+  ],
+  "version": "1.0.0",
+  "license": "GPL-3.0-only OR LicenseRef-Slint-commercial",
+  "files": [
+    "energy_monitor_bg.wasm",
+    "energy_monitor.js",
+    "energy_monitor.d.ts"
+  ],
+  "module": "energy_monitor.js",
+  "types": "energy_monitor.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

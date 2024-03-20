@@ -1,0 +1,22 @@
+.. _exhale_struct_structslint_1_1platform_1_1WindowAdapter_1_1WindowProperties_1_1LayoutConstraints:
+
+Struct WindowProperties::LayoutConstraints
+==========================================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_struct_structslint_1_1platform_1_1WindowAdapter_1_1WindowProperties`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::platform::WindowAdapter::WindowProperties::LayoutConstraints
+   :members:
+   :protected-members:
+   :undoc-members:

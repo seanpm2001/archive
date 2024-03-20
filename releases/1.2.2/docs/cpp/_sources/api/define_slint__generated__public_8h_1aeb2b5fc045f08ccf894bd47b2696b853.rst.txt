@@ -1,0 +1,13 @@
+.. _exhale_define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853:
+
+Define SLINT_VERSION_MAJOR
+==========================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_generated_public.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SLINT_VERSION_MAJOR

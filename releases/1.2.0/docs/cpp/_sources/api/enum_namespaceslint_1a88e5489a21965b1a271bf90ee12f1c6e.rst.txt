@@ -1,0 +1,13 @@
+.. _exhale_enum_namespaceslint_1a88e5489a21965b1a271bf90ee12f1c6e:
+
+Enum PointerEventButton
+=======================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_enums.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: slint::PointerEventButton

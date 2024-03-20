@@ -1,0 +1,16 @@
+.. _exhale_class_classslint_1_1platform_1_1NativeWindowHandle:
+
+Class NativeWindowHandle
+========================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::platform::NativeWindowHandle
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_function_namespaceslint_1_1platform_1a66e865fa8aaea9bb401549294186273a:
+
+Function slint::platform::duration_until_next_timer_update
+==========================================================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: slint::platform::duration_until_next_timer_update()

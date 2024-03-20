@@ -1,0 +1,16 @@
+.. _exhale_class_classslint_1_1interpreter_1_1ComponentDefinition:
+
+Class ComponentDefinition
+=========================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_interpreter.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::interpreter::ComponentDefinition
+   :members:
+   :protected-members:
+   :undoc-members:

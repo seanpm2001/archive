@@ -1,0 +1,718 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Getting Started" href="getting_started.html" /><link rel="prev" title="Welcome to Slint C++’s documentation!" href="index.html" />
+
+    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+        <title>Installing Or Building With CMake - Slint C++ API documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="_static/theme_tweak.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Slint C++ API  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint-ui.com/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint C++ API  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Installing Or Building With CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">First Steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Type Mapping to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_code.html">Example Generated Code</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/library_root.html">C++ API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1LogicalPosition.html">Struct LogicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1LogicalSize.html">Struct LogicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1PhysicalPosition.html">Struct PhysicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1PhysicalSize.html">Struct PhysicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Point.html">Template Struct Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Rgb8Pixel.html">Struct Rgb8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Rgba8Pixel.html">Struct Rgba8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1SharedPixelBuffer.html">Template Struct SharedPixelBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1StandardListViewItem.html">Struct StandardListViewItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1FilterModel.html">Template Class FilterModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1MapModel.html">Template Class MapModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1SortModel.html">Template Class SortModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1Window.html">Class Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html">Enum DiagnosticLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html">Enum ValueType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html">Enum RenderingState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html">Enum TimerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown/debugging_techniques.html">Debugging Techniques</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <!-- cSpell: ignore ccmake dslint femtovg skia winit -->
+<section id="installing-or-building-with-cmake">
+<h1>Installing Or Building With CMake<a class="headerlink" href="#installing-or-building-with-cmake" title="Permalink to this headline">#</a></h1>
+<p>Slint comes with a CMake integration that automates the compilation step of the <code class="docutils literal notranslate"><span class="pre">.slint</span></code> markup language files and
+offers a CMake target for convenient linkage.</p>
+<p><em>Note</em>: We recommend using the Ninja generator of CMake for the most efficient build and <code class="docutils literal notranslate"><span class="pre">.slint</span></code> dependency tracking.
+You can select the CMake Ninja backend by passing <code class="docutils literal notranslate"><span class="pre">-GNinja</span></code> or setting the <code class="docutils literal notranslate"><span class="pre">CMAKE_GENERATOR</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">Ninja</span></code>.</p>
+<section id="binary-packages">
+<h2>Binary Packages<a class="headerlink" href="#binary-packages" title="Permalink to this headline">#</a></h2>
+<p>We offer binary packages of Slint for use with C++. These work without any Rust
+development environment.</p>
+<p>You can download one of our pre-built binaries for Linux or Windows on x86-64 architectures:</p>
+<ol class="arabic simple">
+<li><p>Open <a class="reference external" href="https://github.com/slint-ui/slint/releases">https://github.com/slint-ui/slint/releases</a></p></li>
+<li><p>Click on the latest release</p></li>
+<li><p>From “Assets” download either <code class="docutils literal notranslate"><span class="pre">slint-cpp-XXX-Linux-x86_64.tar.gz</span></code> for a Linux archive
+or <code class="docutils literal notranslate"><span class="pre">slint-cpp-XXX-win64.exe</span></code> for a Windows installer. (“XXX” refers to the version of the latest release)</p></li>
+<li><p>Unpack the downloaded archive or run the installer.</p></li>
+</ol>
+<p>After extracting the artifact or running the installer, you need to place the installation
+directory into your <code class="docutils literal notranslate"><span class="pre">CMAKE_PREFIX_PATH</span></code> by using the <code class="docutils literal notranslate"><span class="pre">-DCMAKE_PREFIX_PATH=/path/to/installed/slint</span></code>
+argument in your cmake invocation. <code class="docutils literal notranslate"><span class="pre">find_package(Slint)</span></code> will
+then be able to find Slint from within a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file.</p>
+<p>At runtime you might also need to add the <code class="docutils literal notranslate"><span class="pre">lib</span></code> sub-directory to the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
+environment variable on Windows or the <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> on Linux. This is
+necessary to find the Slint libraries when trying to run your program.</p>
+<p>In the next section you will learn how to use the installed library in your application
+and how to work with <code class="docutils literal notranslate"><span class="pre">.slint</span></code> UI files.</p>
+</section>
+<section id="building-from-sources">
+<h2>Building From Sources<a class="headerlink" href="#building-from-sources" title="Permalink to this headline">#</a></h2>
+<p>The recommended and most flexible way to use the C++ API is to build Slint from
+sources.</p>
+<p>First you need to install the prerequisites:</p>
+<ul class="simple">
+<li><p>Install Rust by following the <a class="reference external" href="https://www.rust-lang.org/learn/get-started">Rust Getting Started Guide</a>. If you already
+have Rust installed, make sure that it’s at least version 1.60 or newer. You can check which version you have installed
+by running <code class="docutils literal notranslate"><span class="pre">rustc</span> <span class="pre">--version</span></code>. Once this is done, you should have the <code class="docutils literal notranslate"><span class="pre">rustc</span></code> compiler and the <code class="docutils literal notranslate"><span class="pre">cargo</span></code> build system installed in your path.</p></li>
+<li><p><strong><a class="reference external" href="https://cmake.org/download/">cmake</a></strong> (3.21 or newer)</p></li>
+<li><p>A C++ compiler that supports C++20 (e.g., <strong>MSVC 2019 16.6</strong> on Windows)</p></li>
+</ul>
+<p>You can include Slint into your CMake project using CMake’s
+<a class="reference external" href="https://cmake.org/cmake/help/latest/module/FetchContent.html"><code class="docutils literal notranslate"><span class="pre">FetchContent</span></code></a>
+feature. Insert the following snippet into your <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to make CMake
+download the latest released 1.x version, compile it, and make the CMake
+integration available:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">include</span><span class="p">(</span><span class="s">FetchContent</span><span class="p">)</span>
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">Slint</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/slint-ui/slint.git</span>
+<span class="w">    </span><span class="c"># `release/1` will auto-upgrade to the latest Slint &gt;= 1.0.0 and &lt; 2.0.0</span>
+<span class="w">    </span><span class="c"># `release/1.0` will auto-upgrade to the latest Slint &gt;= 1.0.0 and &lt; 1.1.0</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w"> </span><span class="s">release/1</span>
+<span class="w">    </span><span class="s">SOURCE_SUBDIR</span><span class="w"> </span><span class="s">api/cpp</span>
+<span class="p">)</span>
+<span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">Slint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you prefer to use Slint as an external CMake package, then you build Slint from source like a regular
+CMake project, install it into a prefix directory of your choice and use <code class="docutils literal notranslate"><span class="pre">find_package(Slint)</span></code> in your <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p>
+<section id="resource-embedding">
+<h3>Resource Embedding<a class="headerlink" href="#resource-embedding" title="Permalink to this headline">#</a></h3>
+<p>By default, images or fonts that your Slint files reference are loaded from disk at run-time. This minimises build times, but requires that the directory structure with the files remains stable. If you want to build a program that runs anywhere, then you can configure the Slint compiler to embed such sources into the binary.</p>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">SLINT_EMBED_RESOURCES</span></code> target property on your CMake target to one of the following values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">embed-files</span></code>: The raw files are embedded in the application binary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">embed-for-software-renderer</span></code>: The files will be loaded by the Slint compiler, optimized for use with the software renderer and embedded in the application binary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as-absolute-path</span></code>: The paths of files are made absolute and will be used at run-time to load the resources from the file system. This is the default.</p></li>
+</ul>
+<p>This target property is initialised from the global <code class="docutils literal notranslate"><span class="pre">DEFAULT_SLINT_EMBED_RESOURCES</span></code> cache variable. Set it to configure the default for all CMake targets.</p>
+</section>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">#</a></h3>
+<p>The Slint library supports a set of features, not all of them enabled by default.
+You might want to adapt the set of enabled features to optimize your binary
+size. For example you might want to support only the wayland stack on Linux.
+Enable the <code class="docutils literal notranslate"><span class="pre">backend-winit-wayland</span></code> feature while turning off the
+<code class="docutils literal notranslate"><span class="pre">backend-winit-x11</span></code> feature to do so.</p>
+<p>Slint’s CMake configuration uses CMake options prefixed with <code class="docutils literal notranslate"><span class="pre">SLINT_FEATURE_</span></code> to
+expose Slint’s feature flags at compile time. To have a wayland-only stack with
+the CMake setup you would for example use:</p>
+<p><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">-DSLINT_FEATURE_BACKEND_WINIT=OFF</span> <span class="pre">-DSLINT_FEATURE_BACKEND_WINIT_WAYLAND=ON</span> <span class="pre">...</span></code></p>
+<p>Alternatively, you can use <code class="docutils literal notranslate"><span class="pre">cmake-gui</span></code> or <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> for a more interactive way
+to discover and toggle features.</p>
+<p>This works when compiling Slint as a package, using <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code> and
+<code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--install</span></code>, or when including Slint using <code class="docutils literal notranslate"><span class="pre">FetchContent</span></code>.</p>
+</section>
+<section id="back-ends">
+<h3>Back-Ends<a class="headerlink" href="#back-ends" title="Permalink to this headline">#</a></h3>
+<p>Slint needs a back-end that acts as liaison between Slint and the OS. Several
+back-ends can be built into the Slint library at the same time, but only one
+is used a run time.</p>
+<section id="compile-time-back-end-selection">
+<h4>Compile Time Back-End Selection<a class="headerlink" href="#compile-time-back-end-selection" title="Permalink to this headline">#</a></h4>
+<p>By default Slint will include both the Qt and
+<a class="reference external" href="https://crates.io/crates/winit">winit</a> back-ends – if both are detected at
+compile time. You can enable or disable back-ends using the
+<code class="docutils literal notranslate"><span class="pre">SLINT_FEATURE_BACKEND_</span></code> features. For example, to exclude the winit back-end,
+you would disable the <code class="docutils literal notranslate"><span class="pre">SLINT_FEATURE_BACKEND_WINIT</span></code> option in your CMake
+project configuration.</p>
+<p>The winit back-end needs a renderer. <code class="docutils literal notranslate"><span class="pre">SLINT_FEATURE_RENDERER_WINIT_FEMTOVG</span></code> is
+the only stable renderer, the other ones are experimental. If you disable the
+<code class="docutils literal notranslate"><span class="pre">SLINT_FEATURE_BACKEND_WINIT</span></code>, you will also want to disable the renderer!</p>
+</section>
+<section id="run-time-back-end-selection">
+<h4>Run Time Back-End Selection<a class="headerlink" href="#run-time-back-end-selection" title="Permalink to this headline">#</a></h4>
+<p>It’s also possible to select any of the compiled in back-ends and renderer at
+runtime, using the <code class="docutils literal notranslate"><span class="pre">SLINT_BACKEND</span></code> environment variable.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SLINT_BACKEND=Qt</span></code> selects the Qt back-end</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SLINT_BACKEND=winit</span></code> selects the winit back-end</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SLINT_BACKEND=winit-femtovg</span></code> selects the winit back-end with the femtovg renderer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SLINT_BACKEND=winit-skia</span></code> selects the winit back-end with the skia renderer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SLINT_BACKEND=winit-software</span></code> selects the winit back-end with the software renderer</p></li>
+</ul>
+<p>If the selected back-end or renderer isn’t available, the default will be used
+instead.</p>
+</section>
+</section>
+<section id="cross-compiling">
+<h3>Cross-compiling<a class="headerlink" href="#cross-compiling" title="Permalink to this headline">#</a></h3>
+<p>It’s possible to cross-compile Slint to a different target architecture when
+building with CMake. You need to make sure your CMake setup is ready for
+cross-compilation, as documented in the <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html#cross-compiling">upstream CMake documentation</a>.</p>
+<p>If you are building against a Yocto SDK, it is sufficient to source the SDK’s environment setup file.</p>
+<p>Since Slint is implemented using the Rust programming language, you need to
+determine which Rust target matches the target architecture that you’re
+compiling for. Please consult the <a class="reference external" href="https://doc.rust-lang.org/nightly/rustc/platform-support.html">upstream Rust documentation</a> to find the correct target name. Now you need to install the Rust toolchain:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rustup<span class="w"> </span>target<span class="w"> </span>add<span class="w"> </span>&lt;target-name&gt;
+</pre></div>
+</div>
+<p>Then you’re ready to iconfigure your CMake project you need to add
+<code class="docutils literal notranslate"><span class="pre">-DRust_CARGO_TARGET=&lt;target</span> <span class="pre">name&gt;</span></code> to the CMake command line.
+This ensures that the Slint library is built for the correct architecture.</p>
+<p>For example if you are building against an embedded Linux Yocto SDK targeting
+an ARM64 board, the following commands show how to compile:</p>
+<p>Install the Rust targe toolchain once:</p>
+<!-- cSpell:disable -->
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rustup<span class="w"> </span>target<span class="w"> </span>add<span class="w"> </span>aarch64-unknown-linux-gnu
+</pre></div>
+</div>
+<!-- cSpell:enable -->
+<p>Set up the environment and build:</p>
+<!-- cSpell:disable -->
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>.<span class="w"> </span>/path/to/yocto/sdk/environment-setup-cortexa53-crypto-poky-linux
+<span class="nb">cd</span><span class="w"> </span>&lt;PROJECT_ROOT&gt;
+mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+cmake<span class="w"> </span>-DRust_CARGO_TARGET<span class="o">=</span>aarch64-unknown-linux-gnu<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/slint/install/path<span class="w"> </span>...
+cmake<span class="w"> </span>--build<span class="w"> </span>.
+cmake<span class="w"> </span>--install<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="getting_started.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Getting Started</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Installing Or Building With CMake</a><ul>
+<li><a class="reference internal" href="#binary-packages">Binary Packages</a></li>
+<li><a class="reference internal" href="#building-from-sources">Building From Sources</a><ul>
+<li><a class="reference internal" href="#resource-embedding">Resource Embedding</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#back-ends">Back-Ends</a><ul>
+<li><a class="reference internal" href="#compile-time-back-end-selection">Compile Time Back-End Selection</a></li>
+<li><a class="reference internal" href="#run-time-back-end-selection">Run Time Back-End Selection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-compiling">Cross-compiling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/1.0.0/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/1.0.0/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // Safari blocks quite heavily when creating many WebGL contexts, slowing down loading of the docs
+        // significantly. For now, don't do automatic previews:
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            return false;
+        }
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

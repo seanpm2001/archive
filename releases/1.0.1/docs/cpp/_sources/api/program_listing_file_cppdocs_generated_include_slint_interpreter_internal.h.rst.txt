@@ -1,0 +1,285 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_interpreter_internal.h:
+
+Program Listing for File slint_interpreter_internal.h
+=====================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_interpreter_internal.h>` (``cppdocs/generated_include/slint_interpreter_internal.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   /* Generated with cbindgen:0.24.3 */
+   
+   #include <cstdarg>
+   #include <cstdint>
+   #include <cstdlib>
+   #include <ostream>
+   #include <new>
+   #include "slint_internal.h"
+   #include "slint_interpreter_generated_public.h"
+   
+               namespace slint::cbindgen_private {
+                   struct Value;
+                   using slint::interpreter::ValueType;
+                   using slint::interpreter::PropertyDescriptor;
+                   using slint::interpreter::Diagnostic;
+               }
+   
+   namespace slint {
+   namespace cbindgen_private {
+   
+   struct ErasedComponentBox;
+   
+   #if defined(SLINT_TARGET_64)
+   struct ValueOpaque {
+       uintptr_t _0[7];
+   };
+   #endif
+   
+   #if defined(SLINT_TARGET_64)
+   struct StructOpaque {
+       uintptr_t _0[6];
+   };
+   #endif
+   
+   #if defined(SLINT_TARGET_32)
+   struct StructOpaque {
+       uintptr_t _0[8];
+   };
+   #endif
+   
+   #if defined(SLINT_TARGET_64)
+   struct ModelNotifyOpaque {
+       uintptr_t _0[8];
+   };
+   #endif
+   
+   #if defined(SLINT_TARGET_32)
+   struct ModelNotifyOpaque {
+       uintptr_t _0[12];
+   };
+   #endif
+   
+   struct ModelAdaptorVTable {
+       uintptr_t (*row_count)(VRef<ModelAdaptorVTable>);
+       bool (*row_data)(VRef<ModelAdaptorVTable>, uintptr_t row, ValueOpaque *out);
+       void (*set_row_data)(VRef<ModelAdaptorVTable>, uintptr_t row, const ValueOpaque *value);
+       const ModelNotifyOpaque *(*get_notify)(VRef<ModelAdaptorVTable>);
+       void (*drop)(VRefMut<ModelAdaptorVTable>);
+   };
+   
+   struct StructIteratorOpaque {
+       uintptr_t _0[5];
+   };
+   
+   struct StructIteratorResult {
+       Slice<uint8_t> k;
+       const Value *v;
+   };
+   
+   struct ComponentDefinitionOpaque {
+       uintptr_t _0[1];
+   };
+   
+   using DynamicComponentVRc = VRc<ComponentVTable, ErasedComponentBox>;
+   
+   struct ComponentInstance {
+       DynamicComponentVRc inner;
+   };
+   
+   #if defined(SLINT_TARGET_64)
+   struct ComponentCompilerOpaque {
+       uintptr_t _0[13];
+   };
+   #endif
+   
+   extern "C" {
+   
+   void slint_interpreter_value_new(ValueOpaque *val);
+   
+   void slint_interpreter_value_clone(const ValueOpaque *other, ValueOpaque *val);
+   
+   void slint_interpreter_value_destructor(ValueOpaque *val);
+   
+   bool slint_interpreter_value_eq(const ValueOpaque *a, const ValueOpaque *b);
+   
+   void slint_interpreter_value_new_string(const SharedString *str, ValueOpaque *val);
+   
+   void slint_interpreter_value_new_double(double double_, ValueOpaque *val);
+   
+   void slint_interpreter_value_new_bool(bool b, ValueOpaque *val);
+   
+   void slint_interpreter_value_new_array_model(const SharedVector<ValueOpaque> *a, ValueOpaque *val);
+   
+   void slint_interpreter_value_new_brush(const Brush *brush, ValueOpaque *val);
+   
+   void slint_interpreter_value_new_struct(const StructOpaque *struc, ValueOpaque *val);
+   
+   void slint_interpreter_value_new_image(const Image *img, ValueOpaque *val);
+   
+   void slint_interpreter_value_new_model(uint8_t *model,
+                                          const ModelAdaptorVTable *vtable,
+                                          ValueOpaque *val);
+   
+   ValueType slint_interpreter_value_type(const ValueOpaque *val);
+   
+   const SharedString *slint_interpreter_value_to_string(const ValueOpaque *val);
+   
+   const double *slint_interpreter_value_to_number(const ValueOpaque *val);
+   
+   const bool *slint_interpreter_value_to_bool(const ValueOpaque *val);
+   
+   bool slint_interpreter_value_to_array(const ValueOpaque *val, SharedVector<ValueOpaque> *out);
+   
+   const Brush *slint_interpreter_value_to_brush(const ValueOpaque *val);
+   
+   const StructOpaque *slint_interpreter_value_to_struct(const ValueOpaque *val);
+   
+   const Image *slint_interpreter_value_to_image(const ValueOpaque *val);
+   
+   void slint_interpreter_struct_new(StructOpaque *val);
+   
+   void slint_interpreter_struct_clone(const StructOpaque *other, StructOpaque *val);
+   
+   void slint_interpreter_struct_destructor(StructOpaque *val);
+   
+   const ValueOpaque *slint_interpreter_struct_get_field(const StructOpaque *stru,
+                                                         Slice<uint8_t> name);
+   
+   void slint_interpreter_struct_set_field(StructOpaque *stru,
+                                           Slice<uint8_t> name,
+                                           const ValueOpaque *value);
+   
+   void slint_interpreter_struct_iterator_destructor(StructIteratorOpaque *val);
+   
+   StructIteratorResult slint_interpreter_struct_iterator_next(StructIteratorOpaque *iter);
+   
+   StructIteratorOpaque slint_interpreter_struct_make_iter(const StructOpaque *stru);
+   
+   bool slint_interpreter_component_instance_get_property(const ErasedComponentBox *inst,
+                                                          Slice<uint8_t> name,
+                                                          ValueOpaque *out);
+   
+   bool slint_interpreter_component_instance_set_property(const ErasedComponentBox *inst,
+                                                          Slice<uint8_t> name,
+                                                          const ValueOpaque *val);
+   
+   bool slint_interpreter_component_instance_invoke(const ErasedComponentBox *inst,
+                                                    Slice<uint8_t> name,
+                                                    Slice<ValueOpaque> args,
+                                                    ValueOpaque *out);
+   
+   bool slint_interpreter_component_instance_set_callback(const ErasedComponentBox *inst,
+                                                          Slice<uint8_t> name,
+                                                          void (*callback)(void *user_data, Slice<ValueOpaque> arg, ValueOpaque *ret),
+                                                          void *user_data,
+                                                          void (*drop_user_data)(void*));
+   
+   bool slint_interpreter_component_instance_get_global_property(const ErasedComponentBox *inst,
+                                                                 Slice<uint8_t> global,
+                                                                 Slice<uint8_t> property_name,
+                                                                 ValueOpaque *out);
+   
+   bool slint_interpreter_component_instance_set_global_property(const ErasedComponentBox *inst,
+                                                                 Slice<uint8_t> global,
+                                                                 Slice<uint8_t> property_name,
+                                                                 const ValueOpaque *val);
+   
+   bool slint_interpreter_component_instance_set_global_callback(const ErasedComponentBox *inst,
+                                                                 Slice<uint8_t> global,
+                                                                 Slice<uint8_t> name,
+                                                                 void (*callback)(void *user_data, Slice<ValueOpaque> arg, ValueOpaque *ret),
+                                                                 void *user_data,
+                                                                 void (*drop_user_data)(void*));
+   
+   bool slint_interpreter_component_instance_invoke_global(const ErasedComponentBox *inst,
+                                                           Slice<uint8_t> global,
+                                                           Slice<uint8_t> callable_name,
+                                                           Slice<ValueOpaque> args,
+                                                           ValueOpaque *out);
+   
+   void slint_interpreter_component_instance_show(const ErasedComponentBox *inst, bool is_visible);
+   
+   void slint_interpreter_component_instance_window(const ErasedComponentBox *inst,
+                                                    const WindowAdapterRcOpaque **out);
+   
+   void slint_interpreter_component_instance_create(const ComponentDefinitionOpaque *def,
+                                                    ComponentInstance *out);
+   
+   void slint_interpreter_model_notify_new(ModelNotifyOpaque *val);
+   
+   void slint_interpreter_model_notify_destructor(ModelNotifyOpaque *val);
+   
+   void slint_interpreter_model_notify_row_changed(const ModelNotifyOpaque *notify, uintptr_t row);
+   
+   void slint_interpreter_model_notify_row_added(const ModelNotifyOpaque *notify,
+                                                 uintptr_t row,
+                                                 uintptr_t count);
+   
+   void slint_interpreter_model_notify_reset(const ModelNotifyOpaque *notify);
+   
+   void slint_interpreter_model_notify_row_removed(const ModelNotifyOpaque *notify,
+                                                   uintptr_t row,
+                                                   uintptr_t count);
+   
+   void slint_interpreter_component_compiler_new(ComponentCompilerOpaque *compiler);
+   
+   void slint_interpreter_component_compiler_destructor(ComponentCompilerOpaque *compiler);
+   
+   void slint_interpreter_component_compiler_set_include_paths(ComponentCompilerOpaque *compiler,
+                                                               const SharedVector<SharedString> *paths);
+   
+   void slint_interpreter_component_compiler_set_style(ComponentCompilerOpaque *compiler,
+                                                       Slice<uint8_t> style);
+   
+   void slint_interpreter_component_compiler_get_style(const ComponentCompilerOpaque *compiler,
+                                                       SharedString *style_out);
+   
+   void slint_interpreter_component_compiler_get_include_paths(const ComponentCompilerOpaque *compiler,
+                                                               SharedVector<SharedString> *paths);
+   
+   void slint_interpreter_component_compiler_get_diagnostics(const ComponentCompilerOpaque *compiler,
+                                                             SharedVector<Diagnostic> *out_diags);
+   
+   bool slint_interpreter_component_compiler_build_from_source(ComponentCompilerOpaque *compiler,
+                                                               Slice<uint8_t> source_code,
+                                                               Slice<uint8_t> path,
+                                                               ComponentDefinitionOpaque *component_definition_ptr);
+   
+   bool slint_interpreter_component_compiler_build_from_path(ComponentCompilerOpaque *compiler,
+                                                             Slice<uint8_t> path,
+                                                             ComponentDefinitionOpaque *component_definition_ptr);
+   
+   void slint_interpreter_component_definition_clone(const ComponentDefinitionOpaque *other,
+                                                     ComponentDefinitionOpaque *def);
+   
+   void slint_interpreter_component_definition_destructor(ComponentDefinitionOpaque *val);
+   
+   void slint_interpreter_component_definition_properties(const ComponentDefinitionOpaque *def,
+                                                          SharedVector<PropertyDescriptor> *props);
+   
+   void slint_interpreter_component_definition_callbacks(const ComponentDefinitionOpaque *def,
+                                                         SharedVector<SharedString> *callbacks);
+   
+   void slint_interpreter_component_definition_name(const ComponentDefinitionOpaque *def,
+                                                    SharedString *name);
+   
+   void slint_interpreter_component_definition_globals(const ComponentDefinitionOpaque *def,
+                                                       SharedVector<SharedString> *names);
+   
+   bool slint_interpreter_component_definition_global_properties(const ComponentDefinitionOpaque *def,
+                                                                 Slice<uint8_t> global_name,
+                                                                 SharedVector<PropertyDescriptor> *properties);
+   
+   bool slint_interpreter_component_definition_global_callbacks(const ComponentDefinitionOpaque *def,
+                                                                Slice<uint8_t> global_name,
+                                                                SharedVector<SharedString> *names);
+   
+   } // extern "C"
+   
+   } // namespace cbindgen_private
+   } // namespace slint

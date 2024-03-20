@@ -1,0 +1,27 @@
+
+.. _file__home_runner_work_slint_slint_api_cpp_include_slint_platform.h:
+
+File slint_platform.h
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_runner_work_slint_slint_api_cpp_include>` (``/home/runner/work/slint/slint/api/cpp/include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+Definition (``/home/runner/work/slint/slint/api/cpp/include/slint_platform.h``)
+-------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_platform.h.rst
+
+
+
+
+
+
+
+
+

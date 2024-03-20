@@ -1,0 +1,16 @@
+.. _exhale_class_classslint_1_1ComponentWeakHandle:
+
+Template Class ComponentWeakHandle
+==================================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::ComponentWeakHandle
+   :members:
+   :protected-members:
+   :undoc-members:

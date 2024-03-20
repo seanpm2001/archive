@@ -1,0 +1,13 @@
+.. _exhale_enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0:
+
+Enum ValueType
+==============
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_interpreter_generated_public.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: slint::interpreter::ValueType

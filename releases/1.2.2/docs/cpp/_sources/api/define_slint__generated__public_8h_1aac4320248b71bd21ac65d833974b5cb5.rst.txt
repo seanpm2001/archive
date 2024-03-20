@@ -1,0 +1,13 @@
+.. _exhale_define_slint__generated__public_8h_1aac4320248b71bd21ac65d833974b5cb5:
+
+Define SLINT_FEATURE_RENDERER_SOFTWARE
+======================================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_generated_public.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SLINT_FEATURE_RENDERER_SOFTWARE

@@ -1,0 +1,489 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h:
+
+Program Listing for File slint-platform.h
+=========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint-platform.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint.dev>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-Royalty-free-1.1 OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   
+   #include "slint.h"
+   
+   #include <cassert>
+   #include <utility>
+   
+   struct xcb_connection_t;
+   struct wl_surface;
+   struct wl_display;
+   
+   #if defined(__APPLE__) && !defined(_WIN32) && !defined(_WIN64)
+   #    ifdef __OBJC__
+   @class NSView;
+   @class NSWindow;
+   #    else
+   typedef struct objc_object NSView;
+   typedef struct objc_object NSWindow;
+   #    endif
+   #endif
+   
+   namespace slint {
+   
+   namespace platform {
+   
+   class AbstractRenderer
+   {
+   private:
+       virtual ~AbstractRenderer() { }
+       AbstractRenderer(const AbstractRenderer &) = delete;
+       AbstractRenderer &operator=(const AbstractRenderer &) = delete;
+       AbstractRenderer() = default;
+   
+       virtual cbindgen_private::RendererPtr renderer_handle() const = 0;
+       friend class WindowAdapter;
+       friend class SoftwareRenderer;
+       friend class SkiaRenderer;
+   };
+   
+   class WindowAdapter
+   {
+       // This is a pointer to the rust window that own us.
+       // Note that we do not have ownership (there is no reference increase for this)
+       // because it would otherwise be a reference loop
+       cbindgen_private::WindowAdapterRcOpaque self {};
+       // Whether this WindowAdapter was already given to the slint runtime
+       bool was_initialized = false;
+   
+       cbindgen_private::WindowAdapterRcOpaque initialize()
+       {
+           cbindgen_private::slint_window_adapter_new(
+                   this, [](void *wa) { delete reinterpret_cast<WindowAdapter *>(wa); },
+                   [](void *wa) {
+                       return reinterpret_cast<WindowAdapter *>(wa)->renderer().renderer_handle();
+                   },
+                   [](void *wa, bool visible) {
+                       reinterpret_cast<WindowAdapter *>(wa)->set_visible(visible);
+                   },
+                   [](void *wa) { reinterpret_cast<WindowAdapter *>(wa)->request_redraw(); },
+                   [](void *wa) -> cbindgen_private::IntSize {
+                       return reinterpret_cast<WindowAdapter *>(wa)->size();
+                   },
+                   [](void *wa, cbindgen_private::IntSize size) {
+                       reinterpret_cast<WindowAdapter *>(wa)->set_size(
+                               slint::PhysicalSize({ size.width, size.height }));
+                   },
+                   [](void *wa, const cbindgen_private::WindowProperties *p) {
+                       reinterpret_cast<WindowAdapter *>(wa)->update_window_properties(
+                               *reinterpret_cast<const WindowProperties *>(p));
+                   },
+                   [](void *wa, cbindgen_private::Point2D<int32_t> *point) -> bool {
+                       if (auto pos = reinterpret_cast<WindowAdapter *>(wa)->position()) {
+                           *point = *pos;
+                           return true;
+                       } else {
+                           return false;
+                       }
+                   },
+                   [](void *wa, cbindgen_private::Point2D<int32_t> point) {
+                       reinterpret_cast<WindowAdapter *>(wa)->set_position(
+                               slint::PhysicalPosition({ point.x, point.y }));
+                   },
+                   &self);
+           was_initialized = true;
+           return self;
+       }
+   
+       friend inline void set_platform(std::unique_ptr<class Platform> platform);
+   
+   public:
+       explicit WindowAdapter() { }
+       virtual ~WindowAdapter() = default;
+   
+       virtual void set_visible(bool) { }
+   
+       virtual void request_redraw() { }
+   
+       virtual void set_size(slint::PhysicalSize) { }
+   
+       virtual slint::PhysicalSize size() = 0;
+   
+       virtual void set_position(slint::PhysicalPosition) { }
+   
+       virtual std::optional<slint::PhysicalPosition> position() { return std::nullopt; }
+   
+       struct WindowProperties
+       {
+           SharedString title() const
+           {
+               SharedString out;
+               cbindgen_private::slint_window_properties_get_title(inner(), &out);
+               return out;
+           }
+   
+           Brush background() const
+           {
+               Brush out;
+               cbindgen_private::slint_window_properties_get_background(inner(), &out);
+               return out;
+           }
+   
+           struct LayoutConstraints
+           {
+               std::optional<LogicalSize> min;
+               std::optional<LogicalSize> max;
+               LogicalSize preferred;
+           };
+   
+           LayoutConstraints layout_constraints() const
+           {
+               auto lc = cbindgen_private::slint_window_properties_get_layout_constraints(inner());
+               return LayoutConstraints {
+                   .min = lc.has_min ? std::optional(LogicalSize(lc.min)) : std::nullopt,
+                   .max = lc.has_max ? std::optional(LogicalSize(lc.max)) : std::nullopt,
+                   .preferred = LogicalSize(lc.preferred)
+               };
+           }
+   
+       private:
+           WindowProperties() = delete;
+           ~WindowProperties() = delete;
+           WindowProperties(const WindowProperties &) = delete;
+           WindowProperties &operator=(const WindowProperties &) = delete;
+           const cbindgen_private::WindowProperties *inner() const
+           {
+               return reinterpret_cast<const cbindgen_private::WindowProperties *>(this);
+           }
+       };
+   
+       virtual void update_window_properties(const WindowProperties &) { }
+   
+       virtual AbstractRenderer &renderer() = 0;
+   
+       const Window &window() const
+       {
+           if (!was_initialized)
+               std::abort();
+           // This works because cbindgen_private::WindowAdapterRcOpaque and Window have the same
+           // layout
+           return *reinterpret_cast<const Window *>(&self);
+       }
+   
+       Window &window()
+       {
+           if (!was_initialized)
+               std::abort();
+           // This works because cbindgen_private::WindowAdapterRcOpaque and Window have the same
+           // layout
+           return *reinterpret_cast<Window *>(&self);
+       }
+   };
+   
+   class Platform
+   {
+   public:
+       virtual ~Platform() = default;
+       Platform(const Platform &) = delete;
+       Platform &operator=(const Platform &) = delete;
+       Platform() = default;
+   
+       virtual std::unique_ptr<WindowAdapter> create_window_adapter() = 0;
+   
+   #if defined(SLINT_FEATURE_FREESTANDING) || defined(DOXYGEN)
+       virtual std::chrono::milliseconds duration_since_start() = 0;
+   #endif
+   
+       enum class Clipboard {
+           DefaultClipboard = static_cast<uint8_t>(cbindgen_private::Clipboard::DefaultClipboard),
+           SelectionClipboard = static_cast<uint8_t>(cbindgen_private::Clipboard::SelectionClipboard),
+       };
+   
+       virtual void set_clipboard_text(const SharedString &, Clipboard) { }
+   
+       virtual std::optional<SharedString> clipboard_text(Clipboard)
+       {
+           return {};
+       }
+   
+       virtual void run_event_loop() { }
+   
+       virtual void quit_event_loop() { }
+   
+       class Task
+       {
+           cbindgen_private::PlatformTaskOpaque inner { nullptr, nullptr };
+           friend inline void set_platform(std::unique_ptr<Platform> platform);
+           explicit Task(cbindgen_private::PlatformTaskOpaque inner) : inner(inner) { }
+   
+       public:
+           ~Task()
+           {
+               if (inner._0) {
+                   cbindgen_private::slint_platform_task_drop(
+                           std::exchange(inner, { nullptr, nullptr }));
+               }
+           }
+           Task(const Task &) = delete;
+           Task &operator=(const Task &) = delete;
+           Task(Task &&other) : inner(other.inner) { other.inner = { nullptr, nullptr }; }
+           Task &operator=(Task &&other)
+           {
+               std::swap(other.inner, inner);
+               return *this;
+           }
+   
+           void run() &&
+           {
+               private_api::assert_main_thread();
+               assert(inner._0 && "calling invoke form a moved-from Task");
+               if (inner._0) {
+                   cbindgen_private::slint_platform_task_run(
+                           std::exchange(inner, { nullptr, nullptr }));
+               }
+           };
+       };
+   
+       virtual void run_in_event_loop(Task) { }
+   };
+   
+   inline void set_platform(std::unique_ptr<Platform> platform)
+   {
+       cbindgen_private::slint_platform_register(
+               platform.release(), [](void *p) { delete reinterpret_cast<const Platform *>(p); },
+               [](void *p, cbindgen_private::WindowAdapterRcOpaque *out) {
+                   auto w = reinterpret_cast<Platform *>(p)->create_window_adapter();
+                   *out = w->initialize();
+                   (void)w.release();
+               },
+               []([[maybe_unused]] void *p) -> uint64_t {
+   #ifndef SLINT_FEATURE_FREESTANDING
+                   return 0;
+   #else
+                   return reinterpret_cast<Platform *>(p)->duration_since_start().count();
+   #endif
+               },
+               [](void *p, const SharedString *text, cbindgen_private::Clipboard clipboard) {
+                   reinterpret_cast<Platform *>(p)->set_clipboard_text(
+                           *text, static_cast<Platform::Clipboard>(clipboard));
+               },
+               [](void *p, SharedString *out_text, cbindgen_private::Clipboard clipboard) -> bool {
+                   auto maybe_clipboard = reinterpret_cast<Platform *>(p)->clipboard_text(
+                           static_cast<Platform::Clipboard>(clipboard));
+   
+                   bool status = maybe_clipboard.has_value();
+                   if (status)
+                       *out_text = maybe_clipboard.value();
+                   return status;
+               },
+               [](void *p) { return reinterpret_cast<Platform *>(p)->run_event_loop(); },
+               [](void *p) { return reinterpret_cast<Platform *>(p)->quit_event_loop(); },
+               [](void *p, cbindgen_private::PlatformTaskOpaque event) {
+                   return reinterpret_cast<Platform *>(p)->run_in_event_loop(Platform::Task(event));
+               });
+   }
+   
+   #ifdef SLINT_FEATURE_RENDERER_SOFTWARE
+   
+   struct Rgb565Pixel
+   {
+       uint16_t b : 5;
+       uint16_t g : 6;
+       uint16_t r : 5;
+   
+       constexpr Rgb565Pixel() : b(0), g(0), r(0) { }
+   
+       explicit constexpr Rgb565Pixel(const Rgb8Pixel &pixel)
+           : b(pixel.b >> 3), g(pixel.g >> 2), r(pixel.r >> 3)
+       {
+       }
+   
+       constexpr uint8_t red() const { return (r << 3) | (r >> 2); }
+   
+       constexpr uint8_t green() const { return (g << 2) | (g >> 4); }
+   
+       constexpr uint8_t blue() const { return (b << 3) | (b >> 2); }
+   
+       constexpr operator Rgb8Pixel() const { return { red(), green(), blue() }; }
+   
+       friend bool operator==(const Rgb565Pixel &lhs, const Rgb565Pixel &rhs) = default;
+   };
+   
+   class SoftwareRenderer : public AbstractRenderer
+   {
+       mutable cbindgen_private::SoftwareRendererOpaque inner;
+   
+       cbindgen_private::RendererPtr renderer_handle() const override
+       {
+           return cbindgen_private::slint_software_renderer_handle(inner);
+       }
+   
+   public:
+       struct PhysicalRegion
+       {
+           PhysicalSize bounding_box_size() const
+           {
+               return PhysicalSize({ uint32_t(inner.width), uint32_t(inner.height) });
+           }
+           PhysicalPosition bounding_box_origin() const
+           {
+               return PhysicalPosition({ inner.x, inner.y });
+           }
+   
+       private:
+           cbindgen_private::types::IntRect inner;
+           friend class SoftwareRenderer;
+           PhysicalRegion(cbindgen_private::types::IntRect inner) : inner(inner) { }
+       };
+   
+       enum class RepaintBufferType : uint32_t {
+           NewBuffer = 0,
+           ReusedBuffer = 1,
+   
+           SwappedBuffers = 2,
+       };
+   
+       virtual ~SoftwareRenderer() { cbindgen_private::slint_software_renderer_drop(inner); };
+       SoftwareRenderer(const SoftwareRenderer &) = delete;
+       SoftwareRenderer &operator=(const SoftwareRenderer &) = delete;
+       explicit SoftwareRenderer(RepaintBufferType buffer_type)
+       {
+           inner = cbindgen_private::slint_software_renderer_new(uint32_t(buffer_type));
+       }
+   
+       PhysicalRegion render(std::span<slint::Rgb8Pixel> buffer, std::size_t pixel_stride) const
+       {
+           auto r = cbindgen_private::slint_software_renderer_render_rgb8(inner, buffer.data(),
+                                                                          buffer.size(), pixel_stride);
+           return PhysicalRegion { r };
+       }
+   
+       PhysicalRegion render(std::span<Rgb565Pixel> buffer, std::size_t pixel_stride) const
+       {
+           auto r = cbindgen_private::slint_software_renderer_render_rgb565(
+                   inner, reinterpret_cast<uint16_t *>(buffer.data()), buffer.size(), pixel_stride);
+           return PhysicalRegion { r };
+       }
+   };
+   #endif
+   
+   #ifdef SLINT_FEATURE_RENDERER_SKIA
+   class NativeWindowHandle
+   {
+       cbindgen_private::CppRawHandleOpaque inner;
+       friend class SkiaRenderer;
+   
+       NativeWindowHandle(cbindgen_private::CppRawHandleOpaque inner) : inner(inner) { }
+   
+   public:
+       NativeWindowHandle() = delete;
+       NativeWindowHandle(const NativeWindowHandle &) = delete;
+       NativeWindowHandle &operator=(const NativeWindowHandle &) = delete;
+       NativeWindowHandle(NativeWindowHandle &&other) { inner = std::exchange(other.inner, nullptr); }
+       NativeWindowHandle &operator=(NativeWindowHandle &&other)
+       {
+           if (this == &other) {
+               return *this;
+           }
+           if (inner) {
+               cbindgen_private::slint_raw_window_handle_drop(inner);
+           }
+           inner = std::exchange(other.inner, nullptr);
+           return *this;
+       }
+   
+   #    if (!defined(__APPLE__) && !defined(_WIN32) && !defined(_WIN64)) || defined(DOXYGEN)
+       static NativeWindowHandle from_x11_xcb(uint32_t /*xcb_window_t*/ window,
+                                              uint32_t /*xcb_visualid_t*/ visual_id,
+                                              xcb_connection_t *connection, int screen)
+       {
+   
+           return { cbindgen_private::slint_new_raw_window_handle_x11_xcb(window, visual_id,
+                                                                          connection, screen) };
+       }
+   
+       static NativeWindowHandle from_x11_xlib(uint32_t /*Window*/ window,
+                                               unsigned long /*VisualID*/ visual_id,
+                                               void /*Display*/ *display, int screen)
+       {
+   
+           return { cbindgen_private::slint_new_raw_window_handle_x11_xlib(window, visual_id, display,
+                                                                           screen) };
+       }
+   
+       static NativeWindowHandle from_wayland(wl_surface *surface, wl_display *display)
+       {
+   
+           return { cbindgen_private::slint_new_raw_window_handle_wayland(surface, display) };
+       }
+   
+   #    endif
+   #    if (defined(__APPLE__) && !defined(_WIN32) && !defined(_WIN64)) || defined(DOXYGEN)
+   
+       static NativeWindowHandle from_appkit(NSView *nsview, NSWindow *nswindow)
+       {
+   
+           return { cbindgen_private::slint_new_raw_window_handle_appkit(nsview, nswindow) };
+       }
+   
+   #    endif
+   #    if (!defined(__APPLE__) && (defined(_WIN32) || !defined(_WIN64))) || defined(DOXYGEN)
+   
+       static NativeWindowHandle from_win32(void *hwnd, void *hinstance)
+       {
+           return { cbindgen_private::slint_new_raw_window_handle_win32(hwnd, hinstance) };
+       }
+   #    endif
+       ~NativeWindowHandle()
+       {
+           if (inner) {
+               cbindgen_private::slint_raw_window_handle_drop(inner);
+           }
+       }
+   };
+   
+   class SkiaRenderer : public AbstractRenderer
+   {
+       mutable cbindgen_private::SkiaRendererOpaque inner;
+   
+       cbindgen_private::RendererPtr renderer_handle() const override
+       {
+           return cbindgen_private::slint_skia_renderer_handle(inner);
+       }
+   
+   public:
+       virtual ~SkiaRenderer() { cbindgen_private::slint_skia_renderer_drop(inner); }
+       SkiaRenderer(const SkiaRenderer &) = delete;
+       SkiaRenderer &operator=(const SkiaRenderer &) = delete;
+       explicit SkiaRenderer(const NativeWindowHandle &window_handle, PhysicalSize initial_size)
+       {
+           inner = cbindgen_private::slint_skia_renderer_new(window_handle.inner, initial_size);
+       }
+   
+       void render() const { cbindgen_private::slint_skia_renderer_render(inner); }
+   };
+   #endif
+   
+   inline void update_timers_and_animations()
+   {
+       cbindgen_private::slint_platform_update_timers_and_animations();
+   }
+   
+   inline std::optional<std::chrono::milliseconds> duration_until_next_timer_update()
+   {
+       uint64_t val = cbindgen_private::slint_platform_duration_until_next_timer_update();
+       if (val == std::numeric_limits<uint64_t>::max()) {
+           return std::nullopt;
+       } else if (val >= uint64_t(std::chrono::milliseconds::max().count())) {
+           return std::chrono::milliseconds::max();
+       } else {
+           return std::chrono::milliseconds(val);
+       }
+   }
+   }
+   }

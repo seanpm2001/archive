@@ -1,0 +1,16 @@
+.. _exhale_struct_structslint_1_1platform_1_1Rgb565Pixel:
+
+Struct Rgb565Pixel
+==================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::platform::Rgb565Pixel
+   :members:
+   :protected-members:
+   :undoc-members:

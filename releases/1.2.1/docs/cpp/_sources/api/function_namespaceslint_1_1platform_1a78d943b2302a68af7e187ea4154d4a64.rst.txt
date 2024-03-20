@@ -1,0 +1,13 @@
+.. _exhale_function_namespaceslint_1_1platform_1a78d943b2302a68af7e187ea4154d4a64:
+
+Function slint::platform::set_platform
+======================================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: slint::platform::set_platform(std::unique_ptr<Platform>)

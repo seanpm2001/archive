@@ -1,0 +1,13 @@
+.. _exhale_enum_namespaceslint_1abb2b0aa4769a501e7cdeaccae964a64c:
+
+Enum CloseRequestResponse
+=========================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_generated_public.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: slint::CloseRequestResponse

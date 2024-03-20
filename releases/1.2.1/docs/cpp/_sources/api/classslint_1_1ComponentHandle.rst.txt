@@ -1,0 +1,16 @@
+.. _exhale_class_classslint_1_1ComponentHandle:
+
+Template Class ComponentHandle
+==============================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::ComponentHandle
+   :members:
+   :protected-members:
+   :undoc-members:

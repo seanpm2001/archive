@@ -1,0 +1,16 @@
+.. _exhale_struct_structslint_1_1interpreter_1_1PropertyDescriptor:
+
+Struct PropertyDescriptor
+=========================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_interpreter_generated_public.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::interpreter::PropertyDescriptor
+   :members:
+   :protected-members:
+   :undoc-members:

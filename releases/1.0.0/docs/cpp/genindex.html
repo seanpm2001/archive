@@ -1,0 +1,1244 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
+
+    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/><title>Index - Slint C++ API documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="_static/theme_tweak.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Slint C++ API  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint-ui.com/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint C++ API  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cmake.html">Installing Or Building With CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">First Steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Type Mapping to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_code.html">Example Generated Code</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/library_root.html">C++ API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1LogicalPosition.html">Struct LogicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1LogicalSize.html">Struct LogicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1PhysicalPosition.html">Struct PhysicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1PhysicalSize.html">Struct PhysicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Point.html">Template Struct Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Rgb8Pixel.html">Struct Rgb8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Rgba8Pixel.html">Struct Rgba8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1SharedPixelBuffer.html">Template Struct SharedPixelBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1StandardListViewItem.html">Struct StandardListViewItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1FilterModel.html">Template Class FilterModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1MapModel.html">Template Class MapModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1SortModel.html">Template Class SortModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/classslint_1_1Window.html">Class Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html">Enum DiagnosticLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html">Enum ValueType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html">Enum RenderingState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html">Enum TimerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Index (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown/debugging_techniques.html">Debugging Techniques</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a></div>
+</section>
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html#_CPPv4I_NSt9invocableEEN5slint31blocking_invoke_from_event_loopENSt15invoke_result_tI7FunctorEE7Functor">blocking_invoke_from_event_loop (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Brush.html#_CPPv4N5slint5BrushE">Brush (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1Brush.html#_CPPv4NK5slint5Brush8brighterEf">Brush::brighter (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Brush.html#_CPPv4N5slint5Brush5BrushERK5Color">Brush::Brush (C++ function)</a>, <a href="api/classslint_1_1Brush.html#_CPPv4N5slint5Brush5BrushEv">[1]</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1Brush.html#_CPPv4NK5slint5Brush5colorEv">Brush::color (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Brush.html#_CPPv4NK5slint5Brush6darkerEf">Brush::darker (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Brush.html#_CPPv4N5slint5BrushneERK5BrushRK5Brush">Brush::operator!= (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Brush.html#_CPPv4N5slint5BrusheqERK5BrushRK5Brush">Brush::operator== (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html#_CPPv4N5slint20CloseRequestResponseE">CloseRequestResponse (C++ enum)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html#_CPPv4N5slint20CloseRequestResponse10HideWindowE">CloseRequestResponse::HideWindow (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html#_CPPv4N5slint20CloseRequestResponse15KeepWindowShownE">CloseRequestResponse::KeepWindowShown (C++ enumerator)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5ColorE">Color (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color5alphaEv">Color::alpha (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color15as_argb_encodedEv">Color::as_argb_encoded (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color4blueEv">Color::blue (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color8brighterEf">Color::brighter (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5Color5ColorERK9RgbaColorI7uint8_tE">Color::Color (C++ function)</a>, <a href="api/classslint_1_1Color.html#_CPPv4N5slint5Color5ColorERK9RgbaColorIfE">[1]</a>, <a href="api/classslint_1_1Color.html#_CPPv4N5slint5Color5ColorEv">[2]</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color6darkerEf">Color::darker (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5Color17from_argb_encodedE8uint32_t">Color::from_argb_encoded (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5Color15from_argb_floatEffff">Color::from_argb_float (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5Color15from_argb_uint8E7uint8_t7uint8_t7uint8_t7uint8_t">Color::from_argb_uint8 (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5Color14from_rgb_floatEfff">Color::from_rgb_float (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5Color14from_rgb_uint8E7uint8_t7uint8_t7uint8_t">Color::from_rgb_uint8 (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color5greenEv">Color::green (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5ColorlsERNSt7ostreamERK5Color">Color::operator&lt;&lt; (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4N5slint5ColoreqERK5ColorRK5Color">Color::operator== (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color3redEv">Color::red (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color13to_argb_floatEv">Color::to_argb_float (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Color.html#_CPPv4NK5slint5Color12to_argb_uintEv">Color::to_argb_uint (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N5slint11interpreter17ComponentCompilerE">ComponentCompiler (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N5slint11interpreter17ComponentCompiler15build_from_pathENSt11string_viewE">ComponentCompiler::build_from_path (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N5slint11interpreter17ComponentCompiler17build_from_sourceENSt11string_viewENSt11string_viewE">ComponentCompiler::build_from_source (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N5slint11interpreter17ComponentCompiler17ComponentCompilerEv">ComponentCompiler::ComponentCompiler (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4NK5slint11interpreter17ComponentCompiler11diagnosticsEv">ComponentCompiler::diagnostics (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4NK5slint11interpreter17ComponentCompiler13include_pathsEv">ComponentCompiler::include_paths (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N5slint11interpreter17ComponentCompiler17set_include_pathsERKN5slint12SharedVectorIN5slint12SharedStringEEE">ComponentCompiler::set_include_paths (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N5slint11interpreter17ComponentCompiler9set_styleENSt11string_viewE">ComponentCompiler::set_style (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4NK5slint11interpreter17ComponentCompiler5styleEv">ComponentCompiler::style (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentCompiler.html#_CPPv4N5slint11interpreter17ComponentCompilerD0Ev">ComponentCompiler::~ComponentCompiler (C++ function)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N5slint11interpreter19ComponentDefinitionE">ComponentDefinition (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK5slint11interpreter19ComponentDefinition9callbacksEv">ComponentDefinition::callbacks (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N5slint11interpreter19ComponentDefinition19ComponentDefinitionERK19ComponentDefinition">ComponentDefinition::ComponentDefinition (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK5slint11interpreter19ComponentDefinition6createEv">ComponentDefinition::create (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK5slint11interpreter19ComponentDefinition16global_callbacksENSt11string_viewE">ComponentDefinition::global_callbacks (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK5slint11interpreter19ComponentDefinition17global_propertiesENSt11string_viewE">ComponentDefinition::global_properties (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK5slint11interpreter19ComponentDefinition7globalsEv">ComponentDefinition::globals (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK5slint11interpreter19ComponentDefinition4nameEv">ComponentDefinition::name (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N5slint11interpreter19ComponentDefinitionaSERK19ComponentDefinition">ComponentDefinition::operator= (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4NK5slint11interpreter19ComponentDefinition10propertiesEv">ComponentDefinition::properties (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentDefinition.html#_CPPv4N5slint11interpreter19ComponentDefinitionD0Ev">ComponentDefinition::~ComponentDefinition (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1ComponentHandle.html#_CPPv4I0EN5slint15ComponentHandleE">ComponentHandle (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1ComponentHandle.html#_CPPv4N5slint15ComponentHandle15ComponentHandleERKN6vtable3VRcIN11private_api15ComponentVTableE1TEE">ComponentHandle::ComponentHandle (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1ComponentHandle.html#_CPPv4NK5slint15ComponentHandle8into_dynEv">ComponentHandle::into_dyn (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1ComponentHandle.html#_CPPv4N5slint15ComponentHandlemlEv">ComponentHandle::operator* (C++ function)</a>, <a href="api/classslint_1_1ComponentHandle.html#_CPPv4NK5slint15ComponentHandlemlEv">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1ComponentHandle.html#_CPPv4N5slint15ComponentHandleptEv">ComponentHandle::operator-&gt; (C++ function)</a>, <a href="api/classslint_1_1ComponentHandle.html#_CPPv4NK5slint15ComponentHandleptEv">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4N5slint11interpreter17ComponentInstanceE">ComponentInstance (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance19get_global_propertyENSt11string_viewENSt11string_viewE">ComponentInstance::get_global_property (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance12get_propertyENSt11string_viewE">ComponentInstance::get_property (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance4hideEv">ComponentInstance::hide (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance6invokeENSt11string_viewENSt4spanIK5ValueEE">ComponentInstance::invoke (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance13invoke_globalENSt11string_viewENSt11string_viewENSt4spanIK5ValueEE">ComponentInstance::invoke_global (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance7qwidgetEv">ComponentInstance::qwidget (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance3runEv">ComponentInstance::run (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4I_NSt9invocableINSt4spanIK5ValueEEEEENK5slint11interpreter17ComponentInstance19set_global_callbackEbNSt11string_viewENSt11string_viewE1F">ComponentInstance::set_global_callback (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance19set_global_propertyENSt11string_viewENSt11string_viewERK5Value">ComponentInstance::set_global_property (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance12set_propertyENSt11string_viewERK5Value">ComponentInstance::set_property (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4NK5slint11interpreter17ComponentInstance4showEv">ComponentInstance::show (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1ComponentInstance.html#_CPPv4N5slint11interpreter17ComponentInstance6windowEv">ComponentInstance::window (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1ComponentWeakHandle.html#_CPPv4I0EN5slint19ComponentWeakHandleE">ComponentWeakHandle (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1ComponentWeakHandle.html#_CPPv4N5slint19ComponentWeakHandle19ComponentWeakHandleERK15ComponentHandleI1TE">ComponentWeakHandle::ComponentWeakHandle (C++ function)</a>, <a href="api/classslint_1_1ComponentWeakHandle.html#_CPPv4N5slint19ComponentWeakHandle19ComponentWeakHandleEv">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1ComponentWeakHandle.html#_CPPv4NK5slint19ComponentWeakHandle4lockEv">ComponentWeakHandle::lock (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1interpreter_1_1Diagnostic.html#_CPPv4N5slint11interpreter10DiagnosticE">Diagnostic (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Diagnostic.html#_CPPv4N5slint11interpreter10Diagnostic6columnE">Diagnostic::column (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Diagnostic.html#_CPPv4N5slint11interpreter10Diagnostic5levelE">Diagnostic::level (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Diagnostic.html#_CPPv4N5slint11interpreter10Diagnostic4lineE">Diagnostic::line (C++ member)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1interpreter_1_1Diagnostic.html#_CPPv4N5slint11interpreter10Diagnostic7messageE">Diagnostic::message (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Diagnostic.html#_CPPv4N5slint11interpreter10Diagnostic11source_fileE">Diagnostic::source_file (C++ member)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html#_CPPv4N5slint11interpreter15DiagnosticLevelE">DiagnosticLevel (C++ enum)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html#_CPPv4N5slint11interpreter15DiagnosticLevel5ErrorE">DiagnosticLevel::Error (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html#_CPPv4N5slint11interpreter15DiagnosticLevel7WarningE">DiagnosticLevel::Warning (C++ enumerator)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1FilterModel.html#_CPPv4I0EN5slint11FilterModelE">FilterModel (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1FilterModel.html#_CPPv4N5slint11FilterModel11FilterModelENSt10shared_ptrI5ModelI9ModelDataEEENSt8functionIFbRK9ModelDataEEE">FilterModel::FilterModel (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1FilterModel.html#_CPPv4N5slint11FilterModel5resetEv">FilterModel::reset (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1FilterModel.html#_CPPv4NK5slint11FilterModel9row_countEv">FilterModel::row_count (C++ function)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1FilterModel.html#_CPPv4NK5slint11FilterModel8row_dataE6size_t">FilterModel::row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1FilterModel.html#_CPPv4N5slint11FilterModel12set_row_dataE6size_tRK9ModelData">FilterModel::set_row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1FilterModel.html#_CPPv4NK5slint11FilterModel12source_modelEv">FilterModel::source_model (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1FilterModel.html#_CPPv4NK5slint11FilterModel14unfiltered_rowEi">FilterModel::unfiltered_row (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html#_CPPv4N5slint11GraphicsAPIE">GraphicsAPI (C++ enum)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html#_CPPv4N5slint11GraphicsAPI12NativeOpenGLE">GraphicsAPI::NativeOpenGL (C++ enumerator)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1Image.html#_CPPv4N5slint5ImageE">Image (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1Image.html#_CPPv4N5slint5Image5ImageE17SharedPixelBufferI10Rgba8PixelE">Image::Image (C++ function)</a>, <a href="api/structslint_1_1Image.html#_CPPv4N5slint5Image5ImageE17SharedPixelBufferI9Rgb8PixelE">[1]</a>, <a href="api/structslint_1_1Image.html#_CPPv4N5slint5Image5ImageEv">[2]</a>
+</li>
+        <li><a href="api/structslint_1_1Image.html#_CPPv4N5slint5Image14load_from_pathERK12SharedString">Image::load_from_path (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Image.html#_CPPv4N5slint5ImageneERK5ImageRK5Image">Image::operator!= (C++ function)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1Image.html#_CPPv4N5slint5ImageeqERK5ImageRK5Image">Image::operator== (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Image.html#_CPPv4NK5slint5Image4pathEv">Image::path (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Image.html#_CPPv4NK5slint5Image4sizeEv">Image::size (C++ function)</a>
+</li>
+        <li><a href="api/function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html#_CPPv4I_NSt9invocableEEN5slint22invoke_from_event_loopEv7Functor">invoke_from_event_loop (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1LogicalPosition.html#_CPPv4N5slint15LogicalPositionE">LogicalPosition (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1LogicalPosition.html#_CPPv4N5slint15LogicalPosition15LogicalPositionEK5PointIfE">LogicalPosition::LogicalPosition (C++ function)</a>, <a href="api/structslint_1_1LogicalPosition.html#_CPPv4N5slint15LogicalPosition15LogicalPositionEv">[1]</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1LogicalSize.html#_CPPv4N5slint11LogicalSizeE">LogicalSize (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1LogicalSize.html#_CPPv4N5slint11LogicalSize11LogicalSizeEK4SizeIfE">LogicalSize::LogicalSize (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1MapModel.html#_CPPv4I00EN5slint8MapModelE">MapModel (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1MapModel.html#_CPPv4N5slint8MapModel8MapModelENSt10shared_ptrI5ModelI15SourceModelDataEEENSt8functionIF15MappedModelDataRK15SourceModelDataEEE">MapModel::MapModel (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1MapModel.html#_CPPv4NK5slint8MapModel9row_countEv">MapModel::row_count (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1MapModel.html#_CPPv4NK5slint8MapModel8row_dataE6size_t">MapModel::row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1MapModel.html#_CPPv4NK5slint8MapModel12source_modelEv">MapModel::source_model (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4I0EN5slint5ModelE">Model (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4N5slint5Model5ModelERK5Model">Model::Model (C++ function)</a>, <a href="api/classslint_1_1Model.html#_CPPv4N5slint5Model5ModelEv">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4N5slint5ModelaSERK5Model">Model::operator= (C++ function)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4N5slint5Model5resetEv">Model::reset (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4N5slint5Model9row_addedE6size_t6size_t">Model::row_added (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4N5slint5Model11row_changedE6size_t">Model::row_changed (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4NK5slint5Model9row_countEv">Model::row_count (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4NK5slint5Model8row_dataE6size_t">Model::row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4N5slint5Model11row_removedE6size_t6size_t">Model::row_removed (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4N5slint5Model12set_row_dataE6size_tRK9ModelData">Model::set_row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Model.html#_CPPv4N5slint5ModelD0Ev">Model::~Model (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1PhysicalPosition.html#_CPPv4N5slint16PhysicalPositionE">PhysicalPosition (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1PhysicalPosition.html#_CPPv4N5slint16PhysicalPosition16PhysicalPositionEK5PointI7int32_tE">PhysicalPosition::PhysicalPosition (C++ function)</a>, <a href="api/structslint_1_1PhysicalPosition.html#_CPPv4N5slint16PhysicalPosition16PhysicalPositionEv">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1PhysicalSize.html#_CPPv4N5slint12PhysicalSizeE">PhysicalSize (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1PhysicalSize.html#_CPPv4N5slint12PhysicalSize12PhysicalSizeEK4SizeI8uint32_tE">PhysicalSize::PhysicalSize (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Point.html#_CPPv4I0EN5slint5PointE">Point (C++ struct)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1Point.html#_CPPv4NK5slint5PointeqERK5Point">Point::operator== (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Point.html#_CPPv4N5slint5Point1xE">Point::x (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1Point.html#_CPPv4N5slint5Point1yE">Point::y (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1PropertyDescriptor.html#_CPPv4N5slint11interpreter18PropertyDescriptorE">PropertyDescriptor (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1PropertyDescriptor.html#_CPPv4N5slint11interpreter18PropertyDescriptor13property_nameE">PropertyDescriptor::property_name (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1PropertyDescriptor.html#_CPPv4N5slint11interpreter18PropertyDescriptor13property_typeE">PropertyDescriptor::property_type (C++ member)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Q" class="genindex-section">
+  <h2>Q</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html#_CPPv4N5slint15quit_event_loopEv">quit_event_loop (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html#_CPPv4N5slint14RenderingStateE">RenderingState (C++ enum)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html#_CPPv4N5slint14RenderingState14AfterRenderingE">RenderingState::AfterRendering (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html#_CPPv4N5slint14RenderingState15BeforeRenderingE">RenderingState::BeforeRendering (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html#_CPPv4N5slint14RenderingState14RenderingSetupE">RenderingState::RenderingSetup (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html#_CPPv4N5slint14RenderingState17RenderingTeardownE">RenderingState::RenderingTeardown (C++ enumerator)</a>
+</li>
+        <li><a href="api/structslint_1_1Rgb8Pixel.html#_CPPv4N5slint9Rgb8PixelE">Rgb8Pixel (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1Rgb8Pixel.html#_CPPv4N5slint9Rgb8Pixel1bE">Rgb8Pixel::b (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1Rgb8Pixel.html#_CPPv4N5slint9Rgb8Pixel1gE">Rgb8Pixel::g (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1Rgb8Pixel.html#_CPPv4N5slint9Rgb8Pixel1rE">Rgb8Pixel::r (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1Rgba8Pixel.html#_CPPv4N5slint10Rgba8PixelE">Rgba8Pixel (C++ struct)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1Rgba8Pixel.html#_CPPv4N5slint10Rgba8Pixel1aE">Rgba8Pixel::a (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1Rgba8Pixel.html#_CPPv4N5slint10Rgba8Pixel1bE">Rgba8Pixel::b (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1Rgba8Pixel.html#_CPPv4N5slint10Rgba8Pixel1gE">Rgba8Pixel::g (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1Rgba8Pixel.html#_CPPv4N5slint10Rgba8Pixel1rE">Rgba8Pixel::r (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1RgbaColor.html#_CPPv4I0EN5slint9RgbaColorE">RgbaColor (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1RgbaColor.html#_CPPv4N5slint9RgbaColor5alphaE">RgbaColor::alpha (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1RgbaColor.html#_CPPv4N5slint9RgbaColor4blueE">RgbaColor::blue (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1RgbaColor.html#_CPPv4N5slint9RgbaColor5greenE">RgbaColor::green (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1RgbaColor.html#_CPPv4N5slint9RgbaColor3redE">RgbaColor::red (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1RgbaColor.html#_CPPv4N5slint9RgbaColor9RgbaColorERK5Color">RgbaColor::RgbaColor (C++ function)</a>, <a href="api/structslint_1_1RgbaColor.html#_CPPv4N5slint9RgbaColor9RgbaColorERK5Color">[1]</a>, <a href="api/structslint_1_1RgbaColor.html#_CPPv4N5slint9RgbaColor9RgbaColorERK5Color">[2]</a>
+</li>
+        <li><a href="api/function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html#_CPPv4N5slint14run_event_loopEv">run_event_loop (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html#_CPPv4N5slint25SetRenderingNotifierErrorE">SetRenderingNotifierError (C++ enum)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html#_CPPv4N5slint25SetRenderingNotifierError10AlreadySetE">SetRenderingNotifierError::AlreadySet (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html#_CPPv4N5slint25SetRenderingNotifierError11UnsupportedE">SetRenderingNotifierError::Unsupported (C++ enumerator)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4I0EN5slint17SharedPixelBufferE">SharedPixelBuffer (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4N5slint17SharedPixelBuffer5beginEv">SharedPixelBuffer::begin (C++ function)</a>, <a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4NK5slint17SharedPixelBuffer5beginEv">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4NK5slint17SharedPixelBuffer6cbeginEv">SharedPixelBuffer::cbegin (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4NK5slint17SharedPixelBuffer4cendEv">SharedPixelBuffer::cend (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4N5slint17SharedPixelBuffer3endEv">SharedPixelBuffer::end (C++ function)</a>, <a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4NK5slint17SharedPixelBuffer3endEv">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4NK5slint17SharedPixelBuffer6heightEv">SharedPixelBuffer::height (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4NK5slint17SharedPixelBuffereqERK17SharedPixelBuffer">SharedPixelBuffer::operator== (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4N5slint17SharedPixelBuffer17SharedPixelBufferE8uint32_t8uint32_t">SharedPixelBuffer::SharedPixelBuffer (C++ function)</a>, <a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4N5slint17SharedPixelBuffer17SharedPixelBufferE8uint32_t8uint32_tPK5Pixel">[1]</a>, <a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4N5slint17SharedPixelBuffer17SharedPixelBufferEv">[2]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedPixelBuffer.html#_CPPv4NK5slint17SharedPixelBuffer5widthEv">SharedPixelBuffer::width (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringE">SharedString (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4NK5slint12SharedString5beginEv">SharedString::begin (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4NK5slint12SharedString4dataEv">SharedString::data (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4NK5slint12SharedString5emptyEv">SharedString::empty (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4NK5slint12SharedString3endEv">SharedString::end (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4NK5slint12SharedString9ends_withENSt11string_viewE">SharedString::ends_with (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedString11from_numberEd">SharedString::from_number (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4NK5slint12SharedStringcvNSt11string_viewEEv">SharedString::operator std::string_view (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringneERK12SharedStringRK12SharedString">SharedString::operator!= (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringplERK12SharedStringNSt11string_viewE">SharedString::operator+ (C++ function)</a>, <a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringplERR12SharedStringNSt11string_viewE">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringpLENSt11string_viewE">SharedString::operator+= (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringltERK12SharedStringRK12SharedString">SharedString::operator&lt; (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringlsERNSt7ostreamERK12SharedString">SharedString::operator&lt;&lt; (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringleERK12SharedStringRK12SharedString">SharedString::operator&lt;= (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringaSENSt11string_viewE">SharedString::operator= (C++ function)</a>, <a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringaSEPKc">[1]</a>, <a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringaSERK12SharedString">[2]</a>, <a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringaSERR12SharedString">[3]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringeqERK12SharedStringRK12SharedString">SharedString::operator== (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringgtERK12SharedStringRK12SharedString">SharedString::operator&gt; (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringgeERK12SharedStringRK12SharedString">SharedString::operator&gt;= (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedString12SharedStringENSt11string_viewE">SharedString::SharedString (C++ function)</a>, <a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedString12SharedStringEPKc">[1]</a>, <a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedString12SharedStringERK12SharedString">[2]</a>, <a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedString12SharedStringEv">[3]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4NK5slint12SharedString11starts_withENSt11string_viewE">SharedString::starts_with (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedString.html#_CPPv4N5slint12SharedStringD0Ev">SharedString::~SharedString (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4I0EN5slint12SharedVectorE">SharedVector (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4NK5slint12SharedVector2atENSt6size_tE">SharedVector::at (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector5beginEv">SharedVector::begin (C++ function)</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4NK5slint12SharedVector5beginEv">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4NK5slint12SharedVector6cbeginEv">SharedVector::cbegin (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4NK5slint12SharedVector4cendEv">SharedVector::cend (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector5clearEv">SharedVector::clear (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4NK5slint12SharedVector5emptyEv">SharedVector::empty (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector3endEv">SharedVector::end (C++ function)</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4NK5slint12SharedVector3endEv">[1]</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVectoraSERK12SharedVector">SharedVector::operator= (C++ function)</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVectoraSERR12SharedVector">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVectoreqERK12SharedVectorRK12SharedVector">SharedVector::operator== (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVectorixENSt6size_tE">SharedVector::operator[] (C++ function)</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4NK5slint12SharedVectorixENSt6size_tE">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector9push_backERK1T">SharedVector::push_back (C++ function)</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector9push_backERR1T">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4I0EN5slint12SharedVector12SharedVectorE7InputIt7InputIt">SharedVector::SharedVector (C++ function)</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector12SharedVectorE6size_t">[1]</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector12SharedVectorE6size_tRK1T">[2]</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector12SharedVectorENSt16initializer_listI1TEE">[3]</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector12SharedVectorERK12SharedVector">[4]</a>, <a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVector12SharedVectorEv">[5]</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4NK5slint12SharedVector4sizeEv">SharedVector::size (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1SharedVector.html#_CPPv4N5slint12SharedVectorD0Ev">SharedVector::~SharedVector (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Size.html#_CPPv4I0EN5slint4SizeE">Size (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1Size.html#_CPPv4N5slint4Size6heightE">Size::height (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1Size.html#_CPPv4NK5slint4SizeeqERK4Size">Size::operator== (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Size.html#_CPPv4N5slint4Size5widthE">Size::width (C++ member)</a>
+</li>
+        <li><a href="api/define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html#c.SLINT_VERSION_MAJOR">SLINT_VERSION_MAJOR (C macro)</a>
+</li>
+        <li><a href="api/define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html#c.SLINT_VERSION_MINOR">SLINT_VERSION_MINOR (C macro)</a>
+</li>
+        <li><a href="api/define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html#c.SLINT_VERSION_PATCH">SLINT_VERSION_PATCH (C macro)</a>
+</li>
+        <li><a href="api/classslint_1_1SortModel.html#_CPPv4I0EN5slint9SortModelE">SortModel (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1SortModel.html#_CPPv4N5slint9SortModel5resetEv">SortModel::reset (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1SortModel.html#_CPPv4NK5slint9SortModel9row_countEv">SortModel::row_count (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1SortModel.html#_CPPv4NK5slint9SortModel8row_dataE6size_t">SortModel::row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1SortModel.html#_CPPv4N5slint9SortModel12set_row_dataE6size_tRK9ModelData">SortModel::set_row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1SortModel.html#_CPPv4N5slint9SortModel9SortModelENSt10shared_ptrI5ModelI9ModelDataEEENSt8functionIFbRK9ModelDataRK9ModelDataEEE">SortModel::SortModel (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1SortModel.html#_CPPv4NK5slint9SortModel12source_modelEv">SortModel::source_model (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1SortModel.html#_CPPv4NK5slint9SortModel12unsorted_rowEi">SortModel::unsorted_row (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1StandardListViewItem.html#_CPPv4N5slint20StandardListViewItemE">StandardListViewItem (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1StandardListViewItem.html#_CPPv4N5slint20StandardListViewItem4textE">StandardListViewItem::text (C++ member)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6StructE">Struct (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4NK5slint11interpreter6Struct5beginEv">Struct::begin (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4NK5slint11interpreter6Struct3endEv">Struct::end (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4NK5slint11interpreter6Struct9get_fieldENSt11string_viewE">Struct::get_field (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iteratorE">Struct::iterator (C++ struct)</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iteratorE">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iterator8iteratorERK8iterator">Struct::iterator::iterator (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iterator8iteratorERR8iterator">[1]</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iterator8iteratorERK8iterator">[2]</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iterator8iteratorERR8iterator">[3]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iteratorneERK8iteratorRK8iterator">Struct::iterator::operator!= (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iteratorneERK8iteratorRK8iterator">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4NK5slint11interpreter6Struct8iteratormlEv">Struct::iterator::operator* (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4NK5slint11interpreter6Struct8iteratormlEv">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iteratorppEv">Struct::iterator::operator++ (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iteratorppEv">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iteratoraSERK8iterator">Struct::iterator::operator= (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iteratoraSERR8iterator">[1]</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iteratoraSERK8iterator">[2]</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iteratoraSERR8iterator">[3]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iteratoreqERK8iteratorRK8iterator">Struct::iterator::operator== (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iteratoreqERK8iteratorRK8iterator">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iterator10value_typeE">Struct::iterator::value_type (C++ type)</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iterator10value_typeE">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct8iteratorD0Ev">Struct::iterator::~iterator (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct_1_1iterator.html#_CPPv4N5slint11interpreter6Struct8iteratorD0Ev">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6StructaSERK6Struct">Struct::operator= (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6StructaSERR6Struct">[1]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct9set_fieldENSt11string_viewERK5Value">Struct::set_field (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4I0EN5slint11interpreter6Struct6StructE13InputIterator13InputIterator">Struct::Struct (C++ function)</a>, <a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct6StructENSt16initializer_listINSt4pairINSt11string_viewE5ValueEEEE">[1]</a>, <a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct6StructERK6Struct">[2]</a>, <a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct6StructERR6Struct">[3]</a>, <a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6Struct6StructEv">[4]</a>
+</li>
+        <li><a href="api/structslint_1_1interpreter_1_1Struct.html#_CPPv4N5slint11interpreter6StructD0Ev">Struct::~Struct (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4N5slint5TimerE">Timer (C++ struct)</a>
+</li>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4N5slint5TimeraSERK5Timer">Timer::operator= (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4N5slint5Timer7restartEv">Timer::restart (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4NK5slint5Timer7runningEv">Timer::running (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4I_NSt9invocableEEN5slint5Timer11single_shotEvNSt6chrono12millisecondsE1F">Timer::single_shot (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4I_NSt9invocableEEN5slint5Timer5startEv9TimerModeNSt6chrono12millisecondsE1F">Timer::start (C++ function)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4N5slint5Timer4stopEv">Timer::stop (C++ function)</a>
+</li>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4I_NSt9invocableEEN5slint5Timer5TimerENSt6chrono12millisecondsE1F">Timer::Timer (C++ function)</a>, <a href="api/structslint_1_1Timer.html#_CPPv4N5slint5Timer5TimerERK5Timer">[1]</a>, <a href="api/structslint_1_1Timer.html#_CPPv4N5slint5Timer5TimerEv">[2]</a>
+</li>
+        <li><a href="api/structslint_1_1Timer.html#_CPPv4N5slint5TimerD0Ev">Timer::~Timer (C++ function)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html#_CPPv4N5slint9TimerModeE">TimerMode (C++ enum)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html#_CPPv4N5slint9TimerMode8RepeatedE">TimerMode::Repeated (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html#_CPPv4N5slint9TimerMode10SingleShotE">TimerMode::SingleShot (C++ enumerator)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueE">Value (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueaSERK5Value">Value::operator= (C++ function)</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueaSERR5Value">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueeqERK5ValueRK5Value">Value::operator== (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4NK5slint11interpreter5Value8to_arrayEv">Value::to_array (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4NK5slint11interpreter5Value7to_boolEv">Value::to_bool (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4NK5slint11interpreter5Value8to_brushEv">Value::to_brush (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4NK5slint11interpreter5Value8to_imageEv">Value::to_image (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4NK5slint11interpreter5Value9to_numberEv">Value::to_number (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4NK5slint11interpreter5Value9to_stringEv">Value::to_string (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4NK5slint11interpreter5Value9to_structEv">Value::to_struct (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4NK5slint11interpreter5Value4typeEv">Value::type (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value4TypeE">Value::Type (C++ type)</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueERK12SharedString">Value::Value (C++ function)</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueERK12SharedVectorI5ValueE">[1]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueERK5Image">[2]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueERK5Value">[3]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueERK6Struct">[4]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueERKN5slint5BrushE">[5]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueERKNSt10shared_ptrIN5slint5ModelI5ValueEEEE">[6]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueERR5Value">[7]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueEb">[8]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueEd">[9]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueEi">[10]</a>, <a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5Value5ValueEv">[11]</a>
+</li>
+        <li><a href="api/classslint_1_1interpreter_1_1Value.html#_CPPv4N5slint11interpreter5ValueD0Ev">Value::~Value (C++ function)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueTypeE">ValueType (C++ enum)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType4BoolE">ValueType::Bool (C++ enumerator)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType5BrushE">ValueType::Brush (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType5ImageE">ValueType::Image (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType5ModelE">ValueType::Model (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType6NumberE">ValueType::Number (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType5OtherE">ValueType::Other (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType6StringE">ValueType::String (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType6StructE">ValueType::Struct (C++ enumerator)</a>
+</li>
+        <li><a href="api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html#_CPPv4N5slint11interpreter9ValueType4VoidE">ValueType::Void (C++ enumerator)</a>
+</li>
+        <li><a href="api/classslint_1_1VectorModel.html#_CPPv4I0EN5slint11VectorModelE">VectorModel (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1VectorModel.html#_CPPv4N5slint11VectorModel5eraseE6size_t">VectorModel::erase (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1VectorModel.html#_CPPv4N5slint11VectorModel6insertE6size_tRK9ModelData">VectorModel::insert (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1VectorModel.html#_CPPv4N5slint11VectorModel9push_backERK9ModelData">VectorModel::push_back (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1VectorModel.html#_CPPv4NK5slint11VectorModel9row_countEv">VectorModel::row_count (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1VectorModel.html#_CPPv4NK5slint11VectorModel8row_dataE6size_t">VectorModel::row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1VectorModel.html#_CPPv4N5slint11VectorModel12set_row_dataE6size_tRK9ModelData">VectorModel::set_row_data (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1VectorModel.html#_CPPv4N5slint11VectorModel11VectorModelENSt6vectorI9ModelDataEE">VectorModel::VectorModel (C++ function)</a>, <a href="api/classslint_1_1VectorModel.html#_CPPv4N5slint11VectorModel11VectorModelEv">[1]</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4N5slint6WindowE">Window (C++ class)</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4N5slint6Window4hideEv">Window::hide (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4NK5slint6Window10is_visibleEv">Window::is_visible (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4N5slint6WindowaSERK6Window">Window::operator= (C++ function)</a>, <a href="api/classslint_1_1Window.html#_CPPv4N5slint6WindowaSERR6Window">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4NK5slint6Window8positionEv">Window::position (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4NK5slint6Window14request_redrawEv">Window::request_redraw (C++ function)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4N5slint6Window12set_positionERKN5slint15LogicalPositionE">Window::set_position (C++ function)</a>, <a href="api/classslint_1_1Window.html#_CPPv4N5slint6Window12set_positionERKN5slint16PhysicalPositionE">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4I_NSt9invocableI14RenderingState11GraphicsAPIEEENK5slint6Window22set_rendering_notifierENSt8optionalI25SetRenderingNotifierErrorEERR1F">Window::set_rendering_notifier (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4N5slint6Window8set_sizeERKN5slint11LogicalSizeE">Window::set_size (C++ function)</a>, <a href="api/classslint_1_1Window.html#_CPPv4N5slint6Window8set_sizeERKN5slint12PhysicalSizeE">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4N5slint6Window4showEv">Window::show (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4NK5slint6Window4sizeEv">Window::size (C++ function)</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4N5slint6Window6WindowERK6Window">Window::Window (C++ function)</a>, <a href="api/classslint_1_1Window.html#_CPPv4N5slint6Window6WindowERR6Window">[1]</a>
+</li>
+        <li><a href="api/classslint_1_1Window.html#_CPPv4N5slint6WindowD0Ev">Window::~Window (C++ function)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/1.0.0/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/1.0.0/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // Safari blocks quite heavily when creating many WebGL contexts, slowing down loading of the docs
+        // significantly. For now, don't do automatic previews:
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            return false;
+        }
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

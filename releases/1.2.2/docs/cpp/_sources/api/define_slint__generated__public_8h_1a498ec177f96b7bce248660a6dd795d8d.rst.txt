@@ -1,0 +1,13 @@
+.. _exhale_define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d:
+
+Define SLINT_VERSION_PATCH
+==========================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_generated_public.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SLINT_VERSION_PATCH

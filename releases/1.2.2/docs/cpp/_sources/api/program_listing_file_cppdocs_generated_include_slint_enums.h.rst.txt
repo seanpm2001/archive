@@ -1,0 +1,79 @@
+
+.. _program_listing_file_cppdocs_generated_include_slint_enums.h:
+
+Program Listing for File slint_enums.h
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_cppdocs_generated_include_slint_enums.h>` (``cppdocs/generated_include/slint_enums.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   // This file is auto-generated from xtask/src/../../api/cpp/cbindgen.rs
+   namespace slint {
+   enum class PointerEventButton {
+       Other,
+       Left,
+       Right,
+       Middle,
+   };
+   }
+   
+   namespace slint::platform::key_codes {
+   
+   constexpr std::u8string_view Backspace = u8"\u0008";
+   constexpr std::u8string_view Tab = u8"\u0009";
+   constexpr std::u8string_view Return = u8"\u000a";
+   constexpr std::u8string_view Escape = u8"\u001b";
+   constexpr std::u8string_view Backtab = u8"\u0019";
+   constexpr std::u8string_view Delete = u8"\u007f";
+   constexpr std::u8string_view Shift = u8"\u0010";
+   constexpr std::u8string_view Control = u8"\u0011";
+   constexpr std::u8string_view Alt = u8"\u0012";
+   constexpr std::u8string_view AltGr = u8"\u0013";
+   constexpr std::u8string_view CapsLock = u8"\u0014";
+   constexpr std::u8string_view ShiftR = u8"\u0015";
+   constexpr std::u8string_view ControlR = u8"\u0016";
+   constexpr std::u8string_view Meta = u8"\u0017";
+   constexpr std::u8string_view MetaR = u8"\u0018";
+   constexpr std::u8string_view UpArrow = u8"\uf700";
+   constexpr std::u8string_view DownArrow = u8"\uf701";
+   constexpr std::u8string_view LeftArrow = u8"\uf702";
+   constexpr std::u8string_view RightArrow = u8"\uf703";
+   constexpr std::u8string_view F1 = u8"\uf704";
+   constexpr std::u8string_view F2 = u8"\uf705";
+   constexpr std::u8string_view F3 = u8"\uf706";
+   constexpr std::u8string_view F4 = u8"\uf707";
+   constexpr std::u8string_view F5 = u8"\uf708";
+   constexpr std::u8string_view F6 = u8"\uf709";
+   constexpr std::u8string_view F7 = u8"\uf70a";
+   constexpr std::u8string_view F8 = u8"\uf70b";
+   constexpr std::u8string_view F9 = u8"\uf70c";
+   constexpr std::u8string_view F10 = u8"\uf70d";
+   constexpr std::u8string_view F11 = u8"\uf70e";
+   constexpr std::u8string_view F12 = u8"\uf70f";
+   constexpr std::u8string_view F13 = u8"\uf710";
+   constexpr std::u8string_view F14 = u8"\uf711";
+   constexpr std::u8string_view F15 = u8"\uf712";
+   constexpr std::u8string_view F16 = u8"\uf713";
+   constexpr std::u8string_view F17 = u8"\uf714";
+   constexpr std::u8string_view F18 = u8"\uf715";
+   constexpr std::u8string_view F19 = u8"\uf716";
+   constexpr std::u8string_view F20 = u8"\uf717";
+   constexpr std::u8string_view F21 = u8"\uf718";
+   constexpr std::u8string_view F22 = u8"\uf719";
+   constexpr std::u8string_view F23 = u8"\uf71a";
+   constexpr std::u8string_view F24 = u8"\uf71b";
+   constexpr std::u8string_view Insert = u8"\uf727";
+   constexpr std::u8string_view Home = u8"\uf729";
+   constexpr std::u8string_view End = u8"\uf72b";
+   constexpr std::u8string_view PageUp = u8"\uf72c";
+   constexpr std::u8string_view PageDown = u8"\uf72d";
+   constexpr std::u8string_view ScrollLock = u8"\uf72f";
+   constexpr std::u8string_view Pause = u8"\uf730";
+   constexpr std::u8string_view SysReq = u8"\uf731";
+   constexpr std::u8string_view Stop = u8"\uf734";
+   constexpr std::u8string_view Menu = u8"\uf735";
+   }

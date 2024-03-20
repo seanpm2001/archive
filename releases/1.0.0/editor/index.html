@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        
+        <title>SlintPad</title>
+        <script id="inline-sw">
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker.register("./service_worker.js", {
+                        scope: "./",
+                    });
+                });
+            }
+        </script>
+        <link
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            rel="stylesheet"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+            crossorigin="anonymous"
+        />
+        
+      <script type="module" crossorigin src="./assets/index-188e763e.js"></script>
+      <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-3cfb730f.js">
+      <link rel="stylesheet" href="./assets/index-73a6c9c3.css">
+    </head>
+
+    <body>
+        <div class="loader" style="z-index: 1000; position: absolute">
+            <img class="loader-image" src="./assets/loader-2d07109e.svg" />
+        </div>
+    </body>
+</html>

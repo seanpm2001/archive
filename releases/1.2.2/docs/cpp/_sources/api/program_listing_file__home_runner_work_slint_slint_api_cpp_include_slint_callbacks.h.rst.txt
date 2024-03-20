@@ -1,0 +1,106 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_callbacks.h:
+
+Program Listing for File slint_callbacks.h
+==========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint_callbacks.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint_callbacks.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint.dev>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-Royalty-free-1.1 OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   #include <tuple>
+   #include "slint_properties_internal.h"
+   
+   namespace slint::private_api {
+   
+   template<typename = void()>
+   struct Callback;
+   template<typename Ret, typename... Arg>
+   struct Callback<Ret(Arg...)>
+   {
+       Callback() { cbindgen_private::slint_callback_init(&inner); }
+       ~Callback() { cbindgen_private::slint_callback_drop(&inner); }
+       Callback(const Callback &) = delete;
+       Callback(Callback &&) = delete;
+       Callback &operator=(const Callback &) = delete;
+   
+       template<typename F>
+       void set_handler(F binding) const
+       {
+           cbindgen_private::slint_callback_set_handler(
+                   &inner,
+                   [](void *user_data, const void *arg, void *ret) {
+                       *reinterpret_cast<Ret *>(ret) =
+                               std::apply(*reinterpret_cast<F *>(user_data),
+                                          *reinterpret_cast<const Tuple *>(arg));
+                   },
+                   new F(std::move(binding)),
+                   [](void *user_data) { delete reinterpret_cast<F *>(user_data); });
+       }
+   
+       Ret call(const Arg &...arg) const
+       {
+           Ret r {};
+           Tuple tuple { arg... };
+           cbindgen_private::slint_callback_call(&inner, &tuple, &r);
+           return r;
+       }
+   
+   private:
+       using Tuple = std::tuple<Arg...>;
+       cbindgen_private::CallbackOpaque inner;
+   };
+   
+   template<typename... Arg>
+   struct Callback<void(Arg...)>
+   {
+       Callback() { cbindgen_private::slint_callback_init(&inner); }
+       ~Callback() { cbindgen_private::slint_callback_drop(&inner); }
+       Callback(const Callback &) = delete;
+       Callback(Callback &&) = delete;
+       Callback &operator=(const Callback &) = delete;
+   
+       template<typename F>
+       void set_handler(F binding) const
+       {
+           cbindgen_private::slint_callback_set_handler(
+                   &inner,
+                   [](void *user_data, const void *arg, void *) {
+                       std::apply(*reinterpret_cast<F *>(user_data),
+                                  *reinterpret_cast<const Tuple *>(arg));
+                   },
+                   new F(std::move(binding)),
+                   [](void *user_data) { delete reinterpret_cast<F *>(user_data); });
+       }
+   
+       void call(const Arg &...arg) const
+       {
+           Tuple tuple { arg... };
+           cbindgen_private::slint_callback_call(&inner, &tuple, reinterpret_cast<void *>(0x1));
+       }
+   
+   private:
+       using Tuple = std::tuple<Arg...>;
+       cbindgen_private::CallbackOpaque inner;
+   };
+   
+   template<typename A, typename R>
+   struct CallbackSignatureHelper
+   {
+       using Result = R(A);
+   };
+   template<typename R>
+   struct CallbackSignatureHelper<void, R>
+   {
+       using Result = R();
+   };
+   template<typename A, typename R = void>
+   using CallbackHelper = Callback<typename CallbackSignatureHelper<A, R>::Result>;
+   
+   } // namespace slint

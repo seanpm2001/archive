@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Clipboard","Key","PlatformError","PointerEventButton","SetPlatformError","WindowEvent"],"fn":["duration_until_next_timer_update","set_platform","update_timers_and_animations"],"mod":["femtovg_renderer","software_renderer"],"struct":["LayoutConstraints","WindowProperties"],"trait":["EventLoopProxy","Platform","Renderer","WindowAdapter"]};

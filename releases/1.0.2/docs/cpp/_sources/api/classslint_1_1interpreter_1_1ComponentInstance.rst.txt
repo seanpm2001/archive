@@ -1,0 +1,26 @@
+.. _exhale_class_classslint_1_1interpreter_1_1ComponentInstance:
+
+Class ComponentInstance
+=======================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_interpreter.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``private vtable::Dyn``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::interpreter::ComponentInstance
+   :project: Slint
+   :members:
+   :protected-members:
+   :undoc-members:

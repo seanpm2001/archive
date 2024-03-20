@@ -1,0 +1,16 @@
+.. _exhale_class_classslint_1_1Window:
+
+Class Window
+============
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint_window.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::Window
+   :members:
+   :protected-members:
+   :undoc-members:

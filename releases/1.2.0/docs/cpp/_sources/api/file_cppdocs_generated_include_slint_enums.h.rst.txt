@@ -1,0 +1,161 @@
+
+.. _file_cppdocs_generated_include_slint_enums.h:
+
+File slint_enums.h
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir_cppdocs_generated_include>` (``cppdocs/generated_include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+Definition (``cppdocs/generated_include/slint_enums.h``)
+--------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_cppdocs_generated_include_slint_enums.h.rst
+
+
+
+
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_cppdocs_generated_include_slint_enums_internal.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_slint`
+
+- :ref:`namespace_slint__platform`
+
+- :ref:`namespace_slint__platform__key_codes`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespaceslint_1a88e5489a21965b1a271bf90ee12f1c6e`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a569d5973c36441dd8fb3c88a61c48b7d`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a4c83e50d2ba5a7d2f9399053f84e064f`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a73b54ab296bc68ad7fd177222471679f`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1ac32910f77f4588aa03446574e7e6b48b`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a0456177e3225079f495df1a40eb25de6`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1aae06cbdc02fdffe6a787214d25e0ed19`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1ab78ea33dc3464497974100b841eeec4c`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1af674468525494d802b017d421f0432e7`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a472bf83dfe8bd88399ff9e0a6c36d950`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1ae75e3231824370890cc26cda0fe07a75`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1ad3a76f93967bed6e0bf1055d2fb5f97b`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a037e34a7a75bd9b8fc07b0f5039302df`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a8c063c4c238f189edd899b96c42f509b`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1aa46f7e2b5c3f817227683cf5c2d8b92a`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a293f7e38adb43a8f5434e8e900678652`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a6b813cb686d89e8e8d3891259b7115d9`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a72a98f7ac7b1893a25fb20f78dd42675`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a6e73cc7ade6d8452c8c2047ec00964bb`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1ab59f14f7e68c980b6db14852df2c5262`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1addf9890750954a90f025235fdd82e9b4`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a9cd8a0d139cafb40c54c9613d8a23bb3`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a5e01d967f144985e037cd53181559909`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a8d46c4e5ef87c72b2c3fd3a0d34c0bef`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a8551fc7e5309b803a5324347445c6d0e`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1add3be02945fa6ebc94a99e2fc2d7ba20`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1aff5729be964f23fc970f5f80217f5bec`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a597926fdfddd8a0e466a3f82b7ce2fcd`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a00330cf08e78888ec33cb4aad7695f2c`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1aa68b696b0425e397cb24edae6528a68c`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a20afa8a531fee6e8d2503f3670d29b76`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a799426f66be94c7aeab5798ece7ff2bf`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a7d33f3bd6fbde5f7556df7c2996ab0ed`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1abf6255bec49fffb7c7228476877932b7`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a986ca27ff73d68aaa7bacb4d5c509fba`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a851d09118169ae64d44c1ce04cc3d39d`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1acab5a3836aa794489b91f3cc06a1e4ad`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a427463ae65210afe9d5a966d00a8b4f6`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a13c2d54873316cd42061a8b65db36361`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a1375031be6c0b8c45d9df956037df69d`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a7f6e9766b89ac25f49671e6a606109ba`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a16fb91042adacd1de93bcf8a108cca8b`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1aa329a177650db85052f4a4ce45abf32d`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1ade29cc46911c0d95f1a0601870117c8a`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a1907927aae2e873492ea4d266d6e9009`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1aba893f8091b3e8be97636d2144047818`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1ad2e7bbf67cfcea73f242d193bb541e42`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a65876fa90448017ac586c13a47ce604b`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1af883c4301b011c64a67d98c7369d674e`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1af56ac133d6d5242fb4f547d5546cb42f`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a5a2a920d1055575213a0959dc16a3661`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1ad3ba1170ea89d2feaebadff11cf01871`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1adf1a443c827c42391ffbb0cbbf1da3f8`
+
+- :ref:`exhale_variable_namespaceslint_1_1platform_1_1key__codes_1a8bd8df35acb6a08504e955d18b85b4fe`
+

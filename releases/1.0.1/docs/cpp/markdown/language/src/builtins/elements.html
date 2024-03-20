@@ -1,0 +1,1468 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
+
+    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+        <title>Builtin Elements - Slint C++ API documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/theme_tweak.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">Slint C++ API  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="https://slint-ui.com/logo/slint-logo-small-light.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Slint C++ API  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cmake.html">Installing Or Building With CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">First Steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">C++ / .slint Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../types.html">Type Mapping to C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_code.html">Example Generated Code</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/library_root.html">C++ API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/namespace_slint.html">Namespace slint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/namespace_slint__interpreter.html">Namespace slint::interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Image.html">Struct Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1interpreter_1_1Diagnostic.html">Struct Diagnostic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1interpreter_1_1PropertyDescriptor.html">Struct PropertyDescriptor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1interpreter_1_1Struct.html">Struct Struct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1interpreter_1_1Struct_1_1iterator.html">Struct Struct::iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1LogicalPosition.html">Struct LogicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1LogicalSize.html">Struct LogicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1PhysicalPosition.html">Struct PhysicalPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1PhysicalSize.html">Struct PhysicalSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Point.html">Template Struct Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Rgb8Pixel.html">Struct Rgb8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Rgba8Pixel.html">Struct Rgba8Pixel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1RgbaColor.html">Template Struct RgbaColor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1SharedPixelBuffer.html">Template Struct SharedPixelBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1SharedString.html">Struct SharedString</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1SharedVector.html">Template Struct SharedVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Size.html">Template Struct Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1StandardListViewItem.html">Struct StandardListViewItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/structslint_1_1Timer.html">Struct Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1Brush.html">Class Brush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1Color.html">Class Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1ComponentHandle.html">Template Class ComponentHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1ComponentWeakHandle.html">Template Class ComponentWeakHandle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1FilterModel.html">Template Class FilterModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1interpreter_1_1ComponentCompiler.html">Class ComponentCompiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1interpreter_1_1ComponentDefinition.html">Class ComponentDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1interpreter_1_1ComponentInstance.html">Class ComponentInstance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1interpreter_1_1Value.html">Class Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1MapModel.html">Template Class MapModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1Model.html">Template Class Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1SortModel.html">Template Class SortModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1VectorModel.html">Template Class VectorModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/classslint_1_1Window.html">Class Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1a9b8672f3333a9d534f3c1ecd8497b833.html">Enum CloseRequestResponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1a363af807a22999b1816ca4f57a40abf1.html">Enum GraphicsAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6.html">Enum DiagnosticLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0.html">Enum ValueType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1acf929c06c4c92899f6534ad9bc92e20a.html">Enum RenderingState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1ad4eb7e86e076aa0f5133a132c364c233.html">Enum SetRenderingNotifierError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/enum_namespaceslint_1a90456661c07d02d73ab90733c8755282.html">Enum TimerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/function_namespaceslint_1a9ade5df8e39fbec7d2af3c0dd3bd4d9c.html">Template Function slint::blocking_invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/function_namespaceslint_1a4067c90b05ef4cb20e055117b0263430.html">Template Function slint::invoke_from_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/function_namespaceslint_1a14298dd1f4c7ab8c553e047e3704d6d0.html">Function slint::quit_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/function_namespaceslint_1aa9c106cd8c8b682c8624dcf47c31ae16.html">Function slint::run_event_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/define_slint__generated__public_8h_1aeb2b5fc045f08ccf894bd47b2696b853.html">Define SLINT_VERSION_MAJOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/define_slint__generated__public_8h_1aba0d27c0c821a27a3726baa609646ea9.html">Define SLINT_VERSION_MINOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/define_slint__generated__public_8h_1a498ec177f96b7bce248660a6dd795d8d.html">Define SLINT_VERSION_PATCH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging_techniques.html">Debugging Techniques</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="builtin-elements">
+<h1>Builtin Elements<a class="headerlink" href="#builtin-elements" title="Permalink to this headline">#</a></h1>
+<section id="common-properties">
+<h2>Common properties<a class="headerlink" href="#common-properties" title="Permalink to this headline">#</a></h2>
+<section id="geometry">
+<h3>Geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">#</a></h3>
+<p>These properties are valid on all visible items:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">height</span></code></strong> (<em>in</em> <em>length</em>): The size of the element. When set, this overrides the default size.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">x</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">y</span></code></strong> (<em>in</em> <em>length</em>): The position of the element relative to its parent.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">z</span></code></strong> (<em>in</em> <em>float</em>): Allows to specify a different order to stack the items with its siblings. (default value: 0)</p></li>
+</ul>
+</section>
+<section id="layout">
+<h3>Layout<a class="headerlink" href="#layout" title="Permalink to this headline">#</a></h3>
+<p>These properties are valid on all visible items and can be used to specify constraints when used in layouts:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">col</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">row</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">colspan</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">rowspan</span></code></strong> (<em>in</em> <em>int</em>): See <a class="reference internal" href="#gridlayout"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code></span></a>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">horizontal-stretch</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">vertical-stretch</span></code></strong> (<em>in-out</em> <em>float</em>): Specify how much relative space these elements are stretching in a layout. When 0, this means that the elements won’t be stretched unless all elements are 0. Builtin widgets have a value of either 0 or 1.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">max-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">max-height</span></code></strong> (<em>in</em> <em>length</em>): The maximum size of an element</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">min-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">min-height</span></code></strong> (<em>in</em> <em>length</em>): The minimum size of an element</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">preferred-width</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">preferred-height</span></code></strong> (<em>in</em> <em>length</em>): The preferred size of an element</p></li>
+</ul>
+</section>
+<section id="miscellaneous">
+<h3>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">cache-rendering-hint</span></code></strong> (<em>in</em> <em>bool</em>): When set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, this provides a hint to the renderer to cache the contents of the element and all the children into an intermediate cached layer. For complex sub-trees that rarely change this may speed up the rendering, at the expense of increased memory consumption. Not all rendering backends support this, so this is merely a hint. (default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dialog-button-role</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#dialogbuttonrole"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">DialogButtonRole</span></code></span></a></em>): Specify that this is a button in a <code class="docutils literal notranslate"><span class="pre">Dialog</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">opacity</span></code></strong> (<em>in</em> <em>float</em>): A value between 0 and 1 (or a percentage) that is used to draw
+the element and its children with transparency.
+0 is fully transparent (invisible), and 1 is fully opaque.
+The opacity is applied to the tree of child elements as if they
+were first drawn into an intermediate layer, and then the whole layer is rendered with this opacity.
+(default value: 1)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">visible</span></code></strong> (<em>in</em> <em>bool</em>): When set to <code class="docutils literal notranslate"><span class="pre">false</span></code>, the element and all his children won’t be drawn and not react to mouse input (default value: <code class="docutils literal notranslate"><span class="pre">true</span></code>)</p></li>
+</ul>
+<p>The following example demonstrates the <code class="docutils literal notranslate"><span class="pre">opacity</span></code> property with children. An opacity is applied to the red rectangle. Since the green rectangle is a child of the red one, you can see the gradient underneath it, but you can’t see the red rectangle through the green one.</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 100px;
+    height: 100px;
+    background: @radial-gradient(circle, black, white, black, white);
+    Rectangle {
+        opacity: 0.5;
+        background: red;
+        border-color: #822;
+        border-width: 5px;
+        width: 50px; height: 50px;
+        x: 10px; y: 10px;
+        Rectangle {
+            background: green;
+            border-color: #050;
+            border-width: 5px;
+            width: 50px; height: 50px;
+            x: 25px; y: 25px;
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="accessibility">
+<h3>Accessibility<a class="headerlink" href="#accessibility" title="Permalink to this headline">#</a></h3>
+<p>Use the following <code class="docutils literal notranslate"><span class="pre">accessible-</span></code> properties to make your items interact well with software like screen readers, braille terminals and other software to make your application accessible.</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-role</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#accessiblerole"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">AccessibleRole</span></code></span></a></em>): The role of the element. This property is mandatory to be able to use any other accessible properties. It should be set to a constant value. (default value: <code class="docutils literal notranslate"><span class="pre">none</span></code> for most elements, but <code class="docutils literal notranslate"><span class="pre">text</span></code> for the Text element)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-checkable</span></code></strong> (<em>in</em> <em>bool</em>): Whether the element is can be checked or not.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-checked</span></code></strong> (<em>in</em> <em>bool</em>): Whether the element is checked or not. This maps to the “checked” state of checkboxes, radio buttons, and other widgets.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-description</span></code></strong> (<em>in</em> <em>string</em>): The description for the current element.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-has-focus</span></code></strong> (<em>in</em> <em>bool</em>): Set to true when the current element currently has the focus.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-label</span></code></strong> (<em>in</em> <em>string</em>): The label for an interactive element. (default value: empty for most elements, or the value of the <code class="docutils literal notranslate"><span class="pre">text</span></code> property for Text elements)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-value-maximum</span></code></strong> (<em>in</em> <em>float</em>): The maximum value of the item. This is used for example by spin boxes.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-value-minimum</span></code></strong> (<em>in</em> <em>float</em>): The minimum value of the item.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-value-step</span></code></strong> (<em>in</em> <em>float</em>) The smallest increment or decrement by which the current value can change. This corresponds to the step by which a handle on a slider can be dragged.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accessible-value</span></code></strong> (<em>in</em> <em>string</em>): The current value of the item.</p></li>
+</ul>
+</section>
+<section id="drop-shadows">
+<h3>Drop Shadows<a class="headerlink" href="#drop-shadows" title="Permalink to this headline">#</a></h3>
+<p>To achieve the graphical effect of a visually elevated shape that shows a shadow effect underneath the frame of
+an element, it’s possible to set the following <code class="docutils literal notranslate"><span class="pre">drop-shadow</span></code> properties:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">drop-shadow-blur</span></code></strong> (<em>in</em> <em>length</em>): The radius of the shadow that also describes the level of blur applied to the shadow. Negative values are ignored and zero means no blur. (default value: 0)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">drop-shadow-color</span></code></strong> (<em>in</em> <em>color</em>): The base color of the shadow to use. Typically that color is the starting color of a gradient that fades into transparency.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">drop-shadow-offset-x</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">drop-shadow-offset-y</span></code></strong> (<em>in</em> <em>length</em>): The horizontal and vertical distance of the shadow from the element’s frame. A negative value places the shadow left / above of the element.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">drop-shadow</span></code> effect is supported for <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code> elements.</p>
+</section>
+</section>
+<section id="dialog">
+<h2><code class="docutils literal notranslate"><span class="pre">Dialog</span></code><a class="headerlink" href="#dialog" title="Permalink to this headline">#</a></h2>
+<p>Dialog is like a window, but it has buttons that are automatically laid out.</p>
+<p>A Dialog should have one main element as child, that isn’t a button.
+The dialog can have any number of <code class="docutils literal notranslate"><span class="pre">StandardButton</span></code> widgets or other buttons
+with the <code class="docutils literal notranslate"><span class="pre">dialog-button-role</span></code> property.
+The buttons will be placed in an order that depends on the target platform at run-time.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">kind</span></code> property of the <code class="docutils literal notranslate"><span class="pre">StandardButton</span></code>s and the <code class="docutils literal notranslate"><span class="pre">dialog-button-role</span></code> properties need to be set to a constant value, it can’t be an arbitrary variable expression.
+There can’t be several <code class="docutils literal notranslate"><span class="pre">StandardButton</span></code>s of the same kind.</p>
+<p>A callback <code class="docutils literal notranslate"><span class="pre">&lt;kind&gt;_clicked</span></code> is automatically added for each <code class="docutils literal notranslate"><span class="pre">StandardButton</span></code> which doesn’t have an explicit
+callback handler, so it can be handled from the native code: For example if there is a button of kind <code class="docutils literal notranslate"><span class="pre">cancel</span></code>,
+a <code class="docutils literal notranslate"><span class="pre">cancel_clicked</span></code> callback will be added.</p>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">icon</span></code></strong> (<em>in</em> <em>image</em>): The window icon shown in the title bar or the task bar on window managers supporting it.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">title</span></code></strong> (<em>in</em> <em>string</em>): The window title that is shown in the title bar.</p></li>
+</ul>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>import { StandardButton, Button } from &quot;std-widgets.slint&quot;;
+export component Example inherits Dialog {
+    Text {
+      text: &quot;This is a dialog box&quot;;
+    }
+    StandardButton { kind: ok; }
+    StandardButton { kind: cancel; }
+    Button {
+      text: &quot;More Info&quot;;
+      dialog-button-role: action;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="flickable">
+<h2><code class="docutils literal notranslate"><span class="pre">Flickable</span></code><a class="headerlink" href="#flickable" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Flickable</span></code> is a low-level element that is the base for scrollable
+widgets, such as the <a class="reference internal" href="widgets.html#scrollview"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></span></a>. When the <code class="docutils literal notranslate"><span class="pre">viewport-width</span></code> or the
+<code class="docutils literal notranslate"><span class="pre">viewport-height</span></code> is greater than the parent’s <code class="docutils literal notranslate"><span class="pre">width</span></code> or <code class="docutils literal notranslate"><span class="pre">height</span></code>
+respectively, the element becomes scrollable. Note that the <code class="docutils literal notranslate"><span class="pre">Flickable</span></code>
+doesn’t create a scrollbar. When unset, the <code class="docutils literal notranslate"><span class="pre">viewport-width</span></code> and <code class="docutils literal notranslate"><span class="pre">viewport-height</span></code> are
+calculated automatically based on the <code class="docutils literal notranslate"><span class="pre">Flickable</span></code>’s children. This isn’t the
+case when using a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to populate the elements. This is a bug tracked in
+issue [#407]((https://github.com/slint-ui/slint/issues/407).
+The maximum and preferred size of the <code class="docutils literal notranslate"><span class="pre">Flickable</span></code> are based on the viewport.</p>
+<p>When not part of a layout, its width or height defaults to 100% of the parent
+element when not specified.</p>
+<section id="id1">
+<h3>Properties<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">interactive</span></code></strong> (<em>in</em> <em>bool</em>): When true, the viewport can be scrolled by clicking on it and dragging it with the cursor. (default value: true)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">viewport-height</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">viewport-width</span></code></strong> (<em>in</em> <em>length</em>): The total size of the scrollable element.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">viewport-x</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">viewport-y</span></code></strong> (<em>in</em> <em>length</em>): The position of the scrollable element relative to the <code class="docutils literal notranslate"><span class="pre">Flickable</span></code>. This is usually a negative value.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Example<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 270px;
+    height: 100px;
+
+    Flickable {
+        viewport-height: 300px;
+        Text {
+            x:0;
+            y: 150px;
+            text: &quot;This is some text that you have to scroll to see&quot;;
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="focusscope">
+<h2><code class="docutils literal notranslate"><span class="pre">FocusScope</span></code><a class="headerlink" href="#focusscope" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">FocusScope</span></code> exposes callbacks to intercept key events. Note that <code class="docutils literal notranslate"><span class="pre">FocusScope</span></code>
+will only invoke them when it <code class="docutils literal notranslate"><span class="pre">has-focus</span></code>.</p>
+<p>The <a class="reference internal" href="structs.html#keyevent"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></span></a> has a text property, which is a character of the key entered.
+When a non-printable key is pressed, the character will be either a control character,
+or it will be mapped to a private unicode character. The mapping of these non-printable, special characters is available in the <a class="reference internal" href="namespaces.html#key"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">Key</span></code></span></a> namespace</p>
+<section id="id3">
+<h3>Properties<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong> (<em>out</em> <em>bool</em>): Is <code class="docutils literal notranslate"><span class="pre">true</span></code> when the element has keyboard
+focus.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">enabled</span></code></strong> (<em>in</em> <em>bool</em>): When true, the <code class="docutils literal notranslate"><span class="pre">FocusScope</span></code> will make itself the focused element when clicked. Set this to false if you don’t want the click-to-focus
+behavior. Similarly, a disabled <code class="docutils literal notranslate"><span class="pre">FocusScope</span></code> does not accept the focus via tab focus traversal. A parent <code class="docutils literal notranslate"><span class="pre">FocusScope</span></code> will still receive key events from
+child <code class="docutils literal notranslate"><span class="pre">FocusScope</span></code>s that were rejected, even if <code class="docutils literal notranslate"><span class="pre">enabled</span></code> is set to false. (default value: true)</p></li>
+</ul>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">focus()</span></code></strong> Call this function to transfer keyboard focus to this <code class="docutils literal notranslate"><span class="pre">FocusScope</span></code>,
+to receive future <a class="reference internal" href="structs.html#keyevent"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></span></a>s.</p></li>
+</ul>
+</section>
+<section id="callbacks">
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">key-pressed(</span></code><em><a class="reference internal" href="structs.html#keyevent"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></span></a></em><code class="docutils literal notranslate"><span class="pre">)</span> <span class="pre">-&gt;</span> </code><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">EventResult</span></code></span></strong>: Invoked when a key is pressed, the argument is a <a class="reference internal" href="structs.html#keyevent"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></span></a> struct.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">key-released(</span></code><em><a class="reference internal" href="structs.html#keyevent"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></span></a></em><code class="docutils literal notranslate"><span class="pre">)</span> <span class="pre">-&gt;</span> </code><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">EventResult</span></code></span></strong>: Invoked when a key is released, the argument is a <a class="reference internal" href="structs.html#keyevent"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></span></a> struct.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Example<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 100px;
+    height: 100px;
+    forward-focus: my-key-handler;
+    my-key-handler := FocusScope {
+        key-pressed(event) =&gt; {
+            debug(event.text);
+            if (event.modifiers.control) {
+                debug(&quot;control was pressed during this event&quot;);
+            }
+            if (event.text == Key.Escape) {
+                debug(&quot;Esc key was pressed&quot;)
+            }
+            accept
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="gridlayout">
+<h2><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code><a class="headerlink" href="#gridlayout" title="Permalink to this headline">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code> places its children in a grid. <code class="docutils literal notranslate"><span class="pre">GridLayout</span></code> adds properties to each child: <code class="docutils literal notranslate"><span class="pre">col</span></code>, <code class="docutils literal notranslate"><span class="pre">row</span></code>, <code class="docutils literal notranslate"><span class="pre">colspan</span></code>, <code class="docutils literal notranslate"><span class="pre">rowspan</span></code>.
+You can control the position of children with <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">row</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">col</span></code> or <code class="docutils literal notranslate"><span class="pre">row</span></code> aren’t specified, they are automatically computed such that the item is next to the previous item, in the same row.
+Alternatively, the item can be put in a <code class="docutils literal notranslate"><span class="pre">Row</span></code> element.</p>
+<section id="id5">
+<h3>Properties<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spacing</span></code></strong> (<em>in</em> <em>length</em>): The distance between the elements in the layout.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">padding</span></code></strong> (<em>in</em> <em>length</em>): The padding within the layout.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">padding-left</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">padding-right</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">padding-top</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">padding-bottom</span></code></strong> (<em>in</em> <em>length</em>):
+Set these properties to override the padding on specific sides.</p></li>
+</ul>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">#</a></h3>
+<p>This example uses the <code class="docutils literal notranslate"><span class="pre">Row</span></code> element:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Foo inherits Window {
+    width: 200px;
+    height: 200px;
+    GridLayout {
+        spacing: 5px;
+        Row {
+            Rectangle { background: red; }
+            Rectangle { background: blue; }
+        }
+        Row {
+            Rectangle { background: yellow; }
+            Rectangle { background: green; }
+        }
+    }
+}
+</pre></div>
+</div>
+<p>This example uses the <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">row</span></code> properties</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Foo inherits Window {
+    width: 200px;
+    height: 150px;
+    GridLayout {
+        Rectangle { background: red; }
+        Rectangle { background: blue; }
+        Rectangle { background: yellow; row: 1; }
+        Rectangle { background: green; }
+        Rectangle { background: black; col: 2; row: 0; }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="image">
+<h2><code class="docutils literal notranslate"><span class="pre">Image</span></code><a class="headerlink" href="#image" title="Permalink to this headline">#</a></h2>
+<p>An <code class="docutils literal notranslate"><span class="pre">Image</span></code> can be used to represent an image loaded from a file.</p>
+<section id="id6">
+<h3>Properties<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">colorize</span></code></strong> (<em>in</em> <em>brush</em>): When set, the image is used as an alpha mask and is drawn in the given color (or with the gradient).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">image-fit</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#imagefit"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">ImageFit</span></code></span></a></em>): Specifies how the source image shall be fit into the image element. (default value: <code class="docutils literal notranslate"><span class="pre">contain</span></code> when the <code class="docutils literal notranslate"><span class="pre">Image</span></code> element is part of a layout, <code class="docutils literal notranslate"><span class="pre">fill</span></code> otherwise)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">image-rendering</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#imagerendering"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">ImageRendering</span></code></span></a></em>): Specifies how the source image will be scaled. (default value: <code class="docutils literal notranslate"><span class="pre">smooth</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">rotation-angle</span></code></strong> (<em>in</em> <em>angle</em>), <strong><code class="docutils literal notranslate"><span class="pre">rotation-origin-x</span></code></strong> (<em>in</em> <em>length</em>), <strong><code class="docutils literal notranslate"><span class="pre">rotation-origin-y</span></code></strong> (<em>in</em> <em>length</em>):
+Rotates the image by the given angle around the specified origin point. The default origin point is the center of the element.
+When these properties are set, the <code class="docutils literal notranslate"><span class="pre">Image</span></code> can’t have children.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">source</span></code></strong> (<em>in</em> <em>image</em>): The image to load. Use the <code class="docutils literal notranslate"><span class="pre">&#64;image-url(&quot;...&quot;)</span></code> macro to specify the location of the image.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">source-clip-x</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">source-clip-y</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">source-clip-width</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">source-clip-height</span></code></strong> (<em>in</em> <em>int</em>): Properties in source
+image coordinates that define the region of the source image that is rendered. By default the entire source image is visible:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Default Binding</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">source-clip-x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">source-clip-y</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">source-clip-width</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">source.width</span> <span class="pre">-</span> <span class="pre">source-clip-x</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">source-clip-height</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">source.height</span> <span class="pre">-</span> <span class="pre">source-clip-y</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">width</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">height</span></code></strong> (<em>in</em> <em>length</em>): The width and height of the image as it appears on the screen.The default values are
+the sizes provided by the <strong><code class="docutils literal notranslate"><span class="pre">source</span></code></strong> image. If the <code class="docutils literal notranslate"><span class="pre">Image</span></code> is <strong>not</strong> in a layout and only <strong>one</strong> of the two sizes are
+specified, then the other defaults to the specified value scaled according to the aspect ratio of the <strong><code class="docutils literal notranslate"><span class="pre">source</span></code></strong> image.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Example<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 100px;
+    height: 100px;
+    VerticalLayout {
+        Image {
+            source: @image-url(&quot;https://slint-ui.com/logo/slint-logo-full-light.svg&quot;);
+            // image-fit default is `contain` when in layout, preserving aspect ratio
+        }
+        Image {
+            source: @image-url(&quot;https://slint-ui.com/logo/slint-logo-full-light.svg&quot;);
+            colorize: red;
+        }
+    }
+}
+</pre></div>
+</div>
+<p>Scaled while preserving the aspect ratio:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 100px;
+    height: 150px;
+    VerticalLayout {
+        Image {
+            source: @image-url(&quot;https://slint-ui.com/logo/slint-logo-full-light.svg&quot;);
+            width: 100px;
+            // implicit default, preserving aspect ratio:
+            // height: self.width * natural_height / natural_width;
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="path">
+<h2><code class="docutils literal notranslate"><span class="pre">Path</span></code><a class="headerlink" href="#path" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Path</span></code> element allows rendering a generic shape, composed of different geometric commands. A path
+shape can be filled and outlined.</p>
+<p>When not part of a layout, its width or height defaults to 100% of the parent element when not specified.</p>
+<p>A path can be defined in two different ways:</p>
+<ul class="simple">
+<li><p>Using SVG path commands as a string</p></li>
+<li><p>Using path command elements in <code class="docutils literal notranslate"><span class="pre">.slint</span></code> markup.</p></li>
+</ul>
+<p>The coordinates used in the geometric commands are within the imaginary coordinate system of the path.
+When rendering on the screen, the shape is drawn relative to the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties. If the <code class="docutils literal notranslate"><span class="pre">width</span></code>
+and <code class="docutils literal notranslate"><span class="pre">height</span></code> properties are non-zero, then the entire shape is fit into these bounds - by scaling
+accordingly.</p>
+<section id="common-path-properties">
+<h3>Common Path Properties<a class="headerlink" href="#common-path-properties" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">fill</span></code></strong> (<em>in</em> <em>brush</em>): The color for filling the shape of the path.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">fill-rule</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#fillrule"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">FillRule</span></code></span></a></em>): The fill rule to use for the path. (default value: <code class="docutils literal notranslate"><span class="pre">nonzero</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">stroke</span></code></strong> (<em>in</em> <em>brush</em>): The color for drawing the outline of the path.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">stroke-width</span></code></strong> (<em>in</em> <em>length</em>): The width of the outline.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">width</span></code></strong> (<em>in</em> <em>length</em>): If non-zero, the path will be scaled to fit into the specified width.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">height</span></code></strong> (<em>in</em> <em>length</em>): If non-zero, the path will be scaled to fit into the specified height.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">viewbox-x</span></code></strong>/<strong><code class="docutils literal notranslate"><span class="pre">viewbox-y</span></code></strong>/<strong><code class="docutils literal notranslate"><span class="pre">viewbox-width</span></code></strong>/<strong><code class="docutils literal notranslate"><span class="pre">viewbox-height</span></code></strong> (<em>in</em> <em>float</em>) These four
+properties allow defining the position and size of the viewport of the path in path coordinates.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">viewbox-width</span></code> or <code class="docutils literal notranslate"><span class="pre">viewbox-height</span></code> is less or equal than zero, the viewbox properties are
+ignored and instead the bounding rectangle of all path elements is used to define the view port.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">clip</span></code></strong> (<em>in</em> <em>bool</em>): By default, when a path has a view box defined and the elements render
+outside of it, they are still rendered. When this property is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, then rendering will be
+clipped at the boundaries of the view box.
+This property must be a literal <code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code> (default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>)</p></li>
+</ul>
+<section id="path-using-svg-commands">
+<h4>Path Using SVG commands<a class="headerlink" href="#path-using-svg-commands" title="Permalink to this headline">#</a></h4>
+<p>SVG is a popular file format for defining scalable graphics, which are often composed of paths. In SVG
+paths are composed using <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#path_commands">commands</a>,
+which in turn are written in a string. In <code class="docutils literal notranslate"><span class="pre">.slint</span></code> the path commands are provided to the <code class="docutils literal notranslate"><span class="pre">commands</span></code>
+property. The following example renders a shape consists of an arc and a rectangle, composed of <code class="docutils literal notranslate"><span class="pre">line-to</span></code>,
+<code class="docutils literal notranslate"><span class="pre">move-to</span></code> and <code class="docutils literal notranslate"><span class="pre">arc</span></code> commands:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Path {
+    width: 100px;
+    height: 100px;
+    commands: &quot;M 0 0 L 0 100 A 1 1 0 0 0 100 100 L 100 0 Z&quot;;
+    stroke: red;
+    stroke-width: 1px;
+}
+</pre></div>
+</div>
+<p>The commands are provided in a property:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">commands</span></code></strong> (<em>in</em> <em>string</em>): A string providing the commands according to the SVG path specification.</p></li>
+</ul>
+</section>
+<section id="path-using-svg-path-elements">
+<h4>Path Using SVG Path Elements<a class="headerlink" href="#path-using-svg-path-elements" title="Permalink to this headline">#</a></h4>
+<p>The shape of the path can also be described using elements that resemble the SVG path commands but use the
+<code class="docutils literal notranslate"><span class="pre">.slint</span></code> markup syntax. The earlier example using SVG commands can also be written like that:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Path {
+    width: 100px;
+    height: 100px;
+    stroke: blue;
+    stroke-width: 1px;
+
+    MoveTo {
+        x: 0;
+        y: 0;
+    }
+    LineTo {
+        x: 0;
+        y: 100;
+    }
+    ArcTo {
+        radius-x: 1;
+        radius-y: 1;
+        x: 100;
+        y: 100;
+    }
+    LineTo {
+        x: 100;
+        y: 0;
+    }
+    Close {
+    }
+}
+</pre></div>
+</div>
+<p>Note how the coordinates of the path elements don’t use units - they operate within the imaginary
+coordinate system of the scalable path.</p>
+<section id="moveto-sub-element-for-path">
+<h5><code class="docutils literal notranslate"><span class="pre">MoveTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code><a class="headerlink" href="#moveto-sub-element-for-path" title="Permalink to this headline">#</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">MoveTo</span></code> sub-element closes the current sub-path, if present, and moves the current point
+to the location specified by the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties. Subsequent elements such as <code class="docutils literal notranslate"><span class="pre">LineTo</span></code>
+will use this new position as their starting point, therefore this starts a new sub-path.</p>
+<section id="id8">
+<h6>Properties<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h6>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">x</span></code></strong> (<em>in</em> <em>float</em>): The x position of the new current point.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">y</span></code></strong> (<em>in</em> <em>float</em>): The y position of the new current point.</p></li>
+</ul>
+</section>
+</section>
+<section id="lineto-sub-element-for-path">
+<h5><code class="docutils literal notranslate"><span class="pre">LineTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code><a class="headerlink" href="#lineto-sub-element-for-path" title="Permalink to this headline">#</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">LineTo</span></code> sub-element describes a line from the path’s current position to the
+location specified by the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties.</p>
+<section id="id9">
+<h6>Properties<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h6>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">x</span></code></strong> (<em>in</em> <em>float</em>): The target x position of the line.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">y</span></code></strong> (<em>in</em> <em>float</em>): The target y position of the line.</p></li>
+</ul>
+</section>
+</section>
+<section id="arcto-sub-element-for-path">
+<h5><code class="docutils literal notranslate"><span class="pre">ArcTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code><a class="headerlink" href="#arcto-sub-element-for-path" title="Permalink to this headline">#</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">ArcTo</span></code> sub-element describes the portion of an ellipse. The arc is drawn from the path’s
+current position to the location specified by the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties. The remaining properties
+are modelled after the SVG specification and allow tuning visual features such as the direction
+or angle.</p>
+<section id="id10">
+<h6>Properties<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h6>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">large-arc</span></code></strong> (<em>in</em> <em>bool</em>): Out of the two arcs of a closed ellipse, this flag selects that the larger arc is to be rendered. If the property is <code class="docutils literal notranslate"><span class="pre">false</span></code>, the shorter arc is rendered instead.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">radius-x</span></code></strong> (<em>in</em> <em>float</em>): The x-radius of the ellipse.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">radius-y</span></code></strong> (<em>in</em> <em>float</em>): The y-radius of the ellipse.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sweep</span></code></strong> (<em>in</em> <em>bool</em>): If the property is <code class="docutils literal notranslate"><span class="pre">true</span></code>, the arc will be drawn as a clockwise turning arc; anti-clockwise otherwise.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">x-rotation</span></code></strong> (<em>in</em> <em>float</em>): The x-axis of the ellipse will be rotated by the value of this properties, specified in as angle in degrees from 0 to 360.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">x</span></code></strong> (<em>in</em> <em>float</em>): The target x position of the line.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">y</span></code></strong> (<em>in</em> <em>float</em>): The target y position of the line.</p></li>
+</ul>
+</section>
+</section>
+<section id="cubicto-sub-element-for-path">
+<h5><code class="docutils literal notranslate"><span class="pre">CubicTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code><a class="headerlink" href="#cubicto-sub-element-for-path" title="Permalink to this headline">#</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">CubicTo</span></code> sub-element describes a smooth Bézier from the path’s current position to the
+location specified by the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties, using two control points specified by their
+respective properties.</p>
+<section id="id11">
+<h6>Properties<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h6>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">control-1-x</span></code></strong> (<em>in</em> <em>float</em>): The x coordinate of the curve’s first control point.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">control-1-y</span></code></strong> (<em>in</em> <em>float</em>): The y coordinate of the curve’s first control point.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">control-2-x</span></code></strong> (<em>in</em> <em>float</em>): The x coordinate of the curve’s second control point.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">control-2-y</span></code></strong> (<em>in</em> <em>float</em>): The y coordinate of the curve’s second control point.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">x</span></code></strong> (<em>in</em> <em>float</em>): The target x position of the curve.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">y</span></code></strong> (<em>in</em> <em>float</em>): The target y position of the curve.</p></li>
+</ul>
+</section>
+</section>
+<section id="quadraticto-sub-element-for-path">
+<h5><code class="docutils literal notranslate"><span class="pre">QuadraticTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code><a class="headerlink" href="#quadraticto-sub-element-for-path" title="Permalink to this headline">#</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">QuadraticTo</span></code> sub-element describes a smooth Bézier from the path’s current position to the
+location specified by the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> properties, using the control points specified by the
+<code class="docutils literal notranslate"><span class="pre">control-x</span></code> and <code class="docutils literal notranslate"><span class="pre">control-y</span></code> properties.</p>
+<section id="id12">
+<h6>Properties<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h6>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">control-x</span></code></strong> (<em>in</em> <em>float</em>): The x coordinate of the curve’s control point.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">control-y</span></code></strong> (<em>in</em> <em>float</em>): The y coordinate of the curve’s control point.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">x</span></code></strong> (<em>in</em> <em>float</em>): The target x position of the curve.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">y</span></code></strong> (<em>in</em> <em>float</em>): The target y position of the curve.</p></li>
+</ul>
+</section>
+</section>
+<section id="close-sub-element-for-path">
+<h5><code class="docutils literal notranslate"><span class="pre">Close</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code><a class="headerlink" href="#close-sub-element-for-path" title="Permalink to this headline">#</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">Close</span></code> element closes the current sub-path and draws a straight line from the current
+position to the beginning of the path.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="popupwindow">
+<h2><code class="docutils literal notranslate"><span class="pre">PopupWindow</span></code><a class="headerlink" href="#popupwindow" title="Permalink to this headline">#</a></h2>
+<p>Use this element to show a popup window like a tooltip or a popup menu.</p>
+<p>Note: It isn’t allowed to access properties of elements within the popup from outside of the <code class="docutils literal notranslate"><span class="pre">PopupWindow</span></code>.</p>
+<section id="id13">
+<h3>Functions<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">show()</span></code></strong> Show the popup on the screen.</p></li>
+</ul>
+</section>
+<section id="id14">
+<h3>Example<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 100px;
+    height: 100px;
+
+    popup := PopupWindow {
+        Rectangle { height:100%; width: 100%; background: yellow; }
+        x: 20px; y: 20px; height: 50px; width: 50px;
+    }
+
+    TouchArea {
+        height:100%; width: 100%;
+        clicked =&gt; { popup.show(); }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rectangle">
+<h2><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code><a class="headerlink" href="#rectangle" title="Permalink to this headline">#</a></h2>
+<p>By default, a <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code> is just an empty item that shows nothing. By setting a color or configuring a border,
+it’s then possible to draw a rectangle on the screen.</p>
+<p>When not part of a layout, its width and height default to 100% of the parent element.</p>
+<section id="id15">
+<h3>Properties<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">background</span></code></strong> (<em>in</em> <em>brush</em>): The background brush of this <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code>, typically a color. (default value: <code class="docutils literal notranslate"><span class="pre">transparent</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">border-color</span></code></strong> (<em>in</em> <em>brush</em>): The color of the border. (default value: <code class="docutils literal notranslate"><span class="pre">transparent</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">border-radius</span></code></strong> (<em>in</em> <em>length</em>): The size of the radius. (default value: 0)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">border-width</span></code></strong> (<em>in</em> <em>length</em>): The width of the border. (default value: 0)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">clip</span></code></strong> (<em>in</em> <em>bool</em>): By default, when an element is bigger or outside another element, it’s still shown. When this property is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the children of this <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code> are clipped to the border of the rectangle. (default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>)</p></li>
+</ul>
+</section>
+<section id="id16">
+<h3>Example<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 270px;
+    height: 100px;
+
+    Rectangle {
+        x: 10px;
+        y: 10px;
+        width: 50px;
+        height: 50px;
+        background: blue;
+    }
+
+    // Rectangle with a border
+    Rectangle {
+        x: 70px;
+        y: 10px;
+        width: 50px;
+        height: 50px;
+        background: green;
+        border-width: 2px;
+        border-color: red;
+    }
+
+    // Transparent Rectangle with a border and a radius
+    Rectangle {
+        x: 140px;
+        y: 10px;
+        width: 50px;
+        height: 50px;
+        border-width: 4px;
+        border-color: black;
+        border-radius: 10px;
+    }
+
+    // A radius of width/2 makes it a circle
+    Rectangle {
+        x: 210px;
+        y: 10px;
+        width: 50px;
+        height: 50px;
+        background: yellow;
+        border-width: 2px;
+        border-color: blue;
+        border-radius: self.width/2;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="textinput">
+<h2><code class="docutils literal notranslate"><span class="pre">TextInput</span></code><a class="headerlink" href="#textinput" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">TextInput</span></code> is a lower-level item that shows text and allows entering text.</p>
+<p>When not part of a layout, its width or height defaults to 100% of the parent element when not specified.</p>
+<section id="id17">
+<h3>Properties<a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">color</span></code></strong> (<em>in</em> <em>brush</em>): The color of the text (default value: depends on the style)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">font-family</span></code></strong> (<em>in</em> <em>string</em>): The name of the font family selected for rendering the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">font-size</span></code></strong> (<em>in</em> <em>length</em>): The font size of the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">font-weight</span></code></strong> (<em>in</em> <em>int</em>): The weight of the font. The values range from 100 (lightest) to 900 (thickest). 400 is the normal weight.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-focus</span></code></strong> (<em>out</em> <em>bool</em>): <code class="docutils literal notranslate"><span class="pre">TextInput</span></code> sets this to <code class="docutils literal notranslate"><span class="pre">true</span></code> when it’s focused. Only then it receives <a class="reference internal" href="structs.html#keyevent"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">KeyEvent</span></code></span></a>s.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">horizontal-alignment</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#texthorizontalalignment"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">TextHorizontalAlignment</span></code></span></a></em>): The horizontal alignment of the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">input-type</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#inputtype"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">InputType</span></code></span></a></em>): Use this to configure <code class="docutils literal notranslate"><span class="pre">TextInput</span></code> for editing special input, such as password fields. (default value: <code class="docutils literal notranslate"><span class="pre">text</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">letter-spacing</span></code></strong> (<em>in</em> <em>length</em>): The letter spacing allows changing the spacing between the glyphs. A positive value increases the spacing and a negative value decreases the distance. (default value: 0)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">read-only</span></code></strong> (<em>in</em> <em>bool</em>): When set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, text editing via keyboard and mouse is disabled but selecting text is still enabled as well as editing text programatically. (default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">selection-background-color</span></code></strong> (<em>in</em> <em>color</em>): The background color of the selection.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">selection-foreground-color</span></code></strong> (<em>in</em> <em>color</em>): The foreground color of the selection.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">single-line</span></code></strong> (<em>in</em> <em>bool</em>): When set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the text is always rendered as a single line, regardless of new line separators in the text. (default value: <code class="docutils literal notranslate"><span class="pre">true</span></code>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text-cursor-width</span></code></strong> (<em>in</em> <em>length</em>): The width of the text cursor. (default value: provided at run-time by the selected widget style)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong> (<em>in-out</em> <em>string</em>): The text rendered and editable by the user.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">vertical-alignment</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#textverticalalignment"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">TextVerticalAlignment</span></code></span></a></em>): The vertical alignment of the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wrap</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#textwrap"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">TextWrap</span></code></span></a></em>): The way the text input wraps. Only makes sense when <code class="docutils literal notranslate"><span class="pre">single-line</span></code> is false. (default value: no-wrap)</p></li>
+</ul>
+</section>
+<section id="id18">
+<h3>Functions<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">focus()</span></code></strong> Call this function to focus the text input and make it receive future keyboard events.</p></li>
+</ul>
+</section>
+<section id="id19">
+<h3>Callbacks<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">accepted()</span></code></strong>: Invoked when enter key is pressed.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">cursor-position-changed(</span></code><a class="reference internal" href="structs.html#point"><span class="std std-doc"><em><code class="docutils literal notranslate"><span class="pre">Point</span></code></em></span></a><code class="docutils literal notranslate"><span class="pre">)</span></code></strong>: The cursor was moved to the new (x, y) position.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">edited()</span></code></strong>: Invoked when the text has changed because the user modified it.</p></li>
+</ul>
+</section>
+<section id="id20">
+<h3>Example<a class="headerlink" href="#id20" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 270px;
+    height: 100px;
+
+    TextInput {
+        text: &quot;Replace me with a name&quot;;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="text">
+<h2><code class="docutils literal notranslate"><span class="pre">Text</span></code><a class="headerlink" href="#text" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Text</span></code> element is responsible for rendering text. Besides the <code class="docutils literal notranslate"><span class="pre">text</span></code> property, that specifies which text to render,
+it also allows configuring different visual aspects through the <code class="docutils literal notranslate"><span class="pre">font-family</span></code>, <code class="docutils literal notranslate"><span class="pre">font-size</span></code>, <code class="docutils literal notranslate"><span class="pre">font-weight</span></code> and <code class="docutils literal notranslate"><span class="pre">color</span></code> properties.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Text</span></code> element can break long text into multiple lines of text. A line feed character (<code class="docutils literal notranslate"><span class="pre">\n</span></code>) in the string of the <code class="docutils literal notranslate"><span class="pre">text</span></code>
+property will trigger a manual line break. For automatic line breaking you need to set the <code class="docutils literal notranslate"><span class="pre">wrap</span></code> property to a value other than
+<code class="docutils literal notranslate"><span class="pre">no-wrap</span></code>, and it’s important to specify a <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> for the <code class="docutils literal notranslate"><span class="pre">Text</span></code> element, in order to know where to break. It’s
+recommended to place the <code class="docutils literal notranslate"><span class="pre">Text</span></code> element in a layout and let it set the <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> based on the available screen space
+and the text itself.</p>
+<section id="id21">
+<h3>Properties<a class="headerlink" href="#id21" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">color</span></code></strong> (<em>in</em> <em>brush</em>): The color of the text. (default value: depends on the style)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">font-family</span></code></strong> (<em>in</em> <em>string</em>): The name of the font family selected for rendering the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">font-size</span></code></strong> (<em>in</em> <em>length</em>): The font size of the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">font-weight</span></code></strong> (<em>in</em> <em>int</em>): The weight of the font. The values range from 100 (lightest) to 900 (thickest). 400 is the normal weight.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">horizontal-alignment</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#texthorizontalalignment"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">TextHorizontalAlignment</span></code></span></a></em>): The horizontal alignment of the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">letter-spacing</span></code></strong> (<em>in</em> <em>length</em>): The letter spacing allows changing the spacing between the glyphs. A positive value increases the spacing and a negative value decreases the distance. (default value: 0)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">overflow</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#textoverflow"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">TextOverflow</span></code></span></a></em>): What happens when the text overflows (default value: clip).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong> (<em>in</em> <em><a class="reference internal" href="../reference/types.html#strings"><span class="std std-doc">string</span></a></em>): The text rendered.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">vertical-alignment</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#textverticalalignment"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">TextVerticalAlignment</span></code></span></a></em>): The vertical alignment of the text.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wrap</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#textwrap"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">TextWrap</span></code></span></a></em>): The way the text wraps (default value: <code class="docutils literal notranslate"><span class="pre">no-wrap</span></code>).</p></li>
+</ul>
+</section>
+<section id="id22">
+<h3>Example<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h3>
+<p>This example shows the text “Hello World” in red, using the default font:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 270px;
+    height: 100px;
+
+    Text {
+        x:0;y:0;
+        text: &quot;Hello World&quot;;
+        color: red;
+    }
+}
+</pre></div>
+</div>
+<p>This example breaks a longer paragraph of text into multiple lines, by setting a <code class="docutils literal notranslate"><span class="pre">wrap</span></code>
+policy and assigning a limited <code class="docutils literal notranslate"><span class="pre">width</span></code> and enough <code class="docutils literal notranslate"><span class="pre">height</span></code> for the text to flow down:</p>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 270px;
+    height: 300px;
+
+    Text {
+        x:0;
+        text: &quot;This paragraph breaks into multiple lines of text&quot;;
+        wrap: word-wrap;
+        width: 150px;
+        height: 100%;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="toucharea">
+<h2><code class="docutils literal notranslate"><span class="pre">TouchArea</span></code><a class="headerlink" href="#toucharea" title="Permalink to this headline">#</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">TouchArea</span></code> to control what happens when the region it covers is touched or interacted with
+using the mouse.</p>
+<p>When not part of a layout, its width or height default to 100% of the parent element.</p>
+<section id="id23">
+<h3>Properties<a class="headerlink" href="#id23" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">has-hover</span></code></strong> (<em>out</em> <em>bool</em>): <code class="docutils literal notranslate"><span class="pre">TouchArea</span></code> sets this to <code class="docutils literal notranslate"><span class="pre">true</span></code> when the mouse is over it.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mouse-cursor</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#mousecursor"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">MouseCursor</span></code></span></a></em>): The mouse cursor type when the mouse is hovering the <code class="docutils literal notranslate"><span class="pre">TouchArea</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mouse-x</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">mouse-y</span></code></strong> (<em>out</em> <em>length</em>): Set by the <code class="docutils literal notranslate"><span class="pre">TouchArea</span></code> to the position of the mouse within it.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pressed-x</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">pressed-y</span></code></strong> (<em>out</em> <em>length</em>): Set by the <code class="docutils literal notranslate"><span class="pre">TouchArea</span></code> to the position of the mouse at the moment it was last pressed.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pressed</span></code></strong> (<em>out</em> <em>bool</em>): Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> by the <code class="docutils literal notranslate"><span class="pre">TouchArea</span></code> when the mouse is pressed over it.</p></li>
+</ul>
+</section>
+<section id="id24">
+<h3>Callbacks<a class="headerlink" href="#id24" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">clicked()</span></code></strong>: Invoked when clicked: The mouse is pressed, then released on this element.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">moved()</span></code></strong>: The mouse has been moved. This will only be called if the mouse is also pressed.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pointer-event(</span></code><a class="reference internal" href="structs.html#pointerevent"><span class="std std-doc"><em><code class="docutils literal notranslate"><span class="pre">PointerEvent</span></code></em></span></a><code class="docutils literal notranslate"><span class="pre">)</span></code></strong>: Invoked when a button was pressed or released.</p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Example<a class="headerlink" href="#id25" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Example inherits Window {
+    width: 200px;
+    height: 100px;
+    area := TouchArea {
+        width: parent.width;
+        height: parent.height;
+        clicked =&gt; {
+            rect2.background = #ff0;
+        }
+    }
+    Rectangle {
+        x:0;
+        width: parent.width / 2;
+        height: parent.height;
+        background: area.pressed ? blue: red;
+    }
+    rect2 := Rectangle {
+        x: parent.width / 2;
+        width: parent.width / 2;
+        height: parent.height;
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="verticallayout-and-horizontallayout">
+<h2><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code><a class="headerlink" href="#verticallayout-and-horizontallayout" title="Permalink to this headline">#</a></h2>
+<p>These layouts place their children next to each other vertically or horizontally.
+The size of elements can either be fixed with the <code class="docutils literal notranslate"><span class="pre">width</span></code> or <code class="docutils literal notranslate"><span class="pre">height</span></code> property, or if they aren’t set
+they will be computed by the layout respecting the minimum and maximum sizes and the stretch factor.</p>
+<section id="id26">
+<h3>Properties<a class="headerlink" href="#id26" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spacing</span></code></strong> (<em>in</em> <em>length</em>): The distance between the elements in the layout.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">padding</span></code></strong> (<em>in</em> <em>length</em>): the padding within the layout.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">padding-left</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">padding-right</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">padding-top</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">padding-bottom</span></code></strong> (<em>in</em> <em>length</em>): Set these properties to override the padding on specific sides.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">alignment</span></code></strong> (<em>in</em> <em>enum <a class="reference internal" href="enums.html#layoutalignment"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">LayoutAlignment</span></code></span></a></em>): Set the alignment. Matches the CSS flex box.</p></li>
+</ul>
+</section>
+<section id="id27">
+<h3>Example<a class="headerlink" href="#id27" title="Permalink to this headline">#</a></h3>
+<div class="highlight-slint notranslate"><div class="highlight"><pre><span></span>export component Foo inherits Window {
+    width: 200px;
+    height: 100px;
+    HorizontalLayout {
+        spacing: 5px;
+        Rectangle { background: red; width: 10px; }
+        Rectangle { background: blue; min-width: 10px; }
+        Rectangle { background: yellow; horizontal-stretch: 1; }
+        Rectangle { background: green; horizontal-stretch: 2; }
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="window">
+<h2><code class="docutils literal notranslate"><span class="pre">Window</span></code><a class="headerlink" href="#window" title="Permalink to this headline">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Window</span></code> is the root of the tree of elements that are visible on the screen.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Window</span></code> geometry will be restricted by its layout constraints: Setting the <code class="docutils literal notranslate"><span class="pre">width</span></code> will result in a fixed width,
+and the window manager will respect the <code class="docutils literal notranslate"><span class="pre">min-width</span></code> and <code class="docutils literal notranslate"><span class="pre">max-width</span></code> so the window can’t be resized bigger
+or smaller. The initial width can be controlled with the <code class="docutils literal notranslate"><span class="pre">preferred-width</span></code> property. The same applies to the <code class="docutils literal notranslate"><span class="pre">Window</span></code>s height.</p>
+<section id="id28">
+<h3>Properties<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">always-on-top</span></code></strong> (<em>in</em> <em>bool</em>): Whether the window should be placed above all other windows on window managers supporting it.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">background</span></code></strong> (<em>in</em> <em>brush</em>): The background brush of the <code class="docutils literal notranslate"><span class="pre">Window</span></code>. (default value: depends on the style)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">default-font-family</span></code></strong> (<em>in</em> <em>string</em>): The font family to use as default in text elements inside this window, that don’t have their <code class="docutils literal notranslate"><span class="pre">font-family</span></code> property set.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">default-font-size</span></code></strong> (<em>in-out</em> <em>length</em>): The font size to use as default in text elements inside this window, that don’t have their <code class="docutils literal notranslate"><span class="pre">font-size</span></code> property set. The value of this property also forms the basis for relative font sizes.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">default-font-weight</span></code></strong> (<em>in</em> <em>int</em>): The font weight to use as default in text elements inside this window, that don’t have their <code class="docutils literal notranslate"><span class="pre">font-weight</span></code> property set. The values range from 100 (lightest) to 900 (thickest). 400 is the normal weight.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">icon</span></code></strong> (<em>in</em> <em>image</em>): The window icon shown in the title bar or the task bar on window managers supporting it.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">no-frame</span></code></strong> (<em>in</em> <em>bool</em>): Whether the window should be borderless/frameless or not.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">title</span></code></strong> (<em>in</em> <em>string</em>): The window title that is shown in the title bar.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; SixtyFPS GmbH
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Builtin Elements</a><ul>
+<li><a class="reference internal" href="#common-properties">Common properties</a><ul>
+<li><a class="reference internal" href="#geometry">Geometry</a></li>
+<li><a class="reference internal" href="#layout">Layout</a></li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
+<li><a class="reference internal" href="#accessibility">Accessibility</a></li>
+<li><a class="reference internal" href="#drop-shadows">Drop Shadows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dialog"><code class="docutils literal notranslate"><span class="pre">Dialog</span></code></a><ul>
+<li><a class="reference internal" href="#properties">Properties</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#flickable"><code class="docutils literal notranslate"><span class="pre">Flickable</span></code></a><ul>
+<li><a class="reference internal" href="#id1">Properties</a></li>
+<li><a class="reference internal" href="#id2">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#focusscope"><code class="docutils literal notranslate"><span class="pre">FocusScope</span></code></a><ul>
+<li><a class="reference internal" href="#id3">Properties</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#callbacks">Callbacks</a></li>
+<li><a class="reference internal" href="#id4">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gridlayout"><code class="docutils literal notranslate"><span class="pre">GridLayout</span></code></a><ul>
+<li><a class="reference internal" href="#id5">Properties</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
+<li><a class="reference internal" href="#id6">Properties</a></li>
+<li><a class="reference internal" href="#id7">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li><a class="reference internal" href="#common-path-properties">Common Path Properties</a><ul>
+<li><a class="reference internal" href="#path-using-svg-commands">Path Using SVG commands</a></li>
+<li><a class="reference internal" href="#path-using-svg-path-elements">Path Using SVG Path Elements</a><ul>
+<li><a class="reference internal" href="#moveto-sub-element-for-path"><code class="docutils literal notranslate"><span class="pre">MoveTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li><a class="reference internal" href="#id8">Properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lineto-sub-element-for-path"><code class="docutils literal notranslate"><span class="pre">LineTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li><a class="reference internal" href="#id9">Properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#arcto-sub-element-for-path"><code class="docutils literal notranslate"><span class="pre">ArcTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li><a class="reference internal" href="#id10">Properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cubicto-sub-element-for-path"><code class="docutils literal notranslate"><span class="pre">CubicTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li><a class="reference internal" href="#id11">Properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quadraticto-sub-element-for-path"><code class="docutils literal notranslate"><span class="pre">QuadraticTo</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li><a class="reference internal" href="#id12">Properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#close-sub-element-for-path"><code class="docutils literal notranslate"><span class="pre">Close</span></code> Sub-element for <code class="docutils literal notranslate"><span class="pre">Path</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#popupwindow"><code class="docutils literal notranslate"><span class="pre">PopupWindow</span></code></a><ul>
+<li><a class="reference internal" href="#id13">Functions</a></li>
+<li><a class="reference internal" href="#id14">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a><ul>
+<li><a class="reference internal" href="#id15">Properties</a></li>
+<li><a class="reference internal" href="#id16">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#textinput"><code class="docutils literal notranslate"><span class="pre">TextInput</span></code></a><ul>
+<li><a class="reference internal" href="#id17">Properties</a></li>
+<li><a class="reference internal" href="#id18">Functions</a></li>
+<li><a class="reference internal" href="#id19">Callbacks</a></li>
+<li><a class="reference internal" href="#id20">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#text"><code class="docutils literal notranslate"><span class="pre">Text</span></code></a><ul>
+<li><a class="reference internal" href="#id21">Properties</a></li>
+<li><a class="reference internal" href="#id22">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#toucharea"><code class="docutils literal notranslate"><span class="pre">TouchArea</span></code></a><ul>
+<li><a class="reference internal" href="#id23">Properties</a></li>
+<li><a class="reference internal" href="#id24">Callbacks</a></li>
+<li><a class="reference internal" href="#id25">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#verticallayout-and-horizontallayout"><code class="docutils literal notranslate"><span class="pre">VerticalLayout</span></code> and <code class="docutils literal notranslate"><span class="pre">HorizontalLayout</span></code></a><ul>
+<li><a class="reference internal" href="#id26">Properties</a></li>
+<li><a class="reference internal" href="#id27">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul>
+<li><a class="reference internal" href="#id28">Properties</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div>
+<script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/scripts/furo.js"></script>
+    <script src="../../../../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../../../../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+<!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint-ui.com/releases/1.0.1/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint-ui.com/releases/1.0.1/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = component.create(canvas_id);
+            instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        let div = document.createElement("div");
+        div.style = "float: right; padding:0; margin:0;";
+        element.prepend(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // Safari blocks quite heavily when creating many WebGL contexts, slowing down loading of the docs
+        // significantly. For now, don't do automatic previews:
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            return false;
+        }
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+        slint.run_event_loop();
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint-ui.com/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint-ui.com/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+</body>
+</html>

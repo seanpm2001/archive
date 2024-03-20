@@ -1,0 +1,568 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Slint on Microcontrollers"><title>slint::docs::mcu - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-085727c29c2fa99e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="slint" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (65ea825f4 2023-09-18)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/main-f6ec288034ea164c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"><!--
+    This file is used to add preview of the `.slint` snippets in the generated rustdoc documentation.
+    It can be injected via the `--html-in-header slint-docs-preview.html` option of rustdoc.
+-->
+<script type="module">
+    "use strict";
+    import * as slint from 'https://slint.dev/releases/1.2.1/wasm-interpreter/slint_wasm_interpreter.js';
+    const editor_url = "https://slint.dev/releases/1.2.1/editor/";
+    // keep them alive
+    var all_instances = new Array;
+
+    async function render_or_error(source, div) {
+        let canvas_id = 'canvas_' + Math.random().toString(36).substr(2, 9);
+        let canvas = document.createElement("canvas");
+        canvas.id = canvas_id;
+        div.appendChild(canvas);
+
+        let { component, error_string } = await slint.compile_from_string(source, "");
+        if (error_string != "") {
+            var text = document.createTextNode(error_string);
+            var p = document.createElement('pre');
+            p.appendChild(text);
+            div.innerHTML = "<pre style='color: red; background-color:#fee; margin:0'>" + p.innerHTML + "</pre>";
+        }
+        if (component !== undefined) {
+            let instance = await component.create(canvas_id);
+            await instance.show();
+            all_instances.push(instance);
+        }
+    }
+
+    async function create_preview(element, source_code) {
+        // Style the preview such that a flexbox lays out the source code box
+        // (which should take up any spare space), followed by the preview canvas.
+        // The latter may wrap into a new row on mobile. The edit/play buttons are
+        // placed last by flexbox order attribute.
+        let div = document.createElement("div");
+        let sourceCodeBox = element.firstElementChild;
+        element.style = "display: flex; flex-wrap: wrap;";
+        sourceCodeBox.style = "flex-grow: 2";
+        element.append(div);
+        await render_or_error(source_code, div);
+    }
+
+    function should_show_automatic_preview(element) {
+        // The `no-auto-preview` doesn't map directly to a dedicated class but it's mangled differently
+        // between rustdoc and sphinx, so match fuzzy on the entire class list:
+        return !element.className.includes("no-auto-preview");
+    }
+
+    async function create_click_to_play_and_edit_buttons(element) {
+        let source = element.innerText;
+
+        let link_section = document.createElement("div");
+        // Ensure the link section is always last and on a row of its own in the flexbox.
+        link_section.style = "order: 100; flex-basis: 100%;";
+        element.append(link_section);
+
+        let button_style = "text-decoration: none;"
+
+        let edit_button = document.createElement("a");
+        edit_button.style = button_style;
+        edit_button.href = `${editor_url}?snippet=${encodeURIComponent(source)}`;
+        edit_button.target = "_blank";
+        edit_button.innerText = "Edit 📝";
+        link_section.append(edit_button);
+
+        if (should_show_automatic_preview(element)) {
+            create_preview(element, source);
+        } else {
+            let play_button = document.createElement("a");
+            play_button.style = button_style;
+            play_button.innerText = "Preview ▶️";
+            play_button.onclick = async () => {
+                play_button.remove();
+                create_preview(element, source);
+            };
+
+            link_section.prepend(play_button);
+        }
+    }
+
+    async function run() {
+        await slint.default();
+
+        try {
+            slint.run_event_loop();
+            // this will trigger a JS exception, so this line will never be reached!
+        } catch (e) {
+            // The winit event loop, when targeting wasm, throws a JavaScript exception to break out of
+            // Rust without running any destructors. Don't rethrow the exception but swallow it, as
+            // this is no error and we truly want to resolve the promise of this function by returning
+            // the model markers.
+        }
+
+        let selector = ["code.language-slint", ".rustdoc pre.language-slint", "div.highlight-slint div.highlight", "div.highlight-slint\\,no-auto-preview div.highlight"]
+            .map((sel) => `${sel}:not([class*=slint\\,ignore]):not([class*=slint\\,no-preview])`).join(",");
+        var elements = document.querySelectorAll(selector);
+        for (var i = 0; i < elements.length; ++i) {
+            await create_click_to_play_and_edit_buttons(elements[i]);
+        }
+    }
+    run();
+
+    // Included markdown files may have links to other markdown files, which may not have been
+    // resolved by rustdoc. This helper locates such links and resolves them, assuming that each
+    // .md file gets its own sub-directory with an index.html.
+    function fix_markdown_links() {
+        for (let anchor of document.querySelectorAll('a[href$=".md"], a[href*=".md#"]')) {
+            let url = new URL(anchor.href);
+            let dir_separator = Math.max(url.pathname.lastIndexOf("/"), 0);
+            let base_name = url.pathname.slice(dir_separator + 1, -3);
+            let base_path = url.pathname.slice(0, dir_separator);
+            url.pathname = base_path + "/../" + base_name + "/index.html";
+            anchor.setAttribute("href", url);
+        }
+    }
+    fix_markdown_links()
+</script>
+
+<!--
+    This file is used to add syntax highlighting of the `.slint` snippets in the generated rustdoc, sphinx and mdbook documentation.
+    It can be injected via the `--html-in-header slint-docs-highlight.html` option of rustdoc, is included via _templates/layout.html
+    in sphinx and via head.hbs in mdbook.
+-->
+<link rel="stylesheet" href="https://slint.dev/resources/highlightjs/11.0.1/default.min.css">
+<script src="https://slint.dev/resources/highlightjs/11.0.1/highlight.min.js"></script>
+<script>
+  function highlight_slint(hljs) {
+    const KEYWORDS = {
+      keyword:
+        "animate callback component export for function global if import in in-out inherits out parent private property public pure root self signal states struct transitions",
+      literal: "false true",
+      built_in:
+        "ArcTo Clip Close Colors CubicTo Flickable FocusScope GridLayout HorizontalLayout Image LineTo Math MoveTo Path PopupWindow QuadraticTo Rectangle Row Text TextInput TouchArea VerticalLayout Window animation-tick debug",
+      type: "bool duration easing float int length logical_length relative-font-size resource string",
+    };
+
+    return {
+      name: 'slint',
+      case_insensitive: false,
+      keywords: KEYWORDS,
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        hljs.C_BLOCK_COMMENT_MODE,
+        hljs.COMMENT('/\\*', '\\*/', {
+          contains: ['self']
+        }),
+        {
+          className: 'number',
+          begin: '\\b\\d+(\\.\\d+)?(\\w+)?',
+          relevance: 0
+        },
+        {
+          className: 'title',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]* *:=',
+        },
+        {
+          className: 'symbol',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*(:| *=>)',
+        },
+        {
+          className: 'built_in',
+          begin: '\\b[_a-zA-Z][_\\-a-zA-Z0-9]*!',
+        },
+      ],
+      illegal: /@/
+    };
+  };
+
+  // Tags used in fenced code blocks
+  for (let tag of ["slint", "slint,no-preview", "slint,no-auto-preview", "slint,ignore"]) {
+    hljs.registerLanguage(tag, highlight_slint);
+  }
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const rustDoc = document.querySelector('meta[name="generator"]')?.content == "rustdoc";
+    if (rustDoc) {
+      // Only highlight .slint blocks, leave the others to rustdoc
+      for (slintBlock of document.querySelectorAll("[class*=language-slint]")) {
+        hljs.highlightElement(slintBlock)
+      }
+
+      // Some of the rustdoc selectors require the pre element to have the rust class
+      for (codeBlock of document.querySelectorAll(".language-slint.hljs")) {
+        codeBlock.parentElement.classList.add("rust")
+      }
+
+      // Change the hljs generated classes to the rustdoc
+      // ones, so that the highlighting adjusts to the theme correctly.
+      const highlightJSToRustDoc = [
+        ["comment", "comment"],
+        ["number", "number"],
+        ["symbol", "struct"], // width:
+        ["keyword", "kw"],
+        ["built_in", "primitive"],
+        ["string", "string"],
+        ["title", "fnname"], // Foo :=
+        ["type", "type"]
+      ];
+
+      for ([hljs_class, rustdoc_class] of highlightJSToRustDoc) {
+        for (titleElement of document.querySelectorAll(`.hljs-${hljs_class}`)) {
+          titleElement.classList.remove(`hljs-${hljs_class}`);
+          titleElement.classList.add(rustdoc_class);
+        }
+      }
+    } else {
+      // For use with the mdbook Tutorial
+      hljs.highlightAll();
+
+      // The Sphinx/my_st generated HTML for code blocks doesn't use <code> tags, so highlight.js'
+      // default selector "pre code" doesn't match. Let's do it by hand:
+      for (block of document.querySelectorAll("div[class*=highlight-slint] div.highlight pre")) {
+        hljs.highlightElement(block)
+      }
+    }
+  });
+</script>
+
+</head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../../slint/index.html"><img src="https://slint.dev/logo/slint-logo-square-light.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../../../slint/index.html"><img src="https://slint.dev/logo/slint-logo-square-light.svg" alt="logo"></a><h2 class="location"><a href="#">Module mcu</a></h2><div class="sidebar-elems"></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../../index.html">slint</a>::<wbr><a href="../index.html">docs</a>::<wbr><a class="mod" href="#">mcu</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../src/slint/docs.rs.html#138">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><!-- Copyright © SixtyFPS GmbH <info@slint.dev> ; SPDX-License-Identifier: MIT -->
+<h2 id="slint-on-microcontrollers"><a href="#slint-on-microcontrollers">Slint on Microcontrollers</a></h2>
+<p><img src="https://slint.dev/blog/porting-slint-to-microcontrollers/rp-pico_and_screen.jpg" alt="" /></p>
+<p>The following sections explain how to use Slint to develop a UI on a Microcontroller (MCU) in a bare metal environment.</p>
+<h3 id="prerequisites"><a href="#prerequisites">Prerequisites</a></h3>
+<p>Writing an application in Rust that runs on a MCU requires several prerequisites:</p>
+<ul>
+<li>Install a Rust toolchain to cross-compile to the target architecture.</li>
+<li>Locate and select the correct Hardware Abstraction Layer (HAL) crates and drivers, and depend on them in your <code>Cargo.toml</code>.</li>
+<li>Install tools for flashing and debugging your code on the device.</li>
+</ul>
+<p>We recommend reading the <a href="https://docs.rust-embedded.org/book/">Rust Embedded Book</a>,
+and the curated list of <a href="https://github.com/rust-embedded/awesome-embedded-rust">Awesome Embedded Rust</a> for a wide range of
+crates, tools, and training materials. These resources should guide you through the initial setup. Many include a “hello world” example
+to get started with your device.</p>
+<p>Slint requires a global memory allocator in a bare metal environment with <code>#![no_std]</code>.</p>
+<p>The following sections assume that your setup is complete and you have a non-graphical skeleton Rust program running on your MCU.</p>
+<h3 id="changes-to-cargotoml"><a href="#changes-to-cargotoml">Changes to <code>Cargo.toml</code></a></h3>
+<p>Start by adding a dependency to the <code>slint</code> and the <code>slint-build</code> crates to your <code>Cargo.toml</code> using the <code>cargo</code> command:</p>
+<p>Start with the <code>slint</code> crate like this:</p>
+<div class="example-wrap"><pre class="language-sh"><code>cargo add slint@1.2.0 --no-default-features --features &quot;compat-1-2 unsafe-single-threaded libm&quot;
+</code></pre></div>
+<p>The default features of the <code>slint</code> crate are tailored towards hosted environments and includes the “std” feature. In bare metal environments,
+you need to disable the default features.</p>
+<p>In the snippet above, three features are selected:</p>
+<ul>
+<li><code>compat-1-2</code>: We select this feature when disabling the default features. For a detailed explanation see our blog post <a href="https://slint.dev/blog/rust-adding-default-cargo-feature.html">“Adding default cargo features without breaking Semantic Versioning”</a>.</li>
+<li><code>unsafe-single-threaded</code>: Slint internally uses Rust’s <a href="https://doc.rust-lang.org/std/macro.thread_local.html"><code>thread_local!</code></a> macro to store global data.
+This macro is only available in the Rust Standard Library (std), but not in bare metal environments. As a fallback, the <code>unsafe-single-threaded</code>
+feature changes Slint to use unsafe static for storage. This way, you guarantee to use Slint API only from a single thread, and not from interrupt handlers.</li>
+<li><code>libm</code>: We select this feature to enable the use of the <a href="https://crates.io/crates/libm">libm</a> crate to provide traits and functions for floating point arithmetic.
+They’re typically provided by the Rust Standard Library (std), but that’s not available in bare metal environments.</li>
+</ul>
+<p>It might be necessary to enable the <a href="https://doc.rust-lang.org/cargo/reference/features.html#feature-resolver-version-2">Feature resolver version 2</a>
+in your Cargo.toml if you notice that your dependencies are attempting to build with <code>std</code> support even when disabled.
+This is the default when using the Rust 2021 Edition, but not if you use a workspace.</p>
+<p>Then add the <code>slint-build</code> crate as a build dependency:</p>
+<div class="example-wrap"><pre class="language-sh"><code>cargo add --build slint-build@1.2.0
+</code></pre></div>
+<p>For reference: These are the relevant parts of your <code>Cargo.toml</code> file,
+ready to use Slint:</p>
+<div class="example-wrap"><pre class="language-toml"><code>[package]
+## ...
+## Edition 2021 or later enables the feature resolver version 2.
+edition = &quot;2021&quot;
+
+[dependencies]
+## ... your other dependencies
+
+[dependencies.slint]
+version = &quot;1.2.0&quot;
+default-features = false
+features = [&quot;compat-1-2&quot;, &quot;unsafe-single-threaded&quot;, &quot;libm&quot;]
+[build-dependencies]
+slint-build = &quot;1.2.0&quot;
+</code></pre></div><h3 id="changes-to-buildrs"><a href="#changes-to-buildrs">Changes to <code>build.rs</code></a></h3>
+<p>Next, write a build script to compile the <code>.slint</code> files to Rust code for embedding into the program binary, using the <code>slint-build</code> crate:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">fn </span>main() {
+    slint_build::compile_with_config(
+        <span class="string">&quot;ui/main.slint&quot;</span>,
+        slint_build::CompilerConfiguration::new()
+            .embed_resources(slint_build::EmbedResourcesKind::EmbedForSoftwareRenderer),
+    ).unwrap();
+}</code></pre></div>
+<p>Use the <code>slint_build::EmbedResourcesKind::EmbedForSoftwareRenderer</code> configuration option to tell the Slint compiler to embed the images and fonts in the binary
+in a format that’s suitable for the software based renderer we’re going to use.</p>
+<h3 id="application-structure"><a href="#application-structure">Application Structure</a></h3>
+<p>Typically, a graphical application in hosted environments has at least three different tasks:</p>
+<ul>
+<li>Receives user input from operation system APIs.</li>
+<li>Reacts to the input by performing application specific computations.</li>
+<li>Renders an updated user interface and presents it on the screen using device-independent operating system APIs.</li>
+</ul>
+<p>The operating system provides an event loop to connect and schedule these tasks. Slint implements the
+task of receiving user input and forwarding it to the user interface layer, and rendering the user interface to the screen.</p>
+<p>In bare metal environments it’s your responsibility to substitute and connect functionality that’s otherwise provided by the operating system:</p>
+<ul>
+<li>Select crates that allow you to initialize the chips that operate peripherals, such as a touch input or display controller.
+If there are no crates, you may have to to develop your own drivers.</li>
+<li>Drive the event loop yourself by querying peripherals for input, forwarding that input into computational modules of your
+application and instructing Slint to render the user interface.</li>
+</ul>
+<p>In Slint, the two primary APIs you need to use to accomplish these tasks are the <a href="../../platform/trait.Platform.html" title="trait slint::platform::Platform"><code>slint::platform::Platform</code></a> trait and the <a href="../../struct.Window.html" title="struct slint::Window"><code>slint::Window</code></a> struct.
+In the following sections we’re going to cover how to use them and how they integrate into your event loop.</p>
+<h4 id="the-platform-trait"><a href="#the-platform-trait">The <code>Platform</code> Trait</a></h4>
+<p>The <a href="../../platform/trait.Platform.html" title="trait slint::platform::Platform"><code>slint::platform::Platform</code></a> trait defines the interface between Slint and platform APIs typically provided by operating and windowing systems.</p>
+<p>You need to provide a minimal implementation of this trait and call <a href="../../platform/fn.set_platform.html" title="fn slint::platform::set_platform"><code>slint::platform::set_platform</code></a> before constructing your Slint application.</p>
+<p>This minimal implementation needs to cover two functions:</p>
+<ul>
+<li><code>fn create_window_adapter(&amp;self) -&gt; Result&lt;Rc&lt;dyn WindowAdapter + 'static&gt;, PlatformError&gt;;</code>: Implement this function to return an implementation of the <code>WindowAdapter</code>
+trait that will be associated with the Slint components you create. We provide a convenience struct <a href="../../platform/software_renderer/struct.MinimalSoftwareWindow.html" title="struct slint::platform::software_renderer::MinimalSoftwareWindow"><code>slint::platform::software_renderer::MinimalSoftwareWindow</code></a>
+that implements this trait.</li>
+<li><code>fn duration_since_start(&amp;self) -&gt; Duration</code>: For animations in <code>.slint</code> design files to change properties correctly, Slint needs to know
+how much time has elapsed between two rendered frames. In a bare metal environment you need to provide a source of time. Often the HAL crate of your
+device provides a system timer API for this, which you can query in your impementation.</li>
+</ul>
+<p>You may override more functions of this trait, for example to handle debug output, to delegate the event loop,
+or to deliver events in multi-threaded environments.</p>
+<p>A typical minimal implementation of the <a href="../../platform/trait.Platform.html" title="trait slint::platform::Platform"><code>Platform</code></a> trait that uses the <a href="../../platform/software_renderer/struct.MinimalSoftwareWindow.html" title="struct slint::platform::software_renderer::MinimalSoftwareWindow"><code>MinimalSoftwareWindow</code></a> looks like this:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#![no_std]
+</span><span class="kw">extern crate </span>alloc;
+<span class="kw">use </span>alloc::{rc::Rc, boxed::Box};
+<span class="kw">use </span>slint::platform::{Platform, software_renderer::MinimalSoftwareWindow};
+
+<span class="macro">slint::include_modules!</span>();
+
+<span class="kw">struct </span>MyPlatform {
+    window: Rc&lt;MinimalSoftwareWindow&gt;,
+    <span class="comment">// optional: some timer device from your device&#39;s HAL crate
+    </span>timer: hal::Timer,
+    <span class="comment">// ... maybe more devices
+</span>}
+
+<span class="kw">impl </span>Platform <span class="kw">for </span>MyPlatform {
+    <span class="kw">fn </span>create_window_adapter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Rc&lt;<span class="kw">dyn </span>slint::platform::WindowAdapter&gt;, slint::PlatformError&gt; {
+        <span class="comment">// Since on MCUs, there can be only one window, just return a clone of self.window.
+        // We&#39;ll also use the same window in the event loop.
+        </span><span class="prelude-val">Ok</span>(<span class="self">self</span>.window.clone())
+    }
+    <span class="kw">fn </span>duration_since_start(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; core::time::Duration {
+        core::time::Duration::from_micros(<span class="self">self</span>.timer.get_time())
+    }
+    <span class="comment">// optional: You can put the event loop there, or in the main function, see later
+    </span><span class="kw">fn </span>run_event_loop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), slint::PlatformError&gt; {
+        <span class="macro">todo!</span>();
+    }
+}
+
+<span class="comment">// #[hal::entry]
+</span><span class="kw">fn </span>main() {
+    <span class="comment">// Initialize the heap allocator, peripheral devices and other things.
+    // ...
+
+    // Initialize a window (we&#39;ll need it later).
+    </span><span class="kw">let </span>window = MinimalSoftwareWindow::new(Default::default());
+    slint::platform::set_platform(Box::new(MyPlatform {
+        window: window.clone(),
+        timer: hal::Timer(<span class="comment">/*...*/</span>),
+        <span class="comment">//...
+    </span>}))
+    .unwrap();
+
+    <span class="comment">// Setup the UI.
+    </span><span class="kw">let </span>ui = MyUI::new();
+    <span class="comment">// ... setup callback and properties on `ui` ...
+
+    // Make sure the window covers our entire screen.
+    </span>window.set_size(slint::PhysicalSize::new(<span class="number">320</span>, <span class="number">240</span>));
+
+    <span class="comment">// ... start event loop (see later) ...
+</span>}</code></pre></div>
+<h4 id="the-event-loop"><a href="#the-event-loop">The Event Loop</a></h4>
+<p>With a <code>Platform</code> in place, you can write the main event loop to drive all the different tasks.</p>
+<p>You can choose between two options:</p>
+<ul>
+<li>You can implement <a href="../../platform/trait.Platform.html#method.run_event_loop" title="method slint::platform::Platform::run_event_loop"><code>slint::platform::Platform::run_event_loop</code></a>: Use this if you want to start the
+event loop in a way similar to desktop platforms, using the <a href="../../trait.ComponentHandle.html#tymethod.run" title="method slint::ComponentHandle::run"><code>run()</code></a> function
+of your component, or use <a href="../../fn.run_event_loop.html" title="fn slint::run_event_loop"><code>slint::run_event_loop()</code></a>. Both of these functions will call your implementation
+of <a href="../../platform/trait.Platform.html#method.run_event_loop" title="method slint::platform::Platform::run_event_loop"><code>slint::platform::Platform::run_event_loop</code></a>.</li>
+<li>Implement a <code>loop { ... }</code> directly in your main function: This is called a super loop architecture and common
+for programs running in bare metal environments on MCUs. It allows you to initialize you device peripherals
+and access them without the need to move them into your <code>Platform</code> implementation.</li>
+</ul>
+<p>A typical super loop with Slint combines the tasks of querying input drivers, application specific computations,
+rendering and possibly putting the device into a low-power sleep state. Below is an example:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>slint::platform::software_renderer::MinimalSoftwareWindow;
+<span class="kw">let </span>window = MinimalSoftwareWindow::new(Default::default());
+<span class="comment">//...
+</span><span class="kw">loop </span>{
+    <span class="comment">// Let Slint run the timer hooks and update animations.
+    </span>slint::platform::update_timers_and_animations();
+
+    <span class="comment">// Check the touch screen or input device using your driver.
+    </span><span class="kw">if let </span><span class="prelude-val">Some</span>(event) = check_for_touch_event(<span class="comment">/*...*/</span>) {
+        <span class="comment">// convert the event from the driver into a `slint::platform::WindowEvent`
+        // and pass it to the window.
+        </span>window.dispatch_event(event);
+    }
+
+    <span class="comment">// ... maybe some more application logic ...
+
+    // Draw the scene if something needs to be drawn.
+    </span>window.draw_if_needed(|renderer| {
+        <span class="comment">// see next section about rendering.
+        </span><span class="macro">todo!</span>()
+    });
+
+    <span class="comment">// Try to put the MCU to sleep
+    </span><span class="kw">if </span>!window.has_active_animations() {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(duration) = slint::platform::duration_until_next_timer_update() {
+            <span class="comment">// ... schedule a timer interrupt in `duration` ...
+        </span>}
+        hal::wfi(); <span class="comment">// Wait for interrupt
+    </span>}
+}
+</code></pre></div>
+<h4 id="the-renderer"><a href="#the-renderer">The Renderer</a></h4>
+<p>In desktop and embedded environments, Slint typically uses operating system provided APIs to render the user interface using the GPU.
+In contrast, most MCUs don’t have GPUs. Instead, software rendering is used where all rendering is done by software on the CPU.
+Slint provides a SoftwareRenderer for this task.</p>
+<p>In the earlier example, we’ve instantiated a <a href="../../platform/software_renderer/struct.MinimalSoftwareWindow.html" title="struct slint::platform::software_renderer::MinimalSoftwareWindow"><code>slint::platform::software_renderer::MinimalSoftwareWindow</code></a>. This struct implements the
+<code>slint::platform::WindowAdapter</code> trait and also holds an instance of a <a href="../../platform/software_renderer/struct.SoftwareRenderer.html" title="struct slint::platform::software_renderer::SoftwareRenderer"><code>slint::platform::software_renderer::SoftwareRenderer</code></a>. You access it
+through the callback parameter of the <a href="../../platform/software_renderer/struct.MinimalSoftwareWindow.html#method.draw_if_needed" title="method slint::platform::software_renderer::MinimalSoftwareWindow::draw_if_needed"><code>draw_if_needed()</code></a> function.
+Depending on the amount of RAM your MCU has, and the kind of screen attached, you can choose between two different ways of using the renderer:</p>
+<ul>
+<li>Use the <a href="../../platform/software_renderer/struct.SoftwareRenderer.html#method.render" title="method slint::platform::software_renderer::SoftwareRenderer::render"><code>SoftwareRenderer::render()</code></a> function if you have enough RAM to allocate one, or even two, copies of the entire screen (also known as
+frame buffer).</li>
+<li>Use the <a href="../../platform/software_renderer/struct.SoftwareRenderer.html#method.render_by_line" title="method slint::platform::software_renderer::SoftwareRenderer::render_by_line"><code>SoftwareRenderer::render_by_line()</code></a> function to render the entire user interface line by line and send each line of pixels to the screen,
+typically via the SPI. This requires allocating at least enough RAM to store one single line of pixels.</li>
+</ul>
+<p>With both methods Slint renders into a provided buffer, which is a slice of a type that implements the <a href="../../platform/software_renderer/trait.TargetPixel.html" title="trait slint::platform::software_renderer::TargetPixel"><code>slint::platform::software_renderer::TargetPixel</code></a> trait.
+For convenience, Slint provides an implementation for <a href="../../type.Rgb8Pixel.html" title="type slint::Rgb8Pixel"><code>slint::Rgb8Pixel</code></a> and <a href="../../platform/software_renderer/struct.Rgb565Pixel.html" title="struct slint::platform::software_renderer::Rgb565Pixel"><code>slint::platform::software_renderer::Rgb565Pixel</code></a>.</p>
+<h5 id="rendering-into-a-buffer"><a href="#rendering-into-a-buffer">Rendering Into a Buffer</a></h5>
+<p>The following example uses double buffering and swaps between two buffers. This
+requires a graphics driver that takes the address of the currently displayed
+frame buffer, also known as front buffer. A dedicated chip is then responsible
+for reading from RAM and transferring the contents to the attached screen,
+without any interference of the CPU. Meanwhile, Slint renders into the second
+buffer, the back buffer.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>slint::platform::software_renderer::Rgb565Pixel;
+
+<span class="comment">// In this example, we have two buffer: one is currently displayed, and we are
+// rendering into the second one. Hence we use `RepaintBufferType::SwappedBuffers`
+</span><span class="kw">let </span>window = slint::platform::software_renderer::MinimalSoftwareWindow::new(
+    slint::platform::software_renderer::RepaintBufferType::SwappedBuffers
+);
+
+<span class="kw">const </span>DISPLAY_WIDTH: usize = <span class="number">320</span>;
+<span class="kw">const </span>DISPLAY_HEIGHT: usize = <span class="number">240</span>;
+<span class="kw">let </span><span class="kw-2">mut </span>buffer1 = [Rgb565Pixel(<span class="number">0</span>); DISPLAY_WIDTH * DISPLAY_HEIGHT];
+<span class="kw">let </span><span class="kw-2">mut </span>buffer2 = [Rgb565Pixel(<span class="number">0</span>); DISPLAY_WIDTH * DISPLAY_HEIGHT];
+
+<span class="comment">// ... configure the screen driver to use buffer1 or buffer2 ...
+
+// ... rest of initialization ...
+
+</span><span class="kw">let </span><span class="kw-2">mut </span>currently_displayed_buffer : <span class="kw-2">&amp;mut </span>[<span class="kw">_</span>] = <span class="kw-2">&amp;mut </span>buffer1;
+<span class="kw">let </span><span class="kw-2">mut </span>work_buffer : <span class="kw-2">&amp;mut </span>[<span class="kw">_</span>] = <span class="kw-2">&amp;mut </span>buffer2;
+
+<span class="kw">loop </span>{
+    <span class="comment">// ...
+    // Draw the scene if something needs to be drawn
+    </span>window.draw_if_needed(|renderer| {
+        <span class="comment">// The screen driver might be taking some time to do the swap. We need to wait until
+        // work_buffer is ready to be written in
+        </span><span class="kw">while </span>is_swap_pending() {}
+
+        <span class="comment">// Do the rendering!
+        </span>renderer.render(work_buffer, DISPLAY_WIDTH);
+
+        <span class="comment">// tell the screen driver to display the other buffer.
+        </span>swap_buffers();
+
+        <span class="comment">// Swap the buffer references for our next iteration
+        // (this just swap the reference, not the actual data)
+        </span>core::mem::swap::&lt;<span class="kw-2">&amp;mut </span>[<span class="kw">_</span>]&gt;(<span class="kw-2">&amp;mut </span>work_buffer, <span class="kw-2">&amp;mut </span>currently_displayed_buffer);
+    });
+    <span class="comment">// ...
+</span>}
+</code></pre></div>
+<h5 id="rendering-line-by-line"><a href="#rendering-line-by-line">Rendering Line by Line</a></h5>
+<p>When rendering the user interface line by line, you need to implement the <a href="../../platform/software_renderer/trait.LineBufferProvider.html" title="trait slint::platform::software_renderer::LineBufferProvider"><code>LineBufferProvider</code></a> trait. It
+defines a bi-directional interface between Slint and your code to send lines to the screen:</p>
+<ul>
+<li>The trait’s associated <code>TargetPixel</code> type let’s Slint know how to create and manipulate pixels. How exactly the pixels are
+represented in your device and how they are blended remains your implementation detail.</li>
+<li>The trait’s <code>process_line</code> function notifies you when a line can be rendered and provides a callback that you can invoke
+to fill a slice of pixels for the given line.</li>
+</ul>
+<p>The following example defines a <code>DisplayWrapper</code> struct: It connects screen driver that implements the <a href="https://lib.rs/embedded-graphics"><code>embedded_graphics</code></a> traits
+with Slint’s <code>Rgb565Pixel</code> type to implement the <code>LineBufferProvider</code> trait. The pixels for one line are sent to the screen by calling
+the <a href="https://docs.rs/embedded-graphics/0.7.1/embedded_graphics/draw_target/trait.DrawTarget.html">DrawTarget::fill_contiguous</a> function.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>embedded_graphics_core::{prelude::<span class="kw-2">*</span>, primitives::Rectangle, pixelcolor::raw::RawU16};
+
+
+<span class="kw">struct </span>DisplayWrapper&lt;<span class="lifetime">&#39;a</span>, T&gt;{
+    display: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>T,
+    line_buffer: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>[slint::platform::software_renderer::Rgb565Pixel],
+}
+<span class="kw">impl</span>&lt;T: DrawTarget&lt;Color = embedded_graphics_core::pixelcolor::Rgb565&gt;&gt;
+    slint::platform::software_renderer::LineBufferProvider <span class="kw">for </span>DisplayWrapper&lt;<span class="lifetime">&#39;_</span>, T&gt;
+{
+    <span class="kw">type </span>TargetPixel = slint::platform::software_renderer::Rgb565Pixel;
+    <span class="kw">fn </span>process_line(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        line: usize,
+        range: core::ops::Range&lt;usize&gt;,
+        render_fn: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;mut </span>[<span class="self">Self</span>::TargetPixel]),
+    ) {
+        <span class="comment">// Render into the line
+        </span>render_fn(<span class="kw-2">&amp;mut </span><span class="self">self</span>.line_buffer[range.clone()]);
+
+        <span class="comment">// Send the line to the screen using DrawTarget::fill_contiguous
+        </span><span class="self">self</span>.display.fill_contiguous(
+            <span class="kw-2">&amp;</span>Rectangle::new(Point::new(range.start <span class="kw">as _</span>, line <span class="kw">as _</span>), Size::new(range.len() <span class="kw">as _</span>, <span class="number">1</span>)),
+            <span class="self">self</span>.line_buffer[range.clone()].iter().map(|p| RawU16::new(p.<span class="number">0</span>).into())
+        ).map_err(drop).unwrap();
+    }
+}
+
+<span class="comment">// Note that we use `ReusedBuffer` as parameter for MinimalSoftwareWindow to indicate
+// that we just need to re-render what changed since the last frame.
+// What&#39;s shown on the screen buffer is not in our RAM, but actually within the display itself.
+// Only the changed part of the screen will be updated.
+</span><span class="kw">let </span>window = slint::platform::software_renderer::MinimalSoftwareWindow::new(
+    slint::platform::software_renderer::RepaintBufferType::ReusedBuffer
+);
+
+<span class="kw">const </span>DISPLAY_WIDTH: usize = <span class="number">320</span>;
+<span class="kw">let </span><span class="kw-2">mut </span>line_buffer = [slint::platform::software_renderer::Rgb565Pixel(<span class="number">0</span>); DISPLAY_WIDTH];
+
+<span class="kw">let </span><span class="kw-2">mut </span>display = hal::Display::new(<span class="comment">/*...*/</span>);
+
+<span class="comment">// ... rest of initialization ...
+
+</span><span class="kw">loop </span>{
+    <span class="comment">// ...
+    </span>window.draw_if_needed(|renderer| {
+        renderer.render_by_line(DisplayWrapper{
+            display: <span class="kw-2">&amp;mut </span>display,
+            line_buffer: <span class="kw-2">&amp;mut </span>line_buffer
+        });
+    });
+    <span class="comment">// ...
+</span>}
+</code></pre></div>
+<p>Note: In our experience, using the synchronous <code>DrawTarget::fill_contiguous</code> function is slow. If
+your device is capable of using DMA, you may be able to achieve better performance by using
+two line buffers: One buffer to render into with the CPU, while the other buffer is transferred to
+the screen using DMA asynchronously.</p>
+<h3 id="example-implementations"><a href="#example-implementations">Example Implementations</a></h3>
+<p>The examples that come with Slint use a helper crate called <code>mcu-board-support</code>. It provides implementations of
+the <code>Platform</code> trait for some MCUs, along with support for touch input and system timers.</p>
+<p>You can find the crate in our Git repository at:</p>
+<p><a href="https://github.com/slint-ui/slint/tree/master/examples/mcu-board-support">https://github.com/slint-ui/slint/tree/master/examples/mcu-board-support</a></p>
+<p>If your MCU is among the supported boards, then you can use it by specifying it as a
+<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories">dependency from our Git repository</a>
+in your <code>Cargo.toml</code>.</p>
+<p>For an entire template, check out our <a href="https://github.com/slint-ui/slint-mcu-rust-template">Slint Bare Metal Microcontroller Rust Template</a>.</p>
+<p>We also have a version of our printer demo that we’ve adapted to small screens, the <a href="https://github.com/slint-ui/slint/tree/master/examples/printerdemo_mcu">MCU Printer Demo</a>.</p>
+</div></details></section></div></main></body></html>

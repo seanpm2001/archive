@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["debugging_techniques","generated_code","mcu"]};

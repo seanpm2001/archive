@@ -1,0 +1,22 @@
+.. _exhale_struct_structslint_1_1platform_1_1SoftwareRenderer_1_1PhysicalRegion:
+
+Struct SoftwareRenderer::PhysicalRegion
+=======================================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_class_classslint_1_1platform_1_1SoftwareRenderer`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: slint::platform::SoftwareRenderer::PhysicalRegion
+   :members:
+   :protected-members:
+   :undoc-members:

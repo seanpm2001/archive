@@ -1,0 +1,19 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_interpreter.h:
+
+Program Listing for File slint_interpreter.h
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint_interpreter.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint_interpreter.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint.dev>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-Royalty-free-1.1 OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   
+   #warning "the <slint_interpreter.h> header is renamed <slint-interpreter.h>"
+   #include "slint-interpreter.h"

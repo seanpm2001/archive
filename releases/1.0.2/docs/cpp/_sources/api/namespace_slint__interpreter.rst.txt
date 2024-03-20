@@ -1,0 +1,48 @@
+
+.. _namespace_slint__interpreter:
+
+Namespace slint::interpreter
+============================
+
+
+Detailed Description
+--------------------
+
+The types in this namespace allow you to load a .slint file at runtime and show its UI.
+
+You only need to use them if you do not want to use pre-compiled .slint code, which is the normal way to use Slint.
+
+The entry point for this namespace is the :ref:`exhale_class_classslint_1_1interpreter_1_1ComponentCompiler`, which you can use to create :ref:`exhale_class_classslint_1_1interpreter_1_1ComponentDefinition` instances with the ComponentCompiler::build_from_source() or ComponentCompiler::build_from_path() functions. 
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structslint_1_1interpreter_1_1Diagnostic`
+
+- :ref:`exhale_struct_structslint_1_1interpreter_1_1PropertyDescriptor`
+
+- :ref:`exhale_struct_structslint_1_1interpreter_1_1Struct`
+
+- :ref:`exhale_struct_structslint_1_1interpreter_1_1Struct_1_1iterator`
+
+- :ref:`exhale_class_classslint_1_1interpreter_1_1ComponentCompiler`
+
+- :ref:`exhale_class_classslint_1_1interpreter_1_1ComponentDefinition`
+
+- :ref:`exhale_class_classslint_1_1interpreter_1_1ComponentInstance`
+
+- :ref:`exhale_class_classslint_1_1interpreter_1_1Value`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespaceslint_1_1interpreter_1a024a0b8492190ef68961f9888a25b4b6`
+
+- :ref:`exhale_enum_namespaceslint_1_1interpreter_1a6221319f778c7369e1b76672690926e0`

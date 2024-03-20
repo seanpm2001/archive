@@ -1,0 +1,49 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_point.h:
+
+Program Listing for File slint_point.h
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint_point.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint_point.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint.dev>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-Royalty-free-1.1 OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   
+   #include <cstdint>
+   
+   namespace slint {
+   
+   template<typename T>
+   struct Point
+   {
+       T x;
+       T y;
+   
+       bool operator==(const Point &other) const = default;
+   };
+   
+   namespace cbindgen_private {
+   // The Point types are expanded to the Point2D<...> type from the euclid crate which
+   // is binary compatible with Point<T>
+   template<typename T>
+   using Point2D = Point<T>;
+   }
+   
+   struct LogicalPosition : public Point<float>
+   {
+       explicit LogicalPosition(const Point<float> p) : Point<float>(p) {};
+       LogicalPosition() : Point<float> { 0., 0. } {};
+   };
+   struct PhysicalPosition : public Point<int32_t>
+   {
+       explicit PhysicalPosition(const Point<int32_t> p) : Point<int32_t>(p) {};
+       PhysicalPosition() : Point<int32_t> { 0, 0 } {};
+   };
+   
+   }

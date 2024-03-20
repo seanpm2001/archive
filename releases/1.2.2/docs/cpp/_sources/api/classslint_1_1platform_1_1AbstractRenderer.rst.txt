@@ -1,0 +1,26 @@
+.. _exhale_class_classslint_1_1platform_1_1AbstractRenderer:
+
+Class AbstractRenderer
+======================
+
+- Defined in :ref:`file__home_runner_work_slint_slint_api_cpp_include_slint-platform.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public slint::platform::SkiaRenderer`` (:ref:`exhale_class_classslint_1_1platform_1_1SkiaRenderer`)
+- ``public slint::platform::SoftwareRenderer`` (:ref:`exhale_class_classslint_1_1platform_1_1SoftwareRenderer`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: slint::platform::AbstractRenderer
+   :members:
+   :protected-members:
+   :undoc-members:

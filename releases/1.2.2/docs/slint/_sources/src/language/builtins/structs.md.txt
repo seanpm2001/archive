@@ -1,0 +1,66 @@
+<!-- Generated with `cargo xtask slintdocs` from internal/common/builtin_structs.rs -->
+# Builtin Structures
+
+## `KeyEvent`
+
+ This structure is generated and passed to the key press and release callbacks of the `FocusScope` element.
+
+### Fields
+
+- **`text`** (_string_): The unicode representation of the key pressed.
+- **`modifiers`** (_KeyboardModifiers_): The keyboard modifiers active at the time of the key press event.
+
+## `KeyboardModifiers`
+
+ KeyboardModifier provides booleans to indicate possible modifier keys on a keyboard, such as Shift, Control, etc.
+ This structure is generated as part of `KeyEvent`
+ On macOS, the command key is mapped to the meta modifier.
+ On Windows, the windows key is mapped to the meta modifier.
+
+### Fields
+
+- **`alt`** (_bool_): Indicates the alt key on a keyboard.
+- **`control`** (_bool_): Indicates the control key on a keyboard.
+- **`shift`** (_bool_): Indicates the shift key on a keyboard.
+- **`meta`** (_bool_): Indicates the command key on macos.
+
+## `Point`
+
+This structure represents a point with x and y coordinate
+
+### Fields
+
+- **`x`** (_length_)
+- **`y`** (_length_)
+
+## `PointerEvent`
+
+ Represents a Pointer event sent by the windowing system.
+ This structure is generated and passed to the `pointer-event` callback of the `TouchArea` element.
+
+### Fields
+
+- **`button`** (_PointerEventButton_): The button that was pressed or released
+- **`kind`** (_PointerEventKind_): The kind of the event
+- **`modifiers`** (_KeyboardModifiers_): The keyboard modifiers pressed during the event
+
+## `StandardListViewItem`
+
+ Represents an item in a StandardListView and a StandardTableView.
+
+### Fields
+
+- **`text`** (_string_): The text content of the item
+
+## `TableColumn`
+
+ This is used to define the column and the column header of a TableView
+
+### Fields
+
+- **`title`** (_string_): The title of the column header
+- **`min_width`** (_length_): The minimum column width (logical length)
+- **`horizontal_stretch`** (_float_): The horizontal column stretch
+- **`sort_order`** (_SortOrder_): Sorts the column
+- **`width`** (_length_): the actual width of the column (logical length)
+

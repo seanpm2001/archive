@@ -1,0 +1,13 @@
+.. _exhale_define_slint__generated__public_8h_1a45557b46bf1159e97c4ace494d67a53f:
+
+Define SLINT_FEATURE_INTERPRETER
+================================
+
+- Defined in :ref:`file_cppdocs_generated_include_slint_generated_public.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SLINT_FEATURE_INTERPRETER

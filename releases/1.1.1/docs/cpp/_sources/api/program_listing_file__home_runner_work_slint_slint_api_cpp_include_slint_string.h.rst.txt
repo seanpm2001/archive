@@ -1,0 +1,177 @@
+
+.. _program_listing_file__home_runner_work_slint_slint_api_cpp_include_slint_string.h:
+
+Program Listing for File slint_string.h
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_runner_work_slint_slint_api_cpp_include_slint_string.h>` (``/home/runner/work/slint/slint/api/cpp/include/slint_string.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright © SixtyFPS GmbH <info@slint.dev>
+   // SPDX-License-Identifier: GPL-3.0-only OR LicenseRef-Slint-Royalty-free-1.1 OR LicenseRef-Slint-commercial
+   
+   #pragma once
+   #include <string_view>
+   #include "slint_string_internal.h"
+   
+   namespace slint {
+   
+   struct SharedString
+   {
+       SharedString() { cbindgen_private::slint_shared_string_from_bytes(this, "", 0); }
+       SharedString(std::string_view s)
+       {
+           cbindgen_private::slint_shared_string_from_bytes(this, s.data(), s.size());
+       }
+       SharedString(const char *s) : SharedString(std::string_view(s)) { }
+   #if defined(__cpp_char8_t) || __cplusplus >= 202002L
+       SharedString(const char8_t *s) : SharedString(reinterpret_cast<const char *>(s)) { }
+   #endif
+   #ifdef __cpp_lib_char8_t
+       SharedString(std::u8string_view s)
+       {
+           cbindgen_private::slint_shared_string_from_bytes(
+                   this, reinterpret_cast<const char *>(s.data()), s.size());
+       }
+   #endif
+       SharedString(const SharedString &other)
+       {
+           cbindgen_private::slint_shared_string_clone(this, &other);
+       }
+       ~SharedString()
+       {
+           cbindgen_private::slint_shared_string_drop(this);
+       }
+       SharedString &operator=(const SharedString &other)
+       {
+           cbindgen_private::slint_shared_string_drop(this);
+           cbindgen_private::slint_shared_string_clone(this, &other);
+           return *this;
+       }
+       SharedString &operator=(std::string_view s)
+       {
+           cbindgen_private::slint_shared_string_drop(this);
+           cbindgen_private::slint_shared_string_from_bytes(this, s.data(), s.size());
+           return *this;
+       }
+       SharedString &operator=(const char *s)
+       {
+           return *this = std::string_view(s);
+       }
+   
+       SharedString &operator=(SharedString &&other)
+       {
+           std::swap(inner, other.inner);
+           return *this;
+       }
+   
+       operator std::string_view() const
+       {
+           return cbindgen_private::slint_shared_string_bytes(this);
+       }
+       auto data() const -> const char *
+       {
+           return cbindgen_private::slint_shared_string_bytes(this);
+       }
+   
+       const char *begin() const
+       {
+           return data();
+       }
+       const char *end() const
+       {
+           return &*std::string_view(*this).end();
+       }
+   
+       bool empty() const
+       {
+           return std::string_view(*this).empty();
+       }
+   
+       bool starts_with(std::string_view prefix) const
+       {
+           return std::string_view(*this).substr(0, prefix.size()) == prefix;
+       }
+   
+       bool ends_with(std::string_view prefix) const
+       {
+           std::string_view self_view(*this);
+           return self_view.size() >= prefix.size()
+                   && self_view.compare(self_view.size() - prefix.size(), std::string_view::npos,
+                                        prefix)
+                   == 0;
+       }
+   
+       static SharedString from_number(double n)
+       {
+           return SharedString(n);
+       }
+   
+       friend bool operator==(const SharedString &a, const SharedString &b)
+       {
+           return std::string_view(a) == std::string_view(b);
+       }
+       friend bool operator!=(const SharedString &a, const SharedString &b)
+       {
+           return std::string_view(a) != std::string_view(b);
+       }
+   
+       friend bool operator<(const SharedString &a, const SharedString &b)
+       {
+           return std::string_view(a) < std::string_view(b);
+       }
+       friend bool operator<=(const SharedString &a, const SharedString &b)
+       {
+           return std::string_view(a) <= std::string_view(b);
+       }
+       friend bool operator>(const SharedString &a, const SharedString &b)
+       {
+           return std::string_view(a) > std::string_view(b);
+       }
+       friend bool operator>=(const SharedString &a, const SharedString &b)
+       {
+           return std::string_view(a) >= std::string_view(b);
+       }
+   
+       friend std::ostream &operator<<(std::ostream &stream, const SharedString &shared_string)
+       {
+           return stream << std::string_view(shared_string);
+       }
+   
+       friend SharedString operator+(const SharedString &a, std::string_view b)
+       {
+           SharedString a2 = a;
+           return a2 += b;
+       }
+       friend SharedString operator+(SharedString &&a, std::string_view b)
+       {
+           a += b;
+           return a;
+       }
+       SharedString &operator+=(std::string_view other)
+       {
+           cbindgen_private::slint_shared_string_append(this, other.data(), other.size());
+           return *this;
+       }
+   
+   private:
+       explicit SharedString(double n)
+       {
+           cbindgen_private::slint_shared_string_from_number(this, n);
+       }
+       void *inner; // opaque
+   };
+   
+   namespace private_api {
+   inline cbindgen_private::Slice<uint8_t> string_to_slice(std::string_view str)
+   {
+       return cbindgen_private::Slice<uint8_t> {
+           const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(str.data())), str.size()
+       };
+   }
+   }
+   
+   }
