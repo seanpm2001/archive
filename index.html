@@ -152,29 +152,10 @@
                         }
                     }
 
-                    if (!actualVersionValue) {
-                        // add some known version
-                        actualVersionValue = "releases/latest";
-                        actualVersionText = "latest";
-                        const opt = document.createElement("li");
-                        opt.classList.add("option");
-                        opt.innerHTML = actualVersionText;
-                        opt.setAttribute("value", actualVersionValue);
-                        opt.addEventListener("click", () => {
-                            sBtn_text.innerText = actualVersionText;
-                            optionMenu.classList.remove("active");
-                            updateButtonHrefs(actualVersionValue);
-                        });
-                        sel.appendChild(opt);
-                    }
-
-                    const version = document.location.pathname.match(/releases\/([0-9]*.[0-9]*.[0-9]*)|snapshots\/(master)|releases\/(latest)/);
+                    const version = document.location.pathname.match(/releases\/([0-9]*.[0-9]*.[0-9]*)/);
                     if (version) {
                         actualVersionValue = version[0];
                         actualVersionText = version[1];
-                        if (actualVersionValue == "snapshots\/master") {
-                            actualVersionText = "development snapshot";
-                        }
                     }
                     sBtn_text.innerText = actualVersionText;
                     updateButtonHrefs(actualVersionValue);
@@ -183,22 +164,10 @@
                 window.addEventListener('load', () => {
                     // Select menu
                     const optionMenu = document.querySelector(".select-menu"),
-                        selectBtn = optionMenu.querySelector(".select-btn"),
-                        sel = optionMenu.querySelector(".options"),
-                        sBtn_text = optionMenu.querySelector(".sBtn-text");
+                        selectBtn = optionMenu.querySelector(".select-btn");
 
                     selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
 
-                    const opt = document.createElement("li");
-                    opt.classList.add("option");
-                    opt.innerHTML = "development snapshot";
-                    opt.setAttribute("value", "snapshots/master");
-                    opt.addEventListener("click", () => {
-                        sBtn_text.innerText = "development snapshot";
-                        optionMenu.classList.remove("active");
-                        updateButtonHrefs("snapshots/master");
-                    });
-                    sel.appendChild(opt);
                     // / Select menu
 
                     fetchReadFile("/releases/versions.txt");
@@ -309,6 +278,8 @@
                         <ul class="options" id="version">
                         </ul>
                     </div>
+                    <label style="font-size: 1rem;
+                    font-weight: 400; margin-bottom: 1em;">Visit <a href="https://docs.slint.dev">Slint Documentation</a> for newer versions.</label>
                 </div>
             </section>
 
@@ -325,7 +296,7 @@
                             <h5>DSL</h5>
                             <h4>Slint</h4>
                             <p><img src="https://slint.dev/assets/img/slint-favicon.svg"></p>
-                            <p><a href="https://slint.dev/releases/latest/docs/slint/index.html" class="btn doc">Language</a></p>
+                            <p><a href="/releases/latest/docs/slint/index.html" class="btn doc">Language</a></p>
                         </div><!-- .price-box -->
                     </div><!-- .col-2 -->
                     <div class="col-2">
@@ -334,8 +305,8 @@
                                 <h5>APIs</h5>
                                 <h4>Using Rust</h4>
                                 <p><img src="https://slint.dev/assets/img/rust-logo.svg"></p>
-                                <p><a href="https://slint.dev/releases/latest/docs/rust/slint" class="btn doc">API</a></p>
-                                <p><a href="https://slint.dev/releases/latest/docs/tutorial/rust" class="btn doc">Tutorial</a></p>
+                                <p><a href="/releases/latest/docs/rust/slint" class="btn doc">API</a></p>
+                                <p><a href="/releases/latest/docs/tutorial/rust" class="btn doc">Tutorial</a></p>
                                 <p><a href="https://youtu.be/WBcv4V-whHk" class="btn" target="_blank">Video Tutorial</a></p>
                                 <p><a href="https://github.com/slint-ui/slint-rust-template" class="btn" target="_blank">Project Template</a></p>
                             </div><!-- .price-box -->
@@ -343,16 +314,16 @@
                                 <h5>APIs</h5>
                                 <h4>Using C++</h4>
                                 <p><img src="https://slint.dev/assets/img/cpp_logo.svg"></p>
-                                <p><a href="https://slint.dev/releases/latest/docs/cpp" class="btn doc">API</a></p>
-                                <p><a href="https://slint.dev/releases/latest/docs/tutorial/cpp" class="btn doc">Tutorial</a></p>
+                                <p><a href="/releases/latest/docs/cpp" class="btn doc">API</a></p>
+                                <p><a href="/releases/latest/docs/tutorial/cpp" class="btn doc">Tutorial</a></p>
                                 <p><a href="https://github.com/slint-ui/slint-cpp-template" class="btn" target="_blank">Project Template</a></p>
                             </div><!-- .price-box -->
                             <div class="price-box">
                                 <h5>APIs</h5>
                                 <h4>Using NodeJS (beta)</h4>
                                 <p><img src="https://slint.dev/assets/img/nodejs_logo.svg"></p>
-                                <p><a href="https://slint.dev/releases/latest/docs/node" class="btn doc">API</a></p>
-                                <p><a href="https://slint.dev/releases/latest/docs/tutorial/node" class="btn doc">Tutorial</a></p>
+                                <p><a href="/releases/latest/docs/node" class="btn doc">API</a></p>
+                                <p><a href="/releases/latest/docs/tutorial/node" class="btn doc">Tutorial</a></p>
                                 <p><a href="https://github.com/slint-ui/slint-nodejs-template" class="btn" target="_blank">Project Template</a></p>
                             </div><!-- .price-box -->
                         </div><!-- .col-wrap -->
